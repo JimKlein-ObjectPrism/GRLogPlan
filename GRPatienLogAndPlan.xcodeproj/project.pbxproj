@@ -14,6 +14,7 @@
 		986443631A9E78FB00887579 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 986443621A9E78FB00887579 /* Images.xcassets */; };
 		986443661A9E78FB00887579 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 986443641A9E78FB00887579 /* LaunchScreen.xib */; };
 		986443721A9E78FB00887579 /* GRPatienLogAndPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986443711A9E78FB00887579 /* GRPatienLogAndPlanTests.swift */; };
+		9864437C1A9E7DAE00887579 /* gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9864437B1A9E7DAE00887579 /* gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		9864436B1A9E78FB00887579 /* GRPatienLogAndPlanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GRPatienLogAndPlanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		986443701A9E78FB00887579 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		986443711A9E78FB00887579 /* GRPatienLogAndPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRPatienLogAndPlanTests.swift; sourceTree = "<group>"; };
+		9864437B1A9E7DAE00887579 /* gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
 				986443621A9E78FB00887579 /* Images.xcassets */,
 				986443641A9E78FB00887579 /* LaunchScreen.xib */,
+				9864437B1A9E7DAE00887579 /* gitignore */,
 				986443571A9E78FB00887579 /* Supporting Files */,
 			);
 			path = GRPatienLogAndPlan;
@@ -196,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				986443611A9E78FB00887579 /* Main.storyboard in Resources */,
+				9864437C1A9E7DAE00887579 /* gitignore in Resources */,
 				986443661A9E78FB00887579 /* LaunchScreen.xib in Resources */,
 				986443631A9E78FB00887579 /* Images.xcassets in Resources */,
 			);
