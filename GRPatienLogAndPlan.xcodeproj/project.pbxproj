@@ -14,7 +14,12 @@
 		986443631A9E78FB00887579 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 986443621A9E78FB00887579 /* Images.xcassets */; };
 		986443661A9E78FB00887579 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 986443641A9E78FB00887579 /* LaunchScreen.xib */; };
 		986443721A9E78FB00887579 /* GRPatienLogAndPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986443711A9E78FB00887579 /* GRPatienLogAndPlanTests.swift */; };
-		9864437C1A9E7DAE00887579 /* gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9864437B1A9E7DAE00887579 /* gitignore */; };
+		986443811A9E868600887579 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 986443801A9E868600887579 /* SWRevealViewController.m */; };
+		986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986443821A9E8B8C00887579 /* TrackTableViewController.swift */; };
+		986443881A9E8D7C00887579 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 986443851A9E8D7C00887579 /* menu.png */; };
+		986443891A9E8D7C00887579 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 986443861A9E8D7C00887579 /* menu@2x.png */; };
+		9864438A1A9E8D7C00887579 /* menu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 986443871A9E8D7C00887579 /* menu@3x.png */; };
+		9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +44,14 @@
 		9864436B1A9E78FB00887579 /* GRPatienLogAndPlanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GRPatienLogAndPlanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		986443701A9E78FB00887579 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		986443711A9E78FB00887579 /* GRPatienLogAndPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRPatienLogAndPlanTests.swift; sourceTree = "<group>"; };
-		9864437B1A9E7DAE00887579 /* gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gitignore; sourceTree = "<group>"; };
+		9864437E1A9E868500887579 /* GRPatienLogAndPlan-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRPatienLogAndPlan-Bridging-Header.h"; sourceTree = "<group>"; };
+		9864437F1A9E868600887579 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		986443801A9E868600887579 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		986443821A9E8B8C00887579 /* TrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTableViewController.swift; sourceTree = "<group>"; };
+		986443851A9E8D7C00887579 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		986443861A9E8D7C00887579 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
+		986443871A9E8D7C00887579 /* menu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@3x.png"; sourceTree = "<group>"; };
+		9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTrackTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,14 +93,17 @@
 		986443561A9E78FB00887579 /* GRPatienLogAndPlan */ = {
 			isa = PBXGroup;
 			children = (
+				986443841A9E8D1400887579 /* Images */,
+				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				986443591A9E78FB00887579 /* AppDelegate.swift */,
 				9864435B1A9E78FB00887579 /* FirstViewController.swift */,
 				9864435D1A9E78FB00887579 /* SecondViewController.swift */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
 				986443621A9E78FB00887579 /* Images.xcassets */,
 				986443641A9E78FB00887579 /* LaunchScreen.xib */,
-				9864437B1A9E7DAE00887579 /* gitignore */,
 				986443571A9E78FB00887579 /* Supporting Files */,
+				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
+				9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */,
 			);
 			path = GRPatienLogAndPlan;
 			sourceTree = "<group>";
@@ -116,6 +131,26 @@
 				986443701A9E78FB00887579 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9864437D1A9E864B00887579 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9864437F1A9E868600887579 /* SWRevealViewController.h */,
+				986443801A9E868600887579 /* SWRevealViewController.m */,
+				9864437E1A9E868500887579 /* GRPatienLogAndPlan-Bridging-Header.h */,
+			);
+			name = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		986443841A9E8D1400887579 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				986443851A9E8D7C00887579 /* menu.png */,
+				986443861A9E8D7C00887579 /* menu@2x.png */,
+				986443871A9E8D7C00887579 /* menu@3x.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,9 +233,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				986443881A9E8D7C00887579 /* menu.png in Resources */,
 				986443611A9E78FB00887579 /* Main.storyboard in Resources */,
-				9864437C1A9E7DAE00887579 /* gitignore in Resources */,
+				986443891A9E8D7C00887579 /* menu@2x.png in Resources */,
 				986443661A9E78FB00887579 /* LaunchScreen.xib in Resources */,
+				9864438A1A9E8D7C00887579 /* menu@3x.png in Resources */,
 				986443631A9E78FB00887579 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,9 +256,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */,
 				9864435E1A9E78FB00887579 /* SecondViewController.swift in Sources */,
 				9864435A1A9E78FB00887579 /* AppDelegate.swift in Sources */,
+				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				9864435C1A9E78FB00887579 /* FirstViewController.swift in Sources */,
+				986443811A9E868600887579 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,9 +386,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = GRPatienLogAndPlan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GRPatienLogAndPlan/GRPatienLogAndPlan-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -356,9 +399,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = GRPatienLogAndPlan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GRPatienLogAndPlan/GRPatienLogAndPlan-Bridging-Header.h";
 			};
 			name = Release;
 		};
