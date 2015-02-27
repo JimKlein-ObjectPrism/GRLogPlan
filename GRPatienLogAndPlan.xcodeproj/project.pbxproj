@@ -20,6 +20,7 @@
 		986443891A9E8D7C00887579 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 986443861A9E8D7C00887579 /* menu@2x.png */; };
 		9864438A1A9E8D7C00887579 /* menu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 986443871A9E8D7C00887579 /* menu@3x.png */; };
 		9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */; };
+		98FDCF021AA0DC170029F97E /* DataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FDCF011AA0DC170029F97E /* DataTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		986443861A9E8D7C00887579 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
 		986443871A9E8D7C00887579 /* menu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@3x.png"; sourceTree = "<group>"; };
 		9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTrackTableViewController.swift; sourceTree = "<group>"; };
+		98FDCF011AA0DC170029F97E /* DataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				986443571A9E78FB00887579 /* Supporting Files */,
 				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
 				9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */,
+				98FDCF011AA0DC170029F97E /* DataTypes.swift */,
 			);
 			path = GRPatienLogAndPlan;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				9864435A1A9E78FB00887579 /* AppDelegate.swift in Sources */,
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				9864435C1A9E78FB00887579 /* FirstViewController.swift in Sources */,
+				98FDCF021AA0DC170029F97E /* DataTypes.swift in Sources */,
 				986443811A9E868600887579 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +464,7 @@
 				986443771A9E78FB00887579 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		986443781A9E78FB00887579 /* Build configuration list for PBXNativeTarget "GRPatienLogAndPlanTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +473,7 @@
 				9864437A1A9E78FB00887579 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
