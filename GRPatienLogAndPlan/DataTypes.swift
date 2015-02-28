@@ -39,14 +39,38 @@ class JournalItem {
     
 }
 
-class person: NSObject {
+class Person: NSObject {
     var firstName: String = ""
     var lastName: String = ""
     var nicName: String = ""
+    
+    init( firstName: String, lastName: String, nicName: String){
+        self.firstName = firstName
+        self.lastName = lastName
+        self.nicName = nicName
+    }
 }
 class PatientProfile {
+    var patientName: Person!
+    var parents: [Person] = []
     
     var treatmentPhase: TreatmentPhase = TreatmentPhase.DTU
+    
+    var medicines: [Medicine]? = []
+    var activity: Activity?
+    
+    var addOn: AddOn?
+    
+    init(){
+        var person = Person(firstName: "Hannah", lastName: "Doe", nicName: "")
+        patientName = person
+        
+        var father = Person(firstName: "John", lastName: "Doe", nicName: "J.D.")
+        var mother = Person(firstName: "Jane", lastName: "Doe", nicName: "")
+        parents = [mother, father]
+        
+        
+    }
     
 }
 
@@ -200,7 +224,7 @@ class FoodItem {
     var menuItemType = ""
 }
 
-class FoodItemWithChoices: FoodItem {
+class FoodItemWithChoice: FoodItem {
     var choiceItems = [FoodItem]()
     
 }
