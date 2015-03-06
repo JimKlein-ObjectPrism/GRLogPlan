@@ -21,20 +21,17 @@ class JournalItem {
     var lunchItem: Lunch?
     var afternoonSnack: Snack?
     var dinner: Dinner?
+    var addOn: AddOn?
     var meds: Medicine?
     var activity: Activity?
+    var note: String?
     
     init()
     {
-        //super.init()
-        breakfastChoice = Breakfast()
-        //breakfastChoice?.foodChoice  =  BreakfastFoodChoice.CerealMilkEggs
-        
     }
     convenience init(itemTitle: String){
         self.init()
         title = itemTitle
-        
     }
     
 }
@@ -43,6 +40,8 @@ class Person: NSObject {
     var firstName: String = ""
     var lastName: String = ""
     var nicName: String = ""
+    
+    
     
     init( firstName: String, lastName: String, nicName: String){
         self.firstName = firstName
@@ -59,7 +58,7 @@ class PatientProfile {
     var medicines: [Medicine]? = []
     var activity: Activity?
     
-    var addOn: AddOn?
+    var addOns: [AddOn]?
     
     init(){
         var person = Person(firstName: "Hannah", lastName: "Doe", nicName: "")
@@ -94,24 +93,27 @@ class Medicine {
 }
 
 class Activity {
-    var description:String = ""
+    var location: String?
+    var description: String = ""
     var didPerscribedActivityForDay = false
+    var supervisedBy: Person?
 }
 
 class AddOn {
     var addOnItem: String = ""
+    var wasConsumed: Bool?
 }
 
 class MealItem {
     var time: Time?
     var place: Place?
     var note: Note?
+    var supervisor: Person?
     
     var isComplete: Bool?
     var specialCircumstance: SpecialCircumstance?
     
     init(){
-        
     }
 }
 

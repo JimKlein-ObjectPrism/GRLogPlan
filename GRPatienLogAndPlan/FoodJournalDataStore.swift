@@ -40,7 +40,7 @@ class DataStore: NSObject, NSXMLParserDelegate  {
     }
     
     
-    func activitiesPath() -> String {
+    func foodItemsPath() -> String {
         return NSBundle.mainBundle().pathForResource("MealItems", ofType: "xml")!
     }
     
@@ -56,9 +56,9 @@ class DataStore: NSObject, NSXMLParserDelegate  {
     }
     func parseFile ()
     {
-        var xmlPath = NSBundle.mainBundle().pathForResource("MealItems", ofType:"xml")
-        // TODO:  unwrap this
-        var xmlData: AnyObject = NSData.dataWithContentsOfMappedFile(xmlPath!)!
+        var xmlPath = foodItemsPath()
+        
+        var xmlData: AnyObject = NSData.dataWithContentsOfMappedFile(xmlPath)!
         let xmlParser = NSXMLParser.init(data: xmlData as NSData)
         xmlParser.delegate = self
         var success:Bool = xmlParser.parse()

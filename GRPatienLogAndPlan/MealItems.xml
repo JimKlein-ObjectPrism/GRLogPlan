@@ -582,7 +582,7 @@
 			<unit>oz</unit>
 			<servingDescription></servingDescription>
 		</serving>
-		<menuItemType>DinnerItem</menuItemType>
+		<menuItemType>MeatDinnerItem</menuItemType>
 		<choiceItems>
 			<foodItem>
 				<name>DinnerPoultry</name>
@@ -592,7 +592,7 @@
 					<unit>oz</unit>
 					<servingDescription></servingDescription>
 				</serving>
-				<menuItemType>DinnerItem</menuItemType>
+				<menuItemType>MeatDinnerItem</menuItemType>
 			</foodItem>
 			<foodItem>
 				<name>DinnerFish</name>
@@ -602,7 +602,7 @@
 					<unit>oz</unit>
 					<servingDescription></servingDescription>
 				</serving>
-				<menuItemType>DinnerItem</menuItemType>
+				<menuItemType>MeatDinnerItem</menuItemType>
 			</foodItem>
 			<foodItem>
 				<name>DinnerBeef</name>
@@ -612,7 +612,7 @@
 					<unit>oz</unit>
 					<servingDescription></servingDescription>
 				</serving>
-				<menuItemType>DinnerItem</menuItemType>
+				<menuItemType>MeatDinnerItem</menuItemType>
 			</foodItem>
 			<foodItem>
 				<name>DinnerPork</name>
@@ -622,7 +622,7 @@
 					<unit>oz</unit>
 					<servingDescription></servingDescription>
 				</serving>
-				<menuItemType>DinnerItem</menuItemType>
+				<menuItemType>MeatDinnerItem</menuItemType>
 			</foodItem>
 		</choiceItems>
 	</foodItemWithChoice>
