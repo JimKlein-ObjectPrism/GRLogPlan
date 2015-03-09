@@ -12,22 +12,27 @@ import Foundation
 //MARK: Journal Data Types
 class JournalItem {
     var title = ""
-    var date: NSDate?
+    var date: NSDate
     var friendlyDate = ""
     var isComplete = false
     
-    var breakfastChoice: Breakfast?
+    var breakfastChoice: Breakfast
     var morningSnack: Snack?
-    var lunchItem: Lunch?
-    var afternoonSnack: Snack?
-    var dinner: Dinner?
+    var lunchItem: Lunch
+    var afternoonSnack: Snack
+    var dinner: Dinner
     var addOn: AddOn?
     var meds: Medicine?
     var activity: Activity?
-    var note: String?
+    var note: Note?
     
     init()
     {
+        breakfastChoice = Breakfast()
+        lunchItem = Lunch()
+        dinner = Dinner()
+        date = NSDate()
+        afternoonSnack = Snack()
     }
     convenience init(itemTitle: String){
         self.init()
@@ -35,6 +40,99 @@ class JournalItem {
     }
     
 }
+
+class BreakfastItems {
+    var item: Breakfast?
+    var breakfastChoice = [AnyObject]()
+    var fruit = [AnyObject]()
+    var mealDetails = [AnyObject]()
+    var headerTitles: [String]
+    var itemSelectedHeaderTitles: [String]
+    
+    
+    
+    init( breakfastItem: Breakfast?,
+        headerTitles: [String] ,
+        itemSelectedHeaderTitles: [String] ,
+        breakfastChoice: [FoodItem],
+        fruitChoice: [FoodItem],
+        mealDetails: [AnyObject])
+    {
+        item = breakfastItem
+        self.breakfastChoice = breakfastChoice
+        self.fruit = fruitChoice
+        self.headerTitles = headerTitles
+        self.itemSelectedHeaderTitles = itemSelectedHeaderTitles
+        self.mealDetails = mealDetails
+        
+//        otherItems = [ Person(firstName: "test", lastName: "placeholder", nicName: "placeholder"), Place(),
+//        Time() ]
+    }
+    
+}
+
+class LunchItems  {
+    var item: Lunch?
+    var lunchChoice: [FoodItem]
+    var fruitChoice: [FoodItem]
+    
+    var mealDetails: [AnyObject]
+    var headerTitles: [String]
+    var itemSelectedHeaderTitles: [String]
+    
+    init( item: Lunch?,
+        headerTitles: [String] ,
+        itemSelectedHeaderTitles: [String],
+        lunchChoice: [FoodItem],
+        fruitChoice: [FoodItem],
+        mealDetails: [AnyObject])
+    {
+        self.item = item
+        self.lunchChoice = lunchChoice
+        self.fruitChoice = fruitChoice
+        self.headerTitles = headerTitles
+        self.itemSelectedHeaderTitles = itemSelectedHeaderTitles
+        self.mealDetails = mealDetails
+    }
+
+}
+
+
+class  DinnerItems {
+    var dinnerItem: Dinner
+    var meat: [FoodItem]
+    var starch: [FoodItem]
+    var oil: [FoodItem]
+    var vegetable: [FoodItem]
+    var requiredItems: [FoodItem]
+    
+    var mealDetails: [AnyObject]
+    var headerTitles: [String]
+    var itemSelectedHeaderTitles: [String]
+
+    init( dinnerItem: Dinner,
+        headerTitles: [String] ,
+        itemSelectedHeaderTitles: [String],
+        meat: [FoodItem],
+        starch: [FoodItem],
+        oil: [FoodItem],
+        vegetable: [FoodItem],
+        requiredItems: [FoodItem],
+        mealDetails: [AnyObject])
+        
+    {
+        self.dinnerItem = dinnerItem
+        self.meat = meat
+        self.starch = starch
+        self.oil = oil
+        self.vegetable = vegetable
+        self.requiredItems = requiredItems
+        self.headerTitles = headerTitles
+        self.itemSelectedHeaderTitles = itemSelectedHeaderTitles
+        self.mealDetails = mealDetails
+    }
+}
+
 
 class Person: NSObject {
     var firstName: String = ""
@@ -83,20 +181,49 @@ enum TreatmentPhase: Int{
     case PostGraduation
 }
 
+enum MealEntryState {
+    case Empty
+    case Incomplete
+    case Complete
+    case NotApplicableToThisItem
+}
+
 
 // There is a collection of these objects in profile
-class Medicine {
+class Medicine: MenuDisplayCell {
     var name:String = ""
     var dose:String = ""
     var instructions:String = ""
     var didTakeMedsForDay: Bool = false
+    
+    //MenuDisplayCell properties
+    var menuDisplayName: String
+    //this property can be nil, since it is not applicable to all menu items
+    var mealEntryState: MealEntryState!
+
+    init()
+    {
+        menuDisplayName = "Medicines"
+        mealEntryState = MealEntryState.Empty
+    }
 }
 
-class Activity {
+class Activity: MenuDisplayCell {
     var location: String?
     var description: String = ""
     var didPerscribedActivityForDay = false
     var supervisedBy: Person?
+    
+    var menuDisplayName: String
+    //this property can be nil, since it is not applicable to all menu items
+    var mealEntryState: MealEntryState!
+    
+    init()
+    {
+        menuDisplayName = "Activity Log"
+        mealEntryState = MealEntryState.Empty
+    }
+
 }
 
 class AddOn {
@@ -104,53 +231,104 @@ class AddOn {
     var wasConsumed: Bool?
 }
 
-class MealItem {
+class MealItem: MenuDisplayCell {
     var time: Time?
     var place: Place?
     var note: Note?
     var supervisor: Person?
     
+    var menuDisplayName: String
+    //this property can be nil, since it is not applicable to all menu items
+    var mealEntryState: MealEntryState!
+
     var isComplete: Bool?
     var specialCircumstance: SpecialCircumstance?
     
     init(){
+        menuDisplayName = ""
+        mealEntryState = nil
     }
 }
 
 class Time {
     var mealTime: NSDate?
+    init(){
+        
+    }
 }
 class Place {
-    var breadChoice: String?
+    var mealLocation: String?
+    init()
+    {
+        
+    }
+    
 }
-
-class Snack: MealItem {
-    var breadChoice: String?
+class ParentInitials {
+    var initialsArray: [String]
+    init(initialsArray: [
+        String] )
+    {
+        self.initialsArray  = initialsArray
+    }
 }
 
 class Note {
     var text: String?
+    init(){        
+    }
 }
+
+class Snack: MealItem {
+    var snack: FoodItem?
+    override init()
+    {
+        super.init()
+        menuDisplayName = "Snack"
+        mealEntryState = MealEntryState.Empty
+    }
+}
+
 
 class Breakfast: MealItem {
     var foodChoice: FoodItem?
     var fruitChoice: FoodItem?
-    //    init(){
-    //        super.init()
-    //    }
     
+    override init()
+    {
+        super.init()
+        menuDisplayName = "Breakfast"
+        mealEntryState = MealEntryState.Empty
+    }
 }
 
 class Lunch : MealItem{
     var meatChoice: FoodItem?
     var fruitChoice: FoodItem?
+    //var mealEntryState: MealEntryState = MealEntryState.Empty
+    override init()
+    {
+        super.init()
+        menuDisplayName = "Lunch"
+        mealEntryState = MealEntryState.Empty
+    }
 }
 
 class Dinner: MealItem{
-    var kartiniRecipe: String?
-    var namedDinner: FoodItem?
-    var breadChoice: FoodItem?
-    var fruitChoice: FoodItem?
+    //var kartiniRecipe: String?
+    var meat: FoodItem?
+    var startch: FoodItem?
+    var oil: FoodItem?
+    var vegetable: FoodItem?
+    var requiredItems: FoodItem?
+    var mealDetails: FoodItem?
+    
+    override init()
+    {
+        super.init()
+        menuDisplayName = "Breakfast"
+        mealEntryState = MealEntryState.Empty
+    }
 }
 
 struct KartiniRecipe {

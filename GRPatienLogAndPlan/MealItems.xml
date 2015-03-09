@@ -638,7 +638,7 @@
 		<choiceItems>
 			<foodItem>
 				<name>Butter</name>
-				<itemDescription>2 TBSP butter</itemDescription>
+				<itemDescription>2T butter</itemDescription>
 				<serving>
 					<measurement>2</measurement>
 					<unit>TBSP</unit>
@@ -648,7 +648,7 @@
 			</foodItem>
 			<foodItem>
 				<name>Cream Cheese</name>
-				<itemDescription>4 TBSP cream Cheese</itemDescription>
+				<itemDescription>4T cream cheese</itemDescription>
 				<serving>
 					<measurement>4</measurement>
 					<unit>TBSP</unit>
@@ -670,7 +670,7 @@
 		<choiceItems>
 			<foodItem>
 				<name>Butter</name>
-				<itemDescription>2 TBSP butter</itemDescription>
+				<itemDescription>2T butter</itemDescription>
 				<serving>
 					<measurement>2</measurement>
 					<unit>TBSP</unit>
@@ -680,7 +680,7 @@
 			</foodItem>
 			<foodItem>
 				<name>Cream Cheese</name>
-				<itemDescription>4 TBSP cream Cheese</itemDescription>
+				<itemDescription>4T cream cheese</itemDescription>
 				<serving>
 					<measurement>4</measurement>
 					<unit>TBSP</unit>

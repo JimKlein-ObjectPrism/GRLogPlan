@@ -8,9 +8,12 @@
 
 import Foundation
 
+
 class DataStore: NSObject, NSXMLParserDelegate  {
+    // Items that define or are used to define the contents of the Food Journal Log item
+    var logEntryItems = [AnyObject]()
     
-    
+    //MARK: Parsing Variables
     var currentElementName = ""
     
     var currentElementValue = ""
@@ -28,20 +31,14 @@ class DataStore: NSObject, NSXMLParserDelegate  {
     
     var stackIndexValue: Int = 0
     
-    func buildJournalEntry ( profile: PatientProfile ){
+    
+    //MARK: Array Assembly Items
+    
+    var foodItems = [FoodItem]()
+    
+    func buildJournalEntry ( profile: PatientProfile ) -> JournalItem{
+        return JournalItem(itemTitle: "test jounal entry")// itemTitle: "test journal item")
         
-        
-    }
-    
-    func buildDetailViewArray( foodItems: [FoodItem]){
-        let breakFastItems = foodItems.filter({m in
-        m.menuItemType == "BreakfastItem"
-        })
-    }
-    
-    
-    func foodItemsPath() -> String {
-        return NSBundle.mainBundle().pathForResource("MealItems", ofType: "xml")!
     }
     
     func loadProfile() -> PatientProfile {
@@ -49,25 +46,191 @@ class DataStore: NSObject, NSXMLParserDelegate  {
         return profile
     }
     
-    func loadFoodItems() -> [FoodItem] {
+   
+    func buildDetailViewArray() -> [AnyObject]{
         
+        var profile = self.loadProfile()
+        var journalItem = self.buildJournalEntry(profile)
+        
+        //var logEntryItems = [Any]()
+        
+        //foodItems Array used by all foodItems
+        self.foodItems = self.loadFoodItems()
+        
+        logEntryItems.append(buildBreakfastItems(profile, journalItem: journalItem))
+        logEntryItems.append(self.buildLunchItems(profile, journalItem: journalItem))
+        logEntryItems.append(Snack())
+        logEntryItems.append(self.buildDinnerItems(profile, journalItem: journalItem))
+        logEntryItems.append(Medicine())
+        logEntryItems.append(Activity())
+        //TODO:  Load additional meal items
+        
+        return logEntryItems
+    }
+    
+    func updateMealItems (mealItem: MealItem, section: Int, row: Int, foodItem: FoodItem) {
+        
+        switch mealItem {
+        case let mealItem as Breakfast:
+            if section == 0 {
+                mealItem.foodChoice = foodItem
+            } else {
+                mealItem.fruitChoice = foodItem
+            }
+            
+        case let mealItem as Lunch:
+            
+            if section == 0 {
+            
+            }
+            
+        default:
+            println("error")
+        }
+        
+    }
+    
+    func buildFoodItemArray ( mealItem: FoodItem?, filterString: String ) -> [FoodItem]{
+        
+        var fItems: [FoodItem] = [FoodItem]()
+        /*
+        The food item array has 1 or n entries
+        1, if item has been selected
+        n, if not
+        */
+        if  (mealItem != nil) {
+            //copy pre-selected food item to array
+            fItems.append(mealItem!)
+            
+        } else {
+            // get subtype of food items for selection
+            let items = foodItems.filter({m in
+                m.menuItemType == filterString
+            })
+            fItems = items
+        }
+        return fItems
+    }
+    
+    func buildMealDetailsArray (parentInitials: ParentInitials, place: Place, time: Time, note: Note ) -> [AnyObject]{
+        //TODO: Refactor to take optional paramters like buildFoodItemArray
+        return [parentInitials, place, time, note]
+    }
+    
+    func buildBreakfastItems ( patientProfile: PatientProfile, journalItem: JournalItem ) -> BreakfastItems {
+        /*
+        //test using FrenchToast Food Item
+        let frenchToastItemInArray = foodItems.filter({m in
+            m.name == "French Toast"
+        })
+        var frenchToastItem = frenchToastItemInArray[0]
+        journalItem.breakfastChoice?.foodChoice = frenchToastItem
+        */
+        
+        // build breakfastChoice food item array
+        let breakfastChoiceItems = self.buildFoodItemArray(journalItem.breakfastChoice.foodChoice, filterString: "BreakfastItem")
+        let breakfastFruitChoice = self.buildFoodItemArray(journalItem.breakfastChoice.fruitChoice, filterString: "FruitItem")
+        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."]), place: Place(), time: Time(), note: Note())
+        
+        let headerTitles = ["Choose One", "And A Serving of Fruit", "Additional Info"]
+        let itemSelectedHeaderTitles = ["Breakfast Item", "Fruit Item"]
+        
+        let breakfast: BreakfastItems = BreakfastItems(
+            breakfastItem: journalItem.breakfastChoice,
+            headerTitles:  headerTitles,
+            itemSelectedHeaderTitles: itemSelectedHeaderTitles,
+            breakfastChoice:  breakfastChoiceItems,
+            fruitChoice: breakfastFruitChoice,
+            mealDetails: mealDetails)
+        
+        return breakfast
+    }
+    
+    func buildLunchItems ( patientProfile: PatientProfile, journalItem: JournalItem ) -> LunchItems {
+        
+        // build lunchChoice food item array
+        let lunchChoiceItems = self.buildFoodItemArray(journalItem.lunchItem.meatChoice, filterString: "LunchItem")
+        let fruitChoice = self.buildFoodItemArray(journalItem.lunchItem.fruitChoice, filterString: "FruitItem")
+        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."]), place: Place(), time: Time(), note: Note())
+        
+        let headerTitles = ["2 Pieces of Bread With", "And A Serving of Fruit", "Additional Info"]
+        let itemSelectedHeaderTitles = ["Sandwich Item", "Fruit Item"]
+        
+        let lunch: LunchItems = LunchItems(
+            item: journalItem.lunchItem,
+            headerTitles: headerTitles,
+            itemSelectedHeaderTitles: itemSelectedHeaderTitles,
+            lunchChoice: lunchChoiceItems,
+            fruitChoice: fruitChoice,
+            mealDetails: mealDetails
+        )
+         return lunch
+    }
+    
+    func buildDinnerItems ( patientProfile: PatientProfile, journalItem: JournalItem ) -> DinnerItems {
+        
+        // build lunchChoice food item array
+        let meat = self.buildFoodItemArray(journalItem.dinner.meat, filterString: "MeatDinnerItem")
+        let starch = self.buildFoodItemArray(journalItem.dinner.startch, filterString: "StarchDinnerItem")
+        let oil = self.buildFoodItemArray(journalItem.dinner.oil, filterString: "OilDinnerItem")
+        let vegetable = self.buildFoodItemArray(journalItem.dinner.vegetable, filterString: "VegetableItem")
+        let requiredItems = self.buildFoodItemArray(journalItem.dinner.requiredItems, filterString: "RequiredDinnerItem")
+        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."]), place: Place(), time: Time(), note: Note())
+        
+        let headerTitles = ["Choose One", "Choose One", "Choose One", "1 1/2 c Vegetables", "Required Items", "Additional Info"]
+        let itemSelectedHeaderTitles = ["Choose One", "Choose One", "Choose One", "1 1/2 c Vegetables", "Required Items", "Additional Info"]
+        
+        let mealEvent: DinnerItems = DinnerItems(
+            dinnerItem: journalItem.dinner,
+            headerTitles: headerTitles,
+            itemSelectedHeaderTitles: itemSelectedHeaderTitles,
+            meat: meat,
+            starch: starch,
+            oil: oil,
+            vegetable: vegetable,
+            requiredItems: requiredItems,
+
+            mealDetails: mealDetails
+        )
+        return mealEvent
+    }
+    
+    func foodItemsPath() -> String {
+        return NSBundle.mainBundle().pathForResource("MealItems", ofType: "xml")!
+    }
+
+    func getDinnerChoiceItems() -> [Any]{
+        var choiceItems = [Any]()
+        // Get MeatChoiceItems
+        
+        return choiceItems
+    }
+    
+    
+    
+    func activitiesPath() -> String {
+        return NSBundle.mainBundle().pathForResource("TestV1", ofType: "xml")!
+    }
+    
+    func loadFoodItems() -> [FoodItem] {
+
         parseFile()
         return foodItemArray
     }
     func parseFile ()
     {
         var xmlPath = foodItemsPath()
-        
+        // TODO:  unwrap this
         var xmlData: AnyObject = NSData.dataWithContentsOfMappedFile(xmlPath)!
         let xmlParser = NSXMLParser.init(data: xmlData as NSData)
         xmlParser.delegate = self
         var success:Bool = xmlParser.parse()
         println(success)
-        
+
         
     }
-    
-    
+
+
     func resetLocalVariablesForNewFoodItem ()
     {
         //currentFoodItem = nil only do this when Popping FoodItem
@@ -89,39 +252,39 @@ class DataStore: NSObject, NSXMLParserDelegate  {
     func PushFoodItem (foodItem: FoodItem) {
         //TODO: update for FoodItemWithChoice
         
-        //handle FoodItem case
-        if currentIndexOfTopStackItem == 0 {
-            //handle empty stack case:  this is an ordinary FoodItem
-            
-            foodItemArray.append(foodItem)
-            foodItemStackArray.append(foodItem)
-            currentFoodItem = foodItem
-            currentIndexOfTopStackItem++
-        } else {
-            //handle non-nil case: this is a child food item of a FoodItemWithChoice
-            if let foodItemWithChoice = foodItemStackArray[0] as? FoodItemWithChoice {
-                //add to choice items and push on stack
-                foodItemWithChoice.choiceItems.append(foodItem)
-                currentFoodItem = foodItem
+            //handle FoodItem case
+            if currentIndexOfTopStackItem == 0 {
+                //handle empty stack case:  this is an ordinary FoodItem
+                
+                foodItemArray.append(foodItem)
                 foodItemStackArray.append(foodItem)
+                currentFoodItem = foodItem
                 currentIndexOfTopStackItem++
             } else {
-                println("error:  non-nil currentItem encountered")
+                //handle non-nil case: this is a child food item of a FoodItemWithChoice
+                if let foodItemWithChoice = foodItemStackArray[0] as? FoodItemWithChoice {
+                    //add to choice items and push on stack
+                    foodItemWithChoice.choiceItems.append(foodItem)
+                    currentFoodItem = foodItem
+                    foodItemStackArray.append(foodItem)
+                    currentIndexOfTopStackItem++
+                } else {
+                    println("error:  non-nil currentItem encountered")
+                }
+
             }
-            
-        }
-        
+
     }
     
     func PopFoodItem () {
         
         //set currentFoodItem to top of  stack, unless stack is empty, in which case set current FoodItem to nil
         if foodItemStackArray.count > 0 {
-            
+        
             //remove top, set next item to current item
             foodItemStackArray.removeLast()
             currentIndexOfTopStackItem--
-            
+
             if currentIndexOfTopStackItem > 0{
                 currentFoodItem = foodItemStackArray.last
             }
@@ -152,7 +315,7 @@ class DataStore: NSObject, NSXMLParserDelegate  {
             currentFoodItem!.menuItemType = currentElementValue
         default:
             println("default reached in error for set PropertyOnFoodItem \(currentElementName), \(currentElementValue)")
-        }
+            }
     }
     
     // MARK: NSXMLParser Delegate
@@ -160,7 +323,7 @@ class DataStore: NSObject, NSXMLParserDelegate  {
         
         //TODO:  should be a simle If statement
         switch elementName {
-        case "foodItem":
+            case "foodItem":
             var foodItem = FoodItem()
             PushFoodItem(foodItem)
         case "foodItemWithChoice":
@@ -173,38 +336,38 @@ class DataStore: NSObject, NSXMLParserDelegate  {
         }
         
     }
-    
+
     func parser(parser: NSXMLParser!, didEndElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!) {
         switch elementName {
-        case "foodItem" :
+            case "foodItem" :
             PopFoodItem()
-        case "foodItemWithChoice":
+            case "foodItemWithChoice":
             PopFoodItem()
-        case "root":
+            case "root":
             println(elementName)
-        case  "choiceItems" :
+            case  "choiceItems" :
             println(elementName)
-        case "serving":
+            case "serving":
             println(elementName)
-        default:
+            default:
             setPropertyOnFoodItem()
         }
         
         resetLocalVariablesForNewFoodItem()
         
     }
-    
+
     func parser(parser: NSXMLParser!, foundCharacters string: String!) {
         currentElementValue = string
     }
-    
+
     func parser(parser: NSXMLParser!, parseErrorOccurred parseError: NSError!) {
         println(parseError)
     }
     
-    //    func addJournalItem(activity: JournalItem) {
-    //        // TODO: Implement me!
-    //        println("addActivity called... but it's not implemented yet!")
-    //}
-    
+//    func addJournalItem(activity: JournalItem) {
+//        // TODO: Implement me!
+//        println("addActivity called... but it's not implemented yet!")
+//}
+
 }
