@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--First-->
+        <!--Home-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="GRPatienLogAndPlan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Home" id="9pv-A4-QxB" customClass="HomeViewController" customModule="GRPatienLogAndPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -38,16 +38,16 @@
                             <constraint firstAttribute="centerY" secondItem="KQZ-1w-vlD" secondAttribute="centerY" id="exm-UA-ej4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="first" id="acW-dT-cKf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="759" y="-344"/>
         </scene>
-        <!--Second-->
+        <!--Track-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="SWRevealViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Track" title="Track" id="8rJ-Kc-sve" customClass="SWRevealViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
@@ -78,7 +78,7 @@
                             <constraint firstAttribute="centerY" secondItem="zEq-FU-wV5" secondAttribute="centerY" id="qzY-Ky-pLD"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Track" image="second" id="cPa-gy-q4n"/>
                     <connections>
                         <segue destination="mHo-7q-irJ" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="U2c-dy-Kz0"/>
                         <segue destination="Dkt-vk-WQR" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="o2W-bD-T2B"/>
@@ -118,7 +118,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T04-sS-vGP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1704" y="442"/>
+            <point key="canvasLocation" x="1704" y="447"/>
         </scene>
         <!--Menu-->
         <scene sceneID="Xec-7G-8iX">
@@ -157,19 +157,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
-                    <connections>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--TrackNavController-->
         <scene sceneID="KCz-IF-o09">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mHo-7q-irJ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TrackNavController" title="TrackNavController" automaticallyAdjustsScrollViewInsets="NO" id="mHo-7q-irJ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="YIR-TK-CHd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -184,10 +180,10 @@
             </objects>
             <point key="canvasLocation" x="786" y="442"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Menu-->
         <scene sceneID="t6k-zu-Aov">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Dkt-vk-WQR" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TrackMenuController" title="Menu" automaticallyAdjustsScrollViewInsets="NO" id="Dkt-vk-WQR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9dz-p5-j25">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

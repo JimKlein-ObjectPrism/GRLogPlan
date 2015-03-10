@@ -12,6 +12,8 @@ class TrackTableViewController: UITableViewController {
 
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
+    var dataArray = [AnyObject]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +22,8 @@ class TrackTableViewController: UITableViewController {
             menuButton.action = "revealToggle:"
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        
+        var c = dataArray.count
 
     }
 
