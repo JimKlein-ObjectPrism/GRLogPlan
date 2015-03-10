@@ -10,13 +10,15 @@ import UIKit
 
 class ChoiceItemsTableViewCell: UITableViewCell {
 
+   
     @IBOutlet weak var choiceLabel: UILabel!
+    
     @IBOutlet weak var choiceSegmentControl: UISegmentedControl!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        choiceSegmentControl.selectedSegmentIndex = -1
+        //choiceSegmentControl.selectedSegmentIndex = -1
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

@@ -36,9 +36,7 @@ class HomeTabBarController: UITabBarController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        
-        dataArray = appDelegate.dataArray
+
         
         
     }
@@ -50,7 +48,18 @@ class HomeTabBarController: UITabBarController {
             if self.viewControllers!.count > 1 {
             if let containerController  = self.viewControllers![1] as? SWRevealViewController {
                 println("vc found \(containerController.frontViewController!.title)")
-                let trackViewController =  containerController.frontViewController as TrackViewController
+                let trackViewNAVController =  containerController.frontViewController as UINavigationController//
+                
+                let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+                
+                dataArray = appDelegate.dataArray
+                
+                let trackViewController = trackViewNAVController.viewControllers[0] as TrackTableViewController
+                //if trackViewController.dataArray!.count > 0 {
+                    trackViewController.dataArray = [AnyObject]()
+                //}
+                //trackViewController.dataArray = self.dataArray
+                
                 //containerController.rearViewController!.viewControllers.count
                 //println(containerController.rearViewController.)
                 
