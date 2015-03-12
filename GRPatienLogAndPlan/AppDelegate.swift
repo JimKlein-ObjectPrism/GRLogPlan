@@ -30,17 +30,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // instantiate nav controller for Track tab and set data
         var contentNavController = storyboard.instantiateViewControllerWithIdentifier("TrackNavController") as UINavigationController
         
-//        if let trackDispalyController = contentNavController.viewControllers![0] as? TrackTableViewController {
-//            trackDispalyController.dataArray = self.dataArray
-//        }
-//        var trackDispalyController = contentNavController.viewControllers![0] as TrackTableViewController// {
-//        trackDispalyController.dataArray = self.dataArray
-        //}
-        // instantiate nav controller for Track menu tab -- not setting data at this time
         var trackMenuController = storyboard.instantiateViewControllerWithIdentifier("TrackMenuController") as UINavigationController
         
         var trackController = storyboard.instantiateViewControllerWithIdentifier("Track") as SWRevealViewController
         
+        //set up delegates for selecting items in the menu
+
+        let detailTableViewController = contentNavController.viewControllers[0] as TrackTableViewController
+        let menuTableViewController = trackMenuController.viewControllers[0] as MenuTrackTableViewController
+        
+        menuTableViewController.menuItemSelectionHandler = dataStore
+        dataStore.updateDetailViewDelegate = detailTableViewController
         
         //var revealViewController = SWRevealViewController.
         // .initWithRearViewController(contentNavController, trackMenuController)

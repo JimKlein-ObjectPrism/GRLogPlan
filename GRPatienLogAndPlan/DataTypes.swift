@@ -41,7 +41,7 @@ class JournalItem {
     
 }
 
-class BreakfastItems {
+class BreakfastItems: DetailDisplayItem {
     var item: Breakfast?
     var breakfastChoice = [AnyObject]()
     var fruit = [AnyObject]()
@@ -71,7 +71,7 @@ class BreakfastItems {
     
 }
 
-class LunchItems  {
+class LunchItems: DetailDisplayItem  {
     var item: Lunch?
     var lunchChoice: [FoodItem]
     var fruitChoice: [FoodItem]
@@ -97,8 +97,14 @@ class LunchItems  {
 
 }
 
+// super class used in passing data to display in Track detail view
+@objc protocol DetailDisplayItem {
+    
 
-class  DinnerItems {
+}
+
+
+class  DinnerItems: DetailDisplayItem {
     var dinnerItem: Dinner
     var meat: [FoodItem]
     var starch: [FoodItem]
@@ -190,7 +196,7 @@ enum MealEntryState {
 
 
 // There is a collection of these objects in profile
-class Medicine: MenuDisplayCell {
+class Medicine: DetailDisplayItem, MenuDisplayCell {
     var name:String = ""
     var dose:String = ""
     var instructions:String = ""
@@ -208,7 +214,7 @@ class Medicine: MenuDisplayCell {
     }
 }
 
-class Activity: MenuDisplayCell {
+class Activity: DetailDisplayItem, MenuDisplayCell {
     var location: String?
     var description: String = ""
     var didPerscribedActivityForDay = false
@@ -279,7 +285,7 @@ class Note {
     }
 }
 
-class Snack: MealItem {
+class Snack: MealItem, DetailDisplayItem  {
     var snack: FoodItem?
     override init()
     {

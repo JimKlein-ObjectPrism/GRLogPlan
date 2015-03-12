@@ -12,11 +12,12 @@ class HomeTabBarController: UITabBarController {
 
     //Array that holds Food Journal Log Item 
     var dataArray = [AnyObject]()
+    var dataStore = DataStore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var dataStore = DataStore()
+        
         dataStore.loadFoodItems()
         
 
@@ -57,6 +58,10 @@ class HomeTabBarController: UITabBarController {
                 let trackViewController = trackViewNAVController.viewControllers[0] as TrackTableViewController
                 //if trackViewController.dataArray!.count > 0 {
                     trackViewController.dataArray = [AnyObject]()
+                if let test = dataArray[0] as? DetailDisplayItem {
+                    trackViewController.detailDisplayItem = test
+                }
+                
                 //}
                 //trackViewController.dataArray = self.dataArray
                 

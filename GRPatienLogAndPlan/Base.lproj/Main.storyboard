@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Home-->
+        <!--Home View Controller-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController storyboardIdentifier="Home" id="9pv-A4-QxB" customClass="HomeViewController" customModule="GRPatienLogAndPlan" customModuleProvider="target" sceneMemberID="viewController">
@@ -24,27 +24,34 @@
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="107" y="435" width="158" height="42"/>
+                                </variation>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by FirstViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5M-7J-77L">
-                                <rect key="frame" x="203" y="329" width="195" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-eW-haT">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="64" width="407" height="224"/>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="KQZ-1w-vlD" secondAttribute="centerX" id="6BV-lF-sBN"/>
-                            <constraint firstItem="A5M-7J-77L" firstAttribute="top" secondItem="KQZ-1w-vlD" secondAttribute="bottom" constant="8" symbolic="YES" id="cfb-er-3JN"/>
-                            <constraint firstItem="A5M-7J-77L" firstAttribute="centerX" secondItem="KQZ-1w-vlD" secondAttribute="centerX" id="e1l-AV-tCB"/>
-                            <constraint firstAttribute="centerY" secondItem="KQZ-1w-vlD" secondAttribute="centerY" id="exm-UA-ej4"/>
-                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="1gz-eW-haT"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="1gz-eW-haT"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="first" id="acW-dT-cKf"/>
+                    <navigationItem key="navigationItem" id="FSj-q0-ayf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="759" y="-344"/>
+            <point key="canvasLocation" x="1677" y="-344"/>
         </scene>
         <!--Track-->
         <scene sceneID="wg7-f3-ORb">
@@ -133,22 +140,9 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3IR-Id-jEM">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="174" id="JE2-rD-Mcm"/>
-                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="JE2-rD-Mcm"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="widthClass=compact">
-                                                <mask key="constraints">
-                                                    <include reference="JE2-rD-Mcm"/>
-                                                </mask>
-                                            </variation>
                                         </label>
                                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3nm-38-6zs">
                                             <rect key="frame" x="-61" y="-14" width="123" height="29"/>
@@ -159,11 +153,11 @@
                                         </segmentedControl>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="3IR-Id-jEM" firstAttribute="firstBaseline" secondItem="3nm-38-6zs" secondAttribute="firstBaseline" id="5Pd-O7-rTu"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="3nm-38-6zs" secondAttribute="trailing" constant="21" id="FUg-Xv-fXA"/>
-                                        <constraint firstItem="3IR-Id-jEM" firstAttribute="centerY" secondItem="WV4-Nw-J0r" secondAttribute="centerY" id="N4x-hN-DxL"/>
-                                        <constraint firstItem="3nm-38-6zs" firstAttribute="leading" secondItem="3IR-Id-jEM" secondAttribute="trailing" constant="59" id="bw5-kY-j0p"/>
-                                        <constraint firstItem="3nm-38-6zs" firstAttribute="top" secondItem="WV4-Nw-J0r" secondAttribute="topMargin" id="kyp-je-QOe"/>
+                                        <constraint firstItem="3IR-Id-jEM" firstAttribute="leading" secondItem="WV4-Nw-J0r" secondAttribute="leadingMargin" constant="8" id="0d9-kq-9QN"/>
+                                        <constraint firstItem="3nm-38-6zs" firstAttribute="firstBaseline" secondItem="3IR-Id-jEM" secondAttribute="firstBaseline" id="2Nd-HM-Foi"/>
+                                        <constraint firstItem="3nm-38-6zs" firstAttribute="top" secondItem="WV4-Nw-J0r" secondAttribute="topMargin" id="QAB-r9-vMn"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="3nm-38-6zs" secondAttribute="trailing" constant="8" id="cJA-g9-XLe"/>
+                                        <constraint firstItem="3IR-Id-jEM" firstAttribute="centerY" secondItem="3nm-38-6zs" secondAttribute="centerY" id="o9k-7r-dbe"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
@@ -171,11 +165,11 @@
                                             <exclude reference="3nm-38-6zs"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="5Pd-O7-rTu"/>
-                                            <exclude reference="N4x-hN-DxL"/>
-                                            <exclude reference="FUg-Xv-fXA"/>
-                                            <exclude reference="bw5-kY-j0p"/>
-                                            <exclude reference="kyp-je-QOe"/>
+                                            <exclude reference="0d9-kq-9QN"/>
+                                            <exclude reference="o9k-7r-dbe"/>
+                                            <exclude reference="2Nd-HM-Foi"/>
+                                            <exclude reference="QAB-r9-vMn"/>
+                                            <exclude reference="cJA-g9-XLe"/>
                                         </mask>
                                     </variation>
                                     <variation key="widthClass=compact">
@@ -184,11 +178,11 @@
                                             <include reference="3nm-38-6zs"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="5Pd-O7-rTu"/>
-                                            <include reference="N4x-hN-DxL"/>
-                                            <include reference="FUg-Xv-fXA"/>
-                                            <include reference="bw5-kY-j0p"/>
-                                            <include reference="kyp-je-QOe"/>
+                                            <include reference="0d9-kq-9QN"/>
+                                            <include reference="o9k-7r-dbe"/>
+                                            <include reference="2Nd-HM-Foi"/>
+                                            <include reference="QAB-r9-vMn"/>
+                                            <include reference="cJA-g9-XLe"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -197,7 +191,7 @@
                                     <outlet property="choiceSegmentControl" destination="3nm-38-6zs" id="9ux-Wq-TUu"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ParentInitialsCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ParentInitials" id="ehW-gc-of0" customClass="ParentInitialsTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ParentInitialsCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ParentInitialsCell" id="ehW-gc-of0" customClass="ParentInitialsTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ehW-gc-of0" id="XqZ-HU-L3v">
@@ -225,7 +219,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlaceEntryCell" id="E7B-Hr-Vuo" customClass="PlaceEntryTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="PlaceEntryCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlaceEntryCell" id="E7B-Hr-Vuo" customClass="PlaceEntryTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E7B-Hr-Vuo" id="PjA-Cj-aaD">
@@ -253,7 +247,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="TimeEntryCell" selectionStyle="default" indentationWidth="10" id="Kdh-Wy-Cny">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="TimeEntryCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimeEntryCell" id="Kdh-Wy-Cny" customClass="TimeEntryTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kdh-Wy-Cny" id="g6m-uS-XMx">
@@ -281,7 +275,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteCell" id="fKZ-Of-QyB">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="NoteCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteCell" id="fKZ-Of-QyB" customClass="NoteTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fKZ-Of-QyB" id="RW6-Nb-gyz">
@@ -335,11 +329,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="EVM-9T-hAZ">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="MenuCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuCell" id="EVM-9T-hAZ" customClass="MenuCellTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EVM-9T-hAZ" id="9aa-vd-oFj">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AeV-5C-e15">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="30" y="10" width="24" height="24"/>
+                                            </variation>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XwZ-ji-aMI">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="84" y="11" width="154" height="21"/>
+                                            </variation>
+                                        </label>
+                                    </subviews>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="AeV-5C-e15"/>
+                                            <exclude reference="XwZ-ji-aMI"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="AeV-5C-e15"/>
+                                            <include reference="XwZ-ji-aMI"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="statusDisplayView" destination="AeV-5C-e15" id="9zn-J0-OUs"/>
+                                    <outlet property="titleLabel" destination="XwZ-ji-aMI" id="fB2-Ai-Ewc"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -403,6 +431,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GLP-6j-hYG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="759" y="1198"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="74t-4d-htc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QiX-eM-wvd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="first" id="acW-dT-cKf"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Acl-1Z-qgR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="rootViewController" id="ZIH-zf-Mk4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8N0-p6-ntv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="759" y="-344"/>
         </scene>
     </scenes>
     <resources>

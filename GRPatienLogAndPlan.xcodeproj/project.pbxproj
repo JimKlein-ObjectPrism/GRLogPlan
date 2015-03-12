@@ -30,6 +30,8 @@
 		EF157BC11AAEA21300847AEE /* ParentInitialsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC01AAEA21300847AEE /* ParentInitialsTableViewCell.swift */; };
 		EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */; };
 		EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */; };
+		EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */; };
+		EFF448881AB1FEA9004A099F /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF448871AB1FEA9004A099F /* beach.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		EF157BC01AAEA21300847AEE /* ParentInitialsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentInitialsTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeEntryTableViewCell.swift; sourceTree = "<group>"; };
+		EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDetailDisplayProtocols.swift; path = ../MenuDetailDisplayProtocols.swift; sourceTree = "<group>"; };
+		EFF448871AB1FEA9004A099F /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,7 @@
 		986443561A9E78FB00887579 /* GRPatienLogAndPlan */ = {
 			isa = PBXGroup;
 			children = (
+				EF157BC91AB093D600847AEE /* Protocols */,
 				98FDCF0B1AA16BF80029F97E /* Data */,
 				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
@@ -124,7 +129,6 @@
 				EF157BC61AAF7FF400847AEE /* TableCells */,
 				986443621A9E78FB00887579 /* Images.xcassets */,
 				986443641A9E78FB00887579 /* LaunchScreen.xib */,
-				EF157BAF1AAE096200847AEE /* MenuDisplayCellProtocol.swift */,
 				986443571A9E78FB00887579 /* Supporting Files */,
 				986443841A9E8D1400887579 /* Images */,
 			);
@@ -170,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				986443851A9E8D7C00887579 /* menu.png */,
+				EFF448871AB1FEA9004A099F /* beach.jpg */,
 				986443861A9E8D7C00887579 /* menu@2x.png */,
 				986443871A9E8D7C00887579 /* menu@3x.png */,
 			);
@@ -197,6 +202,15 @@
 				EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */,
 			);
 			name = TableCells;
+			sourceTree = "<group>";
+		};
+		EF157BC91AB093D600847AEE /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */,
+				EF157BAF1AAE096200847AEE /* MenuDisplayCellProtocol.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +298,7 @@
 				986443611A9E78FB00887579 /* Main.storyboard in Resources */,
 				986443891A9E8D7C00887579 /* menu@2x.png in Resources */,
 				986443661A9E78FB00887579 /* LaunchScreen.xib in Resources */,
+				EFF448881AB1FEA9004A099F /* beach.jpg in Resources */,
 				9864438A1A9E8D7C00887579 /* menu@3x.png in Resources */,
 				986443631A9E78FB00887579 /* Images.xcassets in Resources */,
 			);
@@ -315,6 +330,7 @@
 				EF157BB41AAE7C0200847AEE /* HomeViewController.swift in Sources */,
 				EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */,
 				EF157BB01AAE096200847AEE /* MenuDisplayCellProtocol.swift in Sources */,
+				EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */,
 				98FDCF0A1AA16ABF0029F97E /* HomeTabBarController.swift in Sources */,
 				EF157BBD1AAEA20300847AEE /* MenuCellTableViewCell.swift in Sources */,
 				986443811A9E868600887579 /* SWRevealViewController.m in Sources */,

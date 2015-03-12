@@ -9,7 +9,7 @@
 import Foundation
 
 
-class DataStore: NSObject, NSXMLParserDelegate  {
+class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
     // Items that define or are used to define the contents of the Food Journal Log item
     var logEntryItems = [AnyObject]()
     
@@ -30,6 +30,9 @@ class DataStore: NSObject, NSXMLParserDelegate  {
     var currentIndexOfTopStackItem: Int = 0
     
     var stackIndexValue: Int = 0
+    
+    //Update Detail View Delegate
+    var updateDetailViewDelegate: UpdateDetailViewDelegate!
     
     
     //MARK: Array Assembly Items
@@ -110,6 +113,27 @@ class DataStore: NSObject, NSXMLParserDelegate  {
             fItems = items
         }
         return fItems
+    }
+    
+    
+    func menuItemSelectedHandler(menudisplayType: MenuDisplayCell){
+        switch menudisplayType{
+        case let menudisplayType as Breakfast:
+            updateDetailViewDelegate.updateDetailViewHandler(self.buildBreakfastItems(loadProfile(), journalItem: buildJournalEntry(loadProfile())))
+            
+        case let menudisplayType as Lunch:
+            updateDetailViewDelegate.updateDetailViewHandler(
+                self.buildLunchItems(loadProfile(), journalItem: buildJournalEntry(loadProfile())
+                ))
+        case let menudisplayType as Dinner:
+            updateDetailViewDelegate.updateDetailViewHandler(
+                self.buildDinnerItems(loadProfile(), journalItem: buildJournalEntry(loadProfile())
+                ))
+            
+        default:
+            println("rest of menu Item Selection Handler not written yet")
+            
+        }
     }
     
     func buildMealDetailsArray (parentInitials: ParentInitials, place: Place, time: Time, note: Note ) -> [AnyObject]{

@@ -18,7 +18,7 @@ class ChoiceItemsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        //choiceSegmentControl.selectedSegmentIndex = -1
+        choiceSegmentControl.selectedSegmentIndex = -1
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

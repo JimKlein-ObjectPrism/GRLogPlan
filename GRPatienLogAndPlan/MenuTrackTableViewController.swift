@@ -10,6 +10,10 @@ import UIKit
 
 class MenuTrackTableViewController: UITableViewController {
 
+    var dataArray: [AnyObject]!
+    
+    var menuItemSelectionHandler: MenuItemSelectedDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,6 +22,11 @@ class MenuTrackTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        
+        dataArray = appDelegate.dataArray
+
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,13 +39,98 @@ class MenuTrackTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return self.dataArray.count
+        
+    }
+    func handleSegmentedControlSelectionChanged(sender: UISegmentedControl)
+    {
+        var selectedIndex = sender.selectedSegmentIndex
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var item: (AnyObject) = dataArray[indexPath.row]
+        
+        //        if let mealItem = item as? MenuDisplayCell{
+        //        var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+        //        //if let menuItem = item as? MenuDisplayCell {
+        //        cell.titleLabel.text = mealItem.menuDisplayName
+        //        //}
+        //        return cell
+        //        }
+        //        else{
+        //            return UITableViewCell()
+        //        }
+        
+        //        //var cell = UITableViewCell()
+        //
+        //            var item = dataArray[indexPath.row]
+        //
+        switch item {
+        case let mealItem as BreakfastItems:
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            cell.titleLabel.text = "Breakfast"
+            cell.statusDisplayView.backgroundColor = UIColor.greenColor()
+            return cell
+            
+        case let mealItem as LunchItems:
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            cell.titleLabel.text = "Lunch"
+            return cell
+            
+        case let mealItem as DinnerItems:
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            cell.titleLabel.text = "Dinner"
+            return cell
+        case let mealItem as Snack:
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            cell.titleLabel.text = mealItem.menuDisplayName
+            return cell
+            
+            
+            
+            //            case let mealItem as MenuDisplayCell:
+            //                var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            //                //if let menuItem = item as? MenuDisplayCell {
+            //                    cell.titleLabel.text = menu
+            //                //}
+            //                return cell
+            
+        default:
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            if let menuItem = item as? MenuDisplayCell {
+                cell.titleLabel.text = menuItem.menuDisplayName
+                return cell
+            } else{
+                return cell
+                
+            }
+        }
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        //Fill the detail view controller with the choices for the currently selected item.
+        var selectedIndex = indexPath.row
+        
+        switch selectedIndex {
+        case 0:
+            menuItemSelectionHandler?.menuItemSelectedHandler(Breakfast())
+        case 1:
+            menuItemSelectionHandler?.menuItemSelectedHandler(Lunch())
+            // skipping Snack!
+        case 3:
+            menuItemSelectionHandler?.menuItemSelectedHandler(Dinner())
+            
+            
+        default:
+            println("Unfinished implementation")
+        }
     }
 
     /*
