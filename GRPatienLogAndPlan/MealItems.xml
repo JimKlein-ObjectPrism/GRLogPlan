@@ -322,7 +322,7 @@
 
 	<foodItem>
 		<name>Apple</name>
-		<itemDescription>Apple</itemDescription>
+		<itemDescription>1 Apple</itemDescription>
 		<serving>
 			<measurement>1</measurement>
 			<unit>Apple</unit>
@@ -332,7 +332,7 @@
 	</foodItem>
 		<foodItem>
 		<name>Banana</name>
-		<itemDescription>Banana</itemDescription>
+		<itemDescription>1 Banana</itemDescription>
 		<serving>
 			<measurement>1</measurement>
 			<unit>Banana</unit>
@@ -341,7 +341,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Blue Berry</name>
+		<name>3/4 c Blue Berry</name>
 		<itemDescription>Blue Berry</itemDescription>
 		<serving>
 			<measurement>1</measurement>
@@ -351,7 +351,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Cherries</name>
+		<name>3/4 c Cherries</name>
 		<itemDescription>Cherries</itemDescription>
 		<serving>
 			<measurement>1 1/2</measurement>
@@ -361,7 +361,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Dates</name>
+		<name>3/4 c Dates</name>
 		<itemDescription>Dates</itemDescription>
 		<serving>
 			<measurement>1 1/2</measurement>
@@ -371,7 +371,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Mango</name>
+		<name>3/4 c Mango</name>
 		<itemDescription>Mango</itemDescription>
 		<serving>
 			<measurement>1 1/2</measurement>
@@ -381,7 +381,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Orange</name>
+		<name>1 Orange</name>
 		<itemDescription>Orange</itemDescription>
 		<serving>
 			<measurement>1</measurement>
@@ -391,7 +391,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Pear</name>
+		<name>1 Pear</name>
 		<itemDescription>Pear</itemDescription>
 		<serving>
 			<measurement>1</measurement>
@@ -401,7 +401,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Pineapple</name>
+		<name>3/4 c Pineapple</name>
 		<itemDescription>Pineapple</itemDescription>
 		<serving>
 			<measurement>1</measurement>
@@ -411,7 +411,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Plum</name>
+		<name>1 Plum</name>
 		<itemDescription>Plum</itemDescription>
 		<serving>
 			<measurement>1</measurement>
@@ -421,7 +421,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Rasberries</name>
+		<name>3/4 c Rasberries</name>
 		<itemDescription>Rasberries</itemDescription>
 		<serving>
 			<measurement>1</measurement>
@@ -431,7 +431,7 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>Strawberries</name>
+		<name>3/4 c Strawberries</name>
 		<itemDescription>Strawberries</itemDescription>
 		<serving>
 			<measurement>1 1/2</measurement>

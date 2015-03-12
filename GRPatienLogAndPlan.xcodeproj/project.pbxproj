@@ -32,6 +32,7 @@
 		EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */; };
 		EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */; };
 		EFF448881AB1FEA9004A099F /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF448871AB1FEA9004A099F /* beach.jpg */; };
+		EFF4488C1AB20620004A099F /* print.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF4488B1AB20620004A099F /* print.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDetailDisplayProtocols.swift; path = ../MenuDetailDisplayProtocols.swift; sourceTree = "<group>"; };
 		EFF448871AB1FEA9004A099F /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach.jpg; sourceTree = "<group>"; };
+		EFF4488B1AB20620004A099F /* print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = print.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			children = (
 				986443851A9E8D7C00887579 /* menu.png */,
 				EFF448871AB1FEA9004A099F /* beach.jpg */,
+				EFF4488B1AB20620004A099F /* print.png */,
 				986443861A9E8D7C00887579 /* menu@2x.png */,
 				986443871A9E8D7C00887579 /* menu@3x.png */,
 			);
@@ -294,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF157BA61AAA597800847AEE /* MealItems.xml in Resources */,
+				EFF4488C1AB20620004A099F /* print.png in Resources */,
 				986443881A9E8D7C00887579 /* menu.png in Resources */,
 				986443611A9E78FB00887579 /* Main.storyboard in Resources */,
 				986443891A9E8D7C00887579 /* menu@2x.png in Resources */,

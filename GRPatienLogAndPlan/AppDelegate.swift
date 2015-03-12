@@ -53,11 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         trackController.frontViewController = contentNavController
         trackController.rearViewController = trackMenuController
        
-        var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as HomeViewController
-        
+        //var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as HomeViewController
+        let homeNaveController = storyboard.instantiateViewControllerWithIdentifier("HomeNavController") as UINavigationController
         let tabBarController = HomeTabBarController()
         
-        let controllers = [homeViewController, trackController]
+        let controllers = [homeNaveController, trackController]
 
         tabBarController.viewControllers = controllers
         
