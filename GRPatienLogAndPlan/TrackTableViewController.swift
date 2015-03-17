@@ -43,13 +43,18 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate 
         
         //access data array in appDelegate
         //TODO - Needs to be a call to the DataStore that gets current Journal Item
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
+            
         dataArray = appDelegate.dataArray
         
         updateDetailViewHandler(self.detailDisplayItem!)
 
         var c = dataArray!.count
-        
+        }
+        else
+        {
+            println("AppDelegate = nil")
+        }
     }
     
     func updateDetailViewHandler(detailItem: DetailDisplayItem) {
@@ -165,7 +170,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate 
             
         case let currentItem as ParentInitials:
             let cell = tableView.dequeueReusableCellWithIdentifier("ParentInitialsCell", forIndexPath: indexPath) as ParentInitialsTableViewCell
-            cell.textLabel?.text = "Parent Initials"
+            cell.titleLabel?.text = "Parent Initials"
             return cell
             
         case let currentItem as Time:
@@ -224,47 +229,96 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate 
         
         var currentData = self.sectionData[indexPath.section]
         
-        if let breakfastItem = dataArray![0] as? BreakfastItems {
-            var itemsArray = self.sectionData[indexPath.section]
+        //TODO: send update meal item message to DataStore
+        var currentItem: DetailDisplayItem = detailDisplayItem!
+        var itemsArray = self.sectionData[indexPath.section]
+        //switch on type here
+        //var currentItem = self.detailDisplayItem
+        switch currentItem {
+        case let currentItem as BreakfastItems:
+                if indexPath.section == 0 {
+                    currentItem.item?.foodChoice = itemsArray[indexPath.row] as? FoodItem
+                }
+                else if indexPath.section == 1{
+                    currentItem.item?.fruitChoice = itemsArray[indexPath.row] as? FoodItem
+                }
+        case let currentItem as LunchItems:
             if indexPath.section == 0 {
-                breakfastItem.item?.foodChoice = itemsArray[indexPath.row] as? FoodItem
+                currentItem.item?.meatChoice = itemsArray[indexPath.row] as? FoodItem
             }
             else {
-                breakfastItem.item?.fruitChoice = itemsArray[indexPath.row] as? FoodItem
+                currentItem.item?.fruitChoice = itemsArray[indexPath.row] as? FoodItem
             }
+        case let currentItem as DinnerItems:
+            if indexPath.section == 0 {
+                currentItem.dinnerItem.meat = itemsArray[indexPath.row] as? FoodItem
+            }
+            else if indexPath.section == 1{
+                currentItem.dinnerItem.starch = itemsArray[indexPath.row] as? FoodItem
+            }
+            if indexPath.section == 2 {
+                currentItem.dinnerItem.oil = itemsArray[indexPath.row] as? FoodItem
+            }
+            else if indexPath.section == 3 {
+                currentItem.dinnerItem.vegetable = itemsArray[indexPath.row] as? FoodItem
+            }
+            if indexPath.section == 4 {
+                currentItem.dinnerItem.requiredItems = itemsArray[indexPath.row] as? FoodItem
+            }
+            else if indexPath.section == 5 {
+                //currentItem.dinnerItem.requiredItems = itemsArray[indexPath.row] as? FoodItem
+            }
+
+
+            /*
+            var meat: FoodItem?
+            var startch: FoodItem?
+            var oil: FoodItem?
+            var vegetable: FoodItem?
+            var requiredItems: FoodItem?
+            var mealDetails: FoodItem?
+            */
             
-            if let foodChoice = breakfastItem.item?.foodChoice  {
-                println(foodChoice.name)
-            }
-            if let fruitChoice = breakfastItem.item?.fruitChoice  {
-                println(fruitChoice.name)
-            }
+        default:
+            //handle other items here
+            println("unimplemented code for non-meal items encountered")
         }
-        
+       
         var originalCountRowsInSection = sectionData[indexPath.section].count //rowArrays[selectedSection].count
-        
+
         //collapse data
         //Remove data items --  need to remove data item as well as deleting rows from table
+        deleteRowsInDataSource( originalCountRowsInSection , selectedRow: selectedRow,  selectedSection: selectedSection)
+        
+        // removed unselected cells in tableview section
+        animateRowDeletion(selectedRow, rowsOriginallyInSection: originalCountRowsInSection, selectedSection: selectedSection)
+        
+    }
+    
+    func deleteRowsInDataSource ( originalCountRowsInSection: Int , selectedRow: Int, selectedSection: Int ){
         if originalCountRowsInSection > 0 {
             var index = originalCountRowsInSection
             while index >  0 {
                 var positionInArray = index - 1
                 if selectedRow != positionInArray {
-                    sectionData[indexPath.section].removeAtIndex(positionInArray)
+                    sectionData[selectedSection].removeAtIndex(positionInArray)
                 }
                 index--
             }
         }
-        var test = sectionData[indexPath.section].count
-        
-        // removed unselected cells in tableview section
-        let rowsToDelete = indexPathForRowsToDelete(selectedRow, rowsOriginallyInSection: originalCountRowsInSection, selectedSection: selectedSection)
+    }
+    
+    
+    func animateRowDeletion ( selectedRow: Int, rowsOriginallyInSection: Int , selectedSection: Int){
+        let rowsToDelete = indexPathForRowsToDelete(
+            selectedRow,
+            rowsOriginallyInSection: rowsOriginallyInSection,
+            selectedSection: selectedSection
+        )
         
         tableView.beginUpdates()
-        
         tableView.deleteRowsAtIndexPaths(rowsToDelete, withRowAnimation: UITableViewRowAnimation.Automatic)
         tableView.endUpdates()
-        
     }
     
     

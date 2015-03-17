@@ -323,7 +323,7 @@ class Lunch : MealItem{
 class Dinner: MealItem{
     //var kartiniRecipe: String?
     var meat: FoodItem?
-    var startch: FoodItem?
+    var starch: FoodItem?
     var oil: FoodItem?
     var vegetable: FoodItem?
     var requiredItems: FoodItem?
@@ -332,7 +332,7 @@ class Dinner: MealItem{
     override init()
     {
         super.init()
-        menuDisplayName = "Breakfast"
+        menuDisplayName = "Dinner"
         mealEntryState = MealEntryState.Empty
     }
 }

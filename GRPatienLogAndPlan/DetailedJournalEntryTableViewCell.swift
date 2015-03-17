@@ -1,23 +1,18 @@
 //
-//  ParentInitialsTableViewCell.swift
-//  FoodItemDataStoreTest
+//  DetailedJournalEntryTableViewCell.swift
+//  GRPatienLogAndPlan
 //
-//  Created by Jim Klein on 3/3/15.
+//  Created by James Klein on 3/12/15.
 //  Copyright (c) 2015 ObjectPrism Corp. All rights reserved.
 //
 
 import UIKit
 
-class ParentInitialsTableViewCell: UITableViewCell {
+class DetailedJournalEntryTableViewCell: UITableViewCell {
 
-
-    @IBOutlet weak var titleLabel: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        //choiceSegmentControl.selectedSegmentIndex = -1
-
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

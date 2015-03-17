@@ -19,8 +19,8 @@ class HomeTabBarController: UITabBarController {
         
         
         dataStore.loadFoodItems()
+ 
         
-
         // Do any additional setup after loading the view.
     }
 
@@ -43,8 +43,8 @@ class HomeTabBarController: UITabBarController {
     }
     
     override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem!) {
-        if item.title == "One" {
-            println("hello \(self.viewControllers!.count)")
+        if item.title == "Track" {
+            //println("hello \(self.viewControllers!.count)")
   
             if self.viewControllers!.count > 1 {
             if let containerController  = self.viewControllers![1] as? SWRevealViewController {
@@ -63,19 +63,6 @@ class HomeTabBarController: UITabBarController {
                 }
                 
                 //}
-                //trackViewController.dataArray = self.dataArray
-                
-                //containerController.rearViewController!.viewControllers.count
-                //println(containerController.rearViewController.)
-                
-                //containerController.setRearViewController(contentViewController, animated: false)
-//                if containerController.frontViewController != nil {
-//                    println("non-nil rear controller")
-//                }
-//                if let foodItemDisplayController = containerController.rearViewController!   as? UINavigationController{//TrackTableViewController {
-//                    
-//                    println("accessed menu nav controller!")
-//                }
                 
             }
             else{

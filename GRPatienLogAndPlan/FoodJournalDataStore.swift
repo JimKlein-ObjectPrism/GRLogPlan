@@ -195,7 +195,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
         
         // build lunchChoice food item array
         let meat = self.buildFoodItemArray(journalItem.dinner.meat, filterString: "MeatDinnerItem")
-        let starch = self.buildFoodItemArray(journalItem.dinner.startch, filterString: "StarchDinnerItem")
+        let starch = self.buildFoodItemArray(journalItem.dinner.starch, filterString: "StarchDinnerItem")
         let oil = self.buildFoodItemArray(journalItem.dinner.oil, filterString: "OilDinnerItem")
         let vegetable = self.buildFoodItemArray(journalItem.dinner.vegetable, filterString: "VegetableItem")
         let requiredItems = self.buildFoodItemArray(journalItem.dinner.requiredItems, filterString: "RequiredDinnerItem")

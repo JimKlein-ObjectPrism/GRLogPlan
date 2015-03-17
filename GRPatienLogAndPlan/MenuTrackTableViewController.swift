@@ -56,26 +56,11 @@ class MenuTrackTableViewController: UITableViewController {
         
         var item: (AnyObject) = dataArray[indexPath.row]
         
-        //        if let mealItem = item as? MenuDisplayCell{
-        //        var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
-        //        //if let menuItem = item as? MenuDisplayCell {
-        //        cell.titleLabel.text = mealItem.menuDisplayName
-        //        //}
-        //        return cell
-        //        }
-        //        else{
-        //            return UITableViewCell()
-        //        }
-        
-        //        //var cell = UITableViewCell()
-        //
-        //            var item = dataArray[indexPath.row]
-        //
-        switch item {
+                switch item {
         case let mealItem as BreakfastItems:
             var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
             cell.titleLabel.text = "Breakfast"
-            cell.statusDisplayView.backgroundColor = UIColor.greenColor()
+            //cell.statusDisplayView.backgroundColor = UIColor.greenColor()
             return cell
             
         case let mealItem as LunchItems:

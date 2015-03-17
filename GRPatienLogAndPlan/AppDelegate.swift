@@ -42,48 +42,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         menuTableViewController.menuItemSelectionHandler = dataStore
         dataStore.updateDetailViewDelegate = detailTableViewController
         
-        //var revealViewController = SWRevealViewController.
-        // .initWithRearViewController(contentNavController, trackMenuController)
-        //revealViewController.set
-        
-//            - (id)initWithRearViewController:(UIViewController *)rearViewController frontViewController:(UIViewController *)frontViewController;
-
-//        trackController.frontViewController = trackMenuController
-//        trackController.rearViewController = contentNavController
         trackController.frontViewController = contentNavController
         trackController.rearViewController = trackMenuController
        
-        //var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as HomeViewController
+        var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as HomeViewController
+        
         let homeNaveController = storyboard.instantiateViewControllerWithIdentifier("HomeNavController") as UINavigationController
+        
+        //let homeViewController = homeNaveController.viewControllers[0] as HomeViewController
+        
+        ////BUG:
+        
+        
         let tabBarController = HomeTabBarController()
         
-        let controllers = [homeNaveController, trackController]
+        tabBarController.viewControllers?.removeAll(keepCapacity: false)
+        
+        let controllers = [ homeNaveController , trackController ]
 
         tabBarController.viewControllers = controllers
         
         window?.rootViewController = tabBarController
-        trackController.tabBarItem =  UITabBarItem(title: "One", image: UIImage(contentsOfFile: "menu"), selectedImage: nil)
-        
-        /*
-
-        let tabBarController = UITabBarController()
-        let myVC1 = PieVC(nibName: &amp;quot;PieVC&amp;quot;, bundle: nil)
-        let myVC2 = PizzaVC(nibName: &amp;quot;PizzaVC&amp;quot;, bundle: nil)
-        let controllers = [myVC1,myVC2]
-        tabBarController.viewControllers = controllers
-        window?.rootViewController = tabBarController
-        let firstImage = UIImage(named: &amp;quot;pie bar icon&amp;quot;)
-        let secondImage = UIImage(named: &amp;quot;pizza bar icon&amp;quot;)
-        myVC1.tabBarItem = UITabBarItem(title: &amp;quot;Pie&amp;quot;, image: firstImage, tag: 1)
-        myVC2.tabBarItem = UITabBarItem(title: &amp;quot;Pizza&amp;quot;, image: secondImage, tag:2)
-        
-        return true
-*/
-        if let tabController = self.window?.rootViewController as? UITabBarController {
-            //tabController.setViewControllers(, animated: <#Bool#>)
-            println("oh")
-        }
-        
+        trackController.tabBarItem =  UITabBarItem(title: "Track", image: UIImage(named: "Track-16"), selectedImage: nil)
+        homeNaveController.tabBarItem =  UITabBarItem(title: "Home", image: UIImage(named: "home-16"), selectedImage: nil)
         return true
     }
 
