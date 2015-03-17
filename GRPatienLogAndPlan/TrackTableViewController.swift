@@ -46,9 +46,9 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate 
         if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
             
         dataArray = appDelegate.dataArray
-        
-        updateDetailViewHandler(self.detailDisplayItem!)
-
+            if self.detailDisplayItem != nil {
+                updateDetailViewHandler(self.detailDisplayItem!)
+            }
         var c = dataArray!.count
         }
         else

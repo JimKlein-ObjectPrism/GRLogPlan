@@ -36,10 +36,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return 2//self.sectionData[section].count
         
     }
-//    func handleSegmentedControlSelectionChanged(sender: UISegmentedControl)
-//    {
-//        var selectedIndex = sender.selectedSegmentIndex
-//    }
+
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var section = indexPath.section
