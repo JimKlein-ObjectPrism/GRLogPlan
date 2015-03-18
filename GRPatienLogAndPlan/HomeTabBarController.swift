@@ -44,24 +44,29 @@ class HomeTabBarController: UITabBarController {
     
     override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem!) {
         if item.title == "Track" {
-            //println("hello \(self.viewControllers!.count)")
+            
   
-            if self.viewControllers!.count > 1 {
-            if let containerController  = self.viewControllers![1] as? SWRevealViewController {
-                println("vc found \(containerController.frontViewController!.title)")
-                let trackViewNAVController =  containerController.frontViewController as UINavigationController//
-                
-                let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-                
-                dataArray = appDelegate.dataArray
-                
-                let trackViewController = trackViewNAVController.viewControllers[0] as TrackTableViewController
-                //if trackViewController.dataArray!.count > 0 {
+            if self.viewControllers?.count > 1 {
+                if let containerController  = self.viewControllers![1] as? SWRevealViewController {
+                    
+                    let trackViewNAVController =  containerController.frontViewController as UINavigationController
+                    
+                    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+                    
+                    dataArray = appDelegate.dataArray
+                    
+                    let trackViewController = trackViewNAVController.viewControllers[0] as TrackTableViewController
+                    
+                    //set full day display type in order to generate the correct button in nav bar
+                    trackViewController.displayType = MealItemSelectionDisplayType.FullDayEntryWithMenu
+                    
+                    // initialize and set dataArray on TrackVC
                     trackViewController.dataArray = [AnyObject]()
-                if let test = dataArray[0] as? DetailDisplayItem {
-                    trackViewController.detailDisplayItem = test
-                }
-                
+                    
+                    if let d = dataArray[0] as? DetailDisplayItem {
+                        trackViewController.detailDisplayItem = d
+                    }
+                    
                 //}
                 
             }

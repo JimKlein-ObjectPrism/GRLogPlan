@@ -341,8 +341,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>3/4 c Blue Berry</name>
-		<itemDescription>Blue Berry</itemDescription>
+		<name>Blue Berry</name>
+		<itemDescription>3/4 c Blue Berry</itemDescription>
 		<serving>
 			<measurement>1</measurement>
 			<unit>c</unit>
@@ -351,8 +351,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>3/4 c Cherries</name>
-		<itemDescription>Cherries</itemDescription>
+		<name>Cherries</name>
+		<itemDescription>3/4 c Cherries</itemDescription>
 		<serving>
 			<measurement>1 1/2</measurement>
 			<unit>c</unit>
@@ -361,8 +361,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>3/4 c Dates</name>
-		<itemDescription>Dates</itemDescription>
+		<name>Dates</name>
+		<itemDescription>3/4 c Dates</itemDescription>
 		<serving>
 			<measurement>1 1/2</measurement>
 			<unit>c</unit>
@@ -371,8 +371,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>3/4 c Mango</name>
-		<itemDescription>Mango</itemDescription>
+		<name>Mango</name>
+		<itemDescription>3/4 c Mango</itemDescription>
 		<serving>
 			<measurement>1 1/2</measurement>
 			<unit>c</unit>
@@ -381,8 +381,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>1 Orange</name>
-		<itemDescription>Orange</itemDescription>
+		<name>Orange</name>
+		<itemDescription>1 Orange</itemDescription>
 		<serving>
 			<measurement>1</measurement>
 			<unit>orange</unit>
@@ -391,8 +391,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>1 Pear</name>
-		<itemDescription>Pear</itemDescription>
+		<name>Pear</name>
+		<itemDescription>1 Pear</itemDescription>
 		<serving>
 			<measurement>1</measurement>
 			<unit>pear</unit>
@@ -401,8 +401,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>3/4 c Pineapple</name>
-		<itemDescription>Pineapple</itemDescription>
+		<name>Pineapple</name>
+		<itemDescription>3/4 c Pineapple</itemDescription>
 		<serving>
 			<measurement>1</measurement>
 			<unit>c</unit>
@@ -411,8 +411,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>1 Plum</name>
-		<itemDescription>Plum</itemDescription>
+		<name>Plum</name>
+		<itemDescription>1 Plum</itemDescription>
 		<serving>
 			<measurement>1</measurement>
 			<unit>plum</unit>
@@ -421,8 +421,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>3/4 c Rasberries</name>
-		<itemDescription>Rasberries</itemDescription>
+		<name>Rasberries</name>
+		<itemDescription>3/4 c Rasberries</itemDescription>
 		<serving>
 			<measurement>1</measurement>
 			<unit>c</unit>
@@ -431,8 +431,8 @@
 		<menuItemType>FruitItem</menuItemType>
 	</foodItem>
 		<foodItem>
-		<name>3/4 c Strawberries</name>
-		<itemDescription>Strawberries</itemDescription>
+		<name>Strawberries</name>
+		<itemDescription>3/4 c Strawberries</itemDescription>
 		<serving>
 			<measurement>1 1/2</measurement>
 			<unit>c</unit>

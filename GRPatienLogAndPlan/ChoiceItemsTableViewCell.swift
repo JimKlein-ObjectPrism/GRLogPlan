@@ -15,6 +15,8 @@ class ChoiceItemsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var choiceSegmentControl: UISegmentedControl!
     
+    var isReusedCell: Bool = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

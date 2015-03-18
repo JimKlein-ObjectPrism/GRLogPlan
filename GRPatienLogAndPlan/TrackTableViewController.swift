@@ -10,7 +10,7 @@ import UIKit
 
 class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate {
 
-    @IBOutlet weak var menuButton: UIBarButtonItem!
+    //@IBOutlet weak var menuButton: UIBarButtonItem!
     
     var dataArray: [AnyObject]?
     
@@ -26,37 +26,63 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate 
     var rowArrays: [ [ String]] = [Array<String>]()
     
     var foodItems = [FoodItem]()
-    
-    
+    //
+    var displayType: MealItemSelectionDisplayType = MealItemSelectionDisplayType.SingleMealEntryWithBackButton
 
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // add menu button to nav bar and set action
-        if self.revealViewController() != nil {
-            menuButton.target = self.revealViewController()
-            menuButton.action = "revealToggle:"
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
+        let dType = displayType
+            switch dType{
+            case .FullDayEntryWithMenu:
+                // add menu button to nav bar and set action
+                if self.revealViewController() != nil {
+                    var bb = UIBarButtonItem(image: UIImage(named: "menu"), style: UIBarButtonItemStyle.Plain, target: self.revealViewController(), action: "revealToggle:")
+                    self.navigationItem.leftBarButtonItem = bb
+                    self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+                }
+            case .SingleMealEntryWithBackButton:
+                // back button
+                var b = UIBarButtonItem(title: "Back", style: .Plain, target: self, action:"backButtonPressed:")
+                self.navigationItem.leftBarButtonItem = b
+                if let item = detailDisplayItem? {
+                    //self.navigationItem.title = item.
+                }
+                //Save Button
+                var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonPressed:")
+
+                self.navigationItem.rightBarButtonItem = sb
+                
+            }
         
-        //access data array in appDelegate
-        //TODO - Needs to be a call to the DataStore that gets current Journal Item
         if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
-            
-        dataArray = appDelegate.dataArray
+            //set local property to data array in appDelegate
+            dataArray = appDelegate.dataArray
+                
+            //Set target for updateDetailViewHandler
             if self.detailDisplayItem != nil {
                 updateDetailViewHandler(self.detailDisplayItem!)
             }
-        var c = dataArray!.count
         }
         else
         {
-            println("AppDelegate = nil")
+            println("AppDelegate = nil. The impossible happened.")
         }
     }
     
+    // MARK: - NavBar Actions
+    func backButtonPressed (sender: UIBarButtonItem ){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    func saveButtonPressed (sender: UIBarButtonItem ){
+        
+        
+    }
+
+    
+    // MARK: - Event Handlers
     func updateDetailViewHandler(detailItem: DetailDisplayItem) {
         
         sectionData.removeAll(keepCapacity: false)
@@ -95,6 +121,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate 
     
     }
     
+    // MARK: - TableView delegate
     override func viewWillAppear(animated: Bool) {
         
         //var dinnerItems: DinnerItems = (DinnerItem(), foodItems )
@@ -149,23 +176,27 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate 
             
             segControl.addTarget(self, action: "handleSegmentedControlSelectionChanged:", forControlEvents: .ValueChanged)
             
+                segControl.removeAllSegments()
+
             
-            for i in 0 ..< currentItem.choiceItems.count {
-                if i  < 2 {
-                    var choiceItem = currentItem.choiceItems[i]
-                    segControl.setTitle(choiceItem.itemDescription, forSegmentAtIndex: i)
+                for i in 0 ..< currentItem.choiceItems.count {
+                    if i  < 2 {
+                        var choiceItem = currentItem.choiceItems[i]
+                        segControl.insertSegmentWithTitle(choiceItem.itemDescription, atIndex: i, animated: false)
+                        //segControl.setTitle(choiceItem.itemDescription, forSegmentAtIndex: i)
+                        
+                        // cell size apportionament, used below, requires cell to have width = 0
+                        segControl.setWidth(0, forSegmentAtIndex: i)
+                    }
+                    else{
+                        segControl.insertSegmentWithTitle(currentItem.choiceItems[i].itemDescription, atIndex: i, animated: false)
+                        segControl.setWidth(0, forSegmentAtIndex: i)
+                    }
                 }
-                else{
-                    segControl.insertSegmentWithTitle(currentItem.choiceItems[i].itemDescription, atIndex: i, animated: false)
-                }
-                if currentItem.choiceItems.count > 2 {
-                    //smaller segments when multiple choices
-                    segControl.setWidth(60, forSegmentAtIndex: i)
-                }
-                else{
-                    segControl.setWidth(110.0, forSegmentAtIndex: i)
-                }
-            }
+            
+            segControl.apportionsSegmentWidthsByContent = true
+            //next time this is read it will show that it is being reused
+            cell.isReusedCell = true
             return cell
             
         case let currentItem as ParentInitials:

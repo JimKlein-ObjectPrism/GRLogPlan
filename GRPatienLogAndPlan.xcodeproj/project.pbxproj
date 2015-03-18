@@ -41,6 +41,7 @@
 		EFF4489B1AB24118004A099F /* HomeLogItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4489A1AB24118004A099F /* HomeLogItemTableViewCell.swift */; };
 		EFF448CB1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF448CA1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift */; };
 		EFF448CD1AB25CF8004A099F /* PopoverTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */; };
+		EFF449641AB87E66004A099F /* Type Defs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF449631AB87E66004A099F /* Type Defs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		EFF4489A1AB24118004A099F /* HomeLogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeLogItemTableViewCell.swift; sourceTree = "<group>"; };
 		EFF448CA1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedJournalEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverTableViewController.swift; sourceTree = "<group>"; };
+		EFF449631AB87E66004A099F /* Type Defs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type Defs.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				986443571A9E78FB00887579 /* Supporting Files */,
 				986443841A9E8D1400887579 /* Images */,
 				EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */,
+				EFF449631AB87E66004A099F /* Type Defs.swift */,
 			);
 			path = GRPatienLogAndPlan;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */,
 				EFF448CB1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift in Sources */,
 				EF157BB01AAE096200847AEE /* MenuDisplayCellProtocol.swift in Sources */,
+				EFF449641AB87E66004A099F /* Type Defs.swift in Sources */,
 				EFF448CD1AB25CF8004A099F /* PopoverTableViewController.swift in Sources */,
 				EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */,
 				98FDCF0A1AA16ABF0029F97E /* HomeTabBarController.swift in Sources */,
