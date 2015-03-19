@@ -21,6 +21,7 @@ class JournalItem {
     var lunchItem: Lunch
     var afternoonSnack: Snack
     var dinner: Dinner
+    var eveningSnack: Snack?
     var addOn: AddOn?
     var meds: Medicine?
     var activity: Activity?
@@ -241,6 +242,8 @@ class MealItem: MenuDisplayCell {
     var time: Time?
     var place: Place?
     var note: Note?
+    var addon: AddOn?
+    
     var supervisor: Person?
     
     var menuDisplayName: String

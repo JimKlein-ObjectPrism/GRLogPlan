@@ -42,6 +42,7 @@
 		EFF448CB1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF448CA1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift */; };
 		EFF448CD1AB25CF8004A099F /* PopoverTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */; };
 		EFF449641AB87E66004A099F /* Type Defs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF449631AB87E66004A099F /* Type Defs.swift */; };
+		EFF449CB1ABB45C2004A099F /* JournalItemProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		EFF448CA1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedJournalEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverTableViewController.swift; sourceTree = "<group>"; };
 		EFF449631AB87E66004A099F /* Type Defs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type Defs.swift"; sourceTree = "<group>"; };
+		EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalItemProtocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,8 +139,9 @@
 		986443561A9E78FB00887579 /* GRPatienLogAndPlan */ = {
 			isa = PBXGroup;
 			children = (
+				EFF449C91ABB4535004A099F /* Visitor Protocol and Files */,
 				EFF448971AB24079004A099F /* Home View Table Cells */,
-				EF157BC91AB093D600847AEE /* Protocols */,
+				EF157BC91AB093D600847AEE /* Protocols and Type Defs */,
 				98FDCF0B1AA16BF80029F97E /* Data */,
 				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
@@ -153,7 +156,6 @@
 				986443571A9E78FB00887579 /* Supporting Files */,
 				986443841A9E8D1400887579 /* Images */,
 				EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */,
-				EFF449631AB87E66004A099F /* Type Defs.swift */,
 			);
 			path = GRPatienLogAndPlan;
 			sourceTree = "<group>";
@@ -233,13 +235,14 @@
 			name = TableCells;
 			sourceTree = "<group>";
 		};
-		EF157BC91AB093D600847AEE /* Protocols */ = {
+		EF157BC91AB093D600847AEE /* Protocols and Type Defs */ = {
 			isa = PBXGroup;
 			children = (
 				EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */,
 				EF157BAF1AAE096200847AEE /* MenuDisplayCellProtocol.swift */,
+				EFF449631AB87E66004A099F /* Type Defs.swift */,
 			);
-			name = Protocols;
+			name = "Protocols and Type Defs";
 			sourceTree = "<group>";
 		};
 		EFF448971AB24079004A099F /* Home View Table Cells */ = {
@@ -249,6 +252,14 @@
 				EFF448CA1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift */,
 			);
 			name = "Home View Table Cells";
+			sourceTree = "<group>";
+		};
+		EFF449C91ABB4535004A099F /* Visitor Protocol and Files */ = {
+			isa = PBXGroup;
+			children = (
+				EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */,
+			);
+			name = "Visitor Protocol and Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,6 +387,7 @@
 				EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */,
 				EFF448CB1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift in Sources */,
 				EF157BB01AAE096200847AEE /* MenuDisplayCellProtocol.swift in Sources */,
+				EFF449CB1ABB45C2004A099F /* JournalItemProtocols.swift in Sources */,
 				EFF449641AB87E66004A099F /* Type Defs.swift in Sources */,
 				EFF448CD1AB25CF8004A099F /* PopoverTableViewController.swift in Sources */,
 				EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */,
