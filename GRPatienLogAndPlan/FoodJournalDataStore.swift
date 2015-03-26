@@ -157,7 +157,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
         let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."]), place: Place(), time: Time(), note: Note())
         
         let headerTitles = ["Choose One", "And A Serving of Fruit", "Additional Info"]
-        let itemSelectedHeaderTitles = ["Breakfast Item", "Fruit Item"]
+        let itemSelectedHeaderTitles = ["Breakfast Item", "Fruit Item" , "Additional Info"]
         
         let breakfast: BreakfastItems = BreakfastItems(
             breakfastItem: journalItem.breakfastChoice,
@@ -178,7 +178,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
         let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."]), place: Place(), time: Time(), note: Note())
         
         let headerTitles = ["2 Pieces of Bread With", "And A Serving of Fruit", "Additional Info"]
-        let itemSelectedHeaderTitles = ["Sandwich Item", "Fruit Item"]
+        let itemSelectedHeaderTitles = ["Sandwich Item", "Fruit Item", "Additional Info"]
         
         let lunch: LunchItems = LunchItems(
             item: journalItem.lunchItem,

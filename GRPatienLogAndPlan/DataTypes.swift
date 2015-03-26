@@ -9,8 +9,9 @@
 import Foundation
 
 
+
 //MARK: Journal Data Types
-class JournalItem {
+class JournalItem : JournalEntryItem{
     var title = ""
     var date: NSDate
     var friendlyDate = ""
@@ -39,6 +40,23 @@ class JournalItem {
         self.init()
         title = itemTitle
     }
+    
+    func accept(journalItemVisitor: JournalEntryItemVisitor){
+        journalItemVisitor.visit(self)
+    }
+
+}
+
+class NamedMeal {
+    var title = ""
+    
+    var breakfastChoice: Breakfast?
+    var morningSnack: Snack?
+    var lunchItem: Lunch?
+    var afternoonSnack: Snack?
+    var dinner: Dinner?
+    var eveningSnack: Snack?
+    var addOns: [AddOn]?
     
 }
 
@@ -155,6 +173,8 @@ class Person: NSObject {
     }
 }
 class PatientProfile {
+    //TODO:  add firstname, lastName nicName fields
+    
     var patientName: Person!
     var parents: [Person] = []
     
@@ -164,6 +184,8 @@ class PatientProfile {
     var activity: Activity?
     
     var addOns: [AddOn]?
+    
+    //named Meals
     
     init(){
         var person = Person(firstName: "Hannah", lastName: "Doe", nicName: "")
@@ -192,9 +214,16 @@ enum MealEntryState {
     case Empty
     case Incomplete
     case Complete
-    case NotApplicableToThisItem
+    //case NotRequired
 }
 
+enum nonMealItemState {
+
+    case Incomplete
+    case Complete
+    case NotRequired
+ 
+}
 
 // There is a collection of these objects in profile
 class Medicine: DetailDisplayItem, MenuDisplayCell {
@@ -215,7 +244,12 @@ class Medicine: DetailDisplayItem, MenuDisplayCell {
     }
 }
 
-class Activity: DetailDisplayItem, MenuDisplayCell {
+/*
+JournalEntryItem
+func accept(journalItemVisitor: JournalEntryItemVisitor)
+*/
+
+class Activity: DetailDisplayItem, MenuDisplayCell, JournalEntryItem {
     var location: String?
     var description: String = ""
     var didPerscribedActivityForDay = false
@@ -230,28 +264,43 @@ class Activity: DetailDisplayItem, MenuDisplayCell {
         menuDisplayName = "Activity Log"
         mealEntryState = MealEntryState.Empty
     }
+    
+    func accept(journalItemVisitor: JournalEntryItemVisitor){
+        journalItemVisitor.visit(self)
+    }
 
 }
 
-class AddOn {
+class AddOn: JournalEntryItem{
+    //Add-ons are added to meals or snacks, so store weak reference to avoid strong reference cycle issues
     var addOnItem: String = ""
+    var instructions: String = ""
+    weak var parentMealItem: MealItem!
     var wasConsumed: Bool?
+    
+    func accept(journalItemVisitor: JournalEntryItemVisitor){
+        journalItemVisitor.visit(self)
+    }
+
 }
 
 class MealItem: MenuDisplayCell {
     var time: Time?
     var place: Place?
     var note: Note?
-    var addon: AddOn?
+    var addons: [AddOn]?
     
-    var supervisor: Person?
+    var parentInitials: Person?
+    
+    // store users name here, not sure where this gets displayed...
+    var namedMealName: String?
     
     var menuDisplayName: String
     //this property can be nil, since it is not applicable to all menu items
     var mealEntryState: MealEntryState!
 
-    var isComplete: Bool?
-    var specialCircumstance: SpecialCircumstance?
+    //var isComplete: Bool?
+    //var specialCircumstance: SpecialCircumstance?
     
     init(){
         menuDisplayName = ""
@@ -288,7 +337,7 @@ class Note {
     }
 }
 
-class Snack: MealItem, DetailDisplayItem  {
+class Snack: MealItem, DetailDisplayItem , JournalEntryItem {
     var snack: FoodItem?
     override init()
     {
@@ -296,10 +345,14 @@ class Snack: MealItem, DetailDisplayItem  {
         menuDisplayName = "Snack"
         mealEntryState = MealEntryState.Empty
     }
+    func accept(journalItemVisitor: JournalEntryItemVisitor){
+        journalItemVisitor.visit(self)
+    }
+
 }
 
 
-class Breakfast: MealItem {
+class Breakfast: MealItem , JournalEntryItem{
     var foodChoice: FoodItem?
     var fruitChoice: FoodItem?
     
@@ -309,9 +362,13 @@ class Breakfast: MealItem {
         menuDisplayName = "Breakfast"
         mealEntryState = MealEntryState.Empty
     }
+    func accept(journalItemVisitor: JournalEntryItemVisitor){
+        journalItemVisitor.visit(self)
+    }
+
 }
 
-class Lunch : MealItem{
+class Lunch : MealItem, JournalEntryItem{
     var meatChoice: FoodItem?
     var fruitChoice: FoodItem?
     //var mealEntryState: MealEntryState = MealEntryState.Empty
@@ -321,9 +378,14 @@ class Lunch : MealItem{
         menuDisplayName = "Lunch"
         mealEntryState = MealEntryState.Empty
     }
+    func accept(journalItemVisitor: JournalEntryItemVisitor){
+        journalItemVisitor.visit(self)
+    }
+
 }
 
-class Dinner: MealItem{
+class Dinner: MealItem, JournalEntryItem{
+    
     //var kartiniRecipe: String?
     var meat: FoodItem?
     var starch: FoodItem?
@@ -338,6 +400,10 @@ class Dinner: MealItem{
         menuDisplayName = "Dinner"
         mealEntryState = MealEntryState.Empty
     }
+    func accept(journalItemVisitor: JournalEntryItemVisitor){
+        journalItemVisitor.visit(self)
+    }
+
 }
 
 struct KartiniRecipe {

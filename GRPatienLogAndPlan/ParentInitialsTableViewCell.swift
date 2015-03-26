@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ParentInitialsTableViewCell: UITableViewCell {
+class ParentInitialsTableViewCell: UITableViewCell, UIActionSheetDelegate {
 
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -25,5 +25,33 @@ class ParentInitialsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    //MARK: Action handler
+    
+    
+    //MARK: - AlertView methods
+    
+    
+    /*
+    let actionSheet = UIActionSheet(title: "Takes the appearance of the bottom bar if specified; otherwise, same as UIActionSheetStyleDefault.", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: "Destroy", otherButtonTitles: "OK")
+    actionSheet.actionSheetStyle = .Default
+    actionSheet.showInView(self.view)
+    
+    // MARK: UIActionSheetDelegate
+    
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        switch buttonIndex {
+            ...
+        }
 
+    }
+*/
+    @IBAction func showActions(sender: AnyObject) {
+        let actionSheet = UIActionSheet(title: "Takes the appearance of the bottom bar if specified; otherwise, same as UIActionSheetStyleDefault.", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: "Destroy", otherButtonTitles: "OK")
+        actionSheet.actionSheetStyle = .Default
+        //actionSheet.showInView()
+        
+    }
+
+	
 }
