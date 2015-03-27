@@ -206,7 +206,8 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             
         case let currentItem as Time:
             let cell = tableView.dequeueReusableCellWithIdentifier("TimeEntryCell", forIndexPath: indexPath) as TimeEntryTableViewCell
-            cell.textLabel?.text = "Time"
+            cell.titleTextLabel?.text = "Time"
+            
             return cell
             
         case let currentItem as Place:
@@ -233,7 +234,15 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             
         }
     }
-    
+    override  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        var currentItemsArray = sectionData[indexPath.section]
+
+        let currentItem: AnyObject = currentItemsArray[indexPath.row]
+        if  let timeCell = currentItem as? Time {
+            return 200.0
+        }
+        return 50.0
+    }
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.itemSelectedHeaderTitles[section]
 //        if self.sectionData[section].count == 1{
