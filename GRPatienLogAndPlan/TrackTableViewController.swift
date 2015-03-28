@@ -30,6 +30,8 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     var displayType: MealItemSelectionDisplayType = MealItemSelectionDisplayType.SingleMealEntryWithBackButton
 
 
+    //Parent Initials value holder
+    var parentInitials: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -202,6 +204,9 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         case let currentItem as ParentInitials:
             let cell = tableView.dequeueReusableCellWithIdentifier("ParentInitialsCell", forIndexPath: indexPath) as ParentInitialsTableViewCell
             cell.titleLabel?.text = "Parent Initials"
+            if self.parentInitials != nil{
+            cell.initialsButton.titleLabel?.text = self.parentInitials
+            }
             return cell
             
         case let currentItem as Time:
@@ -391,6 +396,10 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         // create controller
         let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
         
+        let button = sender as UIButton
+        
+        var newTitle : String = ""
+        
         // add Action buttons for each set of initials in the list
         for s in 0..<buttonList.count {
             
@@ -398,90 +407,32 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
 
             var action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                println("Item selected at index: \(s) TODO: finish implementing code.")
+                //set the button Label text to the selected value
+                button.titleLabel?.text = buttonList[s]
+                newTitle = buttonList[s]
+                self.parentInitials = buttonList[s]
+                println("New Title for button \(button.titleLabel!.text) TODO: finish implementing code.")
             })
+            
             choiceMenu.addAction(action)
         }
         
-        self.presentViewController(choiceMenu, animated: true, completion: nil)
+       self.presentViewController(choiceMenu, animated: true, completion: nil)
 
-        
-//        let deleteAction = UIAlertAction(title: "Delete", style: .Default, handler: {
-//            (alert: UIAlertAction!) -> Void in
-//            println("File Deleted")
-//        })
-//        let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
-//            (alert: UIAlertAction!) -> Void in
-//            println("File Saved")
-//        })
-//        
-//        //
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
-//            (alert: UIAlertAction!) -> Void in
-//            println("Cancelled")
-//        })
-//        
-//        
-//        // 4
-//        optionMenu.addAction(deleteAction)
-//        optionMenu.addAction(saveAction)
-//        optionMenu.addAction(cancelAction)
-        
-        // 5
-    
-        /*
-        let alertController = UIAlertController(title: nil, message: "Takes the appearance of the bottom bar if specified; otherwise, same as UIActionSheetStyleDefault.", preferredStyle: .ActionSheet)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            // ...
-        }
-        alertController.addAction(cancelAction)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            // ...
-        }
-        alertController.addAction(OKAction)
-        
-        let destroyAction = UIAlertAction(title: "Destroy", style: .Destructive) { (action) in
-            println(action)
-        }
-        alertController.addAction(destroyAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-*/
-//        if objc_getClass("UIAlertController") != nil {
-//            println("UIAlertController can be instantiated")
-//            //make and use a UIAlertController
-//                    }
-//            else {
-//            println("UIAlertController can NOT be instantiated")
-//            //make and use a UIAlertView
-//            
-//            // initialize action sheet with first Option, then add buttons for remainder of initials in the array
-//            let actionSheet = UIActionSheet(title: title, delegate: self, cancelButtonTitle: cancel, destructiveButtonTitle: nil, otherButtonTitles: firstButtonItem)
-//            
-//            for s in 1..<buttonList.count {
-//                
-//                actionSheet.addButtonWithTitle(buttonList[s])
-//            }
-//            
-//            actionSheet.actionSheetStyle = .Default
-//            actionSheet.showInView(self.view)
-//
-//        }
-
-        
-        
-       
         
      }
+    
+    
+    
+    
+    
+    
+    
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         //        switch buttonIndex {
         //
         //        }
-        
+        parentInitials = "/(buttonIndex)"
     }
 }

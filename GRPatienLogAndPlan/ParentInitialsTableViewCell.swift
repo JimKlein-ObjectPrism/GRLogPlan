@@ -10,7 +10,8 @@ import UIKit
 
 class ParentInitialsTableViewCell: UITableViewCell, UIActionSheetDelegate {
 
-
+    @IBOutlet weak var initialsButton: UIButton!
+    
     @IBOutlet weak var titleLabel: UILabel!
     
     override func awakeFromNib() {

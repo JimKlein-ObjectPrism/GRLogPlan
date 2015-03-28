@@ -238,7 +238,7 @@
                                                     <constraint firstAttribute="height" constant="21" id="12v-zT-B3H"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
@@ -559,7 +559,6 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="showActions:" destination="ehW-gc-of0" eventType="touchUpInside" id="PYb-zB-Vpg"/>
                                                 <action selector="showAlertForParentInitials:" destination="y5B-jC-mGF" eventType="touchUpInside" id="OXl-WB-uAq"/>
                                             </connections>
                                         </button>
@@ -567,14 +566,11 @@
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="VcB-gz-6Rr" secondAttribute="centerY" id="4v3-yE-2Re"/>
                                         <constraint firstItem="bm5-iv-KTh" firstAttribute="top" secondItem="XqZ-HU-L3v" secondAttribute="topMargin" id="6N3-nW-kM6"/>
-                                        <constraint firstItem="bm5-iv-KTh" firstAttribute="top" secondItem="VcB-gz-6Rr" secondAttribute="top" id="F4R-Kl-28u"/>
                                         <constraint firstAttribute="trailing" secondItem="VcB-gz-6Rr" secondAttribute="trailing" constant="16" id="SfF-em-d6Z"/>
-                                        <constraint firstAttribute="centerY" secondItem="bm5-iv-KTh" secondAttribute="centerY" id="SiC-r4-Bvd"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="bm5-iv-KTh" secondAttribute="bottom" constant="-0.5" id="dmG-6Q-h4A"/>
                                         <constraint firstItem="bm5-iv-KTh" firstAttribute="leading" secondItem="XqZ-HU-L3v" secondAttribute="leading" id="jK1-6L-z2b">
                                             <variation key="widthClass=compact" constant="16"/>
                                         </constraint>
-                                        <constraint firstItem="bm5-iv-KTh" firstAttribute="bottom" secondItem="VcB-gz-6Rr" secondAttribute="bottom" id="jNX-nP-BTl"/>
                                         <constraint firstItem="bm5-iv-KTh" firstAttribute="top" secondItem="VcB-gz-6Rr" secondAttribute="top" id="np9-aR-9TY"/>
                                         <constraint firstItem="bm5-iv-KTh" firstAttribute="bottom" secondItem="VcB-gz-6Rr" secondAttribute="bottom" id="wDt-ym-v0w"/>
                                     </constraints>
@@ -586,11 +582,8 @@
                                             <exclude reference="4v3-yE-2Re"/>
                                             <exclude reference="SfF-em-d6Z"/>
                                             <exclude reference="6N3-nW-kM6"/>
-                                            <exclude reference="F4R-Kl-28u"/>
-                                            <exclude reference="SiC-r4-Bvd"/>
                                             <exclude reference="dmG-6Q-h4A"/>
                                             <exclude reference="jK1-6L-z2b"/>
-                                            <exclude reference="jNX-nP-BTl"/>
                                             <exclude reference="np9-aR-9TY"/>
                                             <exclude reference="wDt-ym-v0w"/>
                                         </mask>
@@ -603,18 +596,15 @@
                                             <include reference="4v3-yE-2Re"/>
                                             <include reference="SfF-em-d6Z"/>
                                             <include reference="6N3-nW-kM6"/>
-                                            <exclude reference="F4R-Kl-28u"/>
-                                            <exclude reference="SiC-r4-Bvd"/>
                                             <include reference="dmG-6Q-h4A"/>
                                             <include reference="jK1-6L-z2b"/>
-                                            <exclude reference="jNX-nP-BTl"/>
                                             <include reference="np9-aR-9TY"/>
                                             <include reference="wDt-ym-v0w"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="textLabel" destination="bm5-iv-KTh" id="pQt-3B-xOb"/>
+                                    <outlet property="initialsButton" destination="VcB-gz-6Rr" id="kaT-p7-dyU"/>
                                     <outlet property="titleLabel" destination="bm5-iv-KTh" id="vj6-kT-kfj"/>
                                 </connections>
                             </tableViewCell>

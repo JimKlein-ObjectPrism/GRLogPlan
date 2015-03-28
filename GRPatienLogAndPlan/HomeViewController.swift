@@ -154,10 +154,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             vc.detailDisplayItem = d
             //TODO: Remove hard coded Nav Bar title
             vc.navigationItem.title = "Breakfast"
+            vc.navigationItem.backBarButtonItem?.title = "Back"
         }
         
         //set full day display type in order to generate the correct button in nav bar
-        vc.displayType = MealItemSelectionDisplayType.FullDayEntryWithMenu
+        vc.displayType = MealItemSelectionDisplayType.SingleMealEntryWithBackButton
         
         self.showViewController(vc as UIViewController, sender: vc)
     }

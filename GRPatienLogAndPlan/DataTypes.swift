@@ -275,6 +275,7 @@ class AddOn: JournalEntryItem{
     //Add-ons are added to meals or snacks, so store weak reference to avoid strong reference cycle issues
     var addOnItem: String = ""
     var instructions: String = ""
+    //TODO: Is an AddOn really a Meal item or just a child of a meal item
     weak var parentMealItem: MealItem!
     var wasConsumed: Bool?
     
