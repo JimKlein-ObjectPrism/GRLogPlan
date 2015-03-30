@@ -13,6 +13,7 @@
         <attribute name="wasConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="addOns" inverseEntity="Profile" syncable="YES"/>
     </entity>
+    <entity name="AfternoonSnack" syncable="YES"/>
     <entity name="Breakfast" syncable="YES">
         <attribute name="fruitChoice" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mealChoice" optional="YES" attributeType="String" syncable="YES"/>
@@ -38,11 +39,9 @@
     </entity>
     <entity name="JournalEntry" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="afternoonSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Snack" syncable="YES"/>
         <relationship name="breakfast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Breakfast" inverseName="journalEntry" inverseEntity="Breakfast" syncable="YES"/>
         <relationship name="dinner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dinner" inverseName="journalEntry" inverseEntity="Dinner" syncable="YES"/>
         <relationship name="lunch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lunch" inverseName="journalEntry" inverseEntity="Lunch" syncable="YES"/>
-        <relationship name="morningSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Snack" syncable="YES"/>
         <relationship name="patientRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientRecord" inverseName="journalEntries" inverseEntity="PatientRecord" syncable="YES"/>
     </entity>
     <entity name="Lunch" syncable="YES">
@@ -51,6 +50,7 @@
     <entity name="Medicine" syncable="YES">
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="medicine" inverseEntity="Profile" syncable="YES"/>
     </entity>
+    <entity name="MorningSnack" syncable="YES"/>
     <entity name="Parent" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -80,12 +80,14 @@
         <element name="Breakfast" positionX="-72" positionY="18" width="128" height="135"/>
         <element name="Dinner" positionX="-72" positionY="281" width="128" height="178"/>
         <element name="ExtraSnack" positionX="-27" positionY="-486" width="128" height="73"/>
-        <element name="JournalEntry" positionX="-396" positionY="126" width="128" height="148"/>
+        <element name="JournalEntry" positionX="-396" positionY="126" width="128" height="118"/>
         <element name="Lunch" positionX="-63" positionY="189" width="128" height="58"/>
         <element name="Medicine" positionX="-18" positionY="-279" width="128" height="58"/>
         <element name="Parent" positionX="-27" positionY="-135" width="128" height="103"/>
         <element name="PatientRecord" positionX="-585" positionY="18" width="128" height="118"/>
         <element name="Profile" positionX="-378" positionY="-144" width="128" height="148"/>
-        <element name="Snack" positionX="-288" positionY="81" width="128" height="45"/>
+        <element name="Snack" positionX="-272" positionY="342" width="128" height="45"/>
+        <element name="MorningSnack" positionX="-252" positionY="108" width="128" height="43"/>
+        <element name="AfternoonSnack" positionX="-243" positionY="117" width="128" height="43"/>
     </elements>
 </model>
