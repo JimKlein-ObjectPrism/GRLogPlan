@@ -10,12 +10,20 @@ import UIKit
 
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
 
+    @IBOutlet weak var summaryTextView: UITextView!
     
+    @IBOutlet weak var mealTitle: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         //self.tableView.rowHeight = 44.0
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        println("ViewWillAppear called.")
+        //mealTitle.text = "Lunch"
     }
 
     override func didReceiveMemoryWarning() {
@@ -155,6 +163,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //TODO: Remove hard coded Nav Bar title
             vc.navigationItem.title = "Breakfast"
             vc.navigationItem.backBarButtonItem?.title = "Back"
+            // hide nav bar on pushed view
+            vc.hidesBottomBarWhenPushed = true
         }
         
         //set full day display type in order to generate the correct button in nav bar
@@ -173,4 +183,42 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     */
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "MyMealsRecipesSegue" {
+            if let navc = segue.destinationViewController as? UINavigationController {
+                if let vc = navc.viewControllers[0] as? MyMealsRecipesTableViewController {
+                    vc.navigationItem.title = "My Meals"
+                    var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
+                    vc.navigationItem.leftBarButtonItem = b
+                    // hide nav bar on pushed view
+                    navc.hidesBottomBarWhenPushed = true
+                    
+                    //TODO: Implement Save for Save Button, current: just Pops VC
+                    var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonPressed:")
+                    
+                    vc.navigationItem.rightBarButtonItem = sb
+
+                
+                }
+            
+            }
+        }
+        
+    }
+    
+    // MARK: - NavBar Actions
+    func backButtonPressed (sender: UIBarButtonItem ){
+        let testString = "\u{2022}  Status:  Breakfast Log Complete" +
+        "\n\u{2022}  French Toast " +
+        "\n\u{2022}  Banana" +
+            "\n\u{2022}  Time:  8:15" +
+            "\n\u{2022}  Parent Intials:  J.K." +
+            "\n\u{2022}  Place: Kitchen"
+        self.summaryTextView.text = testString
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    func saveButtonPressed (sender: UIBarButtonItem ){
+        
+        
+    }
 }

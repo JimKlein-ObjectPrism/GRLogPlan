@@ -47,7 +47,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
                 }
             case .SingleMealEntryWithBackButton:
                 // back button
-                var b = UIBarButtonItem(title: "Back", style: .Plain, target: self, action:"backButtonPressed:")
+                var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
                 self.navigationItem.leftBarButtonItem = b
                 if let item = detailDisplayItem? {
                     //self.navigationItem.title = item.

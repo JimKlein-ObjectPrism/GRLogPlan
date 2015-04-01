@@ -32,6 +32,7 @@
 		EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */; };
 		EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */; };
 		EF49F8331AC6FA440005A3DC /* PatientDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF49F8311AC6FA440005A3DC /* PatientDataModel.xcdatamodeld */; };
+		EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */; };
 		EFF448881AB1FEA9004A099F /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF448871AB1FEA9004A099F /* beach.jpg */; };
 		EFF4488C1AB20620004A099F /* print.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF4488B1AB20620004A099F /* print.png */; };
 		EFF4488E1AB22CDC004A099F /* Track.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF4488D1AB22CDC004A099F /* Track.png */; };
@@ -88,6 +89,7 @@
 		EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDetailDisplayProtocols.swift; path = ../MenuDetailDisplayProtocols.swift; sourceTree = "<group>"; };
 		EF49F8321AC6FA440005A3DC /* PatientDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PatientDataModel.xcdatamodel; sourceTree = "<group>"; };
+		EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMealsRecipesTableViewController.swift; sourceTree = "<group>"; };
 		EFF448871AB1FEA9004A099F /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach.jpg; sourceTree = "<group>"; };
 		EFF4488B1AB20620004A099F /* print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = print.png; sourceTree = "<group>"; };
 		EFF4488D1AB22CDC004A099F /* Track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Track.png; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				986443591A9E78FB00887579 /* AppDelegate.swift */,
 				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
 				EF157BB31AAE7C0200847AEE /* HomeViewController.swift */,
+				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
 				98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */,
 				9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */,
 				EF157BC61AAF7FF400847AEE /* TableCells */,
@@ -384,6 +387,7 @@
 				EF157BAE1AAE089A00847AEE /* FoodJournalDataStore.swift in Sources */,
 				9864435A1A9E78FB00887579 /* AppDelegate.swift in Sources */,
 				EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */,
+				EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */,
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				EF157BBB1AAEA1D600847AEE /* ChoiceItemsTableViewCell.swift in Sources */,
 				EF157BAC1AAE088600847AEE /* DataTypes.swift in Sources */,
