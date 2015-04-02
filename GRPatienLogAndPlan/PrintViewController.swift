@@ -8,7 +8,10 @@
 
 import UIKit
 
-class PrintViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PrintViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
+    
+    var selectedCellDateValue = "Thursday, April 3"
+    
     let journalEntries: [(String, String)] = [
         ("Friday, April 3, 2015", "Status: Partially Complete"),
         ("Thursday, April 2, 2015", "Status: Complete"),
@@ -21,9 +24,23 @@ class PrintViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     ]
     
+    @IBOutlet weak var previewTextView: UITextView!
+    
+    @IBAction func previewPrintJob(sender: AnyObject) {
+        var printVisitor = PrintVisitor()
+        
+        var jItem = JournalItem(itemTitle: selectedCellDateValue)
+        var newItem = jItem.getTestJournalItem(selectedCellDateValue)
+        
+        newItem.accept(printVisitor)
+        
+        previewTextView.attributedText = printVisitor.reduceStringsArray(printVisitor.stringsArray)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        previewTextView.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,8 +73,13 @@ class PrintViewController: UIViewController, UITableViewDataSource, UITableViewD
         println("test")
     }
     
-   
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        selectedCellDateValue = journalEntries[indexPath.row].0
+    }
 
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        return false
+    }
     /*
     // MARK: - Navigation
 

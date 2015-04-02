@@ -11,7 +11,7 @@ import Foundation
 
 
 //MARK: Journal Data Types
-class JournalItem : JournalEntryItem{
+class JournalItem : JournalEntryItem {
     var title = ""
     var date: NSDate
     var friendlyDate = ""
@@ -28,13 +28,53 @@ class JournalItem : JournalEntryItem{
     var activity: Activity?
     var note: Note?
     
+    //subscript:  array that holds meal items
+    var mealItems: [JournalEntryItem] = []
+    
     init()
     {
         breakfastChoice = Breakfast()
+//        mealItems.append(breakfastChoice)
+//        breakfastChoice.foodChoice = FoodItem(name: "French Toast")
+//        breakfastChoice.fruitChoice = FoodItem(name: "Banana")
+//        breakfastChoice.parentInitials = ParentInitials(defaultInitials: "H.T.")
+//        breakfastChoice.place = Place(location: "Kitchen")
+        
+        
         lunchItem = Lunch()
         dinner = Dinner()
         date = NSDate()
         afternoonSnack = Snack()
+    }
+    func getTestJournalItem (title: String) -> JournalItem {
+        
+        var ji = JournalItem(itemTitle: title)
+        
+        
+        ji.breakfastChoice = Breakfast()
+        ji.mealItems.append(ji.breakfastChoice)
+        ji.breakfastChoice.foodChoice = FoodItem(name: "French Toast")
+        ji.breakfastChoice.fruitChoice = FoodItem(name: "Banana")
+       
+        ji.lunchItem = Lunch()
+        ji.mealItems.append(ji.lunchItem)
+        ji.lunchItem.meatChoice = FoodItem(name: "Ham")
+        ji.lunchItem.fruitChoice = FoodItem(name: "Apple")
+        
+        ji.afternoonSnack = Snack()
+        ji.mealItems.append(ji.afternoonSnack)
+        ji.afternoonSnack.snack?.name = "Yogurt"
+        
+        ji.dinner = Dinner()
+        ji.mealItems.append(ji.dinner)
+        ji.dinner.meat = FoodItem(name: "Salmon")
+        ji.dinner.starch = FoodItem(name: "Rice")
+        ji.dinner.oil = FoodItem(name: "Olive Oil")
+        ji.dinner.vegetable = FoodItem(name: "Broccolli")
+      
+       
+        return ji
+        
     }
     convenience init(itemTitle: String){
         self.init()
@@ -43,6 +83,28 @@ class JournalItem : JournalEntryItem{
     
     func accept(journalItemVisitor: JournalEntryItemVisitor){
         journalItemVisitor.visit(self)
+    }
+    
+    func count() -> Int{
+        return mealItems.count
+    }
+    
+    //Subscript is read only
+    subscript(i: Int) -> JournalEntryItem?
+        {
+        get
+        {
+            if 0 <= i && i < mealItems.count {
+            return mealItems[i]
+            }
+            else{
+                return nil
+            }
+        }
+//        set(newValue)
+//        {
+//            mealItems[i] = newValue!
+//        }
     }
 
 }
@@ -291,7 +353,7 @@ class MealItem: MenuDisplayCell {
     var note: Note?
     var addons: [AddOn]?
     
-    var parentInitials: Person?
+    var parentInitials: ParentInitials?
     
     // store users name here, not sure where this gets displayed...
     var namedMealName: String?
@@ -317,18 +379,26 @@ class Time {
 }
 class Place {
     var mealLocation: String?
-    init()
+    init(location: String)
     {
-        
+        self.mealLocation = location
     }
     
 }
 class ParentInitials {
+    var defaultInitials: String
     var initialsArray: [String]
     init(initialsArray: [
-        String] )
+        String] , defaultInitials: String)
     {
         self.initialsArray  = initialsArray
+        self.defaultInitials = defaultInitials
+    }
+    init(defaultInitials:
+        String )
+    {
+        self.defaultInitials  = defaultInitials
+        initialsArray = []
     }
 }
 
@@ -480,6 +550,10 @@ class FoodItem {
     var itemDescription = ""
     var serving: Serving = Serving()
     var menuItemType = ""
+    convenience init(name: String){
+        self.init()
+        self.name = name
+    }
 }
 
 class FoodItemWithChoice: FoodItem {

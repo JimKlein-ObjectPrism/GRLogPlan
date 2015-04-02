@@ -50,7 +50,7 @@
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mfU-pp-JMR">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hGd-XD-L8D">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGd-XD-L8D">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.  Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
@@ -102,6 +102,23 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jTb-Q3-9Bh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem width="16" style="plain" systemItem="fixedSpace" id="2o7-5a-hlM"/>
+                                    <barButtonItem title="Print" id="cQj-k3-VTQ"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="H8D-qg-RFZ"/>
+                                    <barButtonItem title="Preview" id="7bu-Wp-0iC">
+                                        <connections>
+                                            <action selector="previewPrintJob:" destination="68E-cf-Zb7" id="qcI-ST-J6W"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="16" style="plain" systemItem="fixedSpace" id="I4B-OT-T5b"/>
+                                </items>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="327" width="400" height="44"/>
+                                </variation>
+                            </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8m1-fm-20L">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -147,12 +164,14 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="vNK-Qw-GYF"/>
+                                <exclude reference="jTb-Q3-9Bh"/>
                                 <exclude reference="8m1-fm-20L"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="vNK-Qw-GYF"/>
+                                <include reference="jTb-Q3-9Bh"/>
                                 <include reference="8m1-fm-20L"/>
                             </mask>
                         </variation>
@@ -160,6 +179,9 @@
                     <navigationItem key="navigationItem" title="Print" id="6A6-2P-sEh">
                         <barButtonItem key="backBarButtonItem" title="Back" id="f83-T9-xrt"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="previewTextView" destination="hGd-XD-L8D" id="phs-af-u4l"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IW0-Fa-YFC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -353,7 +375,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Status:  Ready to Log a Meal!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AsD-mN-9Pn">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Status:  Ready to Log a Meal!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AsD-mN-9Pn">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -367,9 +389,6 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
-                                                <variation key="widthClass=compact" misplaced="YES">
-                                                    <rect key="frame" x="136" y="15" width="129" height="21"/>
-                                                </variation>
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.32549020649999999" green="0.63921570780000003" blue="0.14901961389999999" alpha="1" colorSpace="deviceRGB"/>

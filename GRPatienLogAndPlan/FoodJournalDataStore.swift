@@ -154,7 +154,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
         // build breakfastChoice food item array
         let breakfastChoiceItems = self.buildFoodItemArray(journalItem.breakfastChoice.foodChoice, filterString: "BreakfastItem")
         let breakfastFruitChoice = self.buildFoodItemArray(journalItem.breakfastChoice.fruitChoice, filterString: "FruitItem")
-        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."]), place: Place(), time: Time(), note: Note())
+        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."], defaultInitials: "A.D."), place: Place(location: "Kitchen"), time: Time(), note: Note())
         
         let headerTitles = ["Choose One", "And A Serving of Fruit", "Additional Info"]
         let itemSelectedHeaderTitles = ["Breakfast Item", "Fruit Item" , "Additional Info"]
@@ -175,7 +175,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
         // build lunchChoice food item array
         let lunchChoiceItems = self.buildFoodItemArray(journalItem.lunchItem.meatChoice, filterString: "LunchItem")
         let fruitChoice = self.buildFoodItemArray(journalItem.lunchItem.fruitChoice, filterString: "FruitItem")
-        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."]), place: Place(), time: Time(), note: Note())
+        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."], defaultInitials: "A.D."), place: Place(location: "Kitchen"), time: Time(), note: Note())
         
         let headerTitles = ["2 Pieces of Bread With", "And A Serving of Fruit", "Additional Info"]
         let itemSelectedHeaderTitles = ["Sandwich Item", "Fruit Item", "Additional Info"]
@@ -199,7 +199,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
         let oil = self.buildFoodItemArray(journalItem.dinner.oil, filterString: "OilDinnerItem")
         let vegetable = self.buildFoodItemArray(journalItem.dinner.vegetable, filterString: "VegetableItem")
         let requiredItems = self.buildFoodItemArray(journalItem.dinner.requiredItems, filterString: "RequiredDinnerItem")
-        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."]), place: Place(), time: Time(), note: Note())
+        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."], defaultInitials: "A.D."), place: Place(location: "Kitchen"), time: Time(), note: Note())
         
         let headerTitles = ["Choose One", "Choose One", "Choose One", "1 1/2 c Vegetables", "Required Items", "Additional Info"]
         let itemSelectedHeaderTitles = ["Choose One", "Choose One", "Choose One", "1 1/2 c Vegetables", "Required Items", "Additional Info"]

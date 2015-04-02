@@ -34,6 +34,7 @@
 		EF49F8331AC6FA440005A3DC /* PatientDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF49F8311AC6FA440005A3DC /* PatientDataModel.xcdatamodeld */; };
 		EFBD36711ACCA14B006F32AA /* PrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36701ACCA14B006F32AA /* PrintViewController.swift */; };
 		EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */; };
+		EFBD36751ACCADC4006F32AA /* PrintVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */; };
 		EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */; };
 		EFF448881AB1FEA9004A099F /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF448871AB1FEA9004A099F /* beach.jpg */; };
 		EFF4488C1AB20620004A099F /* print.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF4488B1AB20620004A099F /* print.png */; };
@@ -93,6 +94,7 @@
 		EF49F8321AC6FA440005A3DC /* PatientDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PatientDataModel.xcdatamodel; sourceTree = "<group>"; };
 		EFBD36701ACCA14B006F32AA /* PrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintViewController.swift; sourceTree = "<group>"; };
 		EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintTableViewCell.swift; sourceTree = "<group>"; };
+		EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintVisitor.swift; sourceTree = "<group>"; };
 		EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMealsRecipesTableViewController.swift; sourceTree = "<group>"; };
 		EFF448871AB1FEA9004A099F /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach.jpg; sourceTree = "<group>"; };
 		EFF4488B1AB20620004A099F /* print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = print.png; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
 				EF157BB31AAE7C0200847AEE /* HomeViewController.swift */,
 				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
+				EFBD36701ACCA14B006F32AA /* PrintViewController.swift */,
 				98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */,
 				9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */,
 				EF157BC61AAF7FF400847AEE /* TableCells */,
@@ -165,7 +168,6 @@
 				986443571A9E78FB00887579 /* Supporting Files */,
 				986443841A9E8D1400887579 /* Images */,
 				EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */,
-				EFBD36701ACCA14B006F32AA /* PrintViewController.swift */,
 				EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */,
 			);
 			path = GRPatienLogAndPlan;
@@ -270,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */,
+				EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */,
 			);
 			name = "Visitor Protocol and Files";
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFBD36751ACCADC4006F32AA /* PrintVisitor.swift in Sources */,
 				9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */,
 				EF157BBF1AAEA20B00847AEE /* NoteTableViewCell.swift in Sources */,
 				EFF4489B1AB24118004A099F /* HomeLogItemTableViewCell.swift in Sources */,
