@@ -29,6 +29,8 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     //
     var displayType: MealItemSelectionDisplayType = MealItemSelectionDisplayType.SingleMealEntryWithBackButton
 
+    //closure to update Home screen text box
+    var updateTextClosure: ((sender: UIBarButtonItem) -> ())?
 
     //Parent Initials value holder
     var parentInitials: String?
@@ -76,6 +78,10 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     
     // MARK: - NavBar Actions
     func backButtonPressed (sender: UIBarButtonItem ){
+        if  let c = updateTextClosure  {
+            c(sender: sender)
+        }
+        
         self.navigationController?.popViewControllerAnimated(true)
     }
     func saveButtonPressed (sender: UIBarButtonItem ){
@@ -212,12 +218,12 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         case let currentItem as Time:
             let cell = tableView.dequeueReusableCellWithIdentifier("TimeEntryCell", forIndexPath: indexPath) as TimeEntryTableViewCell
             cell.titleTextLabel?.text = "Time"
-            
             return cell
             
         case let currentItem as Place:
             let cell = tableView.dequeueReusableCellWithIdentifier("PlaceEntryCell", forIndexPath: indexPath) as PlaceEntryTableViewCell
-            cell.textLabel?.text = "Place"
+            cell.titleLabel?.text  = "Place"
+            cell.placeButton.titleLabel?.text = "Kitchen"
             return cell
             
         case let currentItem as Note:

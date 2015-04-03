@@ -163,8 +163,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //TODO: Remove hard coded Nav Bar title
             vc.navigationItem.title = "Breakfast"
             vc.navigationItem.backBarButtonItem?.title = "Back"
+            
             // hide nav bar on pushed view
             vc.hidesBottomBarWhenPushed = true
+            vc.updateTextClosure = backButtonPressed
         }
         
         //set full day display type in order to generate the correct button in nav bar
@@ -188,13 +190,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let navc = segue.destinationViewController as? UINavigationController {
                 if let vc = navc.viewControllers[0] as? MyMealsRecipesTableViewController {
                     vc.navigationItem.title = "My Meals"
-                    var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
+                    var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"simpleBackButtonPressed:")
                     vc.navigationItem.leftBarButtonItem = b
                     // hide nav bar on pushed view
                     navc.hidesBottomBarWhenPushed = true
                     
                     //TODO: Implement Save for Save Button, current: just Pops VC
-                    var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "backButtonPressed:")
+                    var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "simpleBackButtonPressed:")
                     
                     vc.navigationItem.rightBarButtonItem = sb
 
@@ -208,8 +210,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - NavBar Actions
     func backButtonPressed (sender: UIBarButtonItem ){
-        let testString = "\u{2022}  Status:  Breakfast Log Complete" +
-        "\n\u{2022}  French Toast " +
+        let testString = "\u{2022}  Status:  Lunch Log Complete" +
+        "\n\u{2022}  Ham Sandwich " +
         "\n\u{2022}  Banana" +
             "\n\u{2022}  Time:  8:15" +
             "\n\u{2022}  Parent Intials:  J.K." +
@@ -217,6 +219,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.summaryTextView.text = testString
         self.navigationController?.popViewControllerAnimated(true)
     }
+   
+    func simpleBackButtonPressed (sender: UIBarButtonItem ){
+       
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+
     func saveButtonPressed (sender: UIBarButtonItem ){
         
         
