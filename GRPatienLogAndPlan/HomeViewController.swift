@@ -158,10 +158,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // initialize and set dataArray on TrackVC
         vc.dataArray = [AnyObject]()
         
-        if let d = appDelegate.dataArray[0] as? DetailDisplayItem {
+        if let d = appDelegate.dataArray[1] as? DetailDisplayItem {
             vc.detailDisplayItem = d
             //TODO: Remove hard coded Nav Bar title
-            vc.navigationItem.title = "Breakfast"
+            vc.navigationItem.title = "Lunch"
             vc.navigationItem.backBarButtonItem?.title = "Back"
             
             // hide nav bar on pushed view
@@ -211,10 +211,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - NavBar Actions
     func backButtonPressed (sender: UIBarButtonItem ){
         let testString = "\u{2022}  Status:  Lunch Log Complete" +
-        "\n\u{2022}  Ham Sandwich " +
+        "\n\u{2022}  Tuna Sandwich " +
         "\n\u{2022}  Banana" +
-            "\n\u{2022}  Time:  8:15" +
-            "\n\u{2022}  Parent Intials:  J.K." +
+            "\n\u{2022}  Time:  12:15" +
+            "\n\u{2022}  Parent Intials:  A.B." +
             "\n\u{2022}  Place: Kitchen"
         self.summaryTextView.text = testString
         self.navigationController?.popViewControllerAnimated(true)

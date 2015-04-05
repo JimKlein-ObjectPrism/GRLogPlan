@@ -42,6 +42,23 @@ class PrintVisitor: JournalEntryItemVisitor {
         return bullet
         
     }
+    func formatBulletItemTimePlaceInitials(s: String) -> NSMutableAttributedString {
+        //var myMutableString = NSMutableAttributedString()
+        var myString = NSAttributedString(string: s)
+        //myMutableString.addAttribute(NSFontAttributeName, value: UIFont(name: "Georgia", size: 36.0)!, range: NSRange(location: 0, length: 1))
+        let headerStart: Int = 0
+        let headerEnd: Int = myString.length
+        var mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: myString)
+        var bullet = NSMutableAttributedString(string: "\n\u{2022}  ")
+        bullet.appendAttributedString(mutableAttrString)//x.appenAttributedString(NSAttributedString("\n\u{2022}  "))
+        var newLine = NSMutableAttributedString(string: "\n\n")
+        
+        bullet.appendAttributedString(newLine)
+        //bullet.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(18.0), range: NSMakeRange(headerStart, headerEnd))
+        
+        return bullet
+        
+    }
     
     func setFontFor(attrString: NSAttributedString) -> NSMutableAttributedString {
         var mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrString)
@@ -99,8 +116,8 @@ class PrintVisitor: JournalEntryItemVisitor {
 //        var pi = journalItem.parentInitials?.defaultInitials
 //        var place = journalItem.place?.mealLocation!
         
-        var otherInfo = appendTimePlaceInitials("8:00", place: "Kitchen", initials: "R.H.")
-        stringsArray.append(formatBulletItem(otherInfo))
+        var otherInfo = appendTimePlaceInitials("8:00", place: "Kitchen", initials: "B.C.")
+        stringsArray.append(formatBulletItemTimePlaceInitials(otherInfo))
         
     }
     
@@ -114,9 +131,25 @@ class PrintVisitor: JournalEntryItemVisitor {
         if let s = journalItem.fruitChoice?.name {
             stringsArray.append(formatBulletItem(s))
         }
-        var otherInfo = appendTimePlaceInitials("12:15", place: "Kitchen", initials: "A.H.")
-        stringsArray.append(formatBulletItem(otherInfo))
+        var otherInfo = appendTimePlaceInitials("12:15", place: "Kitchen", initials: "A.B.")
+        stringsArray.append(formatBulletItemTimePlaceInitials(otherInfo))
         
+        stringsArray.append(formatMealItemName("Afternoon Snack"))
+        stringsArray.append(formatBulletItem("Cheese, Crackers and Fruit"))
+        var otherInfoS = appendTimePlaceInitials("3:00", place: "Kitchen", initials: "A.B.")
+        stringsArray.append(formatBulletItemTimePlaceInitials(otherInfoS))
+        
+        stringsArray.append(formatMealItemName("Dinner"))
+        stringsArray.append(formatBulletItem("Chicken"))
+        stringsArray.append(formatBulletItem("Rice"))
+        stringsArray.append(formatBulletItem("Olive Oil"))
+        stringsArray.append(formatBulletItem("Brocoli"))
+        stringsArray.append(formatBulletItem("Milk"))
+        stringsArray.append(formatBulletItem("Salad"))
+        
+        var otherInfoD = appendTimePlaceInitials("6:00", place: "Kitchen", initials: "A.B.")
+        stringsArray.append(formatBulletItemTimePlaceInitials(otherInfoD))
+
     }
     func visit(journalItem: Dinner){
         
