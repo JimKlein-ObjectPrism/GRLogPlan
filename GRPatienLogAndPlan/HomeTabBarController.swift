@@ -10,13 +10,14 @@ import UIKit
 
 class HomeTabBarController: UITabBarController {
 
-    //Array that holds Food Journal Log Item 
+    @IBOutlet weak var homeTabBar: UITabBar!
+    //Array that holds Food Journal Log Item
     var dataArray = [AnyObject]()
     var dataStore = DataStore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //homeTabBar
         
         dataStore.loadFoodItems()
  

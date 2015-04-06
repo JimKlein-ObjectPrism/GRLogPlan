@@ -42,6 +42,7 @@
                         <viewControllerLayoutGuide type="bottom" id="D3T-9I-tK7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="roq-tf-Ne7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8m1-fm-20L">
@@ -240,10 +241,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-eW-haT">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-eW-haT">
                                 <rect key="frame" x="0.0" y="64" width="600" height="224"/>
                             </imageView>
-                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="ogx-nG-Eoa">
+                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="900" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogx-nG-Eoa">
                                 <rect key="frame" x="0.0" y="288" width="600" height="312"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cYs-6p-kZL">
@@ -965,6 +966,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
+                    <connections>
+                        <outlet property="homeTabBar" destination="W28-zg-YXA" id="cHZ-La-dRa"/>
+                        <outlet property="tabBar" destination="W28-zg-YXA" id="jY5-0n-ciT"/>
+                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>

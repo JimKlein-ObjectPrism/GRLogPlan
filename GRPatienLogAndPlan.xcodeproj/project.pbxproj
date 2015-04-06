@@ -35,6 +35,9 @@
 		EFBD36711ACCA14B006F32AA /* PrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36701ACCA14B006F32AA /* PrintViewController.swift */; };
 		EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */; };
 		EFBD36751ACCADC4006F32AA /* PrintVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */; };
+		EFBD36781AD30123006F32AA /* profile_user-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFBD36761AD30122006F32AA /* profile_user-16.png */; };
+		EFBD36791AD30123006F32AA /* Settings_gear-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFBD36771AD30123006F32AA /* Settings_gear-16.png */; };
+		EFBD367B1AD30AFB006F32AA /* calendar_day-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFBD367A1AD30AFB006F32AA /* calendar_day-16.png */; };
 		EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */; };
 		EFF448881AB1FEA9004A099F /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF448871AB1FEA9004A099F /* beach.jpg */; };
 		EFF4488C1AB20620004A099F /* print.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF4488B1AB20620004A099F /* print.png */; };
@@ -95,6 +98,9 @@
 		EFBD36701ACCA14B006F32AA /* PrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintViewController.swift; sourceTree = "<group>"; };
 		EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintTableViewCell.swift; sourceTree = "<group>"; };
 		EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintVisitor.swift; sourceTree = "<group>"; };
+		EFBD36761AD30122006F32AA /* profile_user-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_user-16.png"; sourceTree = "<group>"; };
+		EFBD36771AD30123006F32AA /* Settings_gear-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings_gear-16.png"; sourceTree = "<group>"; };
+		EFBD367A1AD30AFB006F32AA /* calendar_day-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_day-16.png"; sourceTree = "<group>"; };
 		EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMealsRecipesTableViewController.swift; sourceTree = "<group>"; };
 		EFF448871AB1FEA9004A099F /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach.jpg; sourceTree = "<group>"; };
 		EFF4488B1AB20620004A099F /* print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = print.png; sourceTree = "<group>"; };
@@ -211,6 +217,9 @@
 		986443841A9E8D1400887579 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				EFBD36761AD30122006F32AA /* profile_user-16.png */,
+				EFBD367A1AD30AFB006F32AA /* calendar_day-16.png */,
+				EFBD36771AD30123006F32AA /* Settings_gear-16.png */,
 				EFF4488D1AB22CDC004A099F /* Track.png */,
 				986443851A9E8D7C00887579 /* menu.png */,
 				EFF448871AB1FEA9004A099F /* beach.jpg */,
@@ -359,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFF448921AB22DF6004A099F /* 20pixelTrack.png in Resources */,
+				EFBD36781AD30123006F32AA /* profile_user-16.png in Resources */,
 				EF157BA61AAA597800847AEE /* MealItems.xml in Resources */,
 				EFF4488C1AB20620004A099F /* print.png in Resources */,
 				986443881A9E8D7C00887579 /* menu.png in Resources */,
@@ -367,10 +377,12 @@
 				EFF448901AB22D2D004A099F /* TrackDoc.icns in Resources */,
 				EFF448961AB231EB004A099F /* home-16.png in Resources */,
 				986443661A9E78FB00887579 /* LaunchScreen.xib in Resources */,
+				EFBD36791AD30123006F32AA /* Settings_gear-16.png in Resources */,
 				EFF448881AB1FEA9004A099F /* beach.jpg in Resources */,
 				EFF448941AB22E35004A099F /* Track-16.png in Resources */,
 				9864438A1A9E8D7C00887579 /* menu@3x.png in Resources */,
 				986443631A9E78FB00887579 /* Images.xcassets in Resources */,
+				EFBD367B1AD30AFB006F32AA /* calendar_day-16.png in Resources */,
 				EFF4488E1AB22CDC004A099F /* Track.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

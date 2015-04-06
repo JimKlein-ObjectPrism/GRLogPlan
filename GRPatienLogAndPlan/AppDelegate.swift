@@ -50,21 +50,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let homeNaveController = storyboard.instantiateViewControllerWithIdentifier("HomeNavController") as UINavigationController
         
         //let homeViewController = homeNaveController.viewControllers[0] as HomeViewController
+    
         
-        ////BUG:
-        
-        
+        // set up Tab Bar Controller
         let tabBarController = HomeTabBarController()
         
         tabBarController.viewControllers?.removeAll(keepCapacity: false)
         
+        // tab bar target view controllers added in order here:
         let controllers = [ homeNaveController , trackController ]
+        //let controllers = [ homeNaveController , detailTableViewController, trackController , menuTableViewController]
 
         tabBarController.viewControllers = controllers
+        //TODO:  hook up proper Profile and Single Day View controller destinations
+        // set tab bar icon and text here
+        trackController.tabBarItem =  UITabBarItem(title: "Track", image: UIImage(named: "calendar_day-16"), selectedImage: nil)
+        homeNaveController.tabBarItem =  UITabBarItem(title: "Home", image: UIImage(named: "home-16"), selectedImage: nil)
+//        detailTableViewController.tabBarItem =  UITabBarItem(title: "Today", image: UIImage(named: "Track-16"), selectedImage: nil)
+//        menuTableViewController.tabBarItem =  UITabBarItem(title: "Settings", image: UIImage(named: "profile_user-16"), selectedImage: nil)
         
         window?.rootViewController = tabBarController
-        trackController.tabBarItem =  UITabBarItem(title: "Track", image: UIImage(named: "Track-16"), selectedImage: nil)
-        homeNaveController.tabBarItem =  UITabBarItem(title: "Home", image: UIImage(named: "home-16"), selectedImage: nil)
         return true
     }
 

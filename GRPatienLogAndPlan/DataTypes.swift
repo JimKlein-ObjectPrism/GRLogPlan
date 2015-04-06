@@ -247,7 +247,13 @@ class PatientProfile {
     
     var addOns: [AddOn]?
     
-    //named Meals
+    var morningSnackRequired: Bool?
+    var afternoonSnackRequired: Bool?
+    var eveningSnackRequired: Bool?
+    
+    //named Meals - should be lazy loading for this one
+    var namedMeals: [NamedMeal] = []
+    
     
     init(){
         var person = Person(firstName: "Hannah", lastName: "Doe", nicName: "")
@@ -346,6 +352,8 @@ class AddOn: JournalEntryItem{
     }
 
 }
+
+
 
 class MealItem: MenuDisplayCell {
     var time: Time?
