@@ -19,8 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var dataStore: DataStore!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        
+        // Override point for customization after application launch.        
         dataStore = DataStore()
         dataArray = dataStore.buildDetailViewArray()
         
@@ -37,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //set up delegates for selecting items in the menu
 
         let detailTableViewController = contentNavController.viewControllers[0] as TrackTableViewController
+        detailTableViewController.dataStore = dataStore
         let menuTableViewController = trackMenuController.viewControllers[0] as MenuTrackTableViewController
         
         menuTableViewController.menuItemSelectionHandler = dataStore
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         trackController.rearViewController = trackMenuController
        
         var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as HomeViewController
-        
+                
         let homeNaveController = storyboard.instantiateViewControllerWithIdentifier("HomeNavController") as UINavigationController
         
         //let homeViewController = homeNaveController.viewControllers[0] as HomeViewController
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         homeNaveController.tabBarItem =  UITabBarItem(title: "Home", image: UIImage(named: "home-16"), selectedImage: nil)
 //        detailTableViewController.tabBarItem =  UITabBarItem(title: "Today", image: UIImage(named: "Track-16"), selectedImage: nil)
 //        menuTableViewController.tabBarItem =  UITabBarItem(title: "Settings", image: UIImage(named: "profile_user-16"), selectedImage: nil)
-        
+//        
         window?.rootViewController = tabBarController
         return true
     }

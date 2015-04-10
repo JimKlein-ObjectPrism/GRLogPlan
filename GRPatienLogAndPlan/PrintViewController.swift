@@ -10,17 +10,17 @@ import UIKit
 
 class PrintViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
-    var selectedCellDateValue = "Thursday, April 3"
+    var selectedCellDateValue = "Thursday, April 10"
     
     let journalEntries: [(String, String)] = [
-        ("Friday, April 3, 2015", "Status: Partially Complete"),
-        ("Thursday, April 2, 2015", "Status: Complete"),
-        ("Wednesday, April 1, 2015", "Status: Complete"),
-        ("Tuesday, March 31, 2015", "Status: Complete"),
-        ("Monday, March 30, 2015", "Status: Complete"),
-        ("Sunday, March 29, 2015", "Status: Complete"),
-        ("Saturday, March 28, 2015", "Status: Complete"),
-        ("Friday, March 27, 2015", "Status: Complete")
+        ("Friday, April 10, 2015", "Status: Partially Complete"),
+        ("Thursday, April 9, 2015", "Status: Complete"),
+        ("Wednesday, April 8, 2015", "Status: Complete"),
+        ("Tuesday, April 7, 2015", "Status: Complete"),
+        ("Monday, April 6, 2015", "Status: Complete"),
+        ("Sunday, April 5, 2015", "Status: Complete"),
+        ("Saturday, April 4, 2015", "Status: Complete"),
+        ("Friday, April 3, 2015", "Status: Complete")
         
     ]
     

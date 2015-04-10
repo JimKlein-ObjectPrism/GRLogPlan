@@ -294,7 +294,8 @@ enum nonMealItemState {
 }
 
 // There is a collection of these objects in profile
-class Medicine: DetailDisplayItem, MenuDisplayCell {
+class Medicine: DetailDisplayItem, MenuDisplayCell, JournalEntryItem {
+    
     var name:String = ""
     var dose:String = ""
     var instructions:String = ""
@@ -310,6 +311,18 @@ class Medicine: DetailDisplayItem, MenuDisplayCell {
         menuDisplayName = "Medicines"
         mealEntryState = MealEntryState.Empty
     }
+    
+    convenience init(name: String, dose: String, instructions: String){
+        self.init()
+        self.name = name
+        self.dose = dose
+        self.instructions = instructions
+        
+    }
+    func accept(journalItemVisitor: JournalEntryItemVisitor) {
+        journalItemVisitor.visit(self)
+    }
+
 }
 
 /*
@@ -375,6 +388,7 @@ class MealItem: MenuDisplayCell {
     
     init(){
         menuDisplayName = ""
+        
         mealEntryState = nil
     }
 }
@@ -450,6 +464,9 @@ class Breakfast: MealItem , JournalEntryItem{
 class Lunch : MealItem, JournalEntryItem{
     var meatChoice: FoodItem?
     var fruitChoice: FoodItem?
+    var meat: String?
+    var fruit: String?
+    
     //var mealEntryState: MealEntryState = MealEntryState.Empty
     override init()
     {
@@ -465,7 +482,7 @@ class Lunch : MealItem, JournalEntryItem{
 
 class Dinner: MealItem, JournalEntryItem{
     
-    //var kartiniRecipe: String?
+    //TODO: var kartiniRecipe: String?
     var meat: FoodItem?
     var starch: FoodItem?
     var oil: FoodItem?
@@ -566,6 +583,7 @@ class FoodItem {
 
 class FoodItemWithChoice: FoodItem {
     var choiceItems = [FoodItem]()
+    var selectedChildFoodItem: Int?
     
 }
 

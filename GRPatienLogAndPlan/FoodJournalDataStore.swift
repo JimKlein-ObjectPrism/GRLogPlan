@@ -9,7 +9,7 @@
 import Foundation
 
 
-class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
+class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, ChoiceItemSelectedDelegate {
     // Items that define or are used to define the contents of the Food Journal Log item
     var logEntryItems = [AnyObject]()
     
@@ -26,13 +26,52 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
     
     var currentFoodItemWithChoice: FoodItemWithChoice?
     
+    var currentMealItem: MealItem?
+    
     //Stack variables
     var currentIndexOfTopStackItem: Int = 0
     
     var stackIndexValue: Int = 0
     
-    //Update Detail View Delegate
+    //MARK: Delegates
     var updateDetailViewDelegate: UpdateDetailViewDelegate!
+    
+    
+    //MARK: Data Update Delgate Methods
+    func choiceItemSelectedHandler(childItemIndex: Int, indexPathSection: Int, indexPathRow: Int){
+        //update current meal item
+        println("l'")
+        currentMealItem = Lunch()
+        
+        switch currentMealItem {
+        case let x as Breakfast:
+            println("breaky")
+        case let x as Lunch:
+            switch indexPathSection{
+            case 0:
+                x.meat = ""
+                
+            case 1:
+                x.fruitChoice?.name = ""
+            default:
+                println("index out of range")
+            }
+        default:
+            println("index out of range")
+            assertionFailure("index out of range")
+        }
+        //update viewmodel
+        
+        
+    }
+    
+    func setValueForChoiceMealItem() {
+        // get meal item from view model
+        
+        // concatenate parent.name , chosenchild.name
+        
+        //set value in model object
+    }
     
     
     //MARK: Array Assembly Items
@@ -48,6 +87,8 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate {
         var profile = PatientProfile()
         return profile
     }
+    
+
     
    
     func buildDetailViewArray() -> [AnyObject]{

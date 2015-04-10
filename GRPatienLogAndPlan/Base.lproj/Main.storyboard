@@ -243,6 +243,9 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-eW-haT">
                                 <rect key="frame" x="0.0" y="64" width="600" height="224"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="64" width="400" height="224"/>
+                                </variation>
                             </imageView>
                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="900" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogx-nG-Eoa">
                                 <rect key="frame" x="0.0" y="288" width="600" height="312"/>
@@ -250,14 +253,14 @@
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cYs-6p-kZL">
                                         <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friday, April 3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wVH-Zm-dfP">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friday, April 10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wVH-Zm-dfP">
                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.32549020649999999" green="0.63921570780000003" blue="0.14901961389999999" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="backgroundColor" red="0.58664146437576592" green="0.7234253479777778" blue="0.46440326229819351" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="centerX" secondItem="wVH-Zm-dfP" secondAttribute="centerX" id="VHj-ao-9f1"/>
                                             <constraint firstAttribute="centerY" secondItem="wVH-Zm-dfP" secondAttribute="centerY" id="uKs-rX-FMf"/>
@@ -413,6 +416,15 @@
                                             </mask>
                                         </variation>
                                     </view>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Status:  Ready to Log a Meal!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AsD-mN-9Pn">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <variation key="widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="8" y="168" width="384" height="132"/>
+                                        </variation>
+                                    </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhM-O0-hur">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
@@ -423,7 +435,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.64651489230000003" green="1" blue="0.82851062580000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.58664146439999998" green="0.72342534800000002" blue="0.46440326230000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="OMZ-Tx-P8f">
                                                 <variation key="widthClass=compact" constant="60"/>
@@ -454,14 +466,8 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Status:  Ready to Log a Meal!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AsD-mN-9Pn">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.64651489230000003" green="1" blue="0.82851062580000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.58664146439999998" green="0.72342534800000002" blue="0.46440326230000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="vhM-O0-hur" secondAttribute="trailing" id="15k-sL-t07"/>
                                     <constraint firstItem="48c-F4-pQV" firstAttribute="top" secondItem="ogx-nG-Eoa" secondAttribute="top" constant="53" id="73g-DO-SbH">
@@ -482,8 +488,8 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
-                                        <exclude reference="vhM-O0-hur"/>
                                         <exclude reference="AsD-mN-9Pn"/>
+                                        <exclude reference="vhM-O0-hur"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="ErF-FV-s4D"/>
@@ -501,10 +507,11 @@
                                         <exclude reference="vbp-Sl-fMD"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="288" width="400" height="312"/>
                                     <mask key="subviews">
-                                        <include reference="vhM-O0-hur"/>
                                         <include reference="AsD-mN-9Pn"/>
+                                        <include reference="vhM-O0-hur"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="ErF-FV-s4D"/>
@@ -671,6 +678,9 @@
                                                 <segment title="First"/>
                                                 <segment title="Second"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="didSelectSegment:" destination="zbN-Bh-UXp" eventType="valueChanged" id="DRp-Lu-OCr"/>
+                                            </connections>
                                         </segmentedControl>
                                     </subviews>
                                     <constraints>

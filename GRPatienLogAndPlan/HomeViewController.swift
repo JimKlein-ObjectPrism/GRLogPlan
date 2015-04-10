@@ -10,6 +10,7 @@ import UIKit
 
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
 
+    var dataStore: DataStore?
     @IBOutlet weak var summaryTextView: UITextView!
     
     @IBOutlet weak var mealTitle: UILabel!
@@ -24,6 +25,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(animated: Bool) {
         println("ViewWillAppear called.")
         //mealTitle.text = "Lunch"
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
     }
 
     override func didReceiveMemoryWarning() {
@@ -145,6 +148,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func showMealSelectionView(sender: AnyObject) {
         let vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as TrackTableViewController
+        //vc.dataStore =
         
         /*
         //TODO: Code here should be hiding the tab bar, but its not
@@ -157,6 +161,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // initialize and set dataArray on TrackVC
         vc.dataArray = [AnyObject]()
+        vc.dataStore = appDelegate.dataStore
         
         if let d = appDelegate.dataArray[1] as? DetailDisplayItem {
             vc.detailDisplayItem = d
@@ -212,8 +217,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func backButtonPressed (sender: UIBarButtonItem ){
         let testString = "\u{2022}  Status:  Lunch Log Complete" +
         "\n\u{2022}  Tuna Sandwich " +
-        "\n\u{2022}  Banana" +
-            "\n\u{2022}  Time:  12:15" +
+        "\n\u{2022}  Apple" +
+            "\n\u{2022}  Time:  11:15" +
             "\n\u{2022}  Parent Intials:  A.B." +
             "\n\u{2022}  Place: Kitchen"
         self.summaryTextView.text = testString

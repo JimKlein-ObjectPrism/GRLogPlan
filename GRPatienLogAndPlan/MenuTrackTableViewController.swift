@@ -13,6 +13,8 @@ class MenuTrackTableViewController: UITableViewController {
     var dataArray: [AnyObject]!
     
     var menuItemSelectionHandler: MenuItemSelectedDelegate?
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

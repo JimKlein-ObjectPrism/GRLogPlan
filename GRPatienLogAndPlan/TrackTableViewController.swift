@@ -12,6 +12,8 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
 
     //@IBOutlet weak var menuButton: UIBarButtonItem!
     
+    var dataStore: DataStore!
+    
     var dataArray: [AnyObject]?
     
     var detailDisplayItem: DetailDisplayItem?
@@ -177,12 +179,18 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             var foodItemArray = currentItemsArray as [FoodItem]
             var cell = tableView.dequeueReusableCellWithIdentifier("ChoiceCell", forIndexPath: indexPath) as ChoiceItemsTableViewCell
             cell.choiceLabel?.text = foodItemArray[indexPath.row].itemDescription
+            cell.indexPathSection = indexPath.section
+            cell.indexPathRow  = indexPath.row
+            if dataStore != nil {
+            cell.segmentSelectionHandler = dataStore
+            }
             
             
             var segControl = cell.choiceSegmentControl as UISegmentedControl
            
-            
-            segControl.addTarget(self, action: "handleSegmentedControlSelectionChanged:", forControlEvents: .ValueChanged)
+            //TODO:  for the redraw, handle pre-selected child item  FoodChoiceItem.selectedChildFoodItem?  by setting the selected index of segment control to value in FoodChoiceItem
+            //HANDLE
+//            segControl.addTarget(self, action: "handleSegmentedControlSelectionChanged:", forControlEvents: .ValueChanged)
             
                 segControl.removeAllSegments()
 
@@ -284,7 +292,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         var currentItem: DetailDisplayItem = detailDisplayItem!
         var itemsArray = self.sectionData[indexPath.section]
         //switch on type here
-        //var currentItem = self.detailDisplayItem
+        //var currentItem = self.detailDisplayItem pendulum, ken,  michael, android, bjorn, built light, online teacher.  kevin, precision caset part.  web ios.  brian, ideependent. start ou  cdk brian,  ios-devleopers.io.  next ascent, todd, ebay, dhval, ebay classified. zabzab  pdx electrohacks.
         switch currentItem {
         case let currentItem as BreakfastItems:
                 if indexPath.section == 0 {
@@ -319,17 +327,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             else if indexPath.section == 5 {
                 //currentItem.dinnerItem.requiredItems = itemsArray[indexPath.row] as? FoodItem
             }
-
-
-            /*
-            var meat: FoodItem?
-            var startch: FoodItem?
-            var oil: FoodItem?
-            var vegetable: FoodItem?
-            var requiredItems: FoodItem?
-            var mealDetails: FoodItem?
-            */
-            
+           
         default:
             //handle other items here
             println("unimplemented code for non-meal items encountered")
@@ -392,6 +390,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     
     
     //MARK: Table Cell Actions
+
     
     @IBAction func showAlertForParentInitials(sender: AnyObject) {
         let buttonList = ["A.B." , "B.C."]
@@ -413,11 +412,11 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
 
             var action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                //set the button Label text to the selected value
+                //send initials updated event
                 button.titleLabel?.text = buttonList[s]
                 newTitle = buttonList[s]
                 self.parentInitials = buttonList[s]
-                println("New Title for button \(button.titleLabel!.text) TODO: finish implementing code.")
+                
             })
             
             choiceMenu.addAction(action)
