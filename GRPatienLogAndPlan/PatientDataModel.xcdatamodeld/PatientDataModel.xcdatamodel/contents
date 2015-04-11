@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1514" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Activity" syncable="YES">
+    <entity name="OPActivity" syncable="YES">
         <attribute name="activityDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="completedPerscribedActivityForDay" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="supervisedBy" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="activity" inverseEntity="Profile" syncable="YES"/>
+        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="activity" inverseEntity="OPProfile" syncable="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPAdditionalItems" inverseName="activity" inverseEntity="OPAdditionalItems" syncable="YES"/>
     </entity>
-    <entity name="AddOn" syncable="YES">
+    <entity name="OPAdditionalItems" syncable="YES">
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPActivity" inverseName="relationship" inverseEntity="OPActivity" syncable="YES"/>
+        <relationship name="medicine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPMedicines" inverseName="medicine" inverseEntity="OPMedicines" syncable="YES"/>
+    </entity>
+    <entity name="OPAddOn" syncable="YES">
         <attribute name="addOnItem" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="instructions" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="wasConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="addOns" inverseEntity="Profile" syncable="YES"/>
+        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="addOns" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
-    <entity name="AfternoonSnack" syncable="YES">
-        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JournalEntry" inverseName="afternoonSnack" inverseEntity="JournalEntry" syncable="YES"/>
-    </entity>
-    <entity name="Breakfast" syncable="YES">
-        <attribute name="fruitChoice" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mealChoice" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="OPAfternoonSnack" syncable="YES">
+        <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parentInitials" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JournalEntry" inverseName="breakfast" inverseEntity="JournalEntry" syncable="YES"/>
+        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="afternoonSnack" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
-    <entity name="Dinner" syncable="YES">
+    <entity name="OPBreakfast" syncable="YES">
+        <attribute name="fruitChoice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mealChoice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentInitials" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="breakfast" inverseEntity="OPJournalEntry" syncable="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPNamedMeal" inverseName="breakfast" inverseEntity="OPNamedMeal" syncable="YES"/>
+    </entity>
+    <entity name="OPDinner" syncable="YES">
         <attribute name="clinicProvidedMeal" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="meat" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="oil" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parentInitials" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
@@ -35,68 +48,112 @@
         <attribute name="starch" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="vegetable" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JournalEntry" inverseName="dinner" inverseEntity="JournalEntry" syncable="YES"/>
+        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="dinner" inverseEntity="OPJournalEntry" syncable="YES"/>
+        <relationship name="namedMeal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPNamedMeal" inverseName="dinner" inverseEntity="OPNamedMeal" syncable="YES"/>
     </entity>
-    <entity name="ExtraSnack" syncable="YES">
+    <entity name="OPExtraSnack" syncable="YES">
+        <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentInitials" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="snackTime" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="extraSnacks" inverseEntity="Profile" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="extraSnacks" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
-    <entity name="JournalEntry" syncable="YES">
+    <entity name="OPJournalEntry" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="afternoonSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AfternoonSnack" inverseName="journalEntry" inverseEntity="AfternoonSnack" syncable="YES"/>
-        <relationship name="breakfast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Breakfast" inverseName="journalEntry" inverseEntity="Breakfast" syncable="YES"/>
-        <relationship name="dinner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dinner" inverseName="journalEntry" inverseEntity="Dinner" syncable="YES"/>
-        <relationship name="lunch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lunch" inverseName="journalEntry" inverseEntity="Lunch" syncable="YES"/>
-        <relationship name="morningSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MorningSnack" inverseName="journalEntry" inverseEntity="MorningSnack" syncable="YES"/>
-        <relationship name="patientRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientRecord" inverseName="journalEntries" inverseEntity="PatientRecord" syncable="YES"/>
+        <relationship name="afternoonSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPAfternoonSnack" inverseName="journalEntry" inverseEntity="OPAfternoonSnack" syncable="YES"/>
+        <relationship name="breakfast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPBreakfast" inverseName="journalEntry" inverseEntity="OPBreakfast" syncable="YES"/>
+        <relationship name="dinner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPDinner" inverseName="journalEntry" inverseEntity="OPDinner" syncable="YES"/>
+        <relationship name="lunch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPLunch" inverseName="journalEntry" inverseEntity="OPLunch" syncable="YES"/>
+        <relationship name="morningSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPMorningSnack" inverseName="journalEntry" inverseEntity="OPMorningSnack" syncable="YES"/>
+        <relationship name="patientRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPPatientRecord" inverseName="journalEntries" inverseEntity="OPPatientRecord" syncable="YES"/>
     </entity>
-    <entity name="Lunch" syncable="YES">
+    <entity name="OPLunch" syncable="YES">
         <attribute name="clinicProvidedMeal" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JournalEntry" inverseName="lunch" inverseEntity="JournalEntry" syncable="YES"/>
+        <attribute name="fruit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="meat" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentInitials" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="lunch" inverseEntity="OPJournalEntry" syncable="YES"/>
+        <relationship name="namedMeal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPNamedMeal" inverseName="lunch" inverseEntity="OPNamedMeal" syncable="YES"/>
     </entity>
-    <entity name="Medicine" syncable="YES">
-        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="medicine" inverseEntity="Profile" syncable="YES"/>
+    <entity name="OPMedicine" syncable="YES">
+        <attribute name="dose" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="medicines" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPMedicines" inverseName="medicines" inverseEntity="OPMedicines" syncable="YES"/>
     </entity>
-    <entity name="MorningSnack" syncable="YES">
-        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JournalEntry" inverseName="morningSnack" inverseEntity="JournalEntry" syncable="YES"/>
+    <entity name="OPMedicines" syncable="YES">
+        <attribute name="takenAsPrescribed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="medicine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPAdditionalItems" inverseName="medicine" inverseEntity="OPAdditionalItems" syncable="YES"/>
+        <relationship name="medicineList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="medicineLIst" inverseEntity="OPProfile" syncable="YES"/>
+        <relationship name="medicines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPMedicine" inverseName="medicines" inverseEntity="OPMedicine" syncable="YES"/>
     </entity>
-    <entity name="Parent" syncable="YES">
+    <entity name="OPMorningSnack" syncable="YES">
+        <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentInitials" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="morningSnack" inverseEntity="OPJournalEntry" syncable="YES"/>
+    </entity>
+    <entity name="OPNamedMeal" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="breakfast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPBreakfast" inverseName="relationship" inverseEntity="OPBreakfast" syncable="YES"/>
+        <relationship name="dinner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPDinner" inverseName="namedMeal" inverseEntity="OPDinner" syncable="YES"/>
+        <relationship name="lunch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPLunch" inverseName="namedMeal" inverseEntity="OPLunch" syncable="YES"/>
+        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="namedMeals" inverseEntity="OPProfile" syncable="YES"/>
+    </entity>
+    <entity name="OPNote" syncable="YES">
+        <attribute name="noteText" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OPParent" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nicName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="parents" inverseEntity="Profile" syncable="YES"/>
+        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="parents" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
-    <entity name="PatientRecord" syncable="YES">
+    <entity name="OPPatientRecord" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="journalEntries" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="JournalEntry" inverseName="patientRecord" inverseEntity="JournalEntry" syncable="YES"/>
-        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="patientRecord" inverseEntity="Profile" syncable="YES"/>
+        <relationship name="journalEntries" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="OPJournalEntry" inverseName="patientRecord" inverseEntity="OPJournalEntry" syncable="YES"/>
+        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="patientRecord" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
-    <entity name="Profile" syncable="YES">
+    <entity name="OPProfile" syncable="YES">
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="initialsDefaultParent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="treatmentPhase" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="profile" inverseEntity="Activity" syncable="YES"/>
-        <relationship name="addOns" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AddOn" inverseName="profile" inverseEntity="AddOn" syncable="YES"/>
-        <relationship name="extraSnacks" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExtraSnack" inverseName="profile" inverseEntity="ExtraSnack" syncable="YES"/>
-        <relationship name="medicine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Medicine" inverseName="profile" inverseEntity="Medicine" syncable="YES"/>
-        <relationship name="parents" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Parent" inverseName="profile" inverseEntity="Parent" syncable="YES"/>
-        <relationship name="patientRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientRecord" inverseName="profile" inverseEntity="PatientRecord" syncable="YES"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPActivity" inverseName="profile" inverseEntity="OPActivity" syncable="YES"/>
+        <relationship name="addOns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPAddOn" inverseName="profile" inverseEntity="OPAddOn" syncable="YES"/>
+        <relationship name="extraSnacks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPExtraSnack" inverseName="profile" inverseEntity="OPExtraSnack" syncable="YES"/>
+        <relationship name="medicineLIst" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPMedicines" inverseName="medicineList" inverseEntity="OPMedicines" syncable="YES"/>
+        <relationship name="namedMeals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPNamedMeal" inverseName="profile" inverseEntity="OPNamedMeal" syncable="YES"/>
+        <relationship name="parents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPParent" inverseName="profile" inverseEntity="OPParent" syncable="YES"/>
+        <relationship name="patientRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPPatientRecord" inverseName="profile" inverseEntity="OPPatientRecord" syncable="YES"/>
     </entity>
-    <entity name="Snack" syncable="YES"/>
+    <entity name="OPSnack" syncable="YES"/>
     <elements>
-        <element name="Activity" positionX="-92" positionY="-378" width="128" height="28"/>
-        <element name="AddOn" positionX="-18" positionY="-207" width="128" height="103"/>
-        <element name="AfternoonSnack" positionX="-243" positionY="117" width="128" height="58"/>
-        <element name="Breakfast" positionX="-72" positionY="18" width="128" height="135"/>
-        <element name="Dinner" positionX="-72" positionY="281" width="128" height="210"/>
-        <element name="ExtraSnack" positionX="-27" positionY="-486" width="128" height="73"/>
-        <element name="JournalEntry" positionX="-396" positionY="126" width="128" height="148"/>
-        <element name="Lunch" positionX="-63" positionY="189" width="128" height="75"/>
-        <element name="Medicine" positionX="-18" positionY="-279" width="128" height="58"/>
-        <element name="MorningSnack" positionX="-252" positionY="108" width="128" height="58"/>
-        <element name="Parent" positionX="-27" positionY="-135" width="128" height="103"/>
-        <element name="PatientRecord" positionX="-585" positionY="18" width="128" height="118"/>
-        <element name="Profile" positionX="-378" positionY="-144" width="128" height="148"/>
-        <element name="Snack" positionX="-272" positionY="342" width="128" height="45"/>
+        <element name="OPActivity" positionX="-92" positionY="-378" width="128" height="28"/>
+        <element name="OPAddOn" positionX="-18" positionY="-207" width="128" height="28"/>
+        <element name="OPAfternoonSnack" positionX="-243" positionY="117" width="128" height="28"/>
+        <element name="OPBreakfast" positionX="-72" positionY="18" width="128" height="28"/>
+        <element name="OPDinner" positionX="-72" positionY="281" width="128" height="28"/>
+        <element name="OPExtraSnack" positionX="-27" positionY="-486" width="128" height="28"/>
+        <element name="OPJournalEntry" positionX="-396" positionY="126" width="128" height="28"/>
+        <element name="OPLunch" positionX="-63" positionY="189" width="128" height="28"/>
+        <element name="OPMedicine" positionX="-18" positionY="-279" width="128" height="28"/>
+        <element name="OPMorningSnack" positionX="-252" positionY="108" width="128" height="28"/>
+        <element name="OPParent" positionX="-27" positionY="-135" width="128" height="28"/>
+        <element name="OPPatientRecord" positionX="-585" positionY="18" width="128" height="28"/>
+        <element name="OPProfile" positionX="-378" positionY="-144" width="128" height="28"/>
+        <element name="OPSnack" positionX="-272" positionY="342" width="128" height="28"/>
+        <element name="OPMedicines" positionX="-387" positionY="-333" width="128" height="30"/>
+        <element name="OPAdditionalItems" positionX="-378" positionY="-324" width="128" height="30"/>
+        <element name="OPNote" positionX="-369" positionY="-315" width="128" height="30"/>
+        <element name="OPNamedMeal" positionX="-360" positionY="-306" width="128" height="30"/>
     </elements>
 </model>

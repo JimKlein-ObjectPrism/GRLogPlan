@@ -278,6 +278,13 @@ enum TreatmentPhase: Int{
     case PostGraduation
 }
 
+enum AgeGroup: Int {
+    case Fire
+    case Water
+    case Wind
+}
+
+
 enum MealEntryState {
     case Empty
     case Incomplete
