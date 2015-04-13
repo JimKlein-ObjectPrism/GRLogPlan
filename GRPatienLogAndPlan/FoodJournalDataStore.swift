@@ -8,8 +8,12 @@
 
 import Foundation
 
+import CoreData
 
 class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, ChoiceItemSelectedDelegate {
+    
+    var managedContext: NSManagedObjectContext!
+    
     // Items that define or are used to define the contents of the Food Journal Log item
     var logEntryItems = [AnyObject]()
     
@@ -72,6 +76,11 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
         
         //set value in model object
     }
+    
+    
+    //MARK: CoreData Methods
+    
+    //func getNew
     
     
     //MARK: Array Assembly Items
