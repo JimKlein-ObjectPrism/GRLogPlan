@@ -276,14 +276,92 @@ enum TreatmentPhase: Int{
     case IOP
     case OutpatientCounseling
     case PostGraduation
+    
+    var name: String {
+        switch self {
+        case .DTU:
+            return "DTU"
+        case .IOP:
+            return "IOP"
+        case .OutpatientCounseling:
+            return "Outpatient"
+        case .PostGraduation:
+            return "Post Graduation"
+        }
+    }
+    
+    static func all() -> [TreatmentPhase] {
+        return [.DTU, .IOP, .OutpatientCounseling, .PostGraduation]
+    }
+    static func count() -> Int {
+        return self.all().count
+    }
+    
+    //Subscript is read only
+    subscript(i: Int) -> TreatmentPhase?
+        {
+        get
+        {
+            if 0 <= i && i < TreatmentPhase.all().count {
+                if let a = TreatmentPhase(rawValue: i) {
+                    return a
+                } else {
+                    return nil
+                }
+            }
+            else{
+                return nil
+            }
+        }
+    }
+    
 }
 
 enum AgeGroup: Int {
+    case Earth
     case Fire
     case Water
     case Wind
-}
+    
+    var name: String {
+        switch self {
+        case .Earth:
+            return "Earth"
+        case .Fire:
+            return "Fire"
+        case .Water:
+            return "Water"
+        case .Wind:
+            return "Wind"
+        }
+    }
+    
+    static func all() -> [AgeGroup] {
+        return [.Earth, .Fire, .Water, .Wind]
+    }
+    static func count() -> Int {
+        return self.all().count
+    }
+    
+    //Subscript is read only
+    subscript(i: Int) -> AgeGroup?
+        {
+        get
+        {
+            if 0 <= i && i < AgeGroup.all().count {
+                if let a = AgeGroup(rawValue: i) {
+                    return a
+                } else {
+                    return nil
+                }
+            }
+            else{
+                return nil
+            }
+        }
+    }
 
+}
 
 enum MealEntryState {
     case Empty
