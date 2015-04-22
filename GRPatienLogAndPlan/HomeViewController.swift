@@ -148,14 +148,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func showMealSelectionView(sender: AnyObject) {
         let vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as TrackTableViewController
-        //vc.dataStore =
-        
-        /*
-        //TODO: Code here should be hiding the tab bar, but its not
-        if let tabVC = self.tabBarController{
-           tabVC.hidesBottomBarWhenPushed = true
-        }
-        */
         
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         
