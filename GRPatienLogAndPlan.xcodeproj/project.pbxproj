@@ -39,6 +39,8 @@
 		EFBD36791AD30123006F32AA /* Settings_gear-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFBD36771AD30123006F32AA /* Settings_gear-16.png */; };
 		EFBD367B1AD30AFB006F32AA /* calendar_day-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFBD367A1AD30AFB006F32AA /* calendar_day-16.png */; };
 		EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */; };
+		EFCF29101AF057C900B8CF72 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */; };
+		EFCF29121AF0634100B8CF72 /* print-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFCF29111AF0634100B8CF72 /* print-16.png */; };
 		EFE08A2E1AD9AFF4004C80C3 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE08A2D1AD9AFF4004C80C3 /* CoreDataStack.swift */; };
 		EFF448881AB1FEA9004A099F /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF448871AB1FEA9004A099F /* beach.jpg */; };
 		EFF4488C1AB20620004A099F /* print.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF4488B1AB20620004A099F /* print.png */; };
@@ -103,6 +105,8 @@
 		EFBD36771AD30123006F32AA /* Settings_gear-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings_gear-16.png"; sourceTree = "<group>"; };
 		EFBD367A1AD30AFB006F32AA /* calendar_day-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_day-16.png"; sourceTree = "<group>"; };
 		EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMealsRecipesTableViewController.swift; sourceTree = "<group>"; };
+		EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		EFCF29111AF0634100B8CF72 /* print-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "print-16.png"; sourceTree = "<group>"; };
 		EFE08A2D1AD9AFF4004C80C3 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		EFF448871AB1FEA9004A099F /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach.jpg; sourceTree = "<group>"; };
 		EFF4488B1AB20620004A099F /* print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = print.png; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 				986443591A9E78FB00887579 /* AppDelegate.swift */,
 				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
 				EF157BB31AAE7C0200847AEE /* HomeViewController.swift */,
+				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
 				EFBD36701ACCA14B006F32AA /* PrintViewController.swift */,
 				98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */,
@@ -225,6 +230,7 @@
 				EFF4488D1AB22CDC004A099F /* Track.png */,
 				986443851A9E8D7C00887579 /* menu.png */,
 				EFF448871AB1FEA9004A099F /* beach.jpg */,
+				EFCF29111AF0634100B8CF72 /* print-16.png */,
 				EFF4488F1AB22D2D004A099F /* TrackDoc.icns */,
 				EFF448951AB231EB004A099F /* home-16.png */,
 				EFF448931AB22E35004A099F /* Track-16.png */,
@@ -380,6 +386,7 @@
 				EFF448901AB22D2D004A099F /* TrackDoc.icns in Resources */,
 				EFF448961AB231EB004A099F /* home-16.png in Resources */,
 				986443661A9E78FB00887579 /* LaunchScreen.xib in Resources */,
+				EFCF29121AF0634100B8CF72 /* print-16.png in Resources */,
 				EFBD36791AD30123006F32AA /* Settings_gear-16.png in Resources */,
 				EFF448881AB1FEA9004A099F /* beach.jpg in Resources */,
 				EFF448941AB22E35004A099F /* Track-16.png in Resources */,
@@ -418,6 +425,7 @@
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */,
 				EF157BBB1AAEA1D600847AEE /* ChoiceItemsTableViewCell.swift in Sources */,
+				EFCF29101AF057C900B8CF72 /* ProfileTableViewController.swift in Sources */,
 				EF157BAC1AAE088600847AEE /* DataTypes.swift in Sources */,
 				EF157BB41AAE7C0200847AEE /* HomeViewController.swift in Sources */,
 				EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */,
