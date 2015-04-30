@@ -25,6 +25,7 @@ class MenuTrackTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         
         dataArray = appDelegate.dataArray
 
@@ -113,7 +114,6 @@ class MenuTrackTableViewController: UITableViewController {
             // skipping Snack!
         case 3:
             menuItemSelectionHandler?.menuItemSelectedHandler(Dinner())
-            
             
         default:
             println("Unfinished implementation")

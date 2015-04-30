@@ -10,17 +10,17 @@ import UIKit
 
 class PrintViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
-    var selectedCellDateValue = "Thursday, April 10"
+    var selectedCellDateValue = "Thursday, April 30"
     
     let journalEntries: [(String, String)] = [
-        ("Friday, April 10, 2015", "Status: Partially Complete"),
-        ("Thursday, April 9, 2015", "Status: Complete"),
-        ("Wednesday, April 8, 2015", "Status: Complete"),
-        ("Tuesday, April 7, 2015", "Status: Complete"),
-        ("Monday, April 6, 2015", "Status: Complete"),
-        ("Sunday, April 5, 2015", "Status: Complete"),
-        ("Saturday, April 4, 2015", "Status: Complete"),
-        ("Friday, April 3, 2015", "Status: Complete")
+        
+        ("Thursday, April 30, 2015", "Status: Complete"),
+        ("Wednesday, April 29, 2015", "Status: Complete"),
+        ("Tuesday, April 28, 2015", "Status: Complete"),
+        ("Monday, April 27, 2015", "Status: Complete"),
+        ("Sunday, April 26, 2015", "Status: Complete"),
+        ("Saturday, April 25, 2015", "Status: Complete"),
+        ("Friday, April 24, 2015", "Status: Complete")
         
     ]
     
@@ -41,6 +41,8 @@ class PrintViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         previewTextView.delegate = self
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+        
     }
     
     override func didReceiveMemoryWarning() {

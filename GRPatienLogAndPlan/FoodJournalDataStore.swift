@@ -173,8 +173,8 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
             
         case let menudisplayType as Lunch:
             updateDetailViewDelegate.updateDetailViewHandler(
-                self.buildLunchItems(loadProfile(), journalItem: buildJournalEntry(loadProfile())
-                ))
+                self.buildLunchItems(loadProfile(), journalItem: buildJournalEntry(loadProfile()))
+                )
         case let menudisplayType as Dinner:
             updateDetailViewDelegate.updateDetailViewHandler(
                 self.buildDinnerItems(loadProfile(), journalItem: buildJournalEntry(loadProfile())

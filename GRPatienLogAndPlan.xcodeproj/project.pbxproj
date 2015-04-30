@@ -41,6 +41,7 @@
 		EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */; };
 		EFCF29101AF057C900B8CF72 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */; };
 		EFCF29121AF0634100B8CF72 /* print-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFCF29111AF0634100B8CF72 /* print-16.png */; };
+		EFCF291C1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */; };
 		EFE08A2E1AD9AFF4004C80C3 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE08A2D1AD9AFF4004C80C3 /* CoreDataStack.swift */; };
 		EFF448881AB1FEA9004A099F /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF448871AB1FEA9004A099F /* beach.jpg */; };
 		EFF4488C1AB20620004A099F /* print.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF4488B1AB20620004A099F /* print.png */; };
@@ -107,6 +108,7 @@
 		EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMealsRecipesTableViewController.swift; sourceTree = "<group>"; };
 		EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		EFCF29111AF0634100B8CF72 /* print-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "print-16.png"; sourceTree = "<group>"; };
+		EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodJournalTableViewController.swift; sourceTree = "<group>"; };
 		EFE08A2D1AD9AFF4004C80C3 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		EFF448871AB1FEA9004A099F /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach.jpg; sourceTree = "<group>"; };
 		EFF4488B1AB20620004A099F /* print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = print.png; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
 				986443591A9E78FB00887579 /* AppDelegate.swift */,
 				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
+				EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */,
 				EF157BB31AAE7C0200847AEE /* HomeViewController.swift */,
 				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
@@ -425,6 +428,7 @@
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */,
 				EF157BBB1AAEA1D600847AEE /* ChoiceItemsTableViewCell.swift in Sources */,
+				EFCF291C1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift in Sources */,
 				EFCF29101AF057C900B8CF72 /* ProfileTableViewController.swift in Sources */,
 				EF157BAC1AAE088600847AEE /* DataTypes.swift in Sources */,
 				EF157BB41AAE7C0200847AEE /* HomeViewController.swift in Sources */,

@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let detailTableViewController = contentNavController.viewControllers[0] as TrackTableViewController
         detailTableViewController.dataStore = dataStore
+        
         let menuTableViewController = trackMenuController.viewControllers[0] as MenuTrackTableViewController
         
         menuTableViewController.menuItemSelectionHandler = dataStore
@@ -57,6 +58,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //let homeViewController = homeNaveController.viewControllers[0] as HomeViewController
         
+        
+        let newTrackTableVC =  storyboard.instantiateViewControllerWithIdentifier("FoodJournalTableViewController") as FoodJournalTableViewController
+        let newTrackNav = storyboard.instantiateViewControllerWithIdentifier("FoodJournalNavController") as UINavigationController
+        menuTableViewController.menuItemSelectionHandler = dataStore
+        
         let profileTableVC =  storyboard.instantiateViewControllerWithIdentifier("ProfileTableViewController") as ProfileTableViewController
         let profileNav = storyboard.instantiateViewControllerWithIdentifier("ProfileNavController") as UINavigationController
         
@@ -69,13 +75,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.viewControllers?.removeAll(keepCapacity: false)
         
         // tab bar target view controllers added in order here:
-        let controllers = [ homeNaveController , trackController , printNavVC, profileNav ]
+        let controllers = [ homeNaveController , newTrackNav , printNavVC, profileNav ]
         //let controllers = [ homeNaveController , detailTableViewController, trackController , menuTableViewController]
 
         tabBarController.viewControllers = controllers
         //TODO:  hook up proper Profile and Single Day View controller destinations
         // set tab bar icon and text here
-        trackController.tabBarItem =  UITabBarItem(title: "Track", image: UIImage(named: "calendar_day-16"), selectedImage: nil)
+        newTrackNav.tabBarItem =  UITabBarItem(title: "Track", image: UIImage(named: "calendar_day-16"), selectedImage: nil)
         homeNaveController.tabBarItem =  UITabBarItem(title: "Home", image: UIImage(named: "home-16"), selectedImage: nil)
         
         printNavVC.tabBarItem =  UITabBarItem(title: "Print", image: UIImage(named: "print-16"), selectedImage: nil)

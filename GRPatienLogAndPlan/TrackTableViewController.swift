@@ -57,7 +57,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
                     //self.navigationItem.title = item.
                 }
                 //Save Button
-                var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonPressed:")
+                var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonPressed:")
 
                 self.navigationItem.rightBarButtonItem = sb
                 
@@ -76,6 +76,8 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         {
             println("AppDelegate = nil. The impossible happened.")
         }
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+        
     }
     
     // MARK: - NavBar Actions
@@ -88,7 +90,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     }
     func saveButtonPressed (sender: UIBarButtonItem ){
         
-        
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     
