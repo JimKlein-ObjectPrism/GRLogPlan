@@ -1,16 +1,16 @@
 //
-//  PopoverTableViewController.swift
+//  MealTrackingTableViewController.swift
 //  GRPatienLogAndPlan
 //
-//  Created by James Klein on 3/12/15.
+//  Created by James Klein on 5/11/15.
 //  Copyright (c) 2015 ObjectPrism Corp. All rights reserved.
 //
 
 import UIKit
 
-class PopoverTableViewController: UITableViewController {
-    var items: [String] = []
+class MealTrackingTableViewController: UITableViewController {
 
+    var vm : BreakfastVM!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,48 +32,28 @@ class PopoverTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 1
+        return vm.numberOfSectionsInTableView(self.tableView)
     }
-    
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return items.count
+        return vm.tableView(tableView , numberOfRowsInSection: section)
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return vm.tableView(tableView , cellForRowAtIndexPath: indexPath)
+    }
+
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return vm.tableView(tableView , titleForHeaderInSection: section)
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        vm.didDeselectRowAtIndexPath( indexPath)
+        //vm.tableView(tableView, didDeselectRowAtIndexPath: indexPath)
+    }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //var cell: UITableViewCell = UITableViewCell()
-        
-        //var numberOfSections = rowArrays.count
-        
-        //if numberOfSections > 0 {
-        //var cellTextArray = rowArrays[indexPath.section]
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel?.text = items[indexPath.row]
-        return cell
-    }
-    override func tableView(tableView: UITableView,
-        didSelectRowAtIndexPath indexPath: NSIndexPath){
-//            selectedItem = items[indexPath.row]
-//            if let handler = self.selectionHandler{
-//                handler(selectedItem: self.selectedItem)
-//            }
-            
-            dismissViewControllerAnimated(true , completion: nil)
-            
-    }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

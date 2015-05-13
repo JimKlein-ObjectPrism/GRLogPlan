@@ -24,7 +24,7 @@ class MenuTrackTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         
         dataArray = appDelegate.dataArray
@@ -61,22 +61,22 @@ class MenuTrackTableViewController: UITableViewController {
         
                 switch item {
         case let mealItem as BreakfastItems:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             cell.titleLabel.text = "Breakfast"
             //cell.statusDisplayView.backgroundColor = UIColor.greenColor()
             return cell
             
         case let mealItem as LunchItems:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             cell.titleLabel.text = "Lunch"
             return cell
             
         case let mealItem as DinnerItems:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             cell.titleLabel.text = "Dinner"
             return cell
         case let mealItem as Snack:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             cell.titleLabel.text = mealItem.menuDisplayName
             return cell
             
@@ -90,7 +90,7 @@ class MenuTrackTableViewController: UITableViewController {
             //                return cell
             
         default:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             if let menuItem = item as? MenuDisplayCell {
                 cell.titleLabel.text = menuItem.menuDisplayName
                 return cell

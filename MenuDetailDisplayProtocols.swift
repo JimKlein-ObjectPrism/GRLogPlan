@@ -20,7 +20,4 @@ protocol MenuItemSelectedDelegate {
     func menuItemSelectedHandler(menudisplayType: MenuDisplayCell)
 }
 
-protocol ChoiceItemSelectedDelegate {
-    func choiceItemSelectedHandler(childItemIndex: Int, indexPathSection: Int, indexPathRow: Int)
-}
 

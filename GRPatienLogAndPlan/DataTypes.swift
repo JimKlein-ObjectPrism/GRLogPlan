@@ -387,7 +387,7 @@ class Medicine: DetailDisplayItem, MenuDisplayCell, JournalEntryItem {
     var didTakeMedsForDay: Bool = false
     
     //MenuDisplayCell properties
-    var menuDisplayName: String
+    @objc var menuDisplayName: String
     //this property can be nil, since it is not applicable to all menu items
     var mealEntryState: MealEntryState!
 
@@ -421,7 +421,7 @@ class Activity: DetailDisplayItem, MenuDisplayCell, JournalEntryItem {
     var didPerscribedActivityForDay = false
     var supervisedBy: Person?
     
-    var menuDisplayName: String
+    @objc var menuDisplayName: String
     //this property can be nil, since it is not applicable to all menu items
     var mealEntryState: MealEntryState!
     
@@ -464,7 +464,7 @@ class MealItem: MenuDisplayCell {
     // store users name here, not sure where this gets displayed...
     var namedMealName: String?
     
-    var menuDisplayName: String
+    @objc var menuDisplayName: String
     //this property can be nil, since it is not applicable to all menu items
     var mealEntryState: MealEntryState!
 

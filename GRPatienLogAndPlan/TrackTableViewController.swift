@@ -53,7 +53,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
                 // back button
                 var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
                 self.navigationItem.leftBarButtonItem = b
-                if let item = detailDisplayItem? {
+                if let item = detailDisplayItem {
                     //self.navigationItem.title = item.
                 }
                 //Save Button
@@ -171,22 +171,20 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         
         var row = indexPath.row
         
-        
         let currentItem: AnyObject = currentItemsArray[indexPath.row]
         
         switch currentItem {
         case let currentItem as FoodItemWithChoice:
             //handle fooditemwithchoice
             //currentItemsArray must be [FoodItems]
-            var foodItemArray = currentItemsArray as [FoodItem]
-            var cell = tableView.dequeueReusableCellWithIdentifier("ChoiceCell", forIndexPath: indexPath) as ChoiceItemsTableViewCell
+            var foodItemArray = currentItemsArray as! [FoodItem]
+            var cell = tableView.dequeueReusableCellWithIdentifier(ChoiceItemsTableViewCell.cellIdentifier, forIndexPath: indexPath) as! ChoiceItemsTableViewCell
             cell.choiceLabel?.text = foodItemArray[indexPath.row].itemDescription
-            cell.indexPathSection = indexPath.section
-            cell.indexPathRow  = indexPath.row
+            cell.indexPath = indexPath
+            //cell.indexPathRow  = indexPath.row
             if dataStore != nil {
             cell.segmentSelectionHandler = dataStore
             }
-            
             
             var segControl = cell.choiceSegmentControl as UISegmentedControl
            
@@ -218,7 +216,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             return cell
             
         case let currentItem as ParentInitials:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ParentInitialsCell", forIndexPath: indexPath) as ParentInitialsTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ParentInitialsCell", forIndexPath: indexPath) as! ParentInitialsTableViewCell
             cell.titleLabel?.text = "Parent Initials"
             if self.parentInitials != nil{
             cell.initialsButton.titleLabel?.text = self.parentInitials
@@ -226,26 +224,26 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             return cell
             
         case let currentItem as Time:
-            let cell = tableView.dequeueReusableCellWithIdentifier("TimeEntryCell", forIndexPath: indexPath) as TimeEntryTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("TimeEntryCell", forIndexPath: indexPath) as! TimeEntryTableViewCell
             cell.titleTextLabel?.text = "Time"
             return cell
             
-        case let currentItem as Place:
-            let cell = tableView.dequeueReusableCellWithIdentifier("PlaceEntryCell", forIndexPath: indexPath) as PlaceEntryTableViewCell
-            cell.titleLabel?.text  = "Place"
-            cell.placeButton.titleLabel?.text = "Kitchen"
-            return cell
+//        case let currentItem as Place:
+//            let cell = tableView.dequeueReusableCellWithIdentifier("PlaceEntryCell", forIndexPath: indexPath) as! PlaceEntryTableViewCell
+//            cell.titleLabel?.text  = "Place"
+//            cell.placeButton.titleLabel?.text = "Kitchen"
+//            return cell
             
         case let currentItem as Note:
-            let cell = tableView.dequeueReusableCellWithIdentifier("NoteCell", forIndexPath: indexPath) as NoteTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("NoteCell", forIndexPath: indexPath) as! NoteTableViewCell
             cell.textLabel?.text = "Note"
             return cell
             
         default:
             //handle plain FoodItem
             //currentItemsArray must be [FoodItems]
-            var foodItemArray = currentItemsArray as [FoodItem]
-            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)  as UITableViewCell
+            var foodItemArray = currentItemsArray as! [FoodItem]
+            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)  as! UITableViewCell
             
             //if let newCell = cell as? UITableViewCell {
             cell.textLabel?.text = foodItemArray[indexPath.row].name
@@ -266,19 +264,6 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     }
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.itemSelectedHeaderTitles[section]
-//        if self.sectionData[section].count == 1{
-//            return self.itemSelectedHeaderTitles[section]
-//        }
-//        else {
-//            if section < headerTitles.count
-//            {
-//            return headerTitles[section]
-//            }
-//            else{
-//                return "Error More sections than section Header Titles"
-//            }
-//        }
-        
     }
     
     
@@ -325,6 +310,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             }
             if indexPath.section == 4 {
                 currentItem.dinnerItem.requiredItems = itemsArray[indexPath.row] as? FoodItem
+                
             }
             else if indexPath.section == 5 {
                 //currentItem.dinnerItem.requiredItems = itemsArray[indexPath.row] as? FoodItem
@@ -403,7 +389,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         // create controller
         let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
         
-        let button = sender as UIButton
+        let button = sender as! UIButton
         
         var newTitle : String = ""
         

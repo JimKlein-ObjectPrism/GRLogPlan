@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.swift
 //  GRPatienLogAndPlan
@@ -33,18 +34,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         // instantiate nav controller for Track tab and set data
-        var contentNavController = storyboard.instantiateViewControllerWithIdentifier("TrackNavController") as UINavigationController
+        var contentNavController = storyboard.instantiateViewControllerWithIdentifier("TrackNavController") as! UINavigationController
         
-        var trackMenuController = storyboard.instantiateViewControllerWithIdentifier("TrackMenuController") as UINavigationController
+        var trackMenuController = storyboard.instantiateViewControllerWithIdentifier("TrackMenuController") as! UINavigationController
         
-        var trackController = storyboard.instantiateViewControllerWithIdentifier("Track") as SWRevealViewController
+        var trackController = storyboard.instantiateViewControllerWithIdentifier("Track") as! SWRevealViewController
         
         //set up delegates for selecting items in the menu
 
-        let detailTableViewController = contentNavController.viewControllers[0] as TrackTableViewController
+        let detailTableViewController = contentNavController.viewControllers[0] as! TrackTableViewController
         detailTableViewController.dataStore = dataStore
         
-        let menuTableViewController = trackMenuController.viewControllers[0] as MenuTrackTableViewController
+        let menuTableViewController = trackMenuController.viewControllers[0] as! MenuTrackTableViewController
         
         menuTableViewController.menuItemSelectionHandler = dataStore
         dataStore.updateDetailViewDelegate = detailTableViewController
@@ -52,22 +53,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         trackController.frontViewController = contentNavController
         trackController.rearViewController = trackMenuController
        
-        var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as HomeViewController
+        var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as! HomeViewController
                 
-        let homeNaveController = storyboard.instantiateViewControllerWithIdentifier("HomeNavController") as UINavigationController
+        let homeNaveController = storyboard.instantiateViewControllerWithIdentifier("HomeNavController") as! UINavigationController
         
         //let homeViewController = homeNaveController.viewControllers[0] as HomeViewController
         
         
-        let newTrackTableVC =  storyboard.instantiateViewControllerWithIdentifier("FoodJournalTableViewController") as FoodJournalTableViewController
-        let newTrackNav = storyboard.instantiateViewControllerWithIdentifier("FoodJournalNavController") as UINavigationController
+        let newTrackTableVC =  storyboard.instantiateViewControllerWithIdentifier("FoodJournalTableViewController") as! FoodJournalTableViewController
+        let newTrackNav = storyboard.instantiateViewControllerWithIdentifier("FoodJournalNavController") as! UINavigationController
         menuTableViewController.menuItemSelectionHandler = dataStore
         
-        let profileTableVC =  storyboard.instantiateViewControllerWithIdentifier("ProfileTableViewController") as ProfileTableViewController
-        let profileNav = storyboard.instantiateViewControllerWithIdentifier("ProfileNavController") as UINavigationController
+        let profileTableVC =  storyboard.instantiateViewControllerWithIdentifier("ProfileTableViewController") as! ProfileTableViewController
+        let profileNav = storyboard.instantiateViewControllerWithIdentifier("ProfileNavController") as! UINavigationController
         
-        let printTableVC =  storyboard.instantiateViewControllerWithIdentifier("PrintViewController") as PrintViewController
-        let printNavVC = storyboard.instantiateViewControllerWithIdentifier("PrintViewNavController") as UINavigationController
+        let printTableVC =  storyboard.instantiateViewControllerWithIdentifier("PrintViewController") as! PrintViewController
+        let printNavVC = storyboard.instantiateViewControllerWithIdentifier("PrintViewNavController") as! UINavigationController
         
         // set up Tab Bar Controller
         let tabBarController = HomeTabBarController()

@@ -71,7 +71,7 @@ class HomeLogItemTableViewCell: UITableViewCell, UIPopoverPresentationController
         //PopoverTableView
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let contentViewController: PopoverTableViewController = storyboard.instantiateViewControllerWithIdentifier("PopoverTableView") as PopoverTableViewController
+        let contentViewController: PopoverTableViewController = storyboard.instantiateViewControllerWithIdentifier("PopoverTableView") as! PopoverTableViewController
         
         contentViewController.items = items
         
@@ -88,7 +88,7 @@ class HomeLogItemTableViewCell: UITableViewCell, UIPopoverPresentationController
         //self..presentationController(<#controller: UIPresentationController#>, viewControllerForAdaptivePresentationStyle: <#UIModalPresentationStyle#>)
         parent?.presentViewController(contentViewController, animated: true, completion: nil)
     }
-    func adaptivePresentationStyleForPresentationController( controller: UIPresentationController!) -> UIModalPresentationStyle {
+    func adaptivePresentationStyleForPresentationController( controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
     }
     

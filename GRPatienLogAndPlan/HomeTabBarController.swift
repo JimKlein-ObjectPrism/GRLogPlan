@@ -50,13 +50,13 @@ class HomeTabBarController: UITabBarController {
             if self.viewControllers?.count > 1 {
                 if let containerController  = self.viewControllers![1] as? SWRevealViewController {
                     
-                    let trackViewNAVController =  containerController.frontViewController as UINavigationController
+                    let trackViewNAVController =  containerController.frontViewController as! UINavigationController
                     
-                    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                     
                     dataArray = appDelegate.dataArray
                     
-                    let trackViewController = trackViewNAVController.viewControllers[0] as TrackTableViewController
+                    let trackViewController = trackViewNAVController.viewControllers[0] as! TrackTableViewController
                     
                     //set full day display type in order to generate the correct button in nav bar
                     trackViewController.displayType = MealItemSelectionDisplayType.FullDayEntryWithMenu

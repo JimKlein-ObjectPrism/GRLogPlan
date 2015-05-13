@@ -55,14 +55,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCellWithIdentifier("HomeLogItemCell", forIndexPath: indexPath)
-            as HomeLogItemTableViewCell
+            as! HomeLogItemTableViewCell
             
         cell.parent = self
         return cell
         }
         else{
             let cell = tableView.dequeueReusableCellWithIdentifier("Home_DetailedEntryCell", forIndexPath: indexPath)
-                as DetailedJournalEntryTableViewCell
+                as! DetailedJournalEntryTableViewCell
             return cell
         }
         
@@ -147,27 +147,37 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     @IBAction func showMealSelectionView(sender: AnyObject) {
-        let vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as TrackTableViewController
+        let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         // initialize and set dataArray on TrackVC
-        vc.dataArray = [AnyObject]()
-        vc.dataStore = appDelegate.dataStore
+//        vc.dataArray = [AnyObject]()
+//        vc.dataStore = appDelegate.dataStore
         
-        if let d = appDelegate.dataArray[1] as? DetailDisplayItem {
-            vc.detailDisplayItem = d
-            //TODO: Remove hard coded Nav Bar title
-            vc.navigationItem.title = "Lunch"
-            vc.navigationItem.backBarButtonItem?.title = "Back"
-            
-            // hide nav bar on pushed view
-            vc.hidesBottomBarWhenPushed = true
-            vc.updateTextClosure = backButtonPressed
-        }
+        //set up VM
+        BreakfastMenuCategory.configureMenuChoice(OPProfile())
         
-        //set full day display type in order to generate the correct button in nav bar
-        vc.displayType = MealItemSelectionDisplayType.SingleMealEntryWithBackButton
+        let vm: BreakfastVM =  BreakfastVM (profile: OPProfile(), breakfast: OPBreakfast(), dataStore: appDelegate.dataStore)
+        vc.vm = vm
+        vm.tableView = vc.tableView
+        
+//        vc.tableView.delegate = vm
+//        vc.tableView.dataSource = vm
+        
+//        if let d = appDelegate.dataArray[1] as? DetailDisplayItem {
+//            vc.detailDisplayItem = d
+//            //TODO: Remove hard coded Nav Bar title
+//            vc.navigationItem.title = "Lunch"
+//            vc.navigationItem.backBarButtonItem?.title = "Back"
+//            
+//            // hide nav bar on pushed view
+//            vc.hidesBottomBarWhenPushed = true
+//            vc.updateTextClosure = backButtonPressed
+//        }
+//        
+//        //set full day display type in order to generate the correct button in nav bar
+//        vc.displayType = MealItemSelectionDisplayType.SingleMealEntryWithBackButton
         
         self.showViewController(vc as UIViewController, sender: vc)
     }

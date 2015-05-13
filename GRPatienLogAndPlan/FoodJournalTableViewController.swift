@@ -33,7 +33,7 @@ class FoodJournalTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         
         dataArray = appDelegate.dataArray
@@ -100,42 +100,54 @@ class FoodJournalTableViewController: UITableViewController {
         //var meal = Meals.RawValue(selectedIndex)
         switch meal {
         case .Breakfast:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as TrackTableViewController
+            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
             vc.navigationItem.title = "Breakfast"
             var breakfastItem: BreakfastItems = dataStore.buildBreakfastItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
             vc.detailDisplayItem = breakfastItem
             self.showViewController(vc as UIViewController, sender: self)
             
         case .MorningSnack:
-            menuItemSelectionHandler?.menuItemSelectedHandler(Lunch())
-            // skipping Snack!
+            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
+            vc.navigationItem.title = "Morning Snack"
+            var breakfastItem: BreakfastItems = dataStore.buildSnackItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
+            vc.detailDisplayItem = breakfastItem
+            self.showViewController(vc as UIViewController, sender: self)
+
         case .Lunch:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as TrackTableViewController
+            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
             vc.navigationItem.title = "Lunch"
             var lunchItem: LunchItems = dataStore.buildLunchItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
             vc.detailDisplayItem = lunchItem
             self.showViewController(vc as UIViewController, sender: self)
             
         case .AfternoonSnack:
-            menuItemSelectionHandler?.menuItemSelectedHandler(Lunch())
-            // skipping Snack!
+            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
+            vc.navigationItem.title = "Afternoon Snack"
+            var breakfastItem: BreakfastItems = dataStore.buildSnackItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
+            vc.detailDisplayItem = breakfastItem
+            self.showViewController(vc as UIViewController, sender: self)
+           
         case .Dinner:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as TrackTableViewController
+            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
             vc.navigationItem.title = "Dinner"
             var dinnerItem: DinnerItems = dataStore.buildDinnerItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
             vc.detailDisplayItem = dinnerItem
             self.showViewController(vc as UIViewController, sender: self)
             
 
-        default:
-            println("Unfinished implementation")
+        case .EveningSnack:
+            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
+            vc.navigationItem.title = "Evening Snack"
+            var breakfastItem: BreakfastItems = dataStore.buildSnackItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
+            vc.detailDisplayItem = breakfastItem
+            self.showViewController(vc as UIViewController, sender: self)
         }
     }
     
     func pushDetailsVC(displayItem: DetailDisplayItem, navItemTitle: String) {
         
         //var parents =  AppDelegate.profileDataStore.getParents()
-        let vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackNavController") as TrackTableViewController
+        let vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackNavController") as! TrackTableViewController
         vc.navigationItem.title = "Breakfast"
         //vc.currentDisplayType = ParentViewControllerDisplayType.Parents
         

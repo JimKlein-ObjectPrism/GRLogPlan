@@ -42,7 +42,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     
     
     //MARK: Data Update Delgate Methods
-    func choiceItemSelectedHandler(childItemIndex: Int, indexPathSection: Int, indexPathRow: Int){
+    func choiceItemSelectedHandler(childItemIndex: Int, indexPath: NSIndexPath){
         //update current meal item
         println("l'")
         currentMealItem = Lunch()
@@ -51,7 +51,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
         case let x as Breakfast:
             println("breaky")
         case let x as Lunch:
-            switch indexPathSection{
+            switch indexPath.row{
             case 0:
                 x.meat = ""
                 
@@ -142,7 +142,16 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
         }
         
     }
-    
+    func buildFoodItemArray (#filterString: String ) -> [FoodItem]{
+        
+       // get subtype of food items for selection
+        let fItems = foodItems.filter({m in
+            m.menuItemType == filterString
+        })
+        
+        return fItems
+    }
+
     func buildFoodItemArray ( mealItem: FoodItem?, filterString: String ) -> [FoodItem]{
         
         var fItems: [FoodItem] = [FoodItem]()
@@ -192,15 +201,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     }
     
     func buildBreakfastItems ( patientProfile: PatientProfile, journalItem: JournalItem ) -> BreakfastItems {
-        /*
-        //test using FrenchToast Food Item
-        let frenchToastItemInArray = foodItems.filter({m in
-            m.name == "French Toast"
-        })
-        var frenchToastItem = frenchToastItemInArray[0]
-        journalItem.breakfastChoice?.foodChoice = frenchToastItem
-        */
-        
+      
         // build breakfastChoice food item array
         let breakfastChoiceItems = self.buildFoodItemArray(journalItem.breakfastChoice.foodChoice, filterString: "BreakfastItem")
         let breakfastFruitChoice = self.buildFoodItemArray(journalItem.breakfastChoice.fruitChoice, filterString: "FruitItem")
@@ -219,7 +220,26 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
         
         return breakfast
     }
-    
+    func buildSnackItems ( patientProfile: PatientProfile, journalItem: JournalItem ) -> BreakfastItems {
+        
+        // build breakfastChoice food item array
+        let breakfastChoiceItems = self.buildFoodItemArray(journalItem.breakfastChoice.foodChoice, filterString: "SnackItem")
+        let breakfastFruitChoice = self.buildFoodItemArray(journalItem.breakfastChoice.fruitChoice, filterString: "FruitItem")
+        let mealDetails = buildMealDetailsArray(ParentInitials(initialsArray: ["J.D.", "A.D."], defaultInitials: "A.D."), place: Place(location: "Kitchen"), time: Time(), note: Note())
+        
+        let headerTitles = ["Choose One", "And A Serving of Fruit", "Additional Info"]
+        let itemSelectedHeaderTitles = ["Snack Item", "Fruit Item" , "Additional Info"]
+        
+        let breakfast: BreakfastItems = BreakfastItems(
+            breakfastItem: journalItem.breakfastChoice,
+            headerTitles:  headerTitles,
+            itemSelectedHeaderTitles: itemSelectedHeaderTitles,
+            breakfastChoice:  breakfastChoiceItems,
+            fruitChoice: breakfastFruitChoice,
+            mealDetails: mealDetails)
+        
+        return breakfast
+    }
     func buildLunchItems ( patientProfile: PatientProfile, journalItem: JournalItem ) -> LunchItems {
         
         // build lunchChoice food item array
@@ -295,10 +315,10 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     {
         var xmlPath = foodItemsPath()
         // TODO:  unwrap this
-        var xmlData: AnyObject = NSData.dataWithContentsOfMappedFile(xmlPath)!
-        let xmlParser = NSXMLParser.init(data: xmlData as NSData)
-        xmlParser.delegate = self
-        var success:Bool = xmlParser.parse()
+        let url: NSURL! = NSBundle.mainBundle().URLForResource("MealItems", withExtension: "xml")
+        let xmlParser = NSXMLParser(contentsOfURL: url)
+        xmlParser!.delegate = self
+        var success:Bool = xmlParser!.parse()
         println(success)
 
         
@@ -393,7 +413,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     }
     
     // MARK: NSXMLParser Delegate
-    func parser(parser: NSXMLParser!,didStartElement elementName: String!, namespaceURI: String!, qualifiedName : String!, attributes attributeDict: NSDictionary!) {
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [NSObject: AnyObject]) {
         
         //TODO:  should be a simle If statement
         switch elementName {
@@ -411,7 +431,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
         
     }
 
-    func parser(parser: NSXMLParser!, didEndElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!) {
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         switch elementName {
             case "foodItem" :
             PopFoodItem()
@@ -431,11 +451,11 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
         
     }
 
-    func parser(parser: NSXMLParser!, foundCharacters string: String!) {
-        currentElementValue = string
+    func parser(parser: NSXMLParser,foundCharacters string: String?) {
+        currentElementValue = string!
     }
 
-    func parser(parser: NSXMLParser!, parseErrorOccurred parseError: NSError!) {
+    func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
         println(parseError)
     }
     
