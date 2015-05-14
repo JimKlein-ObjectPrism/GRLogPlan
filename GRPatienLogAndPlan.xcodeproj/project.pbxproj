@@ -36,6 +36,10 @@
 		EF7D09E91B0181D70029A824 /* NewChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D09E81B0181D70029A824 /* NewChoiceTableViewCell.swift */; };
 		EF7D0C401B0304D700ED50E5 /* MedicineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C3F1B0304D700ED50E5 /* MedicineTableViewCell.swift */; };
 		EF7D0C421B03AE7C00ED50E5 /* TableCellInputProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C411B03AE7C00ED50E5 /* TableCellInputProtocols.swift */; };
+		EF7D0C441B03C00B00ED50E5 /* AddOnTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C431B03C00B00ED50E5 /* AddOnTableViewCell.swift */; };
+		EF7D0C461B03E74F00ED50E5 /* ParentInitsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C451B03E74F00ED50E5 /* ParentInitsTableViewCell.swift */; };
+		EF7D0C481B03E76C00ED50E5 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C471B03E76C00ED50E5 /* LocationTableViewCell.swift */; };
+		EF7D0C4A1B03E77A00ED50E5 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C491B03E77A00ED50E5 /* TimeTableViewCell.swift */; };
 		EFBD36711ACCA14B006F32AA /* PrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36701ACCA14B006F32AA /* PrintViewController.swift */; };
 		EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */; };
 		EFBD36751ACCADC4006F32AA /* PrintVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */; };
@@ -109,6 +113,10 @@
 		EF7D09E81B0181D70029A824 /* NewChoiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChoiceTableViewCell.swift; sourceTree = "<group>"; };
 		EF7D0C3F1B0304D700ED50E5 /* MedicineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicineTableViewCell.swift; sourceTree = "<group>"; };
 		EF7D0C411B03AE7C00ED50E5 /* TableCellInputProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellInputProtocols.swift; sourceTree = "<group>"; };
+		EF7D0C431B03C00B00ED50E5 /* AddOnTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOnTableViewCell.swift; sourceTree = "<group>"; };
+		EF7D0C451B03E74F00ED50E5 /* ParentInitsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentInitsTableViewCell.swift; sourceTree = "<group>"; };
+		EF7D0C471B03E76C00ED50E5 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		EF7D0C491B03E77A00ED50E5 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 		EFBD36701ACCA14B006F32AA /* PrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintViewController.swift; sourceTree = "<group>"; };
 		EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintTableViewCell.swift; sourceTree = "<group>"; };
 		EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintVisitor.swift; sourceTree = "<group>"; };
@@ -181,6 +189,7 @@
 				98FDCF0B1AA16BF80029F97E /* Data */,
 				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
+				EFCDDBB21B01521200A5F363 /* BreakfastVM.swift */,
 				EF7D09E61B017B320029A824 /* MealTrackingTableViewController.swift */,
 				EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */,
 				986443591A9E78FB00887579 /* AppDelegate.swift */,
@@ -199,7 +208,6 @@
 				986443841A9E8D1400887579 /* Images */,
 				EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */,
 				EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */,
-				EFCDDBB21B01521200A5F363 /* BreakfastVM.swift */,
 			);
 			path = GRPatienLogAndPlan;
 			sourceTree = "<group>";
@@ -276,10 +284,14 @@
 			isa = PBXGroup;
 			children = (
 				EF7D0C411B03AE7C00ED50E5 /* TableCellInputProtocols.swift */,
-				EF7D0C3F1B0304D700ED50E5 /* MedicineTableViewCell.swift */,
 				EF7D09E81B0181D70029A824 /* NewChoiceTableViewCell.swift */,
+				EF7D0C3F1B0304D700ED50E5 /* MedicineTableViewCell.swift */,
+				EF7D0C431B03C00B00ED50E5 /* AddOnTableViewCell.swift */,
+				EF7D0C451B03E74F00ED50E5 /* ParentInitsTableViewCell.swift */,
 				EF157BBC1AAEA20300847AEE /* MenuCellTableViewCell.swift */,
 				EF157BC01AAEA21300847AEE /* ParentInitialsTableViewCell.swift */,
+				EF7D0C471B03E76C00ED50E5 /* LocationTableViewCell.swift */,
+				EF7D0C491B03E77A00ED50E5 /* TimeTableViewCell.swift */,
 				EF157BBE1AAEA20B00847AEE /* NoteTableViewCell.swift */,
 				EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */,
 				EF157BBA1AAEA1D600847AEE /* ChoiceItemsTableViewCell.swift */,
@@ -440,6 +452,7 @@
 				EFF4489B1AB24118004A099F /* HomeLogItemTableViewCell.swift in Sources */,
 				EF49F8331AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld in Sources */,
 				EF157BC11AAEA21300847AEE /* ParentInitialsTableViewCell.swift in Sources */,
+				EF7D0C441B03C00B00ED50E5 /* AddOnTableViewCell.swift in Sources */,
 				EF157BAE1AAE089A00847AEE /* FoodJournalDataStore.swift in Sources */,
 				9864435A1A9E78FB00887579 /* AppDelegate.swift in Sources */,
 				EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */,
@@ -448,6 +461,8 @@
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */,
 				EF157BBB1AAEA1D600847AEE /* ChoiceItemsTableViewCell.swift in Sources */,
+				EF7D0C4A1B03E77A00ED50E5 /* TimeTableViewCell.swift in Sources */,
+				EF7D0C461B03E74F00ED50E5 /* ParentInitsTableViewCell.swift in Sources */,
 				EFCF291C1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift in Sources */,
 				EFCF29101AF057C900B8CF72 /* ProfileTableViewController.swift in Sources */,
 				EF157BAC1AAE088600847AEE /* DataTypes.swift in Sources */,
@@ -462,6 +477,7 @@
 				EF7D0C401B0304D700ED50E5 /* MedicineTableViewCell.swift in Sources */,
 				EFF449641AB87E66004A099F /* Type Defs.swift in Sources */,
 				EFF448CD1AB25CF8004A099F /* PopoverTableViewController.swift in Sources */,
+				EF7D0C481B03E76C00ED50E5 /* LocationTableViewCell.swift in Sources */,
 				EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */,
 				98FDCF0A1AA16ABF0029F97E /* HomeTabBarController.swift in Sources */,
 				EF157BBD1AAEA20300847AEE /* MenuCellTableViewCell.swift in Sources */,

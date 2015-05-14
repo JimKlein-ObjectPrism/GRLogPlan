@@ -8,22 +8,22 @@
 
 import UIKit
 
-public class MedicineTableViewCell: UITableViewCell {
+class MedicineTableViewCell: UITableViewCell {
 
-    public static let cellIdentifer = "MedicineCell"
+    static let cellIdentifer = "MedicineCell"
     
-    var medicineTakenHander: MedicineItemSelectedDelegate!
+    var medicineTakenHandler: MedicineItemSelectedDelegate?
     
     @IBOutlet weak var medicineListingLable: UILabel!
     
     @IBOutlet weak var medicineSwitch: UISwitch!
     
-    override public func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override public func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -31,7 +31,7 @@ public class MedicineTableViewCell: UITableViewCell {
 
     @IBAction func selectionChanged_Switch(sender: AnyObject) {
         if let medsTaken = sender as? UISwitch {
-            medicineTakenHander.choiceItemSelectedHandler(medicineSwitch.on)
-        }        
+            medicineTakenHandler!.choiceItemSelectedHandler(medicineSwitch.on)
+        }
     }
 }

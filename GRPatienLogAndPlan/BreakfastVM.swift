@@ -52,14 +52,20 @@ class OPBreakfast {
     var foodChoice: String?
     var fruitChoice: String?
     var addOn: Int? = 0
-    var addOnConsumed: Bool = false
+    var addOnText = "Yogurt"
+    var addOnConsumed: Bool? = false
     var medicine: Int? = 0
     var medicineText = "Zinc"
+    var parentInitials: String?
+    var location: String?
+    var time: NSDate?
 
     var medicineConsumed: Bool? = false
 }
 
-public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate {
+public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
+    AddOnItemSelectedDelegate, LocationSelectedDelegate
+     {
     
     let foodItemArray: [FoodItem]
     var currentFoodItemArray: [FoodItem] = [FoodItem]()
@@ -91,6 +97,7 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
             currentFruitArray  = fruitArray
         }
 
+        //TODO: Initialize Parent Array from Profile
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -162,12 +169,23 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
                 }
                 return cell
             case .Medicine:
-                let cell = self.tableCell(tableView, cellForMedicineItem: indexPath, medicineText: breakfast.medicineText, switchState: false)
+                let cell: MedicineTableViewCell = self.tableCell(tableView, cellForMedicineItem: indexPath, medicineText: breakfast.medicineText, switchState: false)
+                cell.medicineTakenHandler = self
                 return cell
-//            case .AddOn:
-//                return 1
-//            case .AdditionalInfo:
-//                return 3
+            case .AddOn:
+                //let handler: AddOnItemSelectedDelegate = (self as? AddOnItemSelectedDelegate)!
+                return tableCell(tableView, cellForAddOnItem: indexPath, addOnText: self.breakfast.addOnText, switchState: self.breakfast.addOnConsumed!, switchSelectionHandler: self)
+            case .AdditionalInfo:
+                
+                if let location = self.breakfast.location {
+                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: location, locationSelectionHandler: self)
+                }
+                else{
+                    //set it to
+                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
+                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
+                }
+                
             default:
                 let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
                 return cell
@@ -220,9 +238,115 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
     }
     func choiceItemSelectedHandler(medicineConsumed: Bool){
         setPropertyInModel(boolValue: medicineConsumed, boolPropertyInModel: &self.breakfast.medicineConsumed)
-        //setPropertyInModel(boolValue: medicineConsumed, boolPropertyInModel: &self.breakfast.medicineConsumed)
-//    self.set
-        //self.setPropertyInModel(medicineConsumed, propertyInModel: &self.breakfast.medicineConsumed)
-    //setPropertyInModel(medi, propertyInModel: &self.breakfast.fruitChoice)
     }
+    //MARK: Cell entry delegates
+    func addOnItemSelectedHandler(addOnConsumed: Bool)
+    {
+        setPropertyInModel(boolValue: addOnConsumed, boolPropertyInModel: &self.breakfast.addOnConsumed)
+    }
+    
+    func locationSelectedHandler(){
+        
+        let locations = Location.place
+        
+                let buttonList = locations
+                let title = "Location"
+                let cancel = "Cancel"
+                let firstButtonItem = buttonList[0]
+        
+                // create controller
+                let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
+        
+                //let button = sender as! UIButton
+        
+                var newTitle : String = ""
+        
+                // add Action buttons for each set of initials in the list
+                for s in 0..<buttonList.count {
+        
+                    var buttonIndex = s
+        
+                    var action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
+                        (alert: UIAlertAction!) -> Void in
+                        //send initials updated event
+                        //button.titleLabel?.text = buttonList[s]
+                        newTitle = buttonList[s]
+                        //self.parentInitials = buttonList[s]
+        
+                    })
+                    
+                    choiceMenu.addAction(action)
+                }
+        
+                self.tableviewController.presentViewController(choiceMenu, animated: true, completion: nil)
+    }
+    
+    func parentInitialsSelectedHandler(){
+        let initialsArray = getParentInitials()
+        
+        let title = "Parent Initials"
+        let cancel = "Cancel"
+        //let firstButtonItem = buttonList[0]
+
+        // create controller
+        let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
+
+        //let button = sender as! UIButton
+        
+        var newTitle : String = ""
+        
+
+        for i in 0 ..< initialsArray.count {
+            
+            var buttonIndex = i
+            
+            var action = UIAlertAction(title: initialsArray[i], style: .Default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                newTitle = initialsArray[i]
+            })
+            
+            choiceMenu.addAction(action)
+        }
+        
+        self.tableviewController.presentViewController(choiceMenu, animated: true, completion: nil)
+    }
+    
+    
+
+    
+    func blah ()
+    {
+//        let buttonList = ["A.B." , "B.C."]
+//        let title = "Parent Initials"
+//        let cancel = "Cancel"
+//        let firstButtonItem = buttonList[0]
+//        
+//        // create controller
+//        let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
+//        
+//        let button = sender as! UIButton
+//        
+//        var newTitle : String = ""
+//        
+//        // add Action buttons for each set of initials in the list
+//        for s in 0..<buttonList.count {
+//            
+//            var buttonIndex = s
+//            
+//            var action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
+//                (alert: UIAlertAction!) -> Void in
+//                //send initials updated event
+//                button.titleLabel?.text = buttonList[s]
+//                newTitle = buttonList[s]
+//                //self.parentInitials = buttonList[s]
+//                
+//            })
+//            
+//            choiceMenu.addAction(action)
+//        }
+//        
+//        self.presentViewController(choiceMenu, animated: true, completion: nil)
+
+    }
+
 }

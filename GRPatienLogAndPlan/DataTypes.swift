@@ -378,6 +378,52 @@ enum nonMealItemState {
  
 }
 
+struct Location {
+    static let place: [String] = ["Kitchen", "Dining Room", "Other"]
+}
+
+enum LocationForMeal: Int {
+    
+    case Kitchen = 0
+    case DiningRoom
+    case Other
+    
+    func name () -> String{
+        switch self {
+        case .Kitchen:
+            return "Kitchen"
+        case .DiningRoom:
+            return "Dining Room"
+        case .Other:
+            return "Other"
+        }
+    }
+    static func all() -> [LocationForMeal] {
+        return [.Kitchen, .DiningRoom, .Other]
+    }
+    static func count() -> Int {
+        return self.all().count
+    }
+    
+    //Subscript is read only
+    subscript(i: Int) -> LocationForMeal?
+        {
+        get
+        {
+            if 0 <= i && i < LocationForMeal.all().count {
+                if let a = LocationForMeal(rawValue: i) {
+                    return a
+                } else {
+                    return nil
+                }
+            }
+            else{
+                return nil
+            }
+        }
+    }
+}
+
 // There is a collection of these objects in profile
 class Medicine: DetailDisplayItem, MenuDisplayCell, JournalEntryItem {
     

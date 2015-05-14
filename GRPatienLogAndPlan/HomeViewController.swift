@@ -161,6 +161,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let vm: BreakfastVM =  BreakfastVM (profile: OPProfile(), breakfast: OPBreakfast(), dataStore: appDelegate.dataStore)
         vc.vm = vm
         vm.tableView = vc.tableView
+        vm.tableviewController = vc
         
 //        vc.tableView.delegate = vm
 //        vc.tableView.dataSource = vm

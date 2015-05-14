@@ -1696,7 +1696,7 @@
                                     <outlet property="choiceSegmentControl" destination="fxx-Jg-ziM" id="Lqs-EU-lQe"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ParentInitialsCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ParentInitialsCell" id="tC1-bi-e72">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ParentInitialsCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ParentInitialsCell" id="tC1-bi-e72" customClass="ParentInitsTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tC1-bi-e72" id="qee-Gf-HTy">
@@ -1713,6 +1713,9 @@
                                             <state key="normal" title="Button">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="parentInitialsButtonTapped:" destination="tC1-bi-e72" eventType="touchUpInside" id="BYg-nV-oGP"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -1750,8 +1753,11 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="parentInitsButton" destination="Gck-8k-KQq" id="XKx-18-zJy"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="LocationCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" id="Yis-QY-hQh">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="LocationCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" id="Yis-QY-hQh" customClass="LocationTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yis-QY-hQh" id="CLG-iL-a5k">
@@ -1768,6 +1774,9 @@
                                             <state key="normal" title="Button">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="locationButtonTapped:" destination="Yis-QY-hQh" eventType="touchUpInside" id="HQt-9g-KGU"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -1805,6 +1814,9 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="locationButton" destination="eZj-jX-GAy" id="FS1-YG-quC"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" restorationIdentifier="MedicineCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="MedicineCell" id="Wcj-mb-RAr" customClass="MedicineTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1888,7 +1900,7 @@
                                     <outlet property="medicineSwitch" destination="0J9-uy-xbZ" id="7xw-IR-HMJ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="AddOnCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddOnCell" id="Rmz-sW-52e">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="AddOnCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddOnCell" id="Rmz-sW-52e" customClass="AddOnTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rmz-sW-52e" id="vRe-ld-oJW">
@@ -1896,6 +1908,9 @@
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="heB-V4-Zie">
                                             <rect key="frame" x="-25" y="-15" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="addOnSwitchChanged:" destination="Rmz-sW-52e" eventType="valueChanged" id="h5E-aT-iYR"/>
+                                            </connections>
                                         </switch>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvR-EM-qI9">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -1903,7 +1918,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add  On" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIs-9f-T2H">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Add  On" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIs-9f-T2H">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1911,7 +1926,9 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="iIs-9f-T2H" firstAttribute="top" secondItem="vRe-ld-oJW" secondAttribute="topMargin" constant="-2" id="B0s-Em-oP0"/>
+                                        <constraint firstItem="iIs-9f-T2H" firstAttribute="top" secondItem="vRe-ld-oJW" secondAttribute="topMargin" constant="-2" id="B0s-Em-oP0">
+                                            <variation key="widthClass=compact" constant="2"/>
+                                        </constraint>
                                         <constraint firstAttribute="bottomMargin" secondItem="tvR-EM-qI9" secondAttribute="bottom" constant="-4" id="FxO-dA-pAx"/>
                                         <constraint firstAttribute="centerY" secondItem="iIs-9f-T2H" secondAttribute="centerY" id="Izj-bL-f8A">
                                             <variation key="widthClass=compact" constant="6"/>
@@ -1923,7 +1940,9 @@
                                         <constraint firstAttribute="centerY" secondItem="heB-V4-Zie" secondAttribute="centerY" id="eCV-MS-5cE"/>
                                         <constraint firstItem="iIs-9f-T2H" firstAttribute="leading" secondItem="vRe-ld-oJW" secondAttribute="leadingMargin" constant="7" id="pYZ-Pv-QOL"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="heB-V4-Zie" secondAttribute="trailing" constant="16" id="toC-2W-j3A"/>
-                                        <constraint firstItem="tvR-EM-qI9" firstAttribute="top" secondItem="iIs-9f-T2H" secondAttribute="bottom" constant="-2" id="yBq-Mn-8nq"/>
+                                        <constraint firstItem="tvR-EM-qI9" firstAttribute="top" secondItem="iIs-9f-T2H" secondAttribute="bottom" constant="-2" id="yBq-Mn-8nq">
+                                            <variation key="widthClass=compact" constant="0.0"/>
+                                        </constraint>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
@@ -1952,8 +1971,8 @@
                                         <mask key="constraints">
                                             <include reference="B0s-Em-oP0"/>
                                             <include reference="YYT-CO-FB9"/>
-                                            <include reference="pYZ-Pv-QOL"/>
-                                            <include reference="Izj-bL-f8A"/>
+                                            <exclude reference="pYZ-Pv-QOL"/>
+                                            <exclude reference="Izj-bL-f8A"/>
                                             <include reference="RwT-c7-dGE"/>
                                             <include reference="FxO-dA-pAx"/>
                                             <include reference="yBq-Mn-8nq"/>
@@ -1963,10 +1982,11 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="choiceLabel" destination="iIs-9f-T2H" id="9Ao-SU-fGo"/>
+                                    <outlet property="addOnLabel" destination="iIs-9f-T2H" id="ODi-eE-ZeM"/>
+                                    <outlet property="addOnSwitch" destination="heB-V4-Zie" id="sjd-pd-StO"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="TimeCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimeCell" rowHeight="212" id="3F4-br-obp">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="TimeCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimeCell" rowHeight="212" id="3F4-br-obp" customClass="TimeTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3F4-br-obp" id="bhC-vW-C0A">

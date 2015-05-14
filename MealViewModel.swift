@@ -13,6 +13,11 @@ import Foundation
 
 public class MealViewModel: NSObject {
     weak var tableView: UITableView!
+    weak var tableviewController: UITableViewController!
+    
+    var parentsArray: [String]! = ["Jane Doe", "John Doe", "Jon Smith"]
+    
+    
     
     //MARK:  Cell For Row At Index Path Helpers
     func tableCell(tableView: UITableView, cellForFoodItemAtIndexPath indexPath: NSIndexPath, inArray choicesArray: [FoodItem]) -> UITableViewCell
@@ -56,15 +61,41 @@ public class MealViewModel: NSObject {
         
     }
     
-    func tableCell(tableView: UITableView, cellForMedicineItem indexPath: NSIndexPath, medicineText: String, switchState: Bool) -> UITableViewCell
+    func tableCell(tableView: UITableView, cellForMedicineItem indexPath: NSIndexPath, medicineText: String, switchState: Bool) -> MedicineTableViewCell
     {
-
+        
         let cell = tableView.dequeueReusableCellWithIdentifier(MedicineTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! MedicineTableViewCell
         //cell.textLabel?.text = currentItem.name
         cell.medicineListingLable?.text = medicineText
         cell.medicineSwitch.on = switchState
         return cell
-
+        
+    }
+    func tableCell(tableView: UITableView, cellForAddOnItem indexPath: NSIndexPath, addOnText: String, switchState: Bool, switchSelectionHandler: AddOnItemSelectedDelegate) -> AddOnTableViewCell
+    {
+        
+        let cell: AddOnTableViewCell = tableView.dequeueReusableCellWithIdentifier(AddOnTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! AddOnTableViewCell
+        //cell.textLabel?.text = currentItem.name
+        cell.addOnTakenHandler = switchSelectionHandler//self as? AddOnItemSelectedDelegate
+        cell.addOnLabel?.text = addOnText
+        cell.addOnSwitch.on = switchState
+        return cell
+        
+    }
+    func tableCell(tableView: UITableView, cellForLocationItem indexPath: NSIndexPath, locationText: String?,  locationSelectionHandler: LocationSelectedDelegate) -> LocationTableViewCell
+    {
+        
+        let cell: LocationTableViewCell = tableView.dequeueReusableCellWithIdentifier(LocationTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! LocationTableViewCell
+        //cell.textLabel?.text = currentItem.name
+        cell.locationButtonHandler = locationSelectionHandler
+        if locationText != nil {
+            
+        }
+        cell.locationButton.setTitle(locationText, forState: .Normal)
+        //cell.locationButton.titleLabel?.text = locationText
+        //cell.addOnSwitch.on = switchState
+        return cell
+        
     }
     
     //MARK: Toggle Food Item Rows
@@ -142,7 +173,7 @@ public class MealViewModel: NSObject {
         return compoundName
     }
     
-    //MARK: Helper Methods
+     //MARK: Helper Methods
    
     func setPropertyInModel (#value: String, inout propertyInModel: String?){
         propertyInModel = value
@@ -158,6 +189,21 @@ public class MealViewModel: NSObject {
         })
         
         return fItems
+    }
+    
+    func getParentInitials() -> [String] {
+        var initials = [String]()
+        for fullName in self.parentsArray{
+            var fullNameArr = split(fullName) {$0 == " "}
+            var firstName: String = fullNameArr[0]
+            var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count-1] : nil
+            var firstInitial = firstName[firstName.startIndex]
+            var lastNameCharCount = Array(arrayLiteral: lastName).count
+            var lastInitial = lastName?[lastName!.startIndex]
+            //Array(arrayLiteral: lastName)[lastNameCharCount - 1]
+            initials.append("\(firstInitial). \(lastInitial).")
+        }
+        return initials
     }
     
 }
