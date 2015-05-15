@@ -41,8 +41,9 @@ enum BreakfastMenuCategory {
 
 
 class OPProfile {
-    var addOnRequired = true
-    var medicineRequired = true
+    var addOnRequired = false
+    var medicineRequired = false
+    
     var medicine: Int?
     var parents: [String] = ["Joe Smith", "Jane Doe"]
 }
@@ -64,7 +65,7 @@ class OPBreakfast {
 }
 
 public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
-    AddOnItemSelectedDelegate, LocationSelectedDelegate
+    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
      {
     
     let foodItemArray: [FoodItem]
@@ -176,14 +177,21 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
                 //let handler: AddOnItemSelectedDelegate = (self as? AddOnItemSelectedDelegate)!
                 return tableCell(tableView, cellForAddOnItem: indexPath, addOnText: self.breakfast.addOnText, switchState: self.breakfast.addOnConsumed!, switchSelectionHandler: self)
             case .AdditionalInfo:
-                
-                if let location = self.breakfast.location {
-                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: location, locationSelectionHandler: self)
-                }
-                else{
-                    //set it to
-                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
-                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
+                switch indexPath.row {
+                case 0:
+                    return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: self.breakfast.parentInitials, parentSelectionHandler: self)
+                case 1:
+                    if let location = self.breakfast.location {
+                        return tableCell(tableView , cellForLocationItem: indexPath, locationText: location, locationSelectionHandler: self)
+                    }
+                    else{
+                        //set it to
+                        var defaultLocation = LocationForMeal(rawValue: 0)?.name()
+                        return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
+                    }
+                default:
+                    return tableCell(tableView, cellForTimeItem: indexPath, time: breakfast.time, timeSelectionHandler: self)
+                    
                 }
                 
             default:
@@ -227,8 +235,6 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
         switch menuSection! {
         case .FoodChoice:
             self.toggleSelectionArrayAndPropertyInModelForSegmentedControl(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: &self.currentFoodItemArray, immutableArray: self.foodItemArray, propertyInModel: &self.breakfast.foodChoice)
-//            let itemNameAndSelectionName = self.getItemNameAndChoiceItemName(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFoodItemArray)
-//            setPropertyInModel(itemNameAndSelectionName, propertyInModel: &self.breakfast.foodChoice)
         case .Fruit:
             let itemNameAndSelectionName = self.getItemNameAndChoiceItemName(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
             setPropertyInModel(value: itemNameAndSelectionName, propertyInModel: &self.breakfast.fruitChoice)
@@ -255,10 +261,14 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
                 let firstButtonItem = buttonList[0]
         
                 // create controller
-                let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
+                let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
         
                 //let button = sender as! UIButton
-        
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                    // ...
+                }
+                alertController.addAction(cancelAction)
+
                 var newTitle : String = ""
         
                 // add Action buttons for each set of initials in the list
@@ -271,14 +281,14 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
                         //send initials updated event
                         //button.titleLabel?.text = buttonList[s]
                         newTitle = buttonList[s]
-                        //self.parentInitials = buttonList[s]
-        
+                        self.setPropertyInModel(value: newTitle, propertyInModel: &self.breakfast.location)
+                        self.tableView.reloadData()
                     })
                     
-                    choiceMenu.addAction(action)
+                    alertController.addAction(action)
                 }
         
-                self.tableviewController.presentViewController(choiceMenu, animated: true, completion: nil)
+                self.tableviewController.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func parentInitialsSelectedHandler(){
@@ -289,12 +299,17 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
         //let firstButtonItem = buttonList[0]
 
         // create controller
-        let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
 
         //let button = sender as! UIButton
         
         var newTitle : String = ""
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // ...
+        }
+        alertController.addAction(cancelAction)
+
 
         for i in 0 ..< initialsArray.count {
             
@@ -303,50 +318,20 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
             var action = UIAlertAction(title: initialsArray[i], style: .Default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 newTitle = initialsArray[i]
+                self.setPropertyInModel(value: newTitle, propertyInModel: &self.breakfast.parentInitials)
+                self.tableView.reloadData()
             })
             
-            choiceMenu.addAction(action)
+            alertController.addAction(action)
         }
         
-        self.tableviewController.presentViewController(choiceMenu, animated: true, completion: nil)
+        self.tableviewController.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    
-
-    
-    func blah ()
-    {
-//        let buttonList = ["A.B." , "B.C."]
-//        let title = "Parent Initials"
-//        let cancel = "Cancel"
-//        let firstButtonItem = buttonList[0]
-//        
-//        // create controller
-//        let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
-//        
-//        let button = sender as! UIButton
-//        
-//        var newTitle : String = ""
-//        
-//        // add Action buttons for each set of initials in the list
-//        for s in 0..<buttonList.count {
-//            
-//            var buttonIndex = s
-//            
-//            var action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
-//                (alert: UIAlertAction!) -> Void in
-//                //send initials updated event
-//                button.titleLabel?.text = buttonList[s]
-//                newTitle = buttonList[s]
-//                //self.parentInitials = buttonList[s]
-//                
-//            })
-//            
-//            choiceMenu.addAction(action)
-//        }
-//        
-//        self.presentViewController(choiceMenu, animated: true, completion: nil)
-
+    func timeSelectedHandler(selectedTime : NSDate){
+        
+        
     }
+
 
 }

@@ -10,6 +10,13 @@ import UIKit
 
 class TimeTableViewCell: UITableViewCell {
 
+    static let cellIdentifer = "TimeCell"
+    
+    var timeSelectedHandler: TimeSelectedDelegate?
+
+    @IBOutlet weak var timeTextField: UITextField!
+    @IBOutlet weak var timeUIPicker: UIDatePicker!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +28,21 @@ class TimeTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    @IBAction func timeTextSelected(sender: UITextField) {
+        var datePickerView  : UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePickerMode.Time
+        datePickerView.minuteInterval = 15
+        sender.inputView = datePickerView
+
+        datePickerView.addTarget(self, action: "handleDatePicker:", forControlEvents: UIControlEvents.AllEvents)
+    }
+    @IBAction func timePickerSelected(sender: UIDatePicker) {
+        
+    }
+    func handleDatePicker( sender: UIDatePicker) {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        timeTextField.text = dateFormatter.stringFromDate(sender.date)
+    }
 }

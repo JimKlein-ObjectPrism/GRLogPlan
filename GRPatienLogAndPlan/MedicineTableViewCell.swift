@@ -14,6 +14,7 @@ class MedicineTableViewCell: UITableViewCell {
     
     var medicineTakenHandler: MedicineItemSelectedDelegate?
     
+    @IBOutlet weak var medicineLabel: UILabel!
     @IBOutlet weak var medicineListingLable: UILabel!
     
     @IBOutlet weak var medicineSwitch: UISwitch!

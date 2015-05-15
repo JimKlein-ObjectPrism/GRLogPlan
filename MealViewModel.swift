@@ -15,7 +15,7 @@ public class MealViewModel: NSObject {
     weak var tableView: UITableView!
     weak var tableviewController: UITableViewController!
     
-    var parentsArray: [String]! = ["Jane Doe", "John Doe", "Jon Smith"]
+    var parentsArray: [String]! = ["Lisa Doe", "John Doe", "Jon Smith"]
     
     
     
@@ -66,6 +66,7 @@ public class MealViewModel: NSObject {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(MedicineTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! MedicineTableViewCell
         //cell.textLabel?.text = currentItem.name
+        cell.medicineLabel.text = medicineText
         cell.medicineListingLable?.text = medicineText
         cell.medicineSwitch.on = switchState
         return cell
@@ -94,6 +95,43 @@ public class MealViewModel: NSObject {
         cell.locationButton.setTitle(locationText, forState: .Normal)
         //cell.locationButton.titleLabel?.text = locationText
         //cell.addOnSwitch.on = switchState
+        return cell
+        
+    }
+    func tableCell(tableView: UITableView, cellForParentInitialsItem indexPath: NSIndexPath, parentInitialsText: String?,  parentSelectionHandler: ParentInitialsSelectedDelegate) -> ParentInitsTableViewCell
+    {
+        
+        let cell: ParentInitsTableViewCell = tableView.dequeueReusableCellWithIdentifier(ParentInitsTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! ParentInitsTableViewCell
+        //cell.textLabel?.text = currentItem.name
+        cell.parentButtonHandler = parentSelectionHandler
+        var defaultInitials = parentInitialsText
+        if defaultInitials == nil {
+            defaultInitials = getParentInitials()[0]
+        }
+        cell.parentInitsButton.setTitle(defaultInitials, forState: .Normal)
+        //cell.locationButton.titleLabel?.text = locationText
+        //cell.addOnSwitch.on = switchState
+        return cell
+        
+    }
+    func tableCell(tableView: UITableView, cellForTimeItem indexPath: NSIndexPath, time: NSDate?,  timeSelectionHandler: TimeSelectedDelegate) -> TimeTableViewCell
+    {
+        
+        let cell: TimeTableViewCell = tableView.dequeueReusableCellWithIdentifier(TimeTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! TimeTableViewCell
+        //cell.textLabel?.text = currentItem.name
+        cell.timeSelectedHandler = timeSelectionHandler
+        //var defaultInitials = parentInitialsText
+        var pickerTime = time
+        if pickerTime == nil  {
+            pickerTime = NSDate()
+        }
+        //cell.parentInitsButton.setTitle(timeText, forState: .Normal)
+        //cell.locationButton.titleLabel?.text = locationText
+        //cell.timeUIPicker.date = pickerTime!
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+  
+        cell.timeTextField.text = dateFormatter.stringFromDate(pickerTime!)
         return cell
         
     }
@@ -195,13 +233,14 @@ public class MealViewModel: NSObject {
         var initials = [String]()
         for fullName in self.parentsArray{
             var fullNameArr = split(fullName) {$0 == " "}
+            
             var firstName: String = fullNameArr[0]
             var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count-1] : nil
+            
             var firstInitial = firstName[firstName.startIndex]
-            var lastNameCharCount = Array(arrayLiteral: lastName).count
             var lastInitial = lastName?[lastName!.startIndex]
-            //Array(arrayLiteral: lastName)[lastNameCharCount - 1]
-            initials.append("\(firstInitial). \(lastInitial).")
+            
+            initials.append("\(firstInitial). \(lastInitial!).")
         }
         return initials
     }
