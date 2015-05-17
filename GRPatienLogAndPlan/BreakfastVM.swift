@@ -57,6 +57,7 @@ class OPBreakfast {
     var addOnConsumed: Bool? = false
     var medicine: Int? = 0
     var medicineText = "Zinc"
+    var medicineTaken = false
     var parentInitials: String?
     var location: String?
     var time: NSDate?
@@ -98,7 +99,8 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
             currentFruitArray  = fruitArray
         }
 
-        //TODO: Initialize Parent Array from Profile
+        //TODO: Initialize Parent Array from Profile.  No do this in the datastore
+
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -179,7 +181,8 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
             case .AdditionalInfo:
                 switch indexPath.row {
                 case 0:
-                    return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: self.breakfast.parentInitials, parentSelectionHandler: self)
+                    let parentInitials: String? = self.breakfast.parentInitials
+                    return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: parentInitials, parentSelectionHandler: self)
                 case 1:
                     if let location = self.breakfast.location {
                         return tableCell(tableView , cellForLocationItem: indexPath, locationText: location, locationSelectionHandler: self)
@@ -292,33 +295,43 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
     }
     
     func parentInitialsSelectedHandler(){
-        let initialsArray = getParentInitials()
         
         let title = "Parent Initials"
+        let initialsArray = getParentInitials()
+        //let b = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &<#String#>)
+        let returnString: () = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &self.breakfast.parentInitials)
+        
+        }
+    
+    func timeSelectedHandler(selectedTime : NSDate){
+        
+        
+    }
+    //MARK: Alert View methods
+    func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){
+        
         let cancel = "Cancel"
-        //let firstButtonItem = buttonList[0]
-
+        
         // create controller
         let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
-
-        //let button = sender as! UIButton
         
-        var newTitle : String = ""
+        //let button = sender as! UIButton
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
             // ...
         }
         alertController.addAction(cancelAction)
-
-
-        for i in 0 ..< initialsArray.count {
+        var a: String? = "a"
+        
+        var b:String? = ""
+        for i in 0 ..< buttonValues.count {
             
             var buttonIndex = i
             
-            var action = UIAlertAction(title: initialsArray[i], style: .Default, handler: {
+            var action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                newTitle = initialsArray[i]
-                self.setPropertyInModel(value: newTitle, propertyInModel: &self.breakfast.parentInitials)
+                self.setPropertyInModel(value: buttonValues[i], propertyInModel: &self.breakfast.parentInitials)//modelProperty)
+                //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.breakfast.parentInitials)
                 self.tableView.reloadData()
             })
             
@@ -326,12 +339,7 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
         }
         
         self.tableviewController.presentViewController(alertController, animated: true, completion: nil)
-    }
-    
-    func timeSelectedHandler(selectedTime : NSDate){
-        
         
     }
-
 
 }

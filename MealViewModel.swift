@@ -211,6 +211,42 @@ public class MealViewModel: NSObject {
         return compoundName
     }
     
+//    //MARK: Alert View methods
+//    func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){
+//        
+//        let cancel = "Cancel"
+//        
+//        // create controller
+//        let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
+//        
+//        //let button = sender as! UIButton
+//        
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+//            // ...
+//        }
+//        alertController.addAction(cancelAction)
+//        var a: String? = "a"
+//        
+//        var b:String? = ""
+//        for i in 0 ..< buttonValues.count {
+//            
+//            var buttonIndex = i
+//            
+//            var action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
+//                (alert: UIAlertAction!) -> Void in
+//                self.setPropertyInModel(value: buttonValues[i], propertyInModel: &modelProperty)
+//                //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.breakfast.parentInitials)
+//                self.tableView.reloadData()
+//            })
+//            
+//            alertController.addAction(action)
+//        }
+//        
+//        self.tableviewController.presentViewController(alertController, animated: true, completion: nil)
+//
+//    }
+    
+    
      //MARK: Helper Methods
    
     func setPropertyInModel (#value: String, inout propertyInModel: String?){
@@ -231,6 +267,7 @@ public class MealViewModel: NSObject {
     
     func getParentInitials() -> [String] {
         var initials = [String]()
+        //TODO: implement more robust version of getParentInitials
         for fullName in self.parentsArray{
             var fullNameArr = split(fullName) {$0 == " "}
             
