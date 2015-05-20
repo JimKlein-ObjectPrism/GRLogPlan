@@ -149,6 +149,7 @@ public class MealViewModel: NSObject {
             if let choiceItem = immutableArray[indexPath.row] as? FoodItemWithChoice {
                 return
             } else {
+                mutableArray.removeAll(keepCapacity: false)
                 mutableArray = [immutableArray[indexPath.row]]
                 propertyInModel = immutableArray[indexPath.row].name
 

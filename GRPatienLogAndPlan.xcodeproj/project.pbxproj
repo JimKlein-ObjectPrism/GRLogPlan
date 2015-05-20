@@ -31,6 +31,7 @@
 		EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */; };
 		EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */; };
 		EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */; };
+		EF374C7C1B0B904A005A29BE /* VMDataStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */; };
 		EF49F8331AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF49F8311AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld */; };
 		EF7D09E71B017B320029A824 /* MealTrackingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D09E61B017B320029A824 /* MealTrackingTableViewController.swift */; };
 		EF7D09E91B0181D70029A824 /* NewChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D09E81B0181D70029A824 /* NewChoiceTableViewCell.swift */; };
@@ -108,6 +109,7 @@
 		EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDetailDisplayProtocols.swift; path = ../MenuDetailDisplayProtocols.swift; sourceTree = "<group>"; };
+		EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VMDataStructs.swift; sourceTree = "<group>"; };
 		EF49F8321AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GRPatientLogAndPlan.xcdatamodel; sourceTree = "<group>"; };
 		EF7D09E61B017B320029A824 /* MealTrackingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTrackingTableViewController.swift; sourceTree = "<group>"; };
 		EF7D09E81B0181D70029A824 /* NewChoiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChoiceTableViewCell.swift; sourceTree = "<group>"; };
@@ -189,12 +191,13 @@
 				98FDCF0B1AA16BF80029F97E /* Data */,
 				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
+				986443591A9E78FB00887579 /* AppDelegate.swift */,
+				EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */,
 				EFCDDBB21B01521200A5F363 /* BreakfastVM.swift */,
 				EF7D09E61B017B320029A824 /* MealTrackingTableViewController.swift */,
 				EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */,
-				986443591A9E78FB00887579 /* AppDelegate.swift */,
+				EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */,
 				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
-				EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */,
 				EF157BB31AAE7C0200847AEE /* HomeViewController.swift */,
 				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
@@ -447,6 +450,7 @@
 				EFBD36751ACCADC4006F32AA /* PrintVisitor.swift in Sources */,
 				9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */,
 				EF157BBF1AAEA20B00847AEE /* NoteTableViewCell.swift in Sources */,
+				EF374C7C1B0B904A005A29BE /* VMDataStructs.swift in Sources */,
 				EF7D09E91B0181D70029A824 /* NewChoiceTableViewCell.swift in Sources */,
 				EFE08A2E1AD9AFF4004C80C3 /* CoreDataStack.swift in Sources */,
 				EFF4489B1AB24118004A099F /* HomeLogItemTableViewCell.swift in Sources */,

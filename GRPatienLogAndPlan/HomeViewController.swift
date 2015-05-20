@@ -147,21 +147,23 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     @IBAction func showMealSelectionView(sender: AnyObject) {
+        
         let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let vm: BreakfastVM =  BreakfastVM (dataStore: appDelegate.dataStore)
+        vc.vm = vm
+        vm.tableView = vc.tableView
+        vm.tableviewController = vc
+        
+        self.showViewController(vc as UIViewController, sender: vc)
         
         // initialize and set dataArray on TrackVC
 //        vc.dataArray = [AnyObject]()
 //        vc.dataStore = appDelegate.dataStore
         
         //set up VM
-        BreakfastMenuCategory.configureMenuChoice(OPProfile())
-        
-        let vm: BreakfastVM =  BreakfastVM (profile: OPProfile(), breakfast: OPBreakfast(), dataStore: appDelegate.dataStore)
-        vc.vm = vm
-        vm.tableView = vc.tableView
-        vm.tableviewController = vc
+        //BreakfastMenuCategory.configureMenuChoice(OPProfile())
         
 //        vc.tableView.delegate = vm
 //        vc.tableView.dataSource = vm
@@ -180,7 +182,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        //set full day display type in order to generate the correct button in nav bar
 //        vc.displayType = MealItemSelectionDisplayType.SingleMealEntryWithBackButton
         
-        self.showViewController(vc as UIViewController, sender: vc)
     }
 
     /*

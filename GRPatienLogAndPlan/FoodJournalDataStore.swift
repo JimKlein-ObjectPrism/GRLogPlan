@@ -17,6 +17,9 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     // Items that define or are used to define the contents of the Food Journal Log item
     var logEntryItems = [AnyObject]()
     
+    //MARK: Data Objects for View Model
+    var breakfast: VMBreakfast?
+    
     //MARK: Parsing Variables
     var currentElementName = ""
     
@@ -37,8 +40,50 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     
     var stackIndexValue: Int = 0
     
-    //MARK: Delegates
+    //MARK: Delegates - currently only used method
     var updateDetailViewDelegate: UpdateDetailViewDelegate!
+    
+    override init() {
+        //configure with placeholder until CoreData working
+        BreakfastMenuCategory.configureMenuChoice(OPProfile())
+        
+        //initialize Data Objects
+        if self.breakfast == nil {
+            self.breakfast = VMBreakfast()
+        }
+    }
+    
+    //MARK:  Get food item array
+    func buildFoodItemArray ( mealItem: FoodItem?, filterString: String ) -> [FoodItem]{
+        
+        var fItems: [FoodItem] = [FoodItem]()
+        /*
+        The food item array has 1 or n entries
+        1, if item has been selected
+        n, if not
+        */
+        if  (mealItem != nil) {
+            //copy pre-selected food item to array
+            fItems.append(mealItem!)
+            
+        } else {
+            // get subtype of food items for selection
+            let items = foodItems.filter({m in
+                m.menuItemType == filterString
+            })
+            fItems = items
+        }
+        return fItems
+    }
+    
+    //MARK:  Data Object API
+    func getBreakfast_Today() -> VMBreakfast {
+        return self.breakfast!//initialized in init
+    }
+    
+    func saveBreakfast_Today(breakfast: VMBreakfast){
+        self.breakfast = breakfast
+    }
     
     
     //MARK: Data Update Delgate Methods
@@ -152,28 +197,6 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
         return fItems
     }
 
-    func buildFoodItemArray ( mealItem: FoodItem?, filterString: String ) -> [FoodItem]{
-        
-        var fItems: [FoodItem] = [FoodItem]()
-        /*
-        The food item array has 1 or n entries
-        1, if item has been selected
-        n, if not
-        */
-        if  (mealItem != nil) {
-            //copy pre-selected food item to array
-            fItems.append(mealItem!)
-            
-        } else {
-            // get subtype of food items for selection
-            let items = foodItems.filter({m in
-                m.menuItemType == filterString
-            })
-            fItems = items
-        }
-        return fItems
-    }
-    
     
     func menuItemSelectedHandler(menudisplayType: MenuDisplayCell){
         switch menudisplayType{

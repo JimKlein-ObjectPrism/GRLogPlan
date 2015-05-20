@@ -21,6 +21,7 @@ enum BreakfastMenuCategory {
     static func count() -> Int { return caseItems.count }
     
     static func configureMenuChoice(profile: OPProfile){
+        caseItems.removeAll(keepCapacity: false)
         caseItems.append(BreakfastMenuCategory.FoodChoice)
         caseItems.append(BreakfastMenuCategory.Fruit)
         if profile.medicineRequired {
@@ -41,22 +42,25 @@ enum BreakfastMenuCategory {
 
 
 class OPProfile {
-    var addOnRequired = false
-    var medicineRequired = false
+    var addOnRequired = true
+    var medicineRequired = true
     
     var medicine: Int?
     var parents: [String] = ["Joe Smith", "Jane Doe"]
 }
 
-class OPBreakfast {
+//func testNil (inout stringProperty: String?, errorMessage: String)
+
+
+struct OPBreakfast {
     
     var foodChoice: String?
     var fruitChoice: String?
     var addOn: Int? = 0
-    var addOnText = "Yogurt"
+    var addOnText: String? = "Yogurt"
     var addOnConsumed: Bool? = false
     var medicine: Int? = 0
-    var medicineText = "Zinc"
+    var medicineText: String? = "Zinc"
     var medicineTaken = false
     var parentInitials: String?
     var location: String?
@@ -68,18 +72,20 @@ class OPBreakfast {
 public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
      {
+    let dataStore: DataStore
     
     let foodItemArray: [FoodItem]
     var currentFoodItemArray: [FoodItem] = [FoodItem]()
     let fruitArray: [FoodItem]
     var currentFruitArray: [FoodItem]  = [FoodItem]()
     
-    var breakfast: OPBreakfast
+    var breakfast: VMBreakfast
 
-    init( profile : OPProfile, breakfast: OPBreakfast, dataStore: DataStore)
+    init(dataStore: DataStore)
     {
+        self.dataStore = dataStore
         
-        self.breakfast = breakfast
+        self.breakfast = dataStore.getBreakfast_Today()
         self.foodItemArray = dataStore.buildFoodItemArray(filterString: "BreakfastItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
         
@@ -172,12 +178,12 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
                 }
                 return cell
             case .Medicine:
-                let cell: MedicineTableViewCell = self.tableCell(tableView, cellForMedicineItem: indexPath, medicineText: breakfast.medicineText, switchState: false)
+                let cell: MedicineTableViewCell = self.tableCell(tableView, cellForMedicineItem: indexPath, medicineText: breakfast.medicineText!, switchState: self.breakfast.medicineConsumed!)
                 cell.medicineTakenHandler = self
                 return cell
             case .AddOn:
                 //let handler: AddOnItemSelectedDelegate = (self as? AddOnItemSelectedDelegate)!
-                return tableCell(tableView, cellForAddOnItem: indexPath, addOnText: self.breakfast.addOnText, switchState: self.breakfast.addOnConsumed!, switchSelectionHandler: self)
+                return tableCell(tableView, cellForAddOnItem: indexPath, addOnText: self.breakfast.addOnText!, switchState: self.breakfast.addOnConsumed!, switchSelectionHandler: self)
             case .AdditionalInfo:
                 switch indexPath.row {
                 case 0:
@@ -339,6 +345,78 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
         }
         
         self.tableviewController.presentViewController(alertController, animated: true, completion: nil)
+        
+    }
+    func showAlertForSaveValidation(title: String, buttonValues: [String]){
+        
+        let cancel = "Cancel"
+        
+        var message: String = ""
+        
+        for i in 0 ..< buttonValues.count {
+            var newLine = "\n \(buttonValues[i])"
+            message += newLine
+        }
+        
+        // create controller
+        let alertController = UIAlertController(title: "Meal Log Not Complete", message: message, preferredStyle: .ActionSheet)
+        
+        //let button = sender as! UIButton
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // ...
+        }
+        alertController.addAction(cancelAction)
+        
+        let saveAnywayAction = UIAlertAction(title: "Save Anyway", style: .Default)  {
+            (alert: UIAlertAction!) -> Void in
+            //self.setPropertyInModel(value: buttonValues[i], propertyInModel: &self.breakfast.parentInitials)//modelProperty)
+            //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.breakfast.parentInitials)
+            //self.tableView.reloadData()
+            //self.tableviewController
+            self.dataStore.saveBreakfast_Today(self.breakfast)
+            //tableviewController.navigationController?.popViewControllerAnimated(true)
+
+            self.tableviewController.navigationController?.popViewControllerAnimated(true)
+        }
+        alertController.addAction(saveAnywayAction)
+        //let saveAnyWay = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
+//        var a: String? = "a"
+//        
+//        var b:String? = ""
+//        for i in 0 ..< buttonValues.count {
+//            
+//            var buttonIndex = i
+//            
+//            var action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
+//                (alert: UIAlertAction!) -> Void in
+//                self.setPropertyInModel(value: buttonValues[i], propertyInModel: &self.breakfast.parentInitials)//modelProperty)
+//                //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.breakfast.parentInitials)
+//                self.tableView.reloadData()
+//            })
+//            
+//            alertController.addAction(action)
+//        }
+//        
+        self.tableviewController.presentViewController(alertController, animated: true, completion: nil)
+//        
+    }
+
+    //MARK: Save button
+    func saveButtonTapped() {//-> ValidationResult {
+        //validate
+        let result = self.breakfast.validateWithBreakfastMenuCategoryEnum()
+        
+        switch result{
+        case .Success:
+            // send save message to data store
+            //dismiss view
+            dataStore.saveBreakfast_Today(self.breakfast)
+            tableviewController.navigationController?.popViewControllerAnimated(true)
+
+        case let .Failure(errorCodes):
+            showAlertForSaveValidation("Save Error", buttonValues: errorCodes)
+        }
         
     }
 
