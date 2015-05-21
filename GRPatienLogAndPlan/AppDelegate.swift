@@ -61,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         let newTrackTableVC =  storyboard.instantiateViewControllerWithIdentifier("FoodJournalTableViewController") as! FoodJournalTableViewController
+        newTrackTableVC.appDelegate = self
+        
         let newTrackNav = storyboard.instantiateViewControllerWithIdentifier("FoodJournalNavController") as! UINavigationController
         menuTableViewController.menuItemSelectionHandler = dataStore
         

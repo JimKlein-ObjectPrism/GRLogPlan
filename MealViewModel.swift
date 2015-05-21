@@ -11,6 +11,19 @@ import Foundation
 //add protocols
 //add enum declarations
 
+protocol MealViewModelDelegate {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    func didDeselectRowAtIndexPath (indexPath: NSIndexPath)
+    func saveButtonTapped()
+    
+    weak var tableView: UITableView! {get set}
+    weak var tableviewController: UITableViewController! {get set}
+
+}
+
 public class MealViewModel: NSObject {
     weak var tableView: UITableView!
     weak var tableviewController: UITableViewController!
@@ -65,10 +78,19 @@ public class MealViewModel: NSObject {
     {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(MedicineTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! MedicineTableViewCell
-        //cell.textLabel?.text = currentItem.name
+        
         cell.medicineLabel.text = medicineText
         cell.medicineListingLable?.text = medicineText
         cell.medicineSwitch.on = switchState
+        return cell
+        
+    }
+    func tableCell(tableView: UITableView, cellForRequiredItemsItem indexPath: NSIndexPath, switchState: Bool) -> RequiredItemTableViewCell
+    {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier(RequiredItemTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! RequiredItemTableViewCell
+        
+        cell.rItemSwitch.on = switchState
         return cell
         
     }

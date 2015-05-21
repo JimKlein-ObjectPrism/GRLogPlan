@@ -16,6 +16,9 @@ protocol ChoiceItemSelectedDelegate {
 protocol MedicineItemSelectedDelegate {
     func choiceItemSelectedHandler(medicineConsumed: Bool)
 }
+protocol RequiredItemsSelectedDelegate {
+    func requiredItemSwitchSelectedHandler(requiredItemConsumed: Bool)
+}
 protocol AddOnItemSelectedDelegate {
     func addOnItemSelectedHandler(addOnConsumed: Bool)
 }

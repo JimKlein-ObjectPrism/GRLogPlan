@@ -18,7 +18,13 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     var logEntryItems = [AnyObject]()
     
     //MARK: Data Objects for View Model
+    //TODO: fix optionals here to work with core data
     var breakfast: VMBreakfast?
+    var lunch: VMLunch?
+    var morningSnack: VMSnack?
+    var afternoonSnack: VMSnack?
+    var eveningSnack: VMSnack?
+    var dinner: VMDinner?
     
     //MARK: Parsing Variables
     var currentElementName = ""
@@ -45,11 +51,30 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     
     override init() {
         //configure with placeholder until CoreData working
-        BreakfastMenuCategory.configureMenuChoice(OPProfile())
+        let profile = OPProfile()
+        BreakfastMenuCategory.configureMenuChoice(profile)
+        LunchMenuCategory.configureMenuChoice(profile )
+        SnackMenuCategory.configureMenuChoice(profile)
+        DinnerMenuCategory.configureMenuChoice(profile)
         
         //initialize Data Objects
         if self.breakfast == nil {
             self.breakfast = VMBreakfast()
+        }
+        if self.lunch == nil {
+            self.lunch = VMLunch()
+        }
+        if self.morningSnack == nil {
+            self.morningSnack = VMSnack()
+        }
+        if self.afternoonSnack == nil {
+            self.afternoonSnack = VMSnack()
+        }
+        if self.eveningSnack == nil {
+            self.eveningSnack = VMSnack()
+        }
+        if self.dinner == nil {
+            self.dinner = VMDinner()
         }
     }
     
@@ -84,6 +109,65 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     func saveBreakfast_Today(breakfast: VMBreakfast){
         self.breakfast = breakfast
     }
+    func getLunch_Today() -> VMLunch {
+        return self.lunch!//initialized in init
+    }
+    
+    func saveLunch_Today(lunch: VMLunch){
+        self.lunch = lunch
+    }
+    func getSnack_Today(snackTime: SnackTime) -> VMSnack {
+        switch snackTime{
+        case .Morning:
+            return self.morningSnack!
+        case .Afternoon:
+            return self.afternoonSnack!
+        case .Evening:
+            return self.eveningSnack!
+        }
+       // return self.snack!//initialized in init
+        
+    }
+    func getDinner_Today() -> VMDinner {
+        return self.dinner!//initialized in init
+    }
+
+    func saveDinner_Today(dinner: VMDinner){
+        self.dinner = dinner
+    }
+
+    func saveSnack_Today(snack: VMSnack, snackTime: SnackTime){
+        switch snackTime{
+        case .Morning:
+            self.morningSnack = snack
+        case .Afternoon:
+            self.afternoonSnack = snack
+        case .Evening:
+            self.eveningSnack = snack
+        }
+
+    }
+//    func getBreakfast_Today() -> VMBreakfast {
+//        return self.breakfast!//initialized in init
+//    }
+//    
+//    func saveBreakfast_Today(breakfast: VMBreakfast){
+//        self.breakfast = breakfast
+//    }
+//    func getBreakfast_Today() -> VMBreakfast {
+//        return self.breakfast!//initialized in init
+//    }
+//    
+//    func saveBreakfast_Today(breakfast: VMBreakfast){
+//        self.breakfast = breakfast
+//    }
+//    func getBreakfast_Today() -> VMBreakfast {
+//        return self.breakfast!//initialized in init
+//    }
+//    
+//    func saveBreakfast_Today(breakfast: VMBreakfast){
+//        self.breakfast = breakfast
+//    }
     
     
     //MARK: Data Update Delgate Methods

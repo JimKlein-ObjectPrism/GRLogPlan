@@ -32,7 +32,7 @@ class CoreDataStack {
     //1
     let bundle = NSBundle.mainBundle()
     let modelURL =
-    bundle.URLForResource("PatientDataModel", withExtension:"momd")
+    bundle.URLForResource("GRPatientLogAndPlan", withExtension:"momd")
     model = NSManagedObjectModel(contentsOfURL: modelURL!)!
     
     //2

@@ -8,9 +8,10 @@
 
 import UIKit
 
+
 class MealTrackingTableViewController: UITableViewController {
 
-    var vm : BreakfastVM!
+    var vm : MealViewModelDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,26 @@ class MealTrackingTableViewController: UITableViewController {
         //vm.tableView(tableView, didDeselectRowAtIndexPath: indexPath)
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if let dinnerVC = self.vm as? DinnerVM {
+            return dinnerVC.tableView(dinnerVC.tableView, heightForRowAtIndexPath: indexPath)
+        } else {
+            return 44.0
+        }
+        
+    }
+    /*
+    override  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    var currentItemsArray = sectionData[indexPath.section]
+    
+    let currentItem: AnyObject = currentItemsArray[indexPath.row]
+    if  let timeCell = currentItem as? Time {
+    return 200.0
+    }
+    return 50.0
+    }
+
+*/
 
     func saveButtonTapped() {
         vm.saveButtonTapped()

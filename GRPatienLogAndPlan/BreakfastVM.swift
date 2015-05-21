@@ -38,12 +38,28 @@ enum BreakfastMenuCategory {
         if value >= BreakfastMenuCategory.caseItems.count || value < 0 { return nil }
         self = BreakfastMenuCategory.caseItems[value]
     }
+    
+    func unselectedHeaderTitle() -> String {
+        switch self {
+        case .FoodChoice:
+            return "Breakfast Item"
+        case .Fruit:
+            return "Fruit Choice"
+        case .Medicine:
+            return "Medicine"
+        case .AddOn:
+            return "Add On"
+        case .AdditionalInfo:
+            return "Additional Information"
+        }
+    }
 }
 
 
 class OPProfile {
-    var addOnRequired = true
-    var medicineRequired = true
+    var addOnRequired = false
+    var medicineRequired = false
+    
     
     var medicine: Int?
     var parents: [String] = ["Joe Smith", "Jane Doe"]
@@ -56,12 +72,14 @@ struct OPBreakfast {
     
     var foodChoice: String?
     var fruitChoice: String?
+
     var addOn: Int? = 0
     var addOnText: String? = "Yogurt"
     var addOnConsumed: Bool? = false
     var medicine: Int? = 0
     var medicineText: String? = "Zinc"
     var medicineTaken = false
+
     var parentInitials: String?
     var location: String?
     var time: NSDate?
@@ -69,7 +87,7 @@ struct OPBreakfast {
     var medicineConsumed: Bool? = false
 }
 
-public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
+public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
      {
     let dataStore: DataStore
@@ -114,19 +132,7 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
     }
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let menuSection = BreakfastMenuCategory(value: section){
-            
-            switch menuSection {
-            case BreakfastMenuCategory.FoodChoice:
-                return "Breakfast Item"
-            case BreakfastMenuCategory.Fruit:
-                return "Fruit Choice"
-            case .Medicine:
-                return "Medicine"
-            case .AddOn:
-                return "Add On"
-            case .AdditionalInfo:
-                return "Additional Information"
-            }
+            return menuSection.unselectedHeaderTitle()
         } else {
             //TODO: handle Index Out of Range error
             return nil
@@ -380,26 +386,7 @@ public class BreakfastVM: MealViewModel, UITableViewDataSource, UITableViewDeleg
             self.tableviewController.navigationController?.popViewControllerAnimated(true)
         }
         alertController.addAction(saveAnywayAction)
-        //let saveAnyWay = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
-//        var a: String? = "a"
-//        
-//        var b:String? = ""
-//        for i in 0 ..< buttonValues.count {
-//            
-//            var buttonIndex = i
-//            
-//            var action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
-//                (alert: UIAlertAction!) -> Void in
-//                self.setPropertyInModel(value: buttonValues[i], propertyInModel: &self.breakfast.parentInitials)//modelProperty)
-//                //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.breakfast.parentInitials)
-//                self.tableView.reloadData()
-//            })
-//            
-//            alertController.addAction(action)
-//        }
-//        
-        self.tableviewController.presentViewController(alertController, animated: true, completion: nil)
-//        
+        self.tableviewController.presentViewController(alertController, animated: true, completion: nil)        
     }
 
     //MARK: Save button

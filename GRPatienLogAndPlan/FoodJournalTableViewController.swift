@@ -23,6 +23,8 @@ class FoodJournalTableViewController: UITableViewController {
     var currentDateIndex = 0
     var currentDateHeader = "Thursday, April 30, 2015"
     
+    var appDelegate: AppDelegate?
+    
     var dataArray: [AnyObject]!
     
     var dataStore: DataStore!
@@ -30,15 +32,25 @@ class FoodJournalTableViewController: UITableViewController {
     var updateDetailViewDelegate: UpdateDetailViewDelegate!
     var menuItemSelectionHandler: MenuItemSelectedDelegate?
     
+//    init(appDelegate: AppDelegate){
+//        self.appDelegate = appDelegate
+//        super.init(style: UITableViewStyle.Grouped)
+//    }
+//
+//    required init!(coder aDecoder: NSCoder!) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         
-        dataArray = appDelegate.dataArray
-        dataStore = appDelegate.dataStore
-        
+        if  self.appDelegate != nil {
+        dataArray = appDelegate!.dataArray
+        dataStore = appDelegate!.dataStore
+        }
     }
   
     func previousDay() -> String {
@@ -76,14 +88,10 @@ class FoodJournalTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return 6
     }
     
@@ -91,6 +99,14 @@ class FoodJournalTableViewController: UITableViewController {
         return self.currentDateHeader
     }
     
+    func showVC (navBarTitle: String, mealVMDelegage: MealViewModelDelegate){
+        let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
+        vc.navigationItem.title = navBarTitle
+        vc.vm = mealVMDelegage
+        vc.vm.tableView = vc.tableView
+        vc.vm.tableviewController = vc
+        self.showViewController(vc as UIViewController, sender: vc)
+    }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         //Fill the detail view controller with the choices for the currently selected item.
@@ -100,47 +116,61 @@ class FoodJournalTableViewController: UITableViewController {
         //var meal = Meals.RawValue(selectedIndex)
         switch meal {
         case .Breakfast:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-            vc.navigationItem.title = "Breakfast"
-            var breakfastItem: BreakfastItems = dataStore.buildBreakfastItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-            vc.detailDisplayItem = breakfastItem
-            self.showViewController(vc as UIViewController, sender: self)
+            let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
             
+            vc.navigationItem.title = "Breakfast"
+            let vm: BreakfastVM =  BreakfastVM (dataStore: appDelegate!.dataStore)
+            
+            
+            vc.vm = vm
+            vm.tableView = vc.tableView
+            vm.tableviewController = vc
+            self.showViewController(vc as UIViewController, sender: vc)
+            
+//            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
+
+//            var breakfastItem: BreakfastItems = dataStore.buildBreakfastItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
+//            vc.detailDisplayItem = breakfastItem
+//            self.showViewController(vc as UIViewController, sender: self)
+//            
         case .MorningSnack:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-            vc.navigationItem.title = "Morning Snack"
-            var breakfastItem: BreakfastItems = dataStore.buildSnackItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-            vc.detailDisplayItem = breakfastItem
-            self.showViewController(vc as UIViewController, sender: self)
+            let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Morning) as MealViewModelDelegate
+            showVC("Morning Snack", mealVMDelegage: mSnack)
+
+//            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
+//            vc.navigationItem.title = "Morning Snack"
+//            var breakfastItem: BreakfastItems = dataStore.buildSnackItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
+//            vc.detailDisplayItem = breakfastItem
+//            self.showViewController(vc as UIViewController, sender: self)
 
         case .Lunch:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-            vc.navigationItem.title = "Lunch"
-            var lunchItem: LunchItems = dataStore.buildLunchItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-            vc.detailDisplayItem = lunchItem
-            self.showViewController(vc as UIViewController, sender: self)
+            let lunch: MealViewModelDelegate = LunchVM(dataStore: self.dataStore) as MealViewModelDelegate
+            showVC("Lunch", mealVMDelegage: lunch)
+//            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
+//            vc.navigationItem.title = "Lunch"
+//            var lunchItem: LunchItems = dataStore.buildLunchItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
+//            vc.detailDisplayItem = lunchItem
+//            self.showViewController(vc as UIViewController, sender: self)
             
         case .AfternoonSnack:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-            vc.navigationItem.title = "Afternoon Snack"
-            var breakfastItem: BreakfastItems = dataStore.buildSnackItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-            vc.detailDisplayItem = breakfastItem
-            self.showViewController(vc as UIViewController, sender: self)
+            let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Afternoon) as MealViewModelDelegate
+            showVC("Afternoon Snack", mealVMDelegage: mSnack)
            
         case .Dinner:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-            vc.navigationItem.title = "Dinner"
-            var dinnerItem: DinnerItems = dataStore.buildDinnerItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-            vc.detailDisplayItem = dinnerItem
-            self.showViewController(vc as UIViewController, sender: self)
+            let dinner: MealViewModelDelegate = DinnerVM(dataStore: self.dataStore) as MealViewModelDelegate
+            showVC("Dinner", mealVMDelegage: dinner)
+
+            
+//            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
+//            vc.navigationItem.title = "Dinner"
+//            var dinnerItem: DinnerItems = dataStore.buildDinnerItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
+//            vc.detailDisplayItem = dinnerItem
+//            self.showViewController(vc as UIViewController, sender: self)
             
 
         case .EveningSnack:
-            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-            vc.navigationItem.title = "Evening Snack"
-            var breakfastItem: BreakfastItems = dataStore.buildSnackItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-            vc.detailDisplayItem = breakfastItem
-            self.showViewController(vc as UIViewController, sender: self)
+            let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Evening) as MealViewModelDelegate
+            showVC("Evening Snack", mealVMDelegage: mSnack)
         }
     }
     
@@ -159,59 +189,5 @@ class FoodJournalTableViewController: UITableViewController {
         
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
