@@ -99,7 +99,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <barButtonItem width="16" style="plain" systemItem="fixedSpace" id="2o7-5a-hlM"/>
-                                    <barButtonItem title="Print" id="cQj-k3-VTQ"/>
+                                    <barButtonItem title="Print" id="cQj-k3-VTQ">
+                                        <connections>
+                                            <action selector="printJournalEntry:" destination="68E-cf-Zb7" id="OUX-eH-dje"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="H8D-qg-RFZ"/>
                                     <barButtonItem title="Preview" id="7bu-Wp-0iC">
                                         <connections>
@@ -670,6 +674,9 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="16" y="12" width="42" height="21"/>
+                                            </variation>
                                         </label>
                                     </subviews>
                                     <constraints>
@@ -1616,7 +1623,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="n57-Hu-suK">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="widthClass=compact">
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -1625,7 +1632,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eh0-JG-XbL">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="widthClass=compact">
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -2014,7 +2021,7 @@
                                                 </constraint>
                                                 <constraint firstAttribute="width" constant="248" id="JJW-mI-VRL"/>
                                             </constraints>
-                                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             <variation key="default">
@@ -2100,6 +2107,13 @@
                                             <exclude reference="xUr-km-rg3"/>
                                             <exclude reference="ylw-BP-yvb"/>
                                             <exclude reference="zXM-Ko-Pbh"/>
+                                            <exclude reference="3CV-pF-ma3"/>
+                                            <exclude reference="HaY-5m-9rK"/>
+                                            <exclude reference="gt4-IU-DkD"/>
+                                            <exclude reference="kIh-jC-rrk"/>
+                                            <exclude reference="lZd-vw-LhC"/>
+                                            <exclude reference="olY-9P-dky"/>
+                                            <exclude reference="u46-ih-WuF"/>
                                             <exclude reference="1Ae-sq-rr5"/>
                                             <exclude reference="6Ek-1n-IKB"/>
                                             <exclude reference="6pY-xT-AoZ"/>
@@ -2115,13 +2129,6 @@
                                             <exclude reference="gJ2-el-DMy"/>
                                             <exclude reference="k40-fW-IiF"/>
                                             <exclude reference="spo-Gi-55o"/>
-                                            <exclude reference="3CV-pF-ma3"/>
-                                            <exclude reference="HaY-5m-9rK"/>
-                                            <exclude reference="gt4-IU-DkD"/>
-                                            <exclude reference="kIh-jC-rrk"/>
-                                            <exclude reference="lZd-vw-LhC"/>
-                                            <exclude reference="olY-9P-dky"/>
-                                            <exclude reference="u46-ih-WuF"/>
                                         </mask>
                                     </variation>
                                     <variation key="widthClass=compact">
@@ -2140,6 +2147,13 @@
                                             <include reference="xUr-km-rg3"/>
                                             <exclude reference="ylw-BP-yvb"/>
                                             <exclude reference="zXM-Ko-Pbh"/>
+                                            <include reference="3CV-pF-ma3"/>
+                                            <exclude reference="HaY-5m-9rK"/>
+                                            <exclude reference="gt4-IU-DkD"/>
+                                            <include reference="kIh-jC-rrk"/>
+                                            <exclude reference="lZd-vw-LhC"/>
+                                            <exclude reference="olY-9P-dky"/>
+                                            <exclude reference="u46-ih-WuF"/>
                                             <include reference="1Ae-sq-rr5"/>
                                             <exclude reference="6Ek-1n-IKB"/>
                                             <exclude reference="6pY-xT-AoZ"/>
@@ -2155,13 +2169,6 @@
                                             <exclude reference="gJ2-el-DMy"/>
                                             <exclude reference="k40-fW-IiF"/>
                                             <exclude reference="spo-Gi-55o"/>
-                                            <include reference="3CV-pF-ma3"/>
-                                            <exclude reference="HaY-5m-9rK"/>
-                                            <exclude reference="gt4-IU-DkD"/>
-                                            <include reference="kIh-jC-rrk"/>
-                                            <exclude reference="lZd-vw-LhC"/>
-                                            <exclude reference="olY-9P-dky"/>
-                                            <exclude reference="u46-ih-WuF"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>

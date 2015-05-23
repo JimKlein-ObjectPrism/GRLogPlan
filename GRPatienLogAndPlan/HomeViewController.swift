@@ -10,23 +10,40 @@ import UIKit
 
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
 
-    var dataStore: DataStore?
+    var dataStore: DataStore!
     @IBOutlet weak var summaryTextView: UITextView!
     
     @IBOutlet weak var mealTitle: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
+            //set local property to data array in appDelegate
+                dataStore = appDelegate.dataStore
+            
+             }
         
-        //self.tableView.rowHeight = 44.0
-        // Do any additional setup after loading the view.
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+
+        //Timer for updating meal state
+        let timerPeriod = dataStore.mealState.timeRemainingInCurrentTimeRange()
+        
+        NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
+
     }
     
     override func viewWillAppear(animated: Bool) {
         println("ViewWillAppear called.")
         //mealTitle.text = "Lunch"
+        var ms = dataStore.mealState
+        mealTitle.text = ms.mealName()
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+    }
+    
+    func updateMealState () {
+        let fullPeriodToNextUpdate = dataStore.mealState.timeRangeLength()
+        NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(fullPeriodToNextUpdate), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
+        mealTitle.text = dataStore.mealState.mealName()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,67 +82,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 as! DetailedJournalEntryTableViewCell
             return cell
         }
-        
-        
-        
-//        var currentItemsArray = sectionData[indexPath.section]
-//        
-//        var row = indexPath.row
-//        
-//        
-//        let currentItem: AnyObject = currentItemsArray[indexPath.row]
-//        
-//        switch currentItem {
-//        case let currentItem as FoodItemWithChoice:
-//            //handle fooditemwithchoice
-//            //currentItemsArray must be [FoodItems]
-//            var foodItemArray = currentItemsArray as [FoodItem]
-//            var cell = tableView.dequeueReusableCellWithIdentifier("ChoiceCell", forIndexPath: indexPath) as ChoiceItemsTableViewCell
-//            cell.choiceLabel?.text = foodItemArray[indexPath.row].itemDescription
-//            cell.choiceSegmentControl.addTarget(self, action: "handleSegmentedControlSelectionChanged:", forControlEvents: .ValueChanged)
-//            //cell.choiceSegmentControl.numberOfSegments = foodItem.choiceItems.count
-//            
-//            for i in 0 ..< currentItem.choiceItems.count {
-//                if i  < 2 {
-//                    var choiceItem = currentItem.choiceItems[i]
-//                    cell.choiceSegmentControl.setTitle(choiceItem.itemDescription, forSegmentAtIndex: i)
-//                }
-//                else{
-//                    cell.choiceSegmentControl.insertSegmentWithTitle(currentItem.choiceItems[i].itemDescription, atIndex: i, animated: false)
-//                }
-//                cell.choiceSegmentControl.setWidth(110.0, forSegmentAtIndex: i)
-//            }
-//            return cell
-//            
-//        case let currentItem as ParentInitials:
-//            let cell = tableView.dequeueReusableCellWithIdentifier("ParentInitialsCell", forIndexPath: indexPath) as ParentInitialsTableViewCell
-//            cell.textLabel?.text = "Parent Initials"
-//            return cell
-//            
-//        case let currentItem as Time:
-//            let cell = tableView.dequeueReusableCellWithIdentifier("TimeEntryCell", forIndexPath: indexPath) as TimeEntryTableViewCell
-//            cell.textLabel?.text = "Time"
-//            return cell
-//            
-//        case let currentItem as Place:
-//            let cell = tableView.dequeueReusableCellWithIdentifier("PlaceEntryCell", forIndexPath: indexPath) as PlaceEntryTableViewCell
-//            cell.textLabel?.text = "Place"
-//            return cell
-//            
-//        case let currentItem as Note:
-//            let cell = tableView.dequeueReusableCellWithIdentifier("NoteCell", forIndexPath: indexPath) as NoteTableViewCell
-//            cell.textLabel?.text = "Note"
-//            return cell
-//            
-//        default:
-//            //handle plain FoodItem
-//            //currentItemsArray must be [FoodItems]
-//            var foodItemArray = currentItemsArray as [FoodItem]
-//            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-//            cell.textLabel?.text = foodItemArray[indexPath.row].name
-//            cell.detailTextLabel?.text = foodItemArray[indexPath.row].itemDescription
-//            return cell
-//        }
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -158,41 +114,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.showViewController(vc as UIViewController, sender: vc)
         
-        // initialize and set dataArray on TrackVC
-//        vc.dataArray = [AnyObject]()
-//        vc.dataStore = appDelegate.dataStore
-        
-        //set up VM
-        //BreakfastMenuCategory.configureMenuChoice(OPProfile())
-        
-//        vc.tableView.delegate = vm
-//        vc.tableView.dataSource = vm
-        
-//        if let d = appDelegate.dataArray[1] as? DetailDisplayItem {
-//            vc.detailDisplayItem = d
-//            //TODO: Remove hard coded Nav Bar title
-//            vc.navigationItem.title = "Lunch"
-//            vc.navigationItem.backBarButtonItem?.title = "Back"
-//            
-//            // hide nav bar on pushed view
-//            vc.hidesBottomBarWhenPushed = true
-//            vc.updateTextClosure = backButtonPressed
-//        }
-//        
-//        //set full day display type in order to generate the correct button in nav bar
-//        vc.displayType = MealItemSelectionDisplayType.SingleMealEntryWithBackButton
-        
-    }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "MyMealsRecipesSegue" {
@@ -208,13 +131,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "simpleBackButtonPressed:")
                     
                     vc.navigationItem.rightBarButtonItem = sb
-
-                
                 }
-            
             }
         }
-        
     }
     
     // MARK: - NavBar Actions

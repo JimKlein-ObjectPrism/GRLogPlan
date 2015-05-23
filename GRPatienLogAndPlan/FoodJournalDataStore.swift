@@ -46,12 +46,27 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     
     var stackIndexValue: Int = 0
     
+    var mealState: MealState
+    //should it be lazily instanitiated?  I don't know.
+//    lazy var mealState: MealState = {
+//        [unknown self] in
+//        MealState.setUpMealMenuForProfile(profile)
+//        return MealState.getMealState(NSDate())
+//    }()
+    
     //MARK: Delegates - currently only used method
     var updateDetailViewDelegate: UpdateDetailViewDelegate!
     
     override init() {
         //configure with placeholder until CoreData working
         let profile = OPProfile()
+        
+        //MARK:  Home Controller Meal State Init
+        MealState.setUpMealMenuForProfile(profile)
+        self.mealState = MealState.getMealState(NSDate())
+        
+        
+        //MARK: View Model Initializations
         BreakfastMenuCategory.configureMenuChoice(profile)
         LunchMenuCategory.configureMenuChoice(profile )
         SnackMenuCategory.configureMenuChoice(profile)

@@ -24,6 +24,23 @@ class PrintViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     ]
     
+    @IBAction func printJournalEntry(sender: AnyObject) {
+        // 1
+        let printController = UIPrintInteractionController.sharedPrintController()!
+        // 2
+        let printInfo = UIPrintInfo(dictionary:nil)!
+        printInfo.outputType = UIPrintInfoOutputType.General
+        printInfo.jobName = "Print Job"
+        printController.printInfo = printInfo
+        
+        // 3
+        let formatter = UIMarkupTextPrintFormatter(markupText: previewTextView.text)
+        formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72)
+        printController.printFormatter = formatter
+        
+        // 4
+        printController.presentAnimated(true, completionHandler: nil)
+    }
     @IBOutlet weak var previewTextView: UITextView!
     
     @IBAction func previewPrintJob(sender: AnyObject) {

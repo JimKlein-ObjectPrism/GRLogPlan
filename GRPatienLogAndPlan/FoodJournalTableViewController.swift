@@ -127,31 +127,14 @@ class FoodJournalTableViewController: UITableViewController {
             vm.tableviewController = vc
             self.showViewController(vc as UIViewController, sender: vc)
             
-//            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-
-//            var breakfastItem: BreakfastItems = dataStore.buildBreakfastItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-//            vc.detailDisplayItem = breakfastItem
-//            self.showViewController(vc as UIViewController, sender: self)
-//            
         case .MorningSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Morning) as MealViewModelDelegate
             showVC("Morning Snack", mealVMDelegage: mSnack)
 
-//            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-//            vc.navigationItem.title = "Morning Snack"
-//            var breakfastItem: BreakfastItems = dataStore.buildSnackItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-//            vc.detailDisplayItem = breakfastItem
-//            self.showViewController(vc as UIViewController, sender: self)
-
         case .Lunch:
             let lunch: MealViewModelDelegate = LunchVM(dataStore: self.dataStore) as MealViewModelDelegate
             showVC("Lunch", mealVMDelegage: lunch)
-//            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-//            vc.navigationItem.title = "Lunch"
-//            var lunchItem: LunchItems = dataStore.buildLunchItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-//            vc.detailDisplayItem = lunchItem
-//            self.showViewController(vc as UIViewController, sender: self)
-            
+           
         case .AfternoonSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Afternoon) as MealViewModelDelegate
             showVC("Afternoon Snack", mealVMDelegage: mSnack)
@@ -159,14 +142,6 @@ class FoodJournalTableViewController: UITableViewController {
         case .Dinner:
             let dinner: MealViewModelDelegate = DinnerVM(dataStore: self.dataStore) as MealViewModelDelegate
             showVC("Dinner", mealVMDelegage: dinner)
-
-            
-//            var vc : TrackTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TrackVC") as! TrackTableViewController
-//            vc.navigationItem.title = "Dinner"
-//            var dinnerItem: DinnerItems = dataStore.buildDinnerItems(dataStore.loadProfile(), journalItem: dataStore.buildJournalEntry(dataStore.loadProfile()))
-//            vc.detailDisplayItem = dinnerItem
-//            self.showViewController(vc as UIViewController, sender: self)
-            
 
         case .EveningSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Evening) as MealViewModelDelegate

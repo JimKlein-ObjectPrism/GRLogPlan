@@ -59,7 +59,8 @@ enum BreakfastMenuCategory {
 class OPProfile {
     var addOnRequired = false
     var medicineRequired = false
-    
+    var morningSnackRequired = true
+    var eveningSnackRequired = true
     
     var medicine: Int?
     var parents: [String] = ["Joe Smith", "Jane Doe"]

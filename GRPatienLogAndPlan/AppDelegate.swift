@@ -57,8 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         let homeNaveController = storyboard.instantiateViewControllerWithIdentifier("HomeNavController") as! UINavigationController
         
-        //let homeViewController = homeNaveController.viewControllers[0] as HomeViewController
-        
         
         let newTrackTableVC =  storyboard.instantiateViewControllerWithIdentifier("FoodJournalTableViewController") as! FoodJournalTableViewController
         newTrackTableVC.appDelegate = self
