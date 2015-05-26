@@ -545,6 +545,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Food Journal" id="FSj-q0-ayf"/>
                     <connections>
+                        <outlet property="dayLabel" destination="wVH-Zm-dfP" id="o3X-J6-OAQ"/>
                         <outlet property="mealTitle" destination="B47-h1-xti" id="KcS-xF-PLq"/>
                         <outlet property="summaryTextView" destination="AsD-mN-9Pn" id="ozY-9a-BYy"/>
                     </connections>

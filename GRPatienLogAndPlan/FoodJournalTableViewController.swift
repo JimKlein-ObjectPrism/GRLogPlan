@@ -116,16 +116,19 @@ class FoodJournalTableViewController: UITableViewController {
         //var meal = Meals.RawValue(selectedIndex)
         switch meal {
         case .Breakfast:
-            let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
-            
-            vc.navigationItem.title = "Breakfast"
-            let vm: BreakfastVM =  BreakfastVM (dataStore: appDelegate!.dataStore)
-            
-            
-            vc.vm = vm
-            vm.tableView = vc.tableView
-            vm.tableviewController = vc
-            self.showViewController(vc as UIViewController, sender: vc)
+            let breakfastVM: MealViewModelDelegate = BreakfastVM(dataStore: self.dataStore) as MealViewModelDelegate
+            showVC("Breakfast", mealVMDelegage: breakfastVM)
+
+//            let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
+//            
+//            vc.navigationItem.title = "Breakfast"
+//            let vm: BreakfastVM =  BreakfastVM (dataStore: appDelegate!.dataStore)
+//            
+//            
+//            vc.vm = vm
+//            vm.tableView = vc.tableView
+//            vm.tableviewController = vc
+//            self.showViewController(vc as UIViewController, sender: vc)
             
         case .MorningSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Morning) as MealViewModelDelegate

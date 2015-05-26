@@ -140,14 +140,14 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
         switch menuSection! {
         case .SnackChoice:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentSnackItemArray)
+            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentSnackItemArray, foodItemName: self.snack.snackChoice, viewModel: self)
             if let choiceCell = cell as? NewChoiceTableViewCell {
                 //cellForFoodItemAtIndexPath returns a NewChoice... cell or a plain cell, add delegate only to choice cell
                 choiceCell.segmentSelectionHandler = self
             }
             return cell
         case .Fruit:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFruitArray)
+            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFruitArray, foodItemName: self.snack.fruitChoice, viewModel: self)
             if let choiceCell = cell as? NewChoiceTableViewCell {
                 choiceCell.segmentSelectionHandler = self
             }
@@ -220,7 +220,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         case .SnackChoice:
             self.toggleSelectionArrayAndPropertyInModelForSegmentedControl(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: &self.currentSnackItemArray, immutableArray: self.snackItemArray, propertyInModel: &self.snack.snackChoice)
         case .Fruit:
-            let itemNameAndSelectionName = self.getItemNameAndChoiceItemName(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
+            let itemNameAndSelectionName = self.getItemNameAndChoiceItemIndex(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
             setPropertyInModel(value: itemNameAndSelectionName, propertyInModel: &self.snack.fruitChoice)
         default:
             return
@@ -283,7 +283,8 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        
+        setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.snack.time)
+
         
     }
     //MARK: Alert View methods

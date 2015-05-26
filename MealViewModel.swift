@@ -33,7 +33,7 @@ public class MealViewModel: NSObject {
     
     
     //MARK:  Cell For Row At Index Path Helpers
-    func tableCell(tableView: UITableView, cellForFoodItemAtIndexPath indexPath: NSIndexPath, inArray choicesArray: [FoodItem]) -> UITableViewCell
+    func tableCell(tableView: UITableView, cellForFoodItemAtIndexPath indexPath: NSIndexPath, inArray choicesArray: [FoodItem], foodItemName: String?, viewModel: ChoiceItemSelectedDelegate?) -> UITableViewCell
     {
         let currentItem = choicesArray[indexPath.row]
         
@@ -58,9 +58,26 @@ public class MealViewModel: NSObject {
                     segControl.insertSegmentWithTitle(itemWithChoice.choiceItems[i].itemDescription, atIndex: i, animated: false)
                     segControl.setWidth(0, forSegmentAtIndex: i)
                 }
-        }
+            }
+            
+            if foodItemName != nil {
+                //let parentItemName = currentItem.name
+                
+                
+                let myArray: [String] = foodItemName!.componentsSeparatedByString(",")
+                //var firstName: String? = myArray.first
+                //if myArray.count > 1 {
+                
+                var choiceItemIndex = myArray.last?.toInt()
+                let selectedSegment = choiceItemIndex ?? 0
+
+                cell.choiceSegmentControl.selectedSegmentIndex = selectedSegment
         
+            }
             segControl.apportionsSegmentWidthsByContent = true
+            
+            cell.segmentSelectionHandler = viewModel
+            
 
             return cell
         }
@@ -140,20 +157,16 @@ public class MealViewModel: NSObject {
     {
         
         let cell: TimeTableViewCell = tableView.dequeueReusableCellWithIdentifier(TimeTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! TimeTableViewCell
-        //cell.textLabel?.text = currentItem.name
+        
         cell.timeSelectedHandler = timeSelectionHandler
-        //var defaultInitials = parentInitialsText
-        var pickerTime = time
-        if pickerTime == nil  {
-            pickerTime = NSDate()
-        }
-        //cell.parentInitsButton.setTitle(timeText, forState: .Normal)
-        //cell.locationButton.titleLabel?.text = locationText
-        //cell.timeUIPicker.date = pickerTime!
+        
+        // nil coalescing operator !
+        var timeForPickerControl = time ?? NSDate()
+        
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "HH:mm"
   
-        cell.timeTextField.text = dateFormatter.stringFromDate(pickerTime!)
+        cell.timeTextField.text = dateFormatter.stringFromDate(timeForPickerControl)
         return cell
         
     }
@@ -190,11 +203,11 @@ public class MealViewModel: NSObject {
         if mutableArray.count == 1 {
             //for FoodItemWithChoice this gets called when user changes selection after they've selected this tableCell from the list
             //mutableArray = immutableArray  //immutable array contains full list of values
-            propertyInModel = self.getItemNameAndChoiceItemName(selectedIndexPath: selectedIndexPath, selectedSegment: selectedSegment, mutableArray: mutableArray)
+            propertyInModel = self.getItemNameAndChoiceItemIndex(selectedIndexPath: selectedIndexPath, selectedSegment: selectedSegment, mutableArray: mutableArray)
         } else {
             var indexPathArrayToDelete = getIndexPathArrayOfRowsToDelete(selectedIndexPath, countOfArrayOfFoodItems: mutableArray.count)
             
-            propertyInModel = self.getItemNameAndChoiceItemName(selectedIndexPath: selectedIndexPath, selectedSegment: selectedSegment, mutableArray: mutableArray)            
+            propertyInModel = self.getItemNameAndChoiceItemIndex(selectedIndexPath: selectedIndexPath, selectedSegment: selectedSegment, mutableArray: mutableArray)            
             mutableArray = [immutableArray[selectedIndexPath.row]]
             
             animateRowDeletion(indexPathArrayToDelete)
@@ -224,13 +237,13 @@ public class MealViewModel: NSObject {
         tableView.endUpdates()
     }
 
-    func getItemNameAndChoiceItemName ( #selectedIndexPath: NSIndexPath, selectedSegment: Int, mutableArray: [FoodItem] ) -> String
+    func getItemNameAndChoiceItemIndex ( #selectedIndexPath: NSIndexPath, selectedSegment: Int, mutableArray: [FoodItem] ) -> String
     {
         // cast always succeeds because only FoodItemWithChoice items get the cells with the segmented controls
         let choiceItem = mutableArray[selectedIndexPath.row] as? FoodItemWithChoice
         let itemName = choiceItem!.name
-        let childChoiceItemName = choiceItem!.choiceItems[selectedSegment].name
-        var compoundName = itemName + "," + childChoiceItemName
+        //let childChoiceItemName = choiceItem!.choiceItems[selectedSegment].name
+        var compoundName = itemName + "," + String(selectedSegment)
         return compoundName
     }
     
@@ -278,11 +291,17 @@ public class MealViewModel: NSObject {
     func setPropertyInModel (#boolValue: Bool, inout boolPropertyInModel: Bool?){
         boolPropertyInModel = boolValue
     }
+    func setPropertyInModel (#dateValue: NSDate, inout datePropertyInModel: NSDate?){
+        datePropertyInModel = dateValue
+    }
     
     func getFoodItem ( itemName: String, foodItemArray: [FoodItem] ) -> [FoodItem] {
         // get subtype of food items for selection
+        let myArray: [String] = itemName.componentsSeparatedByString(",")
+        var nameOfParentFoodItem: String? = myArray.first
+
         let fItems = foodItemArray.filter({m in
-            m.name == itemName
+            m.name == nameOfParentFoodItem
         })
         
         return fItems

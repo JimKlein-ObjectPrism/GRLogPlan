@@ -183,7 +183,7 @@ enum MealState {
                 var part1 = ( hour >= minHour && minute >= minMinute)
                 var test = ((hour < timeRange?.rangeEnd?.hour) || ( hour == timeRange?.rangeEnd?.hour && minute < timeRange?.rangeEnd?.minute))//(hour < timeRange?.rangeEnd?.hour) //|| ( hour < timeRange?.rangeEnd?.hour && minute < timeRange?.rangeEnd?.hour))
                 var timeWithinRange: Bool =
-                ( hour >= minHour && minute >= minMinute) &&
+                (( hour >= minHour && minute >= minMinute) || (hour > minHour)) &&
                     ((hour < maxHour) || ( hour == maxHour && minute < maxMinute))
                 return timeWithinRange
             }
@@ -250,9 +250,6 @@ enum MealState {
         
         MealState.afternoonSnackRange = TimeRange(rangeStart: (13,30), rangeEnd: (17,0))
         enumArray.append(MealState.AfternoonSnack(MealState.afternoonSnackRange))
-//        MealState.dinnerRange = TimeRange(rangeStart: (17,0), rangeEnd: (24,0))
-//        enumArray.append(MealState.Dinner(MealState.dinnerRange))
-//        MealState.eveningSnackRange = TimeRange(rangeStart: nil, rangeEnd: nil)
 
         
         if profile.eveningSnackRequired {

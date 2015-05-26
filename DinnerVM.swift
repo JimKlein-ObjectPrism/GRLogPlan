@@ -197,27 +197,27 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
         
         switch menuSection! {
         case .Meat:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentMeatItemArray)
+            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentMeatItemArray, foodItemName: self.dinner.meat, viewModel: self)
             if let choiceCell = cell as? NewChoiceTableViewCell {
                 //cellForFoodItemAtIndexPath returns a NewChoice... cell or a plain cell, add delegate only to choice cell
                 choiceCell.segmentSelectionHandler = self
             }
             return cell
         case .Starch:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentStarchArray)
+            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentStarchArray, foodItemName: self.dinner.starch, viewModel: self)
             if let choiceCell = cell as? NewChoiceTableViewCell {
                 choiceCell.segmentSelectionHandler = self
             }
             return cell
         case .Oil:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentOilArray)
+            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentOilArray, foodItemName: self.dinner.oil, viewModel: self)
             if let choiceCell = cell as? NewChoiceTableViewCell {
                 //cellForFoodItemAtIndexPath returns a NewChoice... cell or a plain cell, add delegate only to choice cell
                 choiceCell.segmentSelectionHandler = self
             }
             return cell
         case .Vegetable:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentVegetableArray)
+            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentVegetableArray, foodItemName: self.dinner.vegetable, viewModel: self)
             if let choiceCell = cell as? NewChoiceTableViewCell {
                 choiceCell.segmentSelectionHandler = self
             }
@@ -308,7 +308,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
         case .Meat:
             self.toggleSelectionArrayAndPropertyInModelForSegmentedControl(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: &self.currentMeatItemArray, immutableArray: self.meatItemArray, propertyInModel: &self.dinner.meat)
         case .Starch:
-            let itemNameAndSelectionName = self.getItemNameAndChoiceItemName(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentStarchArray)
+            let itemNameAndSelectionName = self.getItemNameAndChoiceItemIndex(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentStarchArray)
             setPropertyInModel(value: itemNameAndSelectionName, propertyInModel: &self.dinner.starch)
         default:
             return
@@ -374,8 +374,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
     }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        
-        
+        setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.dinner.time)        
     }
     //MARK: Alert View methods
     func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){

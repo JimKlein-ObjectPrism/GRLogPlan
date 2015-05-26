@@ -13,13 +13,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var dataStore: DataStore!
     @IBOutlet weak var summaryTextView: UITextView!
     
+    @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var mealTitle: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
             //set local property to data array in appDelegate
                 dataStore = appDelegate.dataStore
-            
              }
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
@@ -32,17 +32,61 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewWillAppear(animated: Bool) {
-        println("ViewWillAppear called.")
-        //mealTitle.text = "Lunch"
+
         var ms = dataStore.mealState
         mealTitle.text = ms.mealName()
         
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMM dd"
+        
+        dayLabel.text = dateFormatter.stringFromDate(NSDate())
+
+        summaryTextView.text = checkMealStateValidationStatus(ms)
+        
+    }
+    
+    func checkMealStateValidationStatus(mealState: MealState) -> String {
+        switch mealState{
+        case .Breakfast:
+            let status = dataStore.getBreakfast_Today().validateWithBreakfastMenuCategoryEnum()
+            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+        case .MorningSnack:
+            let status = dataStore.getSnack_Today(SnackTime.Morning).validateWithSnackMenuCategoryEnum()
+            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+        case .Lunch:
+            let status = dataStore.getLunch_Today().validateWithLunchMenuCategoryEnum()
+            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+        case .AfternoonSnack:
+            let status = dataStore.getSnack_Today(SnackTime.Afternoon).validateWithSnackMenuCategoryEnum()
+            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+        case .Dinner:
+            let status = dataStore.getDinner_Today().validateWithDinnerMenuCategoryEnum()
+            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+        case .EveningSnack:
+            let status = dataStore.getSnack_Today(SnackTime.Evening).validateWithSnackMenuCategoryEnum()
+            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+        }
+    }
+    
+    func statusStringForCurrentMeal(mealName: String, validationResult: ValidationResult) -> String{
+        switch validationResult{
+        case .Failure:
+            return "\(mealName) Log Incomplete."
+        case .Success:
+            return "\(mealName) Log Complete."
+        }
     }
     
     func updateMealState () {
+        var ms = dataStore.mealState
+        ms.next()
+
         let fullPeriodToNextUpdate = dataStore.mealState.timeRangeLength()
         NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(fullPeriodToNextUpdate), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
-        mealTitle.text = dataStore.mealState.mealName()
+        mealTitle.text = ms.mealName()
+        summaryTextView.text = checkMealStateValidationStatus(ms)
+
+        
 
     }
 
@@ -104,17 +148,42 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func showMealSelectionView(sender: AnyObject) {
         
-        let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let vm: BreakfastVM =  BreakfastVM (dataStore: appDelegate.dataStore)
-        vc.vm = vm
-        vm.tableView = vc.tableView
-        vm.tableviewController = vc
-        
-        self.showViewController(vc as UIViewController, sender: vc)
-        
+        let meal = dataStore.mealState
+        switch meal {
+        case .Breakfast:
+            let breakfastVM: MealViewModelDelegate = BreakfastVM(dataStore: self.dataStore) as MealViewModelDelegate
+            showVC(meal.mealName(), mealVMDelegage: breakfastVM)
+            
+        case .MorningSnack:
+            let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Morning) as MealViewModelDelegate
+            showVC(meal.mealName(), mealVMDelegage: mSnack)
+            
+        case .Lunch:
+            let lunch: MealViewModelDelegate = LunchVM(dataStore: self.dataStore) as MealViewModelDelegate
+            showVC(meal.mealName(), mealVMDelegage: lunch)
+            
+        case .AfternoonSnack:
+            let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Afternoon) as MealViewModelDelegate
+            showVC(meal.mealName(), mealVMDelegage: mSnack)
+            
+        case .Dinner:
+            let dinner: MealViewModelDelegate = DinnerVM(dataStore: self.dataStore) as MealViewModelDelegate
+            showVC(meal.mealName(), mealVMDelegage: dinner)
+            
+        case .EveningSnack:
+            let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Evening) as MealViewModelDelegate
+            showVC(meal.mealName(), mealVMDelegage: mSnack)
+        }
 
+    }
+    func showVC (navBarTitle: String, mealVMDelegage: MealViewModelDelegate){
+        let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
+        vc.navigationItem.title = navBarTitle
+        vc.vm = mealVMDelegage
+        vc.vm.tableView = vc.tableView
+        vc.vm.tableviewController = vc
+        self.showViewController(vc as UIViewController, sender: vc)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

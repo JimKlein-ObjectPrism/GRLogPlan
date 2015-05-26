@@ -124,7 +124,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
             currentFruitArray  = fruitArray
         }
 
-        //TODO: Initialize Parent Array from Profile.  No do this in the datastore
+        //TODO: Get time at init, i
 
     }
     
@@ -172,14 +172,21 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
             
             switch menuSection! {
             case .FoodChoice:
-                let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFoodItemArray)
+                let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFoodItemArray, foodItemName: self.breakfast.foodChoice, viewModel: self)
                 if let choiceCell = cell as? NewChoiceTableViewCell {
                     //cellForFoodItemAtIndexPath returns a NewChoice... cell or a plain cell, add delegate only to choice cell
                     choiceCell.segmentSelectionHandler = self
+                    if let v = self.breakfast.foodChoice {
+                        //let indexString =
+                        let myArray: [String] = v.componentsSeparatedByString(",")
+                        var indexString: String? = myArray.last
+                        let indexValue = indexString?.toInt()
+                        choiceCell.choiceSegmentControl.selectedSegmentIndex = indexValue!
+                    }
                 }
                 return cell
             case .Fruit:
-                let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFruitArray)
+                let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFruitArray, foodItemName: self.breakfast.foodChoice, viewModel: self)
                 if let choiceCell = cell as? NewChoiceTableViewCell {
                     choiceCell.segmentSelectionHandler = self
                 }
@@ -252,7 +259,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         case .FoodChoice:
             self.toggleSelectionArrayAndPropertyInModelForSegmentedControl(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: &self.currentFoodItemArray, immutableArray: self.foodItemArray, propertyInModel: &self.breakfast.foodChoice)
         case .Fruit:
-            let itemNameAndSelectionName = self.getItemNameAndChoiceItemName(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
+            let itemNameAndSelectionName = self.getItemNameAndChoiceItemIndex(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
             setPropertyInModel(value: itemNameAndSelectionName, propertyInModel: &self.breakfast.fruitChoice)
         default:
             return
@@ -317,7 +324,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        
+        setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.breakfast.time)
         
     }
     //MARK: Alert View methods

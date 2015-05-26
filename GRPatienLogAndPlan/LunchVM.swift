@@ -138,14 +138,14 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
         switch menuSection! {
         case .LunchChoice:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentLunchItemArray)
+            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentLunchItemArray, foodItemName: self.lunch.lunchChoice, viewModel: self)
             if let choiceCell = cell as? NewChoiceTableViewCell {
                 //cellForFoodItemAtIndexPath returns a NewChoice... cell or a plain cell, add delegate only to choice cell
                 choiceCell.segmentSelectionHandler = self
             }
             return cell
         case .Fruit:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFruitArray)
+            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFruitArray, foodItemName: self.lunch.fruitChoice, viewModel: self)
             if let choiceCell = cell as? NewChoiceTableViewCell {
                 choiceCell.segmentSelectionHandler = self
             }
@@ -214,11 +214,15 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
         let menuSection = LunchMenuCategory(value: indexPath.section)
         
+        if currentLunchItemArray.count == 0 {
+            currentLunchItemArray = lunchItemArray
+        }
+        
         switch menuSection! {
         case .LunchChoice:
             self.toggleSelectionArrayAndPropertyInModelForSegmentedControl(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: &self.currentLunchItemArray, immutableArray: self.lunchItemArray, propertyInModel: &self.lunch.lunchChoice)
         case .Fruit:
-            let itemNameAndSelectionName = self.getItemNameAndChoiceItemName(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
+            let itemNameAndSelectionName = self.getItemNameAndChoiceItemIndex(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
             setPropertyInModel(value: itemNameAndSelectionName, propertyInModel: &self.lunch.fruitChoice)
         default:
             return
@@ -281,7 +285,8 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        
+        setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.lunch.time)
+
         
     }
     //MARK: Alert View methods

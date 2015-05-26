@@ -122,6 +122,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     }
     
     func saveBreakfast_Today(breakfast: VMBreakfast){
+        //if self.breakfast?.time
         self.breakfast = breakfast
     }
     func getLunch_Today() -> VMLunch {

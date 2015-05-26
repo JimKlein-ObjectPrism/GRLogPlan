@@ -45,5 +45,6 @@ class TimeTableViewCell: UITableViewCell {
         dateFormatter.dateFormat = "HH:mm"
         
         timeTextField.text = dateFormatter.stringFromDate(sender.date)
+        timeSelectedHandler?.timeSelectedHandler(sender.date)
     }
 }
