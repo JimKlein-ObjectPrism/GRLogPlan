@@ -19,9 +19,9 @@ enum Meals: Int {
 
 class FoodJournalTableViewController: UITableViewController {
 
-    let dates = ["Thursday, April 30, 2015", "Wednesday, April 29, 2015","Tuesday, April 28, 2015","Monday, April 27, 2015","Sunday, April 26, 2015","Saturday, April 25, 2015", "Friday, April 24, 2015"]
+    let dates = ["Wednesday, May 27, 2015","Tuesday, May 26, 2015","Monday, May 25, 2015","Sunday, May 24, 2015","Saturday, May 23, 2015", "Friday, May 22, 2015", "Thursday, May 21, 2015"]
     var currentDateIndex = 0
-    var currentDateHeader = "Thursday, April 30, 2015"
+    var currentDateHeader = "Wednesday, May 27, 2015"
     
     var appDelegate: AppDelegate?
     

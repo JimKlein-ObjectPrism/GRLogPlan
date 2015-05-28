@@ -59,7 +59,7 @@ class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, Choic
     
     override init() {
         //configure with placeholder until CoreData working
-        let profile = OPProfile()
+        let profile = TempProfile()
         
         //MARK:  Home Controller Meal State Init
         MealState.setUpMealMenuForProfile(profile)

@@ -19,7 +19,7 @@ enum LunchMenuCategory {
     
     static func count() -> Int { return caseItems.count }
     
-    static func configureMenuChoice(profile: OPProfile){
+    static func configureMenuChoice(profile: TempProfile){
         caseItems.removeAll(keepCapacity: false)
         caseItems.append(LunchMenuCategory.LunchChoice)
         caseItems.append(LunchMenuCategory.Fruit)

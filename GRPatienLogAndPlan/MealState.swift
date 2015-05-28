@@ -229,7 +229,7 @@ enum MealState {
         return stateArray
     }
     
-    static func setUpMealMenuForProfile( profile: OPProfile) {
+    static func setUpMealMenuForProfile( profile: TempProfile) {
         
         var enumArray = [MealState]()
         if profile.morningSnackRequired {

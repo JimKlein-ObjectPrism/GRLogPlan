@@ -51,6 +51,19 @@
 		EFBD36781AD30123006F32AA /* profile_user-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFBD36761AD30122006F32AA /* profile_user-16.png */; };
 		EFBD36791AD30123006F32AA /* Settings_gear-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFBD36771AD30123006F32AA /* Settings_gear-16.png */; };
 		EFBD367B1AD30AFB006F32AA /* calendar_day-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFBD367A1AD30AFB006F32AA /* calendar_day-16.png */; };
+		EFCAF4A81B1646600039D784 /* OPAfternoonSnack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4A71B1646600039D784 /* OPAfternoonSnack.swift */; };
+		EFCAF4AA1B1646600039D784 /* OPParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4A91B1646600039D784 /* OPParent.swift */; };
+		EFCAF4AC1B1646600039D784 /* OPDinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4AB1B1646600039D784 /* OPDinner.swift */; };
+		EFCAF4AE1B1646600039D784 /* OPProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4AD1B1646600039D784 /* OPProfile.swift */; };
+		EFCAF4B01B1646600039D784 /* OPAddOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4AF1B1646600039D784 /* OPAddOn.swift */; };
+		EFCAF4B21B1646600039D784 /* OPBreakfast.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B11B1646600039D784 /* OPBreakfast.swift */; };
+		EFCAF4B41B1646610039D784 /* OPMedicine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B31B1646610039D784 /* OPMedicine.swift */; };
+		EFCAF4B61B1646610039D784 /* OPMorningSnack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B51B1646610039D784 /* OPMorningSnack.swift */; };
+		EFCAF4B81B1646610039D784 /* OPPatientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B71B1646610039D784 /* OPPatientRecord.swift */; };
+		EFCAF4BA1B1646610039D784 /* OPEveningSnack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */; };
+		EFCAF4BC1B1646610039D784 /* OPLunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4BB1B1646610039D784 /* OPLunch.swift */; };
+		EFCAF4BE1B1646610039D784 /* OPJournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4BD1B1646610039D784 /* OPJournalEntry.swift */; };
+		EFCAF4C01B1646610039D784 /* OPActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4BF1B1646610039D784 /* OPActivity.swift */; };
 		EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */; };
 		EFCDDBB11B0150D500A5F363 /* MealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */; };
 		EFCDDBB31B01521200A5F363 /* BreakfastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDDBB21B01521200A5F363 /* BreakfastVM.swift */; };
@@ -134,6 +147,19 @@
 		EFBD36761AD30122006F32AA /* profile_user-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_user-16.png"; sourceTree = "<group>"; };
 		EFBD36771AD30123006F32AA /* Settings_gear-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings_gear-16.png"; sourceTree = "<group>"; };
 		EFBD367A1AD30AFB006F32AA /* calendar_day-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_day-16.png"; sourceTree = "<group>"; };
+		EFCAF4A71B1646600039D784 /* OPAfternoonSnack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPAfternoonSnack.swift; sourceTree = "<group>"; };
+		EFCAF4A91B1646600039D784 /* OPParent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPParent.swift; sourceTree = "<group>"; };
+		EFCAF4AB1B1646600039D784 /* OPDinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPDinner.swift; sourceTree = "<group>"; };
+		EFCAF4AD1B1646600039D784 /* OPProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPProfile.swift; sourceTree = "<group>"; };
+		EFCAF4AF1B1646600039D784 /* OPAddOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPAddOn.swift; sourceTree = "<group>"; };
+		EFCAF4B11B1646600039D784 /* OPBreakfast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPBreakfast.swift; sourceTree = "<group>"; };
+		EFCAF4B31B1646610039D784 /* OPMedicine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPMedicine.swift; sourceTree = "<group>"; };
+		EFCAF4B51B1646610039D784 /* OPMorningSnack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPMorningSnack.swift; sourceTree = "<group>"; };
+		EFCAF4B71B1646610039D784 /* OPPatientRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPPatientRecord.swift; sourceTree = "<group>"; };
+		EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPEveningSnack.swift; sourceTree = "<group>"; };
+		EFCAF4BB1B1646610039D784 /* OPLunch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPLunch.swift; sourceTree = "<group>"; };
+		EFCAF4BD1B1646610039D784 /* OPJournalEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPJournalEntry.swift; sourceTree = "<group>"; };
+		EFCAF4BF1B1646610039D784 /* OPActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPActivity.swift; sourceTree = "<group>"; };
 		EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMealsRecipesTableViewController.swift; sourceTree = "<group>"; };
 		EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MealViewModel.swift; path = ../MealViewModel.swift; sourceTree = "<group>"; };
 		EFCDDBB21B01521200A5F363 /* BreakfastVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreakfastVM.swift; sourceTree = "<group>"; };
@@ -177,6 +203,19 @@
 		9864434B1A9E78FB00887579 = {
 			isa = PBXGroup;
 			children = (
+				EFCAF4BF1B1646610039D784 /* OPActivity.swift */,
+				EFCAF4BD1B1646610039D784 /* OPJournalEntry.swift */,
+				EFCAF4BB1B1646610039D784 /* OPLunch.swift */,
+				EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */,
+				EFCAF4B71B1646610039D784 /* OPPatientRecord.swift */,
+				EFCAF4B51B1646610039D784 /* OPMorningSnack.swift */,
+				EFCAF4B31B1646610039D784 /* OPMedicine.swift */,
+				EFCAF4B11B1646600039D784 /* OPBreakfast.swift */,
+				EFCAF4AF1B1646600039D784 /* OPAddOn.swift */,
+				EFCAF4AD1B1646600039D784 /* OPProfile.swift */,
+				EFCAF4AB1B1646600039D784 /* OPDinner.swift */,
+				EFCAF4A91B1646600039D784 /* OPParent.swift */,
+				EFCAF4A71B1646600039D784 /* OPAfternoonSnack.swift */,
 				986443561A9E78FB00887579 /* GRPatienLogAndPlan */,
 				9864436E1A9E78FB00887579 /* GRPatienLogAndPlanTests */,
 				986443551A9E78FB00887579 /* Products */,
@@ -462,6 +501,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFCAF4A81B1646600039D784 /* OPAfternoonSnack.swift in Sources */,
 				EFBD36751ACCADC4006F32AA /* PrintVisitor.swift in Sources */,
 				9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */,
 				EF157BBF1AAEA20B00847AEE /* NoteTableViewCell.swift in Sources */,
@@ -470,12 +510,15 @@
 				EFE08A2E1AD9AFF4004C80C3 /* CoreDataStack.swift in Sources */,
 				EFF4489B1AB24118004A099F /* HomeLogItemTableViewCell.swift in Sources */,
 				EF5944691B0D58F3009ED145 /* DinnerVM.swift in Sources */,
+				EFCAF4BC1B1646610039D784 /* OPLunch.swift in Sources */,
 				EF49F8331AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld in Sources */,
 				EF157BC11AAEA21300847AEE /* ParentInitialsTableViewCell.swift in Sources */,
 				EF7D0C441B03C00B00ED50E5 /* AddOnTableViewCell.swift in Sources */,
 				EF157BAE1AAE089A00847AEE /* FoodJournalDataStore.swift in Sources */,
 				9864435A1A9E78FB00887579 /* AppDelegate.swift in Sources */,
+				EFCAF4BA1B1646610039D784 /* OPEveningSnack.swift in Sources */,
 				EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */,
+				EFCAF4C01B1646610039D784 /* OPActivity.swift in Sources */,
 				EF5944671B0D3905009ED145 /* SnackVM.swift in Sources */,
 				EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */,
 				EFCDDBB11B0150D500A5F363 /* MealViewModel.swift in Sources */,
@@ -490,10 +533,14 @@
 				EF157BAC1AAE088600847AEE /* DataTypes.swift in Sources */,
 				EF157BB41AAE7C0200847AEE /* HomeViewController.swift in Sources */,
 				EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */,
+				EFCAF4B81B1646610039D784 /* OPPatientRecord.swift in Sources */,
 				EFF448CB1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift in Sources */,
 				EFF4CECE1B0CD7B10022A5B0 /* LunchVM.swift in Sources */,
 				EF157BB01AAE096200847AEE /* MenuDisplayCellProtocol.swift in Sources */,
+				EFCAF4B41B1646610039D784 /* OPMedicine.swift in Sources */,
 				EFBD36711ACCA14B006F32AA /* PrintViewController.swift in Sources */,
+				EFCAF4B01B1646600039D784 /* OPAddOn.swift in Sources */,
+				EFCAF4BE1B1646610039D784 /* OPJournalEntry.swift in Sources */,
 				EFF449CB1ABB45C2004A099F /* JournalItemProtocols.swift in Sources */,
 				EFCDDBB31B01521200A5F363 /* BreakfastVM.swift in Sources */,
 				EF7D09E71B017B320029A824 /* MealTrackingTableViewController.swift in Sources */,
@@ -501,9 +548,14 @@
 				EFF449641AB87E66004A099F /* Type Defs.swift in Sources */,
 				EFF448CD1AB25CF8004A099F /* PopoverTableViewController.swift in Sources */,
 				EF59446B1B0E3C9C009ED145 /* RequiredItemTableViewCell.swift in Sources */,
+				EFCAF4AE1B1646600039D784 /* OPProfile.swift in Sources */,
+				EFCAF4AC1B1646600039D784 /* OPDinner.swift in Sources */,
 				EF7D0C481B03E76C00ED50E5 /* LocationTableViewCell.swift in Sources */,
 				EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */,
 				98FDCF0A1AA16ABF0029F97E /* HomeTabBarController.swift in Sources */,
+				EFCAF4AA1B1646600039D784 /* OPParent.swift in Sources */,
+				EFCAF4B21B1646600039D784 /* OPBreakfast.swift in Sources */,
+				EFCAF4B61B1646610039D784 /* OPMorningSnack.swift in Sources */,
 				EF157BBD1AAEA20300847AEE /* MenuCellTableViewCell.swift in Sources */,
 				EF7D0C421B03AE7C00ED50E5 /* TableCellInputProtocols.swift in Sources */,
 				986443811A9E868600887579 /* SWRevealViewController.m in Sources */,
@@ -635,6 +687,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = GRPatienLogAndPlan/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -652,6 +705,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = GRPatienLogAndPlan/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -105,45 +105,7 @@ struct VMBreakfast {
         } else {
             return ValidationResult.Failure(errorMessages)
         }
-        
     }
-    //      This function iterates over the list of error messages.  some message apply to optional information.  better approach is to iterate over
-    //      list of items in menu and skip any that aren't required.  Keeping this for reference.  delete after beta release.
-    //    func validateRequiredFields ( ) -> ValidationResult {
-    //        var errorMessages = [String]()
-    //        for i in 0 ..< BreakfastValidationError.count() {
-    //            let errorCondition = BreakfastValidationError.values[i]
-    //            switch errorCondition {
-    //            case BreakfastValidationError.NilValueFoodChoice:
-    //                if testNil(foodChoice)  {
-    //                    errorMessages.append(BreakfastValidationError.NilValueFoodChoice.message())
-    //                }
-    //            case .NilValueFruitChoice:
-    //                if testNil(fruitChoice)  {
-    //                    errorMessages.append(BreakfastValidationError.NilValueFruitChoice.message())
-    //                }
-    //            case .AddOnNotConsumed:
-    //                if addOnRequired {
-    //                    if (addOnConsumed == false) {
-    //                        errorMessages.append(BreakfastValidationError.AddOnNotConsumed.message())
-    //                    }
-    //                }
-    //            case .MedicineNotTaken:
-    //                if meidicineRequired {
-    //                    if (medicineConsumed == false) {
-    //                        errorMessages.append(BreakfastValidationError.MedicineNotTaken.message())
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        if errorMessages.count == 0 {
-    //            return ValidationResult.Success
-    //        } else {
-    //            return ValidationResult.Failure(errorMessages)
-    //        }
-    //        
-    //    }
-
 }
 
 struct VMLunch {
@@ -360,7 +322,7 @@ enum DinnerValidationError: Int {
 
 struct VMDinner {
     
-    var dinnerChoice: String?
+    //var dinnerChoice: String?
     var meat: String?
     
    

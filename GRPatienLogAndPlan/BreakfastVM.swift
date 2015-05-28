@@ -20,7 +20,7 @@ enum BreakfastMenuCategory {
     
     static func count() -> Int { return caseItems.count }
     
-    static func configureMenuChoice(profile: OPProfile){
+    static func configureMenuChoice(profile: TempProfile){
         caseItems.removeAll(keepCapacity: false)
         caseItems.append(BreakfastMenuCategory.FoodChoice)
         caseItems.append(BreakfastMenuCategory.Fruit)
@@ -56,7 +56,7 @@ enum BreakfastMenuCategory {
 }
 
 
-class OPProfile {
+class TempProfile {
     var addOnRequired = false
     var medicineRequired = false
     var morningSnackRequired = true
@@ -69,24 +69,24 @@ class OPProfile {
 //func testNil (inout stringProperty: String?, errorMessage: String)
 
 
-struct OPBreakfast {
-    
-    var foodChoice: String?
-    var fruitChoice: String?
-
-    var addOn: Int? = 0
-    var addOnText: String? = "Yogurt"
-    var addOnConsumed: Bool? = false
-    var medicine: Int? = 0
-    var medicineText: String? = "Zinc"
-    var medicineTaken = false
-
-    var parentInitials: String?
-    var location: String?
-    var time: NSDate?
-
-    var medicineConsumed: Bool? = false
-}
+//struct OPBreakfast {
+//    
+//    var foodChoice: String?
+//    var fruitChoice: String?
+//
+//    var addOn: Int? = 0
+//    var addOnText: String? = "Yogurt"
+//    var addOnConsumed: Bool? = false
+//    var medicine: Int? = 0
+//    var medicineText: String? = "Zinc"
+//    var medicineTaken = false
+//
+//    var parentInitials: String?
+//    var location: String?
+//    var time: NSDate?
+//
+//    var medicineConsumed: Bool? = false
+//}
 
 public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
