@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(OPProfile)
 class OPProfile: NSManagedObject {
 
     @NSManaged var firstName: String

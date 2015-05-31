@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(OPMedicine)
 class OPMedicine: NSManagedObject {
 
     @NSManaged var targetTimePeriodToTake: NSNumber

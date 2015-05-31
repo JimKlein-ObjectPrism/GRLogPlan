@@ -73,7 +73,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate, RequiredItemsSelectedDelegate
 {
    
-    let dataStore: DataStore
+    //let dataStore: DataStore
     
     let meatItemArray: [FoodItem]
     var currentMeatItemArray: [FoodItem] = [FoodItem]()
@@ -86,10 +86,10 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
 
     var dinner: VMDinner
     
-    init(dataStore: DataStore)
+    override init(dataStore: DataStore)
     {
         
-        self.dataStore = dataStore
+        //self.dataStore = dataStore
         
         self.dinner = dataStore.getDinner_Today()
         self.meatItemArray = dataStore.buildFoodItemArray(filterString: "MeatDinnerItem")
@@ -97,7 +97,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
         self.oilArray = dataStore.buildFoodItemArray(filterString: "OilDinnerItem")
         self.vegetableArray = dataStore.buildFoodItemArray(filterString: "VegetableItem")
         
-        super.init()
+        super.init(dataStore: dataStore)
         
         if dinner.meat != nil {
             currentMeatItemArray = getFoodItem(dinner.meat!, foodItemArray: meatItemArray)

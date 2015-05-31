@@ -58,7 +58,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
 {
     var snackTime: SnackTime
-    let dataStore: DataStore
+    //let dataStore: DataStore
     
     let snackItemArray: [FoodItem]
     var currentSnackItemArray: [FoodItem] = [FoodItem]()
@@ -70,13 +70,13 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     init(dataStore: DataStore, snackTime: SnackTime)
     {
         self.snackTime = snackTime
-        self.dataStore = dataStore
+        //self.dataStore = dataStore
         
         self.snack = dataStore.getSnack_Today(snackTime)
         self.snackItemArray = dataStore.buildFoodItemArray(filterString: "SnackItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
         
-        super.init()
+        super.init(dataStore: dataStore)
         
         if snack.snackChoice != nil {
             currentSnackItemArray = getFoodItem(snack.snackChoice!, foodItemArray: snackItemArray)

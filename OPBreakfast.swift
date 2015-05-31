@@ -8,21 +8,21 @@
 
 import Foundation
 import CoreData
-
+@objc(OPBreakfast)
 class OPBreakfast: NSManagedObject {
 
-    @NSManaged var fruitChoice: String
-    @NSManaged var foodChoice: String
-    @NSManaged var note: String
-    @NSManaged var parentInitials: String
-    @NSManaged var location: String
-    @NSManaged var time: NSDate
+    @NSManaged var fruitChoice: String?
+    @NSManaged var foodChoice: String?
+    @NSManaged var note: String?
+    @NSManaged var parentInitials: String?
+    @NSManaged var location: String?
+    @NSManaged var time: NSDate?
     @NSManaged var addOnRequired: NSNumber
-    @NSManaged var addOnText: String
-    @NSManaged var addOnConsumed: NSNumber
-    @NSManaged var medicineText: String
+    @NSManaged var addOnText: String?
+    @NSManaged var addOnConsumed: NSNumber?
+    @NSManaged var medicineText: String?
     @NSManaged var medicineRequired: NSNumber
-    @NSManaged var medicineConsumed: NSNumber
+    @NSManaged var medicineConsumed: NSNumber?
     @NSManaged var journalEntry: OPJournalEntry
 
 }

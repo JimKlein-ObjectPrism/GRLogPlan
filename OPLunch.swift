@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(OPLunch)
 class OPLunch: NSManagedObject {
 
     @NSManaged var addOnRequired: NSNumber

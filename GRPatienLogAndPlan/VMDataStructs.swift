@@ -57,15 +57,39 @@ struct VMBreakfast {
     var addOnRequired: Bool = true
     var addOnText: String? = "Yogurt"
     var addOnConsumed: Bool? = false
-    var meidicineRequired: Bool = true
+    var medicineRequired: Bool = true
     var medicineText: String? = "Zinc"
     var medicineConsumed: Bool? = false
     
     var parentInitials: String?
     var location: String?
     var time: NSDate?
+    init(){
+        
+    }
     
-    
+    init(fromDataObject: OPBreakfast){
+        
+        self.foodChoice = fromDataObject.foodChoice
+        self.fruitChoice = fromDataObject.fruitChoice
+        self.addOnRequired = fromDataObject.addOnRequired.boolValue
+        self.addOnConsumed = fromDataObject.addOnConsumed?.boolValue
+        self.addOnText = fromDataObject.addOnText
+        self.medicineRequired = fromDataObject.medicineRequired.boolValue
+        self.medicineConsumed = fromDataObject.medicineConsumed?.boolValue
+        self.medicineText = fromDataObject.medicineText
+        
+        //parent initials are set by VM using data from DataStore
+        if let pi = fromDataObject.parentInitials {
+            self.parentInitials = fromDataObject.parentInitials
+        }
+        
+        self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
+        //time is set at the point that the cell is created by VM
+        if let t = fromDataObject.time {
+            self.time = t
+        }
+    }
     func validateWithBreakfastMenuCategoryEnum () -> ValidationResult {
         var errorMessages = [String]()
         //this next line isn't necessary when datastore initialized enum

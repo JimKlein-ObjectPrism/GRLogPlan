@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(OPAddOn)
 class OPAddOn: NSManagedObject {
 
     @NSManaged var targetMealOrSnack: NSNumber

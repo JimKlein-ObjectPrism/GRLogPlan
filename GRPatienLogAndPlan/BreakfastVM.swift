@@ -61,7 +61,9 @@ class TempProfile {
     var medicineRequired = false
     var morningSnackRequired = true
     var eveningSnackRequired = true
-    
+    var parentInitials = "A.B"
+    let location = "Kitchen"
+    let time = NSDate()
     var medicine: Int?
     var parents: [String] = ["Joe Smith", "Jane Doe"]
 }
@@ -91,7 +93,7 @@ class TempProfile {
 public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
      {
-    let dataStore: DataStore
+    //let dataStore: DataStore
     
     let foodItemArray: [FoodItem]
     var currentFoodItemArray: [FoodItem] = [FoodItem]()
@@ -100,15 +102,15 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     
     var breakfast: VMBreakfast
 
-    init(dataStore: DataStore)
+    override init(dataStore: DataStore)
     {
-        self.dataStore = dataStore
+        //dataStore = dataStore
         
         self.breakfast = dataStore.getBreakfast_Today()
         self.foodItemArray = dataStore.buildFoodItemArray(filterString: "BreakfastItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
         
-        super.init()
+        super.init(dataStore: dataStore)
         
         if breakfast.foodChoice != nil {
             currentFoodItemArray = getFoodItem(breakfast.foodChoice!, foodItemArray: foodItemArray)

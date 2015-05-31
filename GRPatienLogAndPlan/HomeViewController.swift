@@ -149,7 +149,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func showMealSelectionView(sender: AnyObject) {
         
         
-        let meal = dataStore.mealState
+        let meal = dataStore.mealState!
         switch meal {
         case .Breakfast:
             let breakfastVM: MealViewModelDelegate = BreakfastVM(dataStore: self.dataStore) as MealViewModelDelegate

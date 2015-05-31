@@ -57,7 +57,7 @@ enum LunchMenuCategory {
 public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
 {
-    let dataStore: DataStore
+    //let dataStore: DataStore
     
     let lunchItemArray: [FoodItem]
     var currentLunchItemArray: [FoodItem] = [FoodItem]()
@@ -66,15 +66,15 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     
     var lunch: VMLunch
     
-    init(dataStore: DataStore)
+    override init(dataStore: DataStore)
     {
-        self.dataStore = dataStore
+        //self.dataStore = dataStore
         
         self.lunch = dataStore.getLunch_Today()
         self.lunchItemArray = dataStore.buildFoodItemArray(filterString: "LunchItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
         
-        super.init()
+        super.init(dataStore: dataStore)
         
         if lunch.lunchChoice != nil {
             currentLunchItemArray = getFoodItem(lunch.lunchChoice!, foodItemArray: lunchItemArray)

@@ -32,14 +32,6 @@ class FoodJournalTableViewController: UITableViewController {
     var updateDetailViewDelegate: UpdateDetailViewDelegate!
     var menuItemSelectionHandler: MenuItemSelectedDelegate?
     
-//    init(appDelegate: AppDelegate){
-//        self.appDelegate = appDelegate
-//        super.init(style: UITableViewStyle.Grouped)
-//    }
-//
-//    required init!(coder aDecoder: NSCoder!) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +43,17 @@ class FoodJournalTableViewController: UITableViewController {
         dataArray = appDelegate!.dataArray
         dataStore = appDelegate!.dataStore
         }
+    }
+    
+    func getLast7Days(){
+        let calendar = NSCalendar.currentCalendar()
+        let date = NSDate()
+        
+        let components = NSDateComponents()
+        components.day = 1
+        
+        
+        println("1 day ago: \(calendar.dateByAddingComponents(components, toDate: date, options: nil))")
     }
   
     func previousDay() -> String {

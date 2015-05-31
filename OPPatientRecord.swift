@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(OPPatientRecord)
 class OPPatientRecord: NSManagedObject {
 
     @NSManaged var journalEntries: NSOrderedSet

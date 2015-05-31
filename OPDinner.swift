@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(OPDinner)
 class OPDinner: NSManagedObject {
 
     @NSManaged var clinicProvidedMeal: NSNumber

@@ -398,6 +398,11 @@ enum LocationForMeal: Int {
             return "Other"
         }
     }
+    
+    static func defaultLocation() -> String {
+        return LocationForMeal.Kitchen.name()
+    }
+    
     static func all() -> [LocationForMeal] {
         return [.Kitchen, .DiningRoom, .Other]
     }

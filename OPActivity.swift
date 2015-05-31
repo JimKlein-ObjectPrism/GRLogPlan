@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(OPActivity)
 class OPActivity: NSManagedObject {
 
     @NSManaged var activityDescription: String

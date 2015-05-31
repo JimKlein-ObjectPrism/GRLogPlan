@@ -62,8 +62,8 @@
 		EFCAF4B81B1646610039D784 /* OPPatientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B71B1646610039D784 /* OPPatientRecord.swift */; };
 		EFCAF4BA1B1646610039D784 /* OPEveningSnack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */; };
 		EFCAF4BC1B1646610039D784 /* OPLunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4BB1B1646610039D784 /* OPLunch.swift */; };
-		EFCAF4BE1B1646610039D784 /* OPJournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4BD1B1646610039D784 /* OPJournalEntry.swift */; };
 		EFCAF4C01B1646610039D784 /* OPActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4BF1B1646610039D784 /* OPActivity.swift */; };
+		EFCAF4C21B1785690039D784 /* OPJournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4C11B1785690039D784 /* OPJournalEntry.swift */; };
 		EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */; };
 		EFCDDBB11B0150D500A5F363 /* MealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */; };
 		EFCDDBB31B01521200A5F363 /* BreakfastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDDBB21B01521200A5F363 /* BreakfastVM.swift */; };
@@ -158,8 +158,8 @@
 		EFCAF4B71B1646610039D784 /* OPPatientRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPPatientRecord.swift; sourceTree = "<group>"; };
 		EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPEveningSnack.swift; sourceTree = "<group>"; };
 		EFCAF4BB1B1646610039D784 /* OPLunch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPLunch.swift; sourceTree = "<group>"; };
-		EFCAF4BD1B1646610039D784 /* OPJournalEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPJournalEntry.swift; sourceTree = "<group>"; };
 		EFCAF4BF1B1646610039D784 /* OPActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPActivity.swift; sourceTree = "<group>"; };
+		EFCAF4C11B1785690039D784 /* OPJournalEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPJournalEntry.swift; sourceTree = "<group>"; };
 		EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMealsRecipesTableViewController.swift; sourceTree = "<group>"; };
 		EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MealViewModel.swift; path = ../MealViewModel.swift; sourceTree = "<group>"; };
 		EFCDDBB21B01521200A5F363 /* BreakfastVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreakfastVM.swift; sourceTree = "<group>"; };
@@ -203,8 +203,8 @@
 		9864434B1A9E78FB00887579 = {
 			isa = PBXGroup;
 			children = (
+				EFCAF4C11B1785690039D784 /* OPJournalEntry.swift */,
 				EFCAF4BF1B1646610039D784 /* OPActivity.swift */,
-				EFCAF4BD1B1646610039D784 /* OPJournalEntry.swift */,
 				EFCAF4BB1B1646610039D784 /* OPLunch.swift */,
 				EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */,
 				EFCAF4B71B1646610039D784 /* OPPatientRecord.swift */,
@@ -540,11 +540,11 @@
 				EFCAF4B41B1646610039D784 /* OPMedicine.swift in Sources */,
 				EFBD36711ACCA14B006F32AA /* PrintViewController.swift in Sources */,
 				EFCAF4B01B1646600039D784 /* OPAddOn.swift in Sources */,
-				EFCAF4BE1B1646610039D784 /* OPJournalEntry.swift in Sources */,
 				EFF449CB1ABB45C2004A099F /* JournalItemProtocols.swift in Sources */,
 				EFCDDBB31B01521200A5F363 /* BreakfastVM.swift in Sources */,
 				EF7D09E71B017B320029A824 /* MealTrackingTableViewController.swift in Sources */,
 				EF7D0C401B0304D700ED50E5 /* MedicineTableViewCell.swift in Sources */,
+				EFCAF4C21B1785690039D784 /* OPJournalEntry.swift in Sources */,
 				EFF449641AB87E66004A099F /* Type Defs.swift in Sources */,
 				EFF448CD1AB25CF8004A099F /* PopoverTableViewController.swift in Sources */,
 				EF59446B1B0E3C9C009ED145 /* RequiredItemTableViewCell.swift in Sources */,

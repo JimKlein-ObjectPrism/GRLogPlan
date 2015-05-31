@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="OPActivity" representedClassName="GRPatientLogAndPlan.OPActivity" syncable="YES">
+    <entity name="OPActivity" representedClassName="OPActivity" syncable="YES">
         <attribute name="activityDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="completedPerscribedActivityForDay" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="supervisedBy" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="OPAddOn" representedClassName="GRPatientLogAndPlan.OPAddOn" syncable="YES">
+    <entity name="OPAddOn" representedClassName="OPAddOn" syncable="YES">
         <attribute name="addOnItem" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="targetMealOrSnack" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="addOns" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
-    <entity name="OPAfternoonSnack" representedClassName="GRPatientLogAndPlan.OPAfternoonSnack" syncable="YES">
+    <entity name="OPAfternoonSnack" representedClassName="OPAfternoonSnack" syncable="YES">
         <attribute name="addOnConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnRequired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnText" optional="YES" attributeType="String" syncable="YES"/>
@@ -26,7 +26,7 @@
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="afternoonSnack" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
-    <entity name="OPBreakfast" representedClassName="GRPatientLogAndPlan.OPBreakfast" syncable="YES">
+    <entity name="OPBreakfast" representedClassName="OPBreakfast" syncable="YES">
         <attribute name="addOnConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnRequired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnText" optional="YES" attributeType="String" syncable="YES"/>
@@ -41,7 +41,7 @@
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="breakfast" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
-    <entity name="OPDinner" representedClassName="GRPatientLogAndPlan.OPDinner" syncable="YES">
+    <entity name="OPDinner" representedClassName="OPDinner" syncable="YES">
         <attribute name="clinicProvidedMeal" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="meat" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
@@ -55,7 +55,7 @@
         <attribute name="vegetable" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="dinner" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
-    <entity name="OPEveningSnack" representedClassName="GRPatientLogAndPlan.OPEveningSnack" syncable="YES">
+    <entity name="OPEveningSnack" representedClassName="OPEveningSnack" syncable="YES">
         <attribute name="addOnConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnRequired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnText" optional="YES" attributeType="String" syncable="YES"/>
@@ -70,8 +70,8 @@
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="eveningSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="eveningSnack" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
-    <entity name="OPJournalEntry" representedClassName="GRPatientLogAndPlan.OPJournalEntry" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+    <entity name="OPJournalEntry" representedClassName="OPJournalEntry" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="afternoonSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPAfternoonSnack" inverseName="journalEntry" inverseEntity="OPAfternoonSnack" syncable="YES"/>
         <relationship name="breakfast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPBreakfast" inverseName="journalEntry" inverseEntity="OPBreakfast" syncable="YES"/>
         <relationship name="dinner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPDinner" inverseName="journalEntry" inverseEntity="OPDinner" syncable="YES"/>
@@ -80,7 +80,7 @@
         <relationship name="morningSnack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPMorningSnack" inverseName="journalEntry" inverseEntity="OPMorningSnack" syncable="YES"/>
         <relationship name="patientRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPPatientRecord" inverseName="journalEntries" inverseEntity="OPPatientRecord" syncable="YES"/>
     </entity>
-    <entity name="OPLunch" representedClassName="GRPatientLogAndPlan.OPLunch" syncable="YES">
+    <entity name="OPLunch" representedClassName="OPLunch" syncable="YES">
         <attribute name="addOnConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnRequired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnText" optional="YES" attributeType="String" syncable="YES"/>
@@ -95,12 +95,12 @@
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="lunch" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
-    <entity name="OPMedicine" representedClassName="GRPatientLogAndPlan.OPMedicine" syncable="YES">
+    <entity name="OPMedicine" representedClassName="OPMedicine" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="targetTimePeriodToTake" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="medicineLIst" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
-    <entity name="OPMorningSnack" representedClassName="GRPatientLogAndPlan.OPMorningSnack" syncable="YES">
+    <entity name="OPMorningSnack" representedClassName="OPMorningSnack" syncable="YES">
         <attribute name="addOnConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnRequired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="addOnText" optional="YES" attributeType="String" syncable="YES"/>
@@ -115,16 +115,16 @@
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="morningSnack" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
-    <entity name="OPParent" representedClassName="GRPatientLogAndPlan.OPParent" syncable="YES">
+    <entity name="OPParent" representedClassName="OPParent" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="parents" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
-    <entity name="OPPatientRecord" representedClassName="GRPatientLogAndPlan.OPPatientRecord" syncable="YES">
+    <entity name="OPPatientRecord" representedClassName="OPPatientRecord" syncable="YES">
         <relationship name="journalEntries" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="OPJournalEntry" inverseName="patientRecord" inverseEntity="OPJournalEntry" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="patientRecord" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
-    <entity name="OPProfile" representedClassName="GRPatientLogAndPlan.OPProfile" syncable="YES">
+    <entity name="OPProfile" representedClassName="OPProfile" syncable="YES">
         <attribute name="eveningSnackRequired" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -134,19 +134,20 @@
         <relationship name="parents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPParent" inverseName="profile" inverseEntity="OPParent" syncable="YES"/>
         <relationship name="patientRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPPatientRecord" inverseName="profile" inverseEntity="OPPatientRecord" syncable="YES"/>
     </entity>
+    <fetchRequest name="FetchRequestTodayJournalEntry" entity="OPJournalEntry" predicateString="date == &quot;Thursday, May 28, 2015&quot;"/>
     <elements>
-        <element name="OPActivity" positionX="-963" positionY="-855" width="128" height="103"/>
-        <element name="OPAddOn" positionX="-884" positionY="-450" width="128" height="28"/>
-        <element name="OPAfternoonSnack" positionX="-1170" positionY="206" width="128" height="28"/>
-        <element name="OPBreakfast" positionX="-684" positionY="36" width="128" height="28"/>
-        <element name="OPDinner" positionX="-677" positionY="216" width="128" height="223"/>
-        <element name="OPEveningSnack" positionX="-1406" positionY="189" width="128" height="28"/>
+        <element name="OPActivity" positionX="-963" positionY="-855" width="128" height="105"/>
+        <element name="OPAddOn" positionX="-884" positionY="-450" width="128" height="90"/>
+        <element name="OPAfternoonSnack" positionX="-1170" positionY="206" width="128" height="240"/>
+        <element name="OPBreakfast" positionX="-684" positionY="36" width="128" height="240"/>
+        <element name="OPDinner" positionX="-677" positionY="216" width="128" height="225"/>
+        <element name="OPEveningSnack" positionX="-1406" positionY="189" width="128" height="240"/>
         <element name="OPJournalEntry" positionX="-936" positionY="170" width="128" height="165"/>
-        <element name="OPLunch" positionX="-677" positionY="476" width="128" height="28"/>
-        <element name="OPMedicine" positionX="-612" positionY="-139" width="128" height="28"/>
-        <element name="OPMorningSnack" positionX="-1161" positionY="378" width="128" height="28"/>
-        <element name="OPParent" positionX="-900" positionY="-204" width="128" height="28"/>
-        <element name="OPPatientRecord" positionX="-1296" positionY="-64" width="128" height="28"/>
-        <element name="OPProfile" positionX="-1089" positionY="-414" width="128" height="28"/>
+        <element name="OPLunch" positionX="-677" positionY="476" width="128" height="240"/>
+        <element name="OPMedicine" positionX="-612" positionY="-139" width="128" height="90"/>
+        <element name="OPMorningSnack" positionX="-1161" positionY="378" width="128" height="240"/>
+        <element name="OPParent" positionX="-900" positionY="-204" width="128" height="90"/>
+        <element name="OPPatientRecord" positionX="-1296" positionY="-64" width="128" height="75"/>
+        <element name="OPProfile" positionX="-1089" positionY="-414" width="128" height="165"/>
     </elements>
 </model>

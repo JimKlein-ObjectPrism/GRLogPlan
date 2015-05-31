@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(OPAfternoonSnack)
 class OPAfternoonSnack: NSManagedObject {
 
     @NSManaged var snackChoice: String

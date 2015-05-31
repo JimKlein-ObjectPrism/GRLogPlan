@@ -20,6 +20,10 @@ class MealTrackingTableViewController: UITableViewController {
         var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonTapped")
         self.navigationItem.rightBarButtonItem = sb
 
+        //MARK: back button
+        var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
+        self.navigationItem.leftBarButtonItem = b
+
 
     }
 
@@ -75,6 +79,9 @@ class MealTrackingTableViewController: UITableViewController {
     }
 
 */
+    func backButtonPressed (sender: UIBarButtonItem ){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
     func saveButtonTapped() {
         vm.saveButtonTapped()

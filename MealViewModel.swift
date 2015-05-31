@@ -27,9 +27,11 @@ protocol MealViewModelDelegate {
 public class MealViewModel: NSObject {
     weak var tableView: UITableView!
     weak var tableviewController: UITableViewController!
+    let dataStore: DataStore
     
-    var parentsArray: [String]! = ["Lisa Doe", "John Doe", "Jon Smith"]
-    
+    init(dataStore: DataStore){
+        self.dataStore = dataStore
+    }
     
     
     //MARK:  Cell For Row At Index Path Helpers
@@ -310,7 +312,7 @@ public class MealViewModel: NSObject {
     func getParentInitials() -> [String] {
         var initials = [String]()
         //TODO: implement more robust version of getParentInitials
-        for fullName in self.parentsArray{
+        for fullName in dataStore.parentsArray{
             var fullNameArr = split(fullName) {$0 == " "}
             
             var firstName: String = fullNameArr[0]
