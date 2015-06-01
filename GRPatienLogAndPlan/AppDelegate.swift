@@ -69,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let printTableVC =  storyboard.instantiateViewControllerWithIdentifier("PrintViewController") as! PrintViewController
         let printNavVC = storyboard.instantiateViewControllerWithIdentifier("PrintViewNavController") as! UINavigationController
+        printTableVC.appDelegate = self
         
         // set up Tab Bar Controller
         let tabBarController = HomeTabBarController()

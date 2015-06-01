@@ -10,6 +10,13 @@ import Foundation
 
 import CoreData
 
+enum JournalEntryResult {
+    case Success(OPJournalEntry),
+    EntryDoesNotExist,
+    Error(NSError?)
+    
+}
+
 public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, ChoiceItemSelectedDelegate {
     
     var managedContext: NSManagedObjectContext
@@ -21,6 +28,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     var currentJournalEntry: OPJournalEntry!
     
     var todayJournalEntry: OPJournalEntry!
+    
+    var offsetNumberOfDaysFromCurrentDay: Int = 0
     
     var currentBreakfast: OPBreakfast!
 
@@ -109,15 +118,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
                     self.currentJournalEntry = journalEntry
                     
-                    
-                    
                     //initialize meal items from existing entry
                     
                     breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
 
                 } else {
                     //create blank journal entries
-                    self.currentJournalEntry = getNewJournalEntry()
+                    self.currentJournalEntry = getNewJournalEntry(today)
                     
                     //initialize using Default values in VM Meal Items
                     self.breakfast = VMBreakfast()
@@ -138,11 +145,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 DinnerMenuCategory.configureMenuChoice(profile)
      
 
-        } else {
+            } else {
             profileIsValid = false
+            }
         }
-
-        }
+        todayJournalEntry = currentJournalEntry
     }
     
     
@@ -204,7 +211,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         assert(false, "Unimplemented")
     }
     
-    func getNewJournalEntry () -> OPJournalEntry {
+    func getNewJournalEntry (dateIdentifier: String) -> OPJournalEntry {
         let profileEntity = NSEntityDescription.entityForName("OPJournalEntry",
             inManagedObjectContext: managedContext)
         
@@ -223,17 +230,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         breakfastEntry.journalEntry = journalEntry
         
-        
-        
-        //        let profileEntityMSnack = NSEntityDescription.entityForName("OPMorningSnack",
-        //            inManagedObjectContext: managedContext)
-        //
-        //        let morningSnackEntry =  OPMorningSnack(entity: profileEntityMSnack!,
-        //            insertIntoManagedObjectContext: managedContext)
-        //
-        //        morningSnackEntry.journalEntry = journalEntry
-        //
-        
+       
         return journalEntry
     }
     
@@ -265,7 +262,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
     
-    func getJournalEntry (dateIdentifier: String) -> OPJournalEntry? { // JournalItem{
+    func getJournalEntry (dateIdentifier: String) -> JournalEntryResult { // JournalItem{
         
         let journalEntryDate = today
         //let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
@@ -282,15 +279,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if entries.count > 0 {
                 let entry = entries[0] as OPJournalEntry
                 println(entry.date)
-                return entries[0]
+                return JournalEntryResult.Success(entry)
                 
             } else {
-                return nil
+                return JournalEntryResult.EntryDoesNotExist
             }
         } else {
-            println("Could not Fetch: \(error)")
-            //TODO: handle error more gracefully
-            assert(false, "Core Data Error fetching Journal Entry.")
+            
+            return JournalEntryResult.Error(error)
         }
     }
     
@@ -317,6 +313,64 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             return "\(firstInitial). \(lastInitial!)."
         }
         return nil
+    }
+    
+    //MARK: Journal Item Selection
+    
+    func selectPreviousDayJournalEntry() -> String {
+       // if offsetNumberOfDaysFromCurrentDay > 0 {
+            offsetNumberOfDaysFromCurrentDay++
+            return selectJournalEntry(-offsetNumberOfDaysFromCurrentDay)
+       //return today
+        
+    }
+    func selectNextDayJournalEntry() -> String {
+        if offsetNumberOfDaysFromCurrentDay == 0 {
+            return today
+        } else {
+            offsetNumberOfDaysFromCurrentDay--
+            return selectJournalEntry(-offsetNumberOfDaysFromCurrentDay)
+        }
+    }
+    
+    func selectJournalEntry(offsetFromCurrentDay: Int) -> String {
+        
+        //increase offset from current Dat
+        //offsetNumberOfDaysFromCurrentDay++
+        
+        
+        //Get the date string for the selected day
+        let calendar = NSCalendar.currentCalendar()
+        let components = NSDateComponents()
+        
+        
+        components.day = offsetFromCurrentDay
+        let newDate = calendar.dateByAddingComponents(components, toDate: NSDate(), options: nil)
+        let selectedDay = getFullStyleDateString(newDate!)
+
+        
+        // if core data holds journal entry for this day
+        // else create new entry for selected day
+        let journalEntry = getJournalEntry(selectedDay)
+        
+        switch journalEntry {
+        case let .Success(entry):
+            currentJournalEntry = entry
+        case .EntryDoesNotExist:
+            currentJournalEntry = getNewJournalEntry(selectedDay)
+        case .Error:
+            println("Core Data error encountered.")
+        
+        }
+        
+        return selectedDay
+        
+    }
+    func getFullStyleDateString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .FullStyle
+        println(dateFormatter.stringFromDate(date))
+        return dateFormatter.stringFromDate(date)
     }
     
     //MARK: CoreData Methods
@@ -401,6 +455,24 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
     }
     
+    //MARK: Printing Methods
+    func getPastWeekOfDates() -> [String] {
+        //let todayTuple = (today, getFullStyleDateString(today))
+        var dates = [String]()
+        dates.append(getFullStyleDateString(NSDate()))
+        let calendar = NSCalendar.currentCalendar()
+        let components = NSDateComponents()
+        
+        for i in 1...6 {
+            components.day = -i
+            
+            var newDate: NSDate = calendar.dateByAddingComponents(components, toDate: NSDate(), options: nil) ?? NSDate()
+            let newString = getFullStyleDateString(newDate)
+
+            dates.append(newString)
+        }
+        return dates
+    }
     
     //MARK:  Get food item array
     func buildFoodItemArray ( mealItem: FoodItem?, filterString: String ) -> [FoodItem]{
@@ -479,62 +551,6 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
         
        println("medicine required:  \(mBreakfast.medicineRequired.boolValue)")
-        
-//        setOptionalProperty(
-//            breakfast.foodChoice,
-//            property: &self.currentJournalEntry.breakfast.foodChoice
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.fruitChoice,
-//            property: &self.currentJournalEntry.breakfast.fruitChoice
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.addOnText,
-//            property: &self.currentJournalEntry.breakfast.addOnText
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.medicineText,
-//            property: &self.currentJournalEntry.breakfast.medicineText
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.parentInitials,
-//            property: &self.currentJournalEntry.breakfast.parentInitials
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.location,
-//            property: &self.currentJournalEntry.breakfast.location
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.addOnConsumed,
-//            property: &self.currentJournalEntry.breakfast.addOnConsumed
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.addOnRequired,
-//            property: &self.currentJournalEntry.breakfast.addOnRequired
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.medicineConsumed,
-//            property: &self.currentJournalEntry.breakfast.medicineConsumed        )
-//        
-//        setOptionalProperty(
-//            breakfast.meidicineRequired,
-//            property: &self.currentJournalEntry.breakfast.medicineRequired
-//        )
-//        
-//        setOptionalProperty(
-//            breakfast.time,
-//            property: &self.currentJournalEntry.breakfast.time
-//        )
-        
-        
  
     }
     func setOptionalProperty( input: String? , inout property: String){

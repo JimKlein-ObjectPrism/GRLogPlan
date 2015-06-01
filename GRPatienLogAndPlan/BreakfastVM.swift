@@ -94,6 +94,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
      {
     //let dataStore: DataStore
+    var targetOPBreakfast: OPBreakfast?
     
     let foodItemArray: [FoodItem]
     var currentFoodItemArray: [FoodItem] = [FoodItem]()
@@ -386,12 +387,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         
         let saveAnywayAction = UIAlertAction(title: "Save Anyway", style: .Default)  {
             (alert: UIAlertAction!) -> Void in
-            //self.setPropertyInModel(value: buttonValues[i], propertyInModel: &self.breakfast.parentInitials)//modelProperty)
-            //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.breakfast.parentInitials)
-            //self.tableView.reloadData()
-            //self.tableviewController
-            self.dataStore.saveBreakfast_Today(self.breakfast)
-            //tableviewController.navigationController?.popViewControllerAnimated(true)
+            self.dataStore.saveBreakfast(self.breakfast, modelBreakfast: &self.targetOPBreakfast!)
 
             self.tableviewController.navigationController?.popViewControllerAnimated(true)
         }
@@ -408,7 +404,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         case .Success:
             // send save message to data store
             //dismiss view
-            dataStore.saveBreakfast_Today(self.breakfast)
+            dataStore.saveBreakfast(self.breakfast, modelBreakfast: &self.targetOPBreakfast!)
             tableviewController.navigationController?.popViewControllerAnimated(true)
 
         case let .Failure(errorCodes):

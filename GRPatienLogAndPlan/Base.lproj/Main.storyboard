@@ -1668,10 +1668,10 @@
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="fxx-Jg-ziM" secondAttribute="centerY" id="5N6-UA-JXr"/>
                                         <constraint firstItem="KjI-9B-ymH" firstAttribute="leading" secondItem="vMe-gE-ZV9" secondAttribute="leadingMargin" constant="11" id="CNX-Af-HM9">
-                                            <variation key="widthClass=compact" constant="8"/>
+                                            <variation key="widthClass=compact" constant="7"/>
                                         </constraint>
                                         <constraint firstAttribute="trailingMargin" secondItem="fxx-Jg-ziM" secondAttribute="trailing" constant="33" id="K9t-6t-Dfs">
-                                            <variation key="widthClass=compact" constant="16"/>
+                                            <variation key="widthClass=compact" constant="8"/>
                                         </constraint>
                                         <constraint firstAttribute="centerY" secondItem="KjI-9B-ymH" secondAttribute="centerY" id="Sj0-lO-4Ik"/>
                                     </constraints>

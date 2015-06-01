@@ -10,20 +10,25 @@ import UIKit
 
 class PrintViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
-    var selectedCellDateValue = "Wednesday, May 27"
+    var dataStore: DataStore!
+    var appDelegate: AppDelegate?
+
     
-    let journalEntries: [(String, String)] = [
-        
-        
-        ("Wednesday, May 27, 2015", "Status: Complete"),
-        ("Tuesday, May 26, 2015", "Status: Complete"),
-        ("Monday, May 25, 2015", "Status: Complete"),
-        ("Sunday, May 24, 2015", "Status: Complete"),
-        ("Saturday, May 23, 2015", "Status: Complete"),
-        ("Friday, May 22, 2015", "Status: Complete"),
-        ("Thursday, May 21, 2015", "Status: Complete"),
-        
-    ]
+    var selectedCellDateValue: String!
+    
+    var journalEntries: [String]!
+//    = [
+//        
+//        
+//        ("Wednesday, May 27, 2015", "Status: Complete"),
+//        ("Tuesday, May 26, 2015", "Status: Complete"),
+//        ("Monday, May 25, 2015", "Status: Complete"),
+//        ("Sunday, May 24, 2015", "Status: Complete"),
+//        ("Saturday, May 23, 2015", "Status: Complete"),
+//        ("Friday, May 22, 2015", "Status: Complete"),
+//        ("Thursday, May 21, 2015", "Status: Complete"),
+//        
+//    ]
     
     @IBAction func printJournalEntry(sender: AnyObject) {
         // 1
@@ -60,7 +65,14 @@ class PrintViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Do any additional setup after loading the view, typically from a nib.
         previewTextView.delegate = self
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-        
+        self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+
+        if  self.appDelegate != nil {
+            dataStore = appDelegate!.dataStore
+            journalEntries = dataStore.getPastWeekOfDates()
+            //self.currentDateHeader = dataStore.today
+        }
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,8 +96,9 @@ class PrintViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PrintCell", forIndexPath: indexPath) as! UITableViewCell
         
-        cell.textLabel?.text = journalEntries[indexPath.row].0
-        cell.detailTextLabel?.text = journalEntries[indexPath.row].1
+        cell.textLabel?.text = journalEntries[indexPath.row]
+        //use commented out code to display status in detail area of cell
+        cell.detailTextLabel?.text = "" //journalEntries[indexPath.row].1
         
         return cell
     }

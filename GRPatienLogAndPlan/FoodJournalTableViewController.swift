@@ -42,6 +42,7 @@ class FoodJournalTableViewController: UITableViewController {
         if  self.appDelegate != nil {
         dataArray = appDelegate!.dataArray
         dataStore = appDelegate!.dataStore
+        self.currentDateHeader = dataStore.today
         }
     }
     
@@ -57,25 +58,27 @@ class FoodJournalTableViewController: UITableViewController {
     }
   
     func previousDay() -> String {
-        if currentDateIndex < dates.count - 1 {
-            currentDateIndex++
-            return dates[currentDateIndex]
-        } else {
-            //return last day in array
-            return dates[currentDateIndex]
-        }
+        return dataStore.selectPreviousDayJournalEntry()
+//        if currentDateIndex < dates.count - 1 {
+//            currentDateIndex++
+//            return dates[currentDateIndex]
+//        } else {
+//            //return last day in array
+//            return dates[currentDateIndex]
+//        }
     }
     
     @IBAction func nextDay(sender: AnyObject) {
-        // Use show Previous naminig convention
-        if currentDateIndex > 0 {
-            currentDateIndex--
-            currentDateHeader = dates[currentDateIndex]
-        } else {
-            //return last day in array
-            currentDateHeader = dates[currentDateIndex]
-        }
-        tableView.reloadData()
+        currentDateHeader = dataStore.selectNextDayJournalEntry()
+//        // Use show Previous naminig convention
+//        if currentDateIndex > 0 {
+//            currentDateIndex--
+//            currentDateHeader = dates[currentDateIndex]
+//        } else {
+//            //return last day in array
+//            currentDateHeader = dates[currentDateIndex]
+//        }
+       tableView.reloadData()
     }
 
     @IBAction func showPreviousDateButton(sender: AnyObject) {
@@ -119,8 +122,10 @@ class FoodJournalTableViewController: UITableViewController {
         //var meal = Meals.RawValue(selectedIndex)
         switch meal {
         case .Breakfast:
-            let breakfastVM: MealViewModelDelegate = BreakfastVM(dataStore: self.dataStore) as MealViewModelDelegate
-            showVC("Breakfast", mealVMDelegage: breakfastVM)
+            let breakfastVM = BreakfastVM(dataStore: self.dataStore)
+            breakfastVM.targetOPBreakfast = self.dataStore.currentJournalEntry.breakfast
+            
+            showVC("Breakfast", mealVMDelegage: breakfastVM as MealViewModelDelegate)
 
 //            let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
 //            

@@ -152,8 +152,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let meal = dataStore.mealState!
         switch meal {
         case .Breakfast:
-            let breakfastVM: MealViewModelDelegate = BreakfastVM(dataStore: self.dataStore) as MealViewModelDelegate
-            showVC(meal.mealName(), mealVMDelegage: breakfastVM)
+            let breakfastVM = BreakfastVM(dataStore: self.dataStore)
+            breakfastVM.targetOPBreakfast = self.dataStore.todayJournalEntry.breakfast
+            showVC(meal.mealName(), mealVMDelegage: breakfastVM as MealViewModelDelegate)
             
         case .MorningSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Morning) as MealViewModelDelegate
