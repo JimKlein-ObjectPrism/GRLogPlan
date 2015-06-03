@@ -109,6 +109,7 @@ class JournalItem : JournalEntryItem {
 
 }
 
+
 class NamedMeal {
     var title = ""
     
@@ -722,4 +723,206 @@ class FoodItemWithChoice: FoodItem {
     var selectedChildFoodItem: Int?
     
 }
+
+//MARK:  Profile Data Types
+
+public enum Medicines: Int {
+    case Calcium
+    case Zinc
+    case LyvoThyroxin
+    case Iron
+    
+    var name: String {
+        switch self {
+        case .Calcium:
+            return "Calcium"
+        case .Zinc:
+            return "Zinc"
+        case .LyvoThyroxin:
+            return "LyvoThyroxin"
+        case .Iron:
+            return "Iron"
+        }
+    }
+    
+    static func all() -> [Medicines] {
+        return [.Calcium, .Zinc, .LyvoThyroxin, .Iron]
+    }
+    static func count() -> Int
+    {
+        return self.all().count
+    }
+    
+    //Subscript is read only
+    subscript(i: Int) -> Medicines?
+        {
+        get
+        {
+            if 0 <= i && i < Medicines.all().count {
+                if let a = Medicines(rawValue: i) {
+                    return a
+                } else {
+                    return nil
+                }
+            }
+            else{
+                return nil
+            }
+        }
+    }
+    
+}
+
+enum ActivityListItem: Int {
+    case WalkingAroundTheHouse
+    case TwentyMinutesWalking
+    case SixtyMinutesLightExercise
+}
+
+enum AddOnListItem: Int {
+    case NestleBenecalorie
+    case Yogurt
+    case ExtraSnack
+    
+    var name: String {
+        switch self {
+        case .NestleBenecalorie:
+            var brandName = "Nestle"
+            brandName.append(UnicodeScalar(0xAE))
+            return brandName + " Benecalorie"
+        case .Yogurt:
+            return "Yogurt"
+        case .ExtraSnack:
+            return "Extra Snack"
+        }
+    }
+    
+    static func all() -> [AddOnListItem] {
+        return [.NestleBenecalorie, .Yogurt, .ExtraSnack]
+    }
+    static func count() -> Int {
+        return self.all().count
+    }
+    
+    //Subscript is read only
+    subscript(i: Int) -> AddOnListItem?
+        {
+        get
+        {
+            if 0 <= i && i < AddOnListItem.all().count {
+                if let a = AddOnListItem(rawValue: i) {
+                    return a
+                } else {
+                    return nil
+                }
+            }
+            else{
+                return nil
+            }
+        }
+    }
+    
+}
+
+public enum PrescribedTimeForAction: Int {
+    case BeforeBreakfast
+    case BreakfastTime
+    case MidMorning
+    case MorningSnack
+    case LunchTime
+    case AfternoonSnack
+    case AfternoonSchool
+    case DinnerTime
+    case EveningSnack
+    case EightPM
+    case TenPM
+    case Bedtime
+    case MidNight
+    case TwoAM
+    
+    var name: String {
+        switch self {
+        case .BeforeBreakfast:
+            return "Before Breakfast"
+        case .BreakfastTime:
+            return "Breakfast Time"
+        case .MidMorning:
+            return "Mid Morning"
+        case .MorningSnack:
+            return "Morning Snack"
+        case .LunchTime:
+            return "Lunch Time"
+        case .AfternoonSnack:
+            return "Afternoon Snack"
+        case .AfternoonSchool:
+            return "After School"
+        case .DinnerTime:
+            return "Dinner Time"
+        case .EveningSnack:
+            return "Extra Snack"
+        case .EightPM:
+            return "8 p.m."
+        case .TenPM:
+            return "10 p.m."
+        case .Bedtime:
+            return "Bed Time"
+        case .MidNight:
+            return "Midnight"
+        case .TwoAM:
+            return "2 a.m."
+        }
+    }
+    
+    static func all() -> [PrescribedTimeForAction] {
+        return [
+            .BeforeBreakfast,
+            .BreakfastTime,
+            .MidMorning,
+            .MorningSnack,
+            .LunchTime,
+            .AfternoonSnack,
+            .AfternoonSchool,
+            .DinnerTime,
+            .EveningSnack,
+            .EightPM,
+            .TenPM,
+            .Bedtime,
+            .MidNight,
+            .TwoAM
+        ]
+    }
+    static func count() -> Int {
+        return self.all().count
+    }
+    
+    //Subscript is read only
+    subscript(i: Int) -> PrescribedTimeForAction?
+        {
+        get
+        {
+            if 0 <= i && i < PrescribedTimeForAction.all().count {
+                if let a = PrescribedTimeForAction(rawValue: i) {
+                    return a
+                } else {
+                    return nil
+                }
+            }
+            else{
+                return nil
+            }
+        }
+    }
+    
+    
+}
+
+//enum MealEntryState {
+//    case Empty
+//    case Incomplete
+//    case Complete
+//    //case NotRequired
+//}
+
+
+
 

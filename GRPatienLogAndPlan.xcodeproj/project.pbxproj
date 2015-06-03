@@ -20,6 +20,12 @@
 		9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */; };
 		98FDCF0A1AA16ABF0029F97E /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */; };
 		EF0D923D1B0FB36F00EE992B /* MealState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D923C1B0FB36F00EE992B /* MealState.swift */; };
+		EF1367951B1D5204007F1649 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367941B1D5204007F1649 /* ParentViewController.swift */; };
+		EF1367971B1D53CB007F1649 /* ParentViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */; };
+		EF1367991B1D543F007F1649 /* ProfileDataStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367981B1D543F007F1649 /* ProfileDataStoreDelegate.swift */; };
+		EF13679C1B1D54A4007F1649 /* AddOnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13679A1B1D54A4007F1649 /* AddOnViewController.swift */; };
+		EF13679D1B1D54A4007F1649 /* MedicineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */; };
+		EF13679F1B1D7220007F1649 /* AOnTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */; };
 		EF157BA61AAA597800847AEE /* MealItems.xml in Resources */ = {isa = PBXBuildFile; fileRef = EF157BA51AAA597800847AEE /* MealItems.xml */; };
 		EF157BAC1AAE088600847AEE /* DataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BAB1AAE088600847AEE /* DataTypes.swift */; };
 		EF157BAE1AAE089A00847AEE /* FoodJournalDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BAD1AAE089A00847AEE /* FoodJournalDataStore.swift */; };
@@ -32,6 +38,7 @@
 		EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */; };
 		EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */; };
 		EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */; };
+		EF3587FE1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */; };
 		EF374C7C1B0B904A005A29BE /* VMDataStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */; };
 		EF49F8331AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF49F8311AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld */; };
 		EF5944671B0D3905009ED145 /* SnackVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5944661B0D3905009ED145 /* SnackVM.swift */; };
@@ -116,6 +123,12 @@
 		9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTrackTableViewController.swift; sourceTree = "<group>"; };
 		98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		EF0D923C1B0FB36F00EE992B /* MealState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealState.swift; sourceTree = "<group>"; };
+		EF1367941B1D5204007F1649 /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
+		EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewTableViewCell.swift; sourceTree = "<group>"; };
+		EF1367981B1D543F007F1649 /* ProfileDataStoreDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDataStoreDelegate.swift; sourceTree = "<group>"; };
+		EF13679A1B1D54A4007F1649 /* AddOnViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOnViewController.swift; sourceTree = "<group>"; };
+		EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicineTableViewController.swift; sourceTree = "<group>"; };
+		EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOnTableViewController.swift; sourceTree = "<group>"; };
 		EF157BA51AAA597800847AEE /* MealItems.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MealItems.xml; sourceTree = "<group>"; };
 		EF157BAB1AAE088600847AEE /* DataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTypes.swift; sourceTree = "<group>"; };
 		EF157BAD1AAE089A00847AEE /* FoodJournalDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodJournalDataStore.swift; sourceTree = "<group>"; };
@@ -128,6 +141,7 @@
 		EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDetailDisplayProtocols.swift; path = ../MenuDetailDisplayProtocols.swift; sourceTree = "<group>"; };
+		EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedsAddOnTableViewCell.swift; sourceTree = "<group>"; };
 		EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VMDataStructs.swift; sourceTree = "<group>"; };
 		EF49F8321AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GRPatientLogAndPlan.xcdatamodel; sourceTree = "<group>"; };
 		EF5944661B0D3905009ED145 /* SnackVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnackVM.swift; path = ../SnackVM.swift; sourceTree = "<group>"; };
@@ -203,19 +217,7 @@
 		9864434B1A9E78FB00887579 = {
 			isa = PBXGroup;
 			children = (
-				EFCAF4C11B1785690039D784 /* OPJournalEntry.swift */,
-				EFCAF4BF1B1646610039D784 /* OPActivity.swift */,
-				EFCAF4BB1B1646610039D784 /* OPLunch.swift */,
-				EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */,
-				EFCAF4B71B1646610039D784 /* OPPatientRecord.swift */,
-				EFCAF4B51B1646610039D784 /* OPMorningSnack.swift */,
-				EFCAF4B31B1646610039D784 /* OPMedicine.swift */,
-				EFCAF4B11B1646600039D784 /* OPBreakfast.swift */,
-				EFCAF4AF1B1646600039D784 /* OPAddOn.swift */,
-				EFCAF4AD1B1646600039D784 /* OPProfile.swift */,
-				EFCAF4AB1B1646600039D784 /* OPDinner.swift */,
-				EFCAF4A91B1646600039D784 /* OPParent.swift */,
-				EFCAF4A71B1646600039D784 /* OPAfternoonSnack.swift */,
+				EF1367931B1D5192007F1649 /* CoreDataFiles */,
 				986443561A9E78FB00887579 /* GRPatienLogAndPlan */,
 				9864436E1A9E78FB00887579 /* GRPatienLogAndPlanTests */,
 				986443551A9E78FB00887579 /* Products */,
@@ -241,6 +243,12 @@
 				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
 				986443591A9E78FB00887579 /* AppDelegate.swift */,
+				EF1367941B1D5204007F1649 /* ParentViewController.swift */,
+				EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */,
+				EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */,
+				EF13679A1B1D54A4007F1649 /* AddOnViewController.swift */,
+				EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */,
+				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */,
 				EF5944681B0D58F3009ED145 /* DinnerVM.swift */,
 				EF5944661B0D3905009ED145 /* SnackVM.swift */,
@@ -250,7 +258,6 @@
 				EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */,
 				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
 				EF157BB31AAE7C0200847AEE /* HomeViewController.swift */,
-				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
 				EFBD36701ACCA14B006F32AA /* PrintViewController.swift */,
 				98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */,
@@ -330,16 +337,38 @@
 				EF157BAD1AAE089A00847AEE /* FoodJournalDataStore.swift */,
 				EF157BAB1AAE088600847AEE /* DataTypes.swift */,
 				EFE08A2D1AD9AFF4004C80C3 /* CoreDataStack.swift */,
+				EF1367981B1D543F007F1649 /* ProfileDataStoreDelegate.swift */,
 				EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */,
 				EF157BA51AAA597800847AEE /* MealItems.xml */,
 			);
 			name = Data;
 			sourceTree = "<group>";
 		};
+		EF1367931B1D5192007F1649 /* CoreDataFiles */ = {
+			isa = PBXGroup;
+			children = (
+				EFCAF4BF1B1646610039D784 /* OPActivity.swift */,
+				EFCAF4BB1B1646610039D784 /* OPLunch.swift */,
+				EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */,
+				EFCAF4B71B1646610039D784 /* OPPatientRecord.swift */,
+				EFCAF4B51B1646610039D784 /* OPMorningSnack.swift */,
+				EFCAF4B31B1646610039D784 /* OPMedicine.swift */,
+				EFCAF4B11B1646600039D784 /* OPBreakfast.swift */,
+				EFCAF4AF1B1646600039D784 /* OPAddOn.swift */,
+				EFCAF4AD1B1646600039D784 /* OPProfile.swift */,
+				EFCAF4AB1B1646600039D784 /* OPDinner.swift */,
+				EFCAF4A91B1646600039D784 /* OPParent.swift */,
+				EFCAF4A71B1646600039D784 /* OPAfternoonSnack.swift */,
+				EFCAF4C11B1785690039D784 /* OPJournalEntry.swift */,
+			);
+			name = CoreDataFiles;
+			sourceTree = "<group>";
+		};
 		EF157BC61AAF7FF400847AEE /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
 				EF59446A1B0E3C9C009ED145 /* RequiredItemTableViewCell.swift */,
+				EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */,
 				EF7D0C411B03AE7C00ED50E5 /* TableCellInputProtocols.swift */,
 				EF7D09E81B0181D70029A824 /* NewChoiceTableViewCell.swift */,
 				EF7D0C3F1B0304D700ED50E5 /* MedicineTableViewCell.swift */,
@@ -502,6 +531,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFCAF4A81B1646600039D784 /* OPAfternoonSnack.swift in Sources */,
+				EF13679D1B1D54A4007F1649 /* MedicineTableViewController.swift in Sources */,
 				EFBD36751ACCADC4006F32AA /* PrintVisitor.swift in Sources */,
 				9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */,
 				EF157BBF1AAEA20B00847AEE /* NoteTableViewCell.swift in Sources */,
@@ -518,14 +548,17 @@
 				9864435A1A9E78FB00887579 /* AppDelegate.swift in Sources */,
 				EFCAF4BA1B1646610039D784 /* OPEveningSnack.swift in Sources */,
 				EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */,
+				EF13679C1B1D54A4007F1649 /* AddOnViewController.swift in Sources */,
 				EFCAF4C01B1646610039D784 /* OPActivity.swift in Sources */,
 				EF5944671B0D3905009ED145 /* SnackVM.swift in Sources */,
 				EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */,
 				EFCDDBB11B0150D500A5F363 /* MealViewModel.swift in Sources */,
+				EF1367991B1D543F007F1649 /* ProfileDataStoreDelegate.swift in Sources */,
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				EF0D923D1B0FB36F00EE992B /* MealState.swift in Sources */,
 				EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */,
 				EF157BBB1AAEA1D600847AEE /* ChoiceItemsTableViewCell.swift in Sources */,
+				EF13679F1B1D7220007F1649 /* AOnTableViewController.swift in Sources */,
 				EF7D0C4A1B03E77A00ED50E5 /* TimeTableViewCell.swift in Sources */,
 				EF7D0C461B03E74F00ED50E5 /* ParentInitsTableViewCell.swift in Sources */,
 				EFCF291C1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift in Sources */,
@@ -553,9 +586,12 @@
 				EF7D0C481B03E76C00ED50E5 /* LocationTableViewCell.swift in Sources */,
 				EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */,
 				98FDCF0A1AA16ABF0029F97E /* HomeTabBarController.swift in Sources */,
+				EF1367971B1D53CB007F1649 /* ParentViewTableViewCell.swift in Sources */,
 				EFCAF4AA1B1646600039D784 /* OPParent.swift in Sources */,
+				EF3587FE1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift in Sources */,
 				EFCAF4B21B1646600039D784 /* OPBreakfast.swift in Sources */,
 				EFCAF4B61B1646610039D784 /* OPMorningSnack.swift in Sources */,
+				EF1367951B1D5204007F1649 /* ParentViewController.swift in Sources */,
 				EF157BBD1AAEA20300847AEE /* MenuCellTableViewCell.swift in Sources */,
 				EF7D0C421B03AE7C00ED50E5 /* TableCellInputProtocols.swift in Sources */,
 				986443811A9E868600887579 /* SWRevealViewController.m in Sources */,

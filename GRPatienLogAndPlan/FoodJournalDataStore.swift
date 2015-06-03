@@ -185,15 +185,6 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 currentRecord.profile = OPProfile(entity: profileEntity!,
                     insertIntoManagedObjectContext: managedContext)
                 
-                //                let p = currentRecord.profile
-                //                p.firstName = "Sarah"
-                //                p.lastName = "Snythe"
-                
-                //                var error: NSError?
-                //                if !managedContext.save(&error) {
-                //                    println("Could not save: \(error)")
-                //                }
-                //
                 return currentRecord
                 
             } else {
@@ -313,6 +304,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             return "\(firstInitial). \(lastInitial!)."
         }
         return nil
+    }
+    
+    //MARK: Profile Input
+    func getCurrentProfile() -> OPProfile {
+        return self.currentRecord.profile
+        
+        
     }
     
     //MARK: Journal Item Selection

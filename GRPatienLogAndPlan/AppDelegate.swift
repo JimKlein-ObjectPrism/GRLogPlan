@@ -22,6 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var dataStore: DataStore!
 
+//    class var profileDataStore: DataStore {
+//        //TODO: update in Swift 1.2
+//        struct Static {
+//            static let instance: DataStore = DataStore(managedContext: coreDataStack.managedContext)
+//        }
+//        return Static.instance
+//    }
+    
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.        
         dataStore = DataStore(managedContext: coreDataStack.context)

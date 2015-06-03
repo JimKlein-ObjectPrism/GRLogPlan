@@ -8,6 +8,71 @@
 
 import Foundation
 
+//MARK: Meal Item types
+class VMProfile {
+    /*
+var addOnRequired = false
+var medicineRequired = false
+var parentInitials = "A.B"
+let location = "Kitchen"
+let time = NSDate()
+var medicine: Int?
+var parents: [String] = ["Joe Smith", "Jane Doe"]
+*/
+
+    //required Items
+    var patientFirstName: String?
+    var patientLastName: String?
+    var morningSnackRequired: Bool = false
+    var eveningSnackRequired: Bool = false
+    var parents: [VMParent] = [VMParent]()
+    
+    
+    //optional items
+    var medicines: [Medicine] = []
+    var addOns: [VMAddOn] = [VMAddOn]()
+    
+    
+    //named Meals - NOT  IMPLEMENTED
+    var namedMeals: [NamedMeal] = []
+    
+    
+    init(morningSnackRequired: Bool, eveningSnackRequired: Bool){
+        self.morningSnackRequired = morningSnackRequired
+        self.eveningSnackRequired = eveningSnackRequired
+    }
+    
+}
+struct VMAddOn {
+    //Add-ons are added to meals or snacks, so store weak reference to avoid strong reference cycle issues
+    var addOnItem: String = ""
+    var instructions: String = ""
+    //TODO: Is an AddOn really a Meal item or just a child of a meal item
+    //weak var parentMealItem: MealItem!
+    var wasConsumed: Bool?
+}
+
+class VMParent: NSObject {
+    var firstName: String?
+    var lastName: String?
+}
+
+class VMMedicine: NSObject {
+    
+    var name:String = ""
+//var dose:String = ""
+   // var instructions:String = ""
+    //var didTakeMedsForDay: Bool = false
+    
+    //MenuDisplayCell properties
+    //@objc var menuDisplayName: String
+    //this property can be nil, since it is not applicable to all menu items
+    var mealEntryState: MealEntryState!
+    
+
+    
+}
+
 //validation helper functions
 func testNil (stringProperty: String?) -> Bool {
     if stringProperty == nil {
@@ -17,6 +82,8 @@ func testNil (stringProperty: String?) -> Bool {
         return false
     }
 }
+
+
 
 enum ValidationResult {
     case Success,
