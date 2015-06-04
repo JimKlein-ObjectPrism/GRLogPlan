@@ -727,10 +727,10 @@ class FoodItemWithChoice: FoodItem {
 //MARK:  Profile Data Types
 
 public enum Medicines: Int {
-    case Calcium
-    case Zinc
-    case LyvoThyroxin
-    case Iron
+    case Calcium = 0,
+    Zinc,
+    LyvoThyroxin,
+    Iron
     
     var name: String {
         switch self {
@@ -780,9 +780,9 @@ enum ActivityListItem: Int {
 }
 
 enum AddOnListItem: Int {
-    case NestleBenecalorie
-    case Yogurt
-    case ExtraSnack
+    case NestleBenecalorie = 0,
+    Yogurt,
+    ExtraSnack
     
     var name: String {
         switch self {
@@ -825,20 +825,20 @@ enum AddOnListItem: Int {
 }
 
 public enum PrescribedTimeForAction: Int {
-    case BeforeBreakfast
-    case BreakfastTime
-    case MidMorning
-    case MorningSnack
-    case LunchTime
-    case AfternoonSnack
-    case AfternoonSchool
-    case DinnerTime
-    case EveningSnack
-    case EightPM
-    case TenPM
-    case Bedtime
-    case MidNight
-    case TwoAM
+    case BeforeBreakfast = 0,
+    BreakfastTime,
+    MidMorning,
+    MorningSnack,
+    LunchTime,
+    AfternoonSnack,
+    AfternoonSchool,
+    DinnerTime,
+    EveningSnack,
+    EightPM,
+    TenPM,
+    Bedtime,
+    MidNight,
+    TwoAM
     
     var name: String {
         switch self {

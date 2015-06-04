@@ -7,7 +7,7 @@
         <attribute name="supervisedBy" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="OPAddOn" representedClassName="OPAddOn" syncable="YES">
-        <attribute name="addOnItem" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addOnItem" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="targetMealOrSnack" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="addOns" inverseEntity="OPProfile" syncable="YES"/>
     </entity>
@@ -96,7 +96,7 @@
         <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="lunch" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
     <entity name="OPMedicine" representedClassName="OPMedicine" syncable="YES">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="targetTimePeriodToTake" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPProfile" inverseName="medicineLIst" inverseEntity="OPProfile" syncable="YES"/>
     </entity>

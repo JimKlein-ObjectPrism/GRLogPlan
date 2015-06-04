@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 @objc(OPParent)
-class OPParent: NSManagedObject {
+public class OPParent: NSManagedObject {
 
     @NSManaged var firstName: String
     @NSManaged var lastName: String

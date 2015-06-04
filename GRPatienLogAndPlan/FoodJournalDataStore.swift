@@ -17,11 +17,15 @@ enum JournalEntryResult {
     
 }
 
-public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, ChoiceItemSelectedDelegate {
+public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate, ChoiceItemSelectedDelegate, ProfileDataStoreDelegate {
     
     var managedContext: NSManagedObjectContext
     
     public var parentsArray: [String] = []
+
+    var currentAddOns: [OPAddOn] = [OPAddOn]()
+    var currentParents: [OPParent] = [OPParent]()
+    var currentMedicines: [OPMedicine] = [OPMedicine]()
 
     
     var currentRecord: OPPatientRecord!
@@ -43,6 +47,398 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     // Items that define or are used to define the contents of the Food Journal Log item
     var logEntryItems = [AnyObject]()
+    
+    //MARK: Parents Model
+    public func getParents() -> [OPParent] {
+        var profileparents = currentRecord.profile.parents
+        currentParents = [OPParent]()
+        
+        // Create new Parent Object, then add to top of array sent to tableview
+        let parentEntity = NSEntityDescription.entityForName("OPParent",
+            inManagedObjectContext: managedContext)
+        
+        var parent: OPParent = OPParent(entity: parentEntity!,
+            insertIntoManagedObjectContext: managedContext)
+        parent.firstName = ""
+        parent.lastName = ""
+        currentParents.append(parent)
+        
+        for x in profileparents {
+            currentParents.append( x as! OPParent)
+        }
+        
+        return currentParents
+        
+    }
+    
+    public func addParentToModel ( firstName: String, lastName: String ) -> (OPParent?, NSError?) {
+        
+        let parentEntity = NSEntityDescription.entityForName("OPParent",
+            inManagedObjectContext: managedContext)
+        
+        var parent: OPParent = OPParent(entity: parentEntity!,
+            insertIntoManagedObjectContext: managedContext)
+        
+        parent.profile = currentRecord.profile
+        
+        parent.firstName = firstName
+        parent.lastName = lastName
+        
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return ( nil, error)
+        }
+        else{
+            return (parent, nil)
+        }
+    }
+    
+    
+    public func addParent( firstName: String?, lastName: String?) -> (parent: OPParent?, errorArray: [ParentProfileValidation]){
+        var errors = [ParentProfileValidation]()
+        
+        if firstName == nil {
+            errors.append(ParentProfileValidation.FirstNameIsNil)
+        }
+        if lastName == nil {
+            errors.append(ParentProfileValidation.LastNameIsNil)
+        }
+        
+        
+        if errors.count == 0 {
+            //forced unwrap OK because no errors encountered
+            let result = addParentToModel(firstName!, lastName: lastName!)
+            if let parent = result.0 {
+                errors.append(ParentProfileValidation.Success)
+                // return value with no errors
+                return (parent, errors)
+            } else {
+                errors.append(ParentProfileValidation.CoreDataErrorEncountered)
+            }
+        }
+        // return value when errors occur
+        return (nil, errors)
+    }
+    
+    public func validateParentInput (atIndex: Int, firstName: String?, lastName: String?) -> [ParentProfileValidation] {
+        var errors = [ParentProfileValidation]()
+        
+        if firstName == nil {
+            errors.append(ParentProfileValidation.FirstNameIsNil)
+        }
+        if lastName == nil {
+            errors.append(ParentProfileValidation.LastNameIsNil)
+        }
+        if atIndex < 0 || atIndex > currentProfile().profile.parents.count  {
+            errors.append(ParentProfileValidation.IndexOutOfRange)
+        }
+        
+        return (errors)
+        
+    }
+    public func updateParentInModel( atIndex: Int, firstName: String?, lastName: String?) -> (parent: OPParent?, errorArray: [ParentProfileValidation]){
+        
+        var validationResult = validateParentInput(atIndex, firstName: firstName, lastName: lastName)
+        
+        if validationResult.count == 0  {
+            //forced unwrap OK because no errors encountered
+            let result = updateParent(atIndex, firstName: firstName!, lastName: lastName!)
+            if let parent = result.0 {
+                // return value with no errors
+                validationResult.append(ParentProfileValidation.Success)
+                return (parent, validationResult)
+            } else {
+                validationResult.append(ParentProfileValidation.CoreDataErrorEncountered)
+            }
+        }
+        else {
+            //TODO: handle error message here
+        }
+        // return value when errors occur
+        return (nil, validationResult)
+    }
+    
+    
+    func updateParent ( atIndex: Int, firstName: String, lastName: String) -> (OPParent?, NSError?)  {
+        
+        var parent: OPParent = self.currentParents[atIndex]
+        
+        parent.firstName = firstName
+        parent.lastName = lastName
+        
+        //set relationship if this is top cell used for initial input
+        if atIndex == 0 {
+            parent.profile = currentRecord.profile
+        }
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return (nil, error)
+        }
+        
+        return ( parent, nil)
+    }
+    
+    public func deleteParent(index: Int)-> (parent: OPParent?, coreDataError: NSError?) {
+        let parentToDelete = self.currentParents[index]
+        managedContext.deleteObject(parentToDelete)
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return (parentToDelete, error)
+        }
+        
+        return (parentToDelete, nil)
+    }
+    
+    //MARK: Medicine Model
+    func getMedicines() -> [OPMedicine] {
+        let profileMedicines = currentRecord.profile.medicineLIst
+        currentMedicines = [OPMedicine]()
+        for x in profileMedicines {
+            currentMedicines.append( x as! OPMedicine)
+        }
+        return currentMedicines
+    }
+
+    func validateMedicineResult(medicine: Int, prescribedTimeForAction: Int) -> [MedicineValidation]{
+        //TODO: Medicine Validation array:  What should be included?  No out of index range error if input is enum!
+        var validationResult = [MedicineValidation]()
+        
+        
+        return validationResult
+    }
+    
+    public func addMedicine (medicine: Int, prescribedTimeForAction: Int) -> (medObject: OPMedicine?, errorArray: [MedicineValidation]) {
+        // validate input
+        var validationResult = validateMedicineResult(medicine , prescribedTimeForAction: prescribedTimeForAction)
+        
+        
+        if validationResult.count == 0  {
+            //forced unwrap OK because no errors encountered
+            let result = addMedicineToModel(medicine, prescribedTimeForAction: prescribedTimeForAction)
+            if let parent = result.0 {
+                // return value with no errors
+                validationResult.append(MedicineValidation.Success)
+                return (parent, validationResult)
+            } else {
+                validationResult.append(MedicineValidation.CoreDataErrorEncountered)
+            }
+        }
+        else {
+            //TODO: handle error message here
+        }
+        // return value when errors occur
+        return (nil, validationResult)
+        
+    }
+    func addMedicineToModel(medicine: Int, prescribedTimeForAction: Int) -> (medObject: OPMedicine?, error: NSError?) {
+        //create new OPMedicine entity in the managed context
+        let medicineEntity = NSEntityDescription.entityForName("OPMedicine",
+            inManagedObjectContext: managedContext)
+        
+        var med: OPMedicine = OPMedicine(entity: medicineEntity!,
+            insertIntoManagedObjectContext: managedContext)
+        med.profile = currentRecord.profile
+        med.name = medicine
+        
+        med.targetTimePeriodToTake = prescribedTimeForAction
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return ( nil, error!)
+        }
+        else{
+            return (med, nil)
+        }
+        
+    }
+    
+    
+    
+    //    func updateMedicine (atIndex: Int, medicine: Medicines, prescribedTimeForAction: PrescribedTimeForAction) -> ( medObject: OPMedicine, errorArray: [MedicineValidation])
+    func deleteMedicine (atIndex: Int) -> (medicine: OPMedicine?, coreDataError: NSError?)
+    {
+        let medicineToDelete = self.currentMedicines[atIndex]
+        managedContext.deleteObject(medicineToDelete)
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return (nil, error)
+        }
+        
+        return (medicineToDelete, nil)
+    }
+    
+    func updateMedicine (atIndex: Int, medicine: Int, prescribedTimeForAction: Int) -> ( medObject: OPMedicine?, errorArray: [MedicineValidation])
+    {
+        // validate input
+        var validationResult = validateMedicineResult(medicine , prescribedTimeForAction: prescribedTimeForAction)
+        if validationResult.count == 0  {
+            //forced unwrap OK because no errors encountered
+            let result = updateMedicineInModel(atIndex, medicine: medicine, prescribedTimeForAction: prescribedTimeForAction)
+            if let parent = result.0 {
+                // return value with no errors
+                validationResult.append(MedicineValidation.Success)
+                return (parent, validationResult)
+            } else {
+                validationResult.append(MedicineValidation.CoreDataErrorEncountered)
+                //TODO: handle Core Data error
+            }
+        }
+        else {
+            //TODO: handle error messages here
+        }
+        // return value when errors occur
+        return (nil, validationResult)
+    }
+    
+    func updateMedicineInModel (atIndex: Int, medicine: Int, prescribedTimeForAction: Int) -> ( medObject: OPMedicine?, error: NSError?){
+        var currentMedicine: OPMedicine = self.currentMedicines[atIndex]
+        
+        currentMedicine.name = NSNumber(integer: medicine)
+        currentMedicine.targetTimePeriodToTake = NSNumber(integer: prescribedTimeForAction)
+        
+        currentMedicine.profile = currentRecord.profile
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return (nil, error!)
+        }
+        
+        return ( currentMedicine, nil)
+        
+    }
+    
+    
+    //MARK:  AddOn Model
+    func getAddOns() -> [OPAddOn] {
+        let profileAddOns = currentRecord.profile.addOns
+        currentAddOns.removeAll(keepCapacity: false)// = [OPAddOn]()
+        for x in profileAddOns {
+            currentAddOns.append( x as! OPAddOn)
+        }
+        return currentAddOns
+    }
+    
+    public func validateAddOnResult(addOn: Int, prescribedTimeForAction: Int) -> [AddOnValidation]{
+        //TODO: AddOn Validation array:  What should be included?  No out of index range error if input is enum!
+        var validationResult = [AddOnValidation]()
+        
+        
+        return validationResult
+    }
+    public func addAddOn (addOn: Int, prescribedTimeForAction: Int) -> (addOnObject: OPAddOn?, errorArray: [AddOnValidation]) {
+        // validate input
+        var validationResult = validateAddOnResult(addOn , prescribedTimeForAction: prescribedTimeForAction)
+        
+        
+        if validationResult.count == 0  {
+            //forced unwrap OK because no errors encountered
+            let result = addAddOnToModel(addOn, prescribedTimeForAction: prescribedTimeForAction)
+            if let parent = result.0 {
+                // return value with no errors
+                validationResult.append(AddOnValidation.Success)
+                return (parent, validationResult)
+            } else {
+                validationResult.append(AddOnValidation.CoreDataErrorEncountered)
+            }
+        }
+        else {
+            //TODO: handle error message here
+        }
+        // return value when errors occur
+        return (nil, validationResult)
+        
+    }
+    func addAddOnToModel(addOn: Int, prescribedTimeForAction: Int) -> (addOnObject: OPAddOn?, error: NSError?) {
+        //create new OPAddOn entity in the managed context
+        let addOnEntity = NSEntityDescription.entityForName("OPAddOn",
+            inManagedObjectContext: managedContext)
+        
+        var med: OPAddOn = OPAddOn(entity: addOnEntity!,
+            insertIntoManagedObjectContext: managedContext)
+        med.profile = currentRecord.profile
+        med.addOnItem = NSNumber(integer: addOn)
+        
+        med.targetMealOrSnack = NSNumber(integer: prescribedTimeForAction)
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return ( nil, error!)
+        }
+        else{
+            return (med, nil)
+        }
+        
+    }
+    
+    
+    
+    //    func updateAddOn (atIndex: Int, AddOn: AddOns, prescribedTimeForAction: PrescribedTimeForAction) -> ( medObject: OPAddOn, errorArray: [AddOnValidation])
+    func deleteAddOn (atIndex: Int) -> (addOnObject: OPAddOn?, coreDataError: NSError?)
+    {
+        let addOnToDelete = self.currentAddOns[atIndex]
+        managedContext.deleteObject(addOnToDelete)
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return (nil, error)
+        }
+        
+        return (addOnToDelete, nil)
+    }
+    
+    func updateAddOn (atIndex: Int, addOn: Int, prescribedTimeForAction: Int) -> ( addOnObject: OPAddOn?, errorArray: [AddOnValidation])
+    {
+        // validate input
+        var validationResult = validateAddOnResult(addOn , prescribedTimeForAction: prescribedTimeForAction)
+        if validationResult.count == 0  {
+            //forced unwrap OK because no errors encountered
+            let result = updateAddOnInModel(atIndex, addOn: addOn, prescribedTimeForAction: prescribedTimeForAction)
+            if let parent = result.0 {
+                // return value with no errors
+                validationResult.append(AddOnValidation.Success)
+                return (parent, validationResult)
+            } else {
+                validationResult.append(AddOnValidation.CoreDataErrorEncountered)
+                //TODO: handle Core Data error
+            }
+        }
+        else {
+            //TODO: handle error messages here
+        }
+        // return value when errors occur
+        return (nil, validationResult)
+    }
+    
+    func updateAddOnInModel (atIndex: Int, addOn: Int, prescribedTimeForAction: Int) -> ( addOnObject: OPAddOn?, error: NSError?){
+        var currentAddOn: OPAddOn = self.currentAddOns[atIndex]
+        
+        currentAddOn.addOnItem = NSNumber(integer: addOn)
+        currentAddOn.targetMealOrSnack = NSNumber(integer: prescribedTimeForAction)
+        
+        currentAddOn.profile = currentRecord.profile
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            return (nil, error!)
+        }
+        
+        return ( currentAddOn, nil)
+        
+    }
+    
+    
+
+    
     
     //MARK: Data Objects for View Model
     var breakfast: VMBreakfast! //= {
@@ -160,7 +556,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     func currentProfile() -> OPPatientRecord {
         // TODO: Implement me!
-        //let managedCon = coreDataStack.context
+        //let managedCon = managedContext
         let recordEntity = NSEntityDescription.entityForName("OPPatientRecord",
             inManagedObjectContext: managedContext)
         let recordFetch = NSFetchRequest(entityName: "OPPatientRecord")
@@ -380,7 +776,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     func currentRecordAndProfile() -> OPPatientRecord {
         // TODO: Implement me!
-        //let managedCon = coreDataStack.context
+        //let managedCon = managedContext
         let recordEntity = NSEntityDescription.entityForName("OPPatientRecord",
             inManagedObjectContext: managedContext)
         let recordFetch = NSFetchRequest(entityName: "OPPatientRecord")

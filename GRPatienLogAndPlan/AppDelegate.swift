@@ -75,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let profileTableVC =  storyboard.instantiateViewControllerWithIdentifier("ProfileTableViewController") as! ProfileTableViewController
         let profileNav = storyboard.instantiateViewControllerWithIdentifier("ProfileNavController") as! UINavigationController
+        profileTableVC.appDelegate = self
+        profileTableVC.dataStore = dataStore
         
         let printTableVC =  storyboard.instantiateViewControllerWithIdentifier("PrintViewController") as! PrintViewController
         let printNavVC = storyboard.instantiateViewControllerWithIdentifier("PrintViewNavController") as! UINavigationController

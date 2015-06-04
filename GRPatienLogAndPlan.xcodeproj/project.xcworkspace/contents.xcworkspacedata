@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../OPMedicine.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../OPAddOn.swift">
+   </FileRef>
+   <FileRef
       location = "self:GRPatienLogAndPlan.xcodeproj">
    </FileRef>
 </Workspace>

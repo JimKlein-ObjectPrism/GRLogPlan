@@ -23,21 +23,23 @@ class MedicineTableViewController: UITableViewController, UIPickerViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if isUpdate {
-            
-            
-            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Update")
-            self.navigationItem.rightBarButtonItem = sb
-            
-        } else {
-            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Add")
-            self.navigationItem.rightBarButtonItem = sb
-
-        }
         prescribedTimeUIPicker.delegate = self
         prescribedTimeUIPicker.dataSource = self
         medicineUIPicker.delegate = self
         medicineUIPicker.dataSource = self
+        
+        if isUpdate {
+            
+            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Update")
+            self.navigationItem.rightBarButtonItem = sb
+            prescribedTimeUIPicker.selectRow(medicineToUpdate!.name.integerValue, inComponent: 0, animated: false)
+            medicineUIPicker.selectRow(medicineToUpdate!.targetTimePeriodToTake.integerValue, inComponent: 0, animated: false)
+
+        } else {
+            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Add")
+            self.navigationItem.rightBarButtonItem = sb
+            
+        }
 
         //prescribedTimeUIPicker.set
     }

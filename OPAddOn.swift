@@ -1,18 +1,18 @@
 //
 //  OPAddOn.swift
-//  GRPatienLogAndPlan
+//  
 //
-//  Created by James Klein on 5/27/15.
-//  Copyright (c) 2015 ObjectPrism Corp. All rights reserved.
+//  Created by James Klein on 6/2/15.
+//
 //
 
 import Foundation
 import CoreData
 @objc(OPAddOn)
-class OPAddOn: NSManagedObject {
+public class OPAddOn: NSManagedObject {
 
+    @NSManaged var addOnItem: NSNumber
     @NSManaged var targetMealOrSnack: NSNumber
-    @NSManaged var addOnItem: String
     @NSManaged var profile: OPProfile
 
 }

@@ -43,12 +43,16 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     @IBOutlet weak var lastNameTextField: UITextField!
     var mostCommonSupervisingParent: Int =  0
     
-    
-    
     @IBOutlet weak var tableView: UITableView!
+    
+    
+//    @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
         switch currentDisplayType! {
         case  ParentViewControllerDisplayType.Parents:
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped")
@@ -91,7 +95,10 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             }
 
         case .AddOns:
-            println()
+            addOns = dataStoreDelegate.getAddOns()
+            if view.gestureRecognizers?.count > 0 {
+                view.gestureRecognizers?.removeAll(keepCapacity: true)
+            }
         case .Parents:
             println()
         }
@@ -224,7 +231,13 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                     }
                     
                 case .AddOns:
-                    println()
+                    let result = self.dataStoreDelegate.deleteAddOn(indexPath.row)
+                    if result.coreDataError == nil {
+                        self.addOns!.removeAtIndex(indexPath.row)
+                    } else {
+                        //TODO: handle error here.
+                    }
+
                 case .Medicines:
                     let result = self.dataStoreDelegate.deleteMedicine(indexPath.row)
                     if result.coreDataError == nil {
@@ -269,12 +282,17 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         case .AddOns:
                 let row = indexPath.row
                 //var title: String = ProfileChoice(rawValue: row)?.name
-                let cell = tableView.dequeueReusableCellWithIdentifier("AddOnMedicineCell", forIndexPath: indexPath) as! UITableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("MedsAddOnTableViewCell", forIndexPath: indexPath) as! UITableViewCell
                 
                 if addOns?.count > 0{
                     let addOn = addOns![row]
                     //TODO:  finish implementing code here
-                    cell.textLabel?.text = "placeholder" //addOn.addOnItem
+                    cell.textLabel?.text = AddOnListItem(rawValue:  addOn.addOnItem.integerValue )?.name
+                    cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name
+                    var name = AddOnListItem(rawValue:  addOn.addOnItem.integerValue )?.name
+                    var time = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name
+                    println("addON \(name) , when \(time)") //("addON: \(name) \(addOnSelection), time: \(time) \(timeSelection)")
+
                     //cell.accessoryType = UITableViewCellAccessoryType.
                 }
                 
@@ -283,12 +301,12 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         case .Medicines:
             let row = indexPath.row
             //var title: String = ProfileChoice(rawValue: row)?.name
-            let cell = tableView.dequeueReusableCellWithIdentifier("AddOnMedicineCell", forIndexPath: indexPath) as! UITableViewCell//MedsAddOnTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("MedsAddOnTableViewCell", forIndexPath: indexPath) as! UITableViewCell//MedsAddOnTableViewCell
             if medicines?.count > 0 {
                 if let med = medicines?[row] {
                 //TODO:  finish implementing code here
-                cell.textLabel?.text = Medicines(rawValue: row )?.name
-                cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: row)?.name
+                cell.textLabel?.text = Medicines(rawValue: med.name.integerValue )?.name
+                cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: med.targetTimePeriodToTake.integerValue)?.name
                 
                 //cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             
@@ -306,9 +324,10 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         case  ParentViewControllerDisplayType.Parents:
             println()
         case .AddOns:
-            pushAddOnsVC()
+            self.pushAddOnVC_Update(indexPath.row, addOn: self.addOns![indexPath.row])
+        
         case .Medicines:
-            pushMedicinesVC(true, medicine: self.medicines?[indexPath.row])
+            pushMedicinesVC_Update(indexPath.row,  medicine: self.medicines![indexPath.row])
         }
     }
 //    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -325,7 +344,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         case .AddOns:
             pushAddOnsVC()
         case .Medicines:
-            pushMedicinesVC(false, medicine: nil)
+            pushMedicineVC()
         }
     }
     func bindData(parents: [OPParent], indexOfMostCommonParentSupervisor: Int) -> Bool {
@@ -368,19 +387,12 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     
     func doneButtonTapped(){
         view.endEditing(true)
-
-        
-        //Add the last one
-        //dataStoreDelegate.addParent(self.firstNameTextField.text, lastName: "Smith")
-        
-//        let nameInput = self.firstNameTextField.text
-//        let myArray: [String] = nameInput.componentsSeparatedByString(" ")
-//        dataStoreDelegate.addParent(myArray.first, lastName: myArray.last)
+        self.navigationController?.popViewControllerAnimated(true)
     }
         
     //MARK: Push Methods
     func pushAddOnsVC() {
-        
+        //CALLED using add button
         let vc : AOnTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AOnTableViewController") as! AOnTableViewController
         
         vc.navigationItem.title = "AddOn"
@@ -388,14 +400,39 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         
         self.showViewController(vc as UIViewController, sender: vc)
     }
-    func pushMedicinesVC(isUpdate: Bool, medicine: OPMedicine?) {
+    func pushAddOnVC_Update(selectedIndex: Int, addOn: OPAddOn) {
+        //called on row select
+        let vc : AOnTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AOnTableViewController") as! AOnTableViewController
+        
+        vc.navigationItem.title = "AddOn"
+        vc.dataStoreDelegate = self.dataStoreDelegate
+        vc.addOnToUpdate = addOn
+        vc.isUpdate = true
+        vc.selectedIndex = selectedIndex
+        self.showViewController(vc as UIViewController, sender: vc)
+    }
+    func pushMedicineVC() {
         
         let vc : MedicineTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MedicineTableViewController") as! MedicineTableViewController
-
+        
+        vc.navigationItem.title = "Medicine"
+        vc.dataStoreDelegate = self.dataStoreDelegate
+        
+        self.showViewController(vc as UIViewController, sender: vc)
+    }
+    func pushMedicinesVC_Update( selectedIndex: Int, medicine: OPMedicine) {
+        
+        let vc : MedicineTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MedicineTableViewController") as! MedicineTableViewController
+        
         vc.navigationItem.title = "Medicine"
         vc.dataStoreDelegate = self.dataStoreDelegate
 
+        vc.medicineToUpdate = medicine
+        vc.isUpdate = true
+        vc.selectedIndex = selectedIndex
+        
         self.showViewController(vc as UIViewController, sender: vc)
+        
     }
 
 

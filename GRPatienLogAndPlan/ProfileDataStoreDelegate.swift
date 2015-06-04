@@ -24,7 +24,12 @@ protocol ProfileDataStoreDelegate {
     func updateMedicine (atIndex: Int, medicine: Int, prescribedTimeForAction: Int) -> ( medObject: OPMedicine?, errorArray: [MedicineValidation])
     func deleteMedicine (atIndex: Int) -> (medicine: OPMedicine?, coreDataError: NSError?)
     // AddOns
-    
+    //Inputs not optional because picker always has value
+    func getAddOns() -> [OPAddOn]
+    func addAddOn (addOn: Int, prescribedTimeForAction: Int) -> ( addOnObject: OPAddOn?, errorArray: [AddOnValidation])
+    func updateAddOn (atIndex: Int, addOn: Int, prescribedTimeForAction: Int) -> ( addOnObject: OPAddOn?, errorArray: [AddOnValidation])
+    func deleteAddOn (atIndex: Int) -> (addOnObject: OPAddOn?, coreDataError: NSError?)
+
     //Profile
     //func saveProfile(firstName: String, lastName: String) -> (profile: OPProfile?, error: ProfileValidation)
     

@@ -238,7 +238,6 @@
 			children = (
 				EFF449C91ABB4535004A099F /* Visitor Protocol and Files */,
 				EFF448971AB24079004A099F /* Home View Table Cells */,
-				EF157BC91AB093D600847AEE /* Protocols and Type Defs */,
 				98FDCF0B1AA16BF80029F97E /* Data */,
 				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
@@ -336,6 +335,7 @@
 				EF49F8311AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld */,
 				EF157BAD1AAE089A00847AEE /* FoodJournalDataStore.swift */,
 				EF157BAB1AAE088600847AEE /* DataTypes.swift */,
+				EF157BC91AB093D600847AEE /* Protocols and Type Defs */,
 				EFE08A2D1AD9AFF4004C80C3 /* CoreDataStack.swift */,
 				EF1367981B1D543F007F1649 /* ProfileDataStoreDelegate.swift */,
 				EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */,

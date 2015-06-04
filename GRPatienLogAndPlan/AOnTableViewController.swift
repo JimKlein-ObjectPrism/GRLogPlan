@@ -13,17 +13,40 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
     //handle datastore calls delegage
     var dataStoreDelegate: ProfileDataStoreDelegate!
     var addOn: OPAddOn!
+    var selectedIndex: Int?
+    
+    var isUpdate = false
+
+    var addOnToUpdate: OPAddOn?
 
     @IBOutlet weak var addOnSegmentedControl: UISegmentedControl!
-
     @IBOutlet weak var prescribedTimeUIPicker: UIPickerView!
+    //@IBOutlet weak var addOnSegmentedControl: UISegmentedControl!
+
+    //@IBOutlet weak var prescribedTimeUIPicker: UIPickerView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+
         buildSegmentedControls()
         prescribedTimeUIPicker.delegate = self
         prescribedTimeUIPicker.dataSource = self
+        if isUpdate {
+            //addOnSegmentedControl.set
+            addOnSegmentedControl.selectedSegmentIndex = addOnToUpdate!.addOnItem.integerValue
+            prescribedTimeUIPicker.selectRow(addOnToUpdate!.targetMealOrSnack.integerValue, inComponent: 0, animated: false)
+            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Update")
+            self.navigationItem.rightBarButtonItem = sb
+            
+        } else {
+            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Add")
+            self.navigationItem.rightBarButtonItem = sb
+            
+        }
+
+        
+        self.tableView.reloadData()
 
     }
 
@@ -56,7 +79,6 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
         
         //Segment Control Code
         addOnSegmentedControl.removeAllSegments()
-        
         for i in 0 ..< AddOnListItem.count() {
             addOnSegmentedControl.insertSegmentWithTitle(AddOnListItem(rawValue: i)!.name, atIndex: i, animated: false)
             addOnSegmentedControl.setWidth(0, forSegmentAtIndex: i)
@@ -70,5 +92,20 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
         //prescribedTimeUIPicker!.selectRow(row, inComponent: 0, animated: false)
         
     }
-
+    func doneButtonTapped_Add()
+    {
+        // OK this is addon only onthe vc.
+        let addOnSelection = self.addOnSegmentedControl.selectedSegmentIndex
+        let timeSelection = prescribedTimeUIPicker.selectedRowInComponent(0)
+//        let name = AddOnListItem(rawValue: addOnSelection)?.name
+//        let time = PrescribedTimeForAction(rawValue: timeSelection)?.name
+//        println("addON: \(name) \(addOnSelection), time: \(time) \(timeSelection)")
+        dataStoreDelegate.addAddOn(addOnSelection, prescribedTimeForAction: timeSelection)
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    func doneButtonTapped_Update()
+    {
+        dataStoreDelegate.updateAddOn(selectedIndex!, addOn: self.addOnSegmentedControl.selectedSegmentIndex, prescribedTimeForAction: self.prescribedTimeUIPicker.selectedRowInComponent(0))
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 }
