@@ -166,9 +166,9 @@ public class MealViewModel: NSObject {
         var timeForPickerControl = time ?? NSDate()
         
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-  
-        cell.timeTextField.text = dateFormatter.stringFromDate(timeForPickerControl)
+        dateFormatter.timeStyle = .ShortStyle
+        let time = dateFormatter.stringFromDate(timeForPickerControl)
+        cell.timeTextField.text = time
         return cell
         
     }
@@ -295,6 +295,10 @@ public class MealViewModel: NSObject {
     }
     func setPropertyInModel (#dateValue: NSDate, inout datePropertyInModel: NSDate?){
         datePropertyInModel = dateValue
+//        var error: NSError?
+//        if !managedContext.save(&error) {
+//            println("Could not save: \(error)")
+
     }
     
     func getFoodItem ( itemName: String, foodItemArray: [FoodItem] ) -> [FoodItem] {

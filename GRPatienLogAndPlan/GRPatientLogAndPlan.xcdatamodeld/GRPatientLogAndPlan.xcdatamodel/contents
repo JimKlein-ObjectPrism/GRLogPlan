@@ -42,8 +42,14 @@
         <relationship name="journalEntry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPJournalEntry" inverseName="breakfast" inverseEntity="OPJournalEntry" syncable="YES"/>
     </entity>
     <entity name="OPDinner" representedClassName="OPDinner" syncable="YES">
+        <attribute name="addOnConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="addOnRequired" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="addOnText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clinicProvidedMeal" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="meat" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="medicineConsumed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="medicineRequired" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="medicineText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="oil" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parentInitials" optional="YES" attributeType="String" syncable="YES"/>
@@ -140,7 +146,7 @@
         <element name="OPAddOn" positionX="-884" positionY="-450" width="128" height="90"/>
         <element name="OPAfternoonSnack" positionX="-1170" positionY="206" width="128" height="240"/>
         <element name="OPBreakfast" positionX="-684" positionY="36" width="128" height="240"/>
-        <element name="OPDinner" positionX="-677" positionY="216" width="128" height="225"/>
+        <element name="OPDinner" positionX="-677" positionY="216" width="128" height="30"/>
         <element name="OPEveningSnack" positionX="-1406" positionY="189" width="128" height="240"/>
         <element name="OPJournalEntry" positionX="-936" positionY="170" width="128" height="165"/>
         <element name="OPLunch" positionX="-677" positionY="476" width="128" height="240"/>

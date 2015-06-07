@@ -1,15 +1,15 @@
 //
 //  OPDinner.swift
-//  GRPatienLogAndPlan
+//  
 //
-//  Created by James Klein on 5/27/15.
-//  Copyright (c) 2015 ObjectPrism Corp. All rights reserved.
+//  Created by James Klein on 6/6/15.
+//
 //
 
 import Foundation
 import CoreData
-@objc(OPDinner)
-class OPDinner: NSManagedObject {
+
+public class OPDinner: NSManagedObject {
 
     @NSManaged var clinicProvidedMeal: NSNumber
     @NSManaged var meat: String
@@ -22,6 +22,12 @@ class OPDinner: NSManagedObject {
     @NSManaged var starch: String
     @NSManaged var time: NSDate
     @NSManaged var vegetable: String
+    @NSManaged var addOnRequired: NSNumber
+    @NSManaged var addOnText: String
+    @NSManaged var addOnConsumed: NSNumber
+    @NSManaged var medicineRequired: NSNumber
+    @NSManaged var medicineConsumed: NSNumber
+    @NSManaged var medicineText: String
     @NSManaged var journalEntry: OPJournalEntry
 
 }

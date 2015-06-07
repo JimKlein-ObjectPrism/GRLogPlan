@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 @objc(OPLunch)
-class OPLunch: NSManagedObject {
+public class OPLunch: NSManagedObject {
 
     @NSManaged var addOnRequired: NSNumber
     @NSManaged var fruitChoice: String

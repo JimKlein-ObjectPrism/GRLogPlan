@@ -8,51 +8,6 @@
 
 import Foundation
 
-enum SnackMenuCategory {
-    case SnackChoice,
-    Fruit,
-    Medicine,
-    AddOn,
-    AdditionalInfo
-    
-    static var caseItems: [SnackMenuCategory] = [SnackMenuCategory]()
-    
-    static func count() -> Int { return caseItems.count }
-    
-    static func configureMenuChoice(profile: TempProfile){
-        caseItems.removeAll(keepCapacity: false)
-        caseItems.append(.SnackChoice)
-        caseItems.append(.Fruit)
-        if profile.medicineRequired {
-            caseItems.append(.Medicine)
-        }
-        if profile.addOnRequired {
-            caseItems.append(.AddOn)
-        }
-        caseItems.append(.AdditionalInfo)
-    }
-    
-    init?(value: Int){
-        //fail if index out of bounds
-        if value >= SnackMenuCategory.caseItems.count || value < 0 { return nil }
-        self = SnackMenuCategory.caseItems[value]
-    }
-    
-    func unselectedHeaderTitle() -> String {
-        switch self {
-        case .SnackChoice:
-            return "Snack Choice"
-        case .Fruit:
-            return "Fruit Choice"
-        case .Medicine:
-            return "Medicine"
-        case .AddOn:
-            return "Add On"
-        case .AdditionalInfo:
-            return "Additional Information"
-        }
-    }
-}
 
 public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate

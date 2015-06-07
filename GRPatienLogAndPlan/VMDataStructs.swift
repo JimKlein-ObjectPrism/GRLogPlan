@@ -9,7 +9,7 @@
 import Foundation
 
 //MARK: Meal Item types
-class VMProfile {
+public class VMProfile {
     /*
 var addOnRequired = false
 var medicineRequired = false
@@ -37,13 +37,13 @@ var parents: [String] = ["Joe Smith", "Jane Doe"]
     var namedMeals: [NamedMeal] = []
     
     
-    init(morningSnackRequired: Bool, eveningSnackRequired: Bool){
+    public init(morningSnackRequired: Bool, eveningSnackRequired: Bool){
         self.morningSnackRequired = morningSnackRequired
         self.eveningSnackRequired = eveningSnackRequired
     }
     
 }
-struct VMAddOn {
+public struct VMAddOn {
     //Add-ons are added to meals or snacks, so store weak reference to avoid strong reference cycle issues
     var addOnItem: String = ""
     var instructions: String = ""
@@ -52,12 +52,12 @@ struct VMAddOn {
     var wasConsumed: Bool?
 }
 
-class VMParent: NSObject {
+public class VMParent: NSObject {
     var firstName: String?
     var lastName: String?
 }
 
-class VMMedicine: NSObject {
+public class VMMedicine: NSObject {
     
     var name:String = ""
 //var dose:String = ""
@@ -74,7 +74,7 @@ class VMMedicine: NSObject {
 }
 
 //validation helper functions
-func testNil (stringProperty: String?) -> Bool {
+public func testNil (stringProperty: String?) -> Bool {
     if stringProperty == nil {
         return true
     }
@@ -85,12 +85,12 @@ func testNil (stringProperty: String?) -> Bool {
 
 
 
-enum ValidationResult {
+public enum ValidationResult {
     case Success,
     Failure([String])
 }
 
-enum BreakfastValidationError: Int {
+public enum BreakfastValidationError: Int {
     case NilValueFoodChoice = 0,
     NilValueFruitChoice,
     AddOnNotConsumed,
@@ -116,26 +116,26 @@ enum BreakfastValidationError: Int {
     }
 }
 
-struct VMBreakfast {
+public struct VMBreakfast {
     
-    var foodChoice: String?
-    var fruitChoice: String?
+    public var foodChoice: String?
+    public var fruitChoice: String?
     
-    var addOnRequired: Bool = true
-    var addOnText: String? = "Yogurt"
-    var addOnConsumed: Bool? = false
-    var medicineRequired: Bool = true
-    var medicineText: String? = "Zinc"
-    var medicineConsumed: Bool? = false
+    public var addOnRequired: Bool = true
+    public var addOnText: String? = "Yogurt"
+    public var addOnConsumed: Bool? = false
+    public var medicineRequired: Bool = true
+    public var medicineText: String? = "Zinc"
+    public var medicineConsumed: Bool? = false
     
-    var parentInitials: String?
-    var location: String?
-    var time: NSDate?
-    init(){
+    public var parentInitials: String?
+    public var location: String?
+    public var time: NSDate?
+    public init(){
         
     }
     
-    init(fromDataObject: OPBreakfast){
+    public init(fromDataObject: OPBreakfast){
         
         self.foodChoice = fromDataObject.foodChoice
         self.fruitChoice = fromDataObject.fruitChoice
@@ -157,7 +157,7 @@ struct VMBreakfast {
             self.time = t
         }
     }
-    func validateWithBreakfastMenuCategoryEnum () -> ValidationResult {
+    public func validateWithBreakfastMenuCategoryEnum () -> ValidationResult {
         var errorMessages = [String]()
         //this next line isn't necessary when datastore initialized enum
         //BreakfastMenuCategory.configureMenuChoice(OPProfile())
@@ -199,24 +199,27 @@ struct VMBreakfast {
     }
 }
 
-struct VMLunch {
+public struct VMLunch {
     
-    var lunchChoice: String?
-    var fruitChoice: String?
+    public var lunchChoice: String?
+    public var fruitChoice: String?
     
-    var addOnRequired: Bool = false
-    var addOnText: String? = "Yogurt"
-    var addOnConsumed: Bool? = false
-    var meidicineRequired: Bool = false
-    var medicineText: String? = "Zinc"
-    var medicineConsumed: Bool? = false
+    public  var addOnRequired: Bool = false
+    public var addOnText: String? = "Yogurt"
+    public var addOnConsumed: Bool? = false
+    public var meidicineRequired: Bool = false
+    public var medicineText: String? = "Zinc"
+    public var medicineConsumed: Bool? = false
     
-    var parentInitials: String?
-    var location: String?
-    var time: NSDate?
+    public var parentInitials: String?
+    public var location: String?
+    public var time: NSDate?
+    public init(){
+        
+    }
     
     
-    func validateWithLunchMenuCategoryEnum () -> ValidationResult {
+    public func validateWithLunchMenuCategoryEnum () -> ValidationResult {
         var errorMessages = [String]()
         //this next line isn't necessary when datastore initialized enum
         //BreakfastMenuCategory.configureMenuChoice(OPProfile())
@@ -258,18 +261,18 @@ struct VMLunch {
         
     }
 }
-enum LunchValidationError: Int {
+public enum LunchValidationError: Int {
     case NilValueLunchChoice = 0,
     NilValueFruitChoice,
     AddOnNotConsumed,
     MedicineNotTaken
     
-    static let values: [LunchValidationError] = [.NilValueLunchChoice, .NilValueFruitChoice, .AddOnNotConsumed, .MedicineNotTaken]
-    static func count ()  -> Int {
+    public static let values: [LunchValidationError] = [.NilValueLunchChoice, .NilValueFruitChoice, .AddOnNotConsumed, .MedicineNotTaken]
+    public static func count ()  -> Int {
         return values.count
     }
     
-    func message() -> String{
+    public func message() -> String{
         
         switch self{
         case NilValueLunchChoice:
@@ -285,18 +288,18 @@ enum LunchValidationError: Int {
 }
 
 
-enum SnackValidationError: Int {
+public enum SnackValidationError: Int {
     case NilValueSnackChoice = 0,
     NilValueFruitChoice,
     AddOnNotConsumed,
     MedicineNotTaken
     
-    static let values: [SnackValidationError] = [.NilValueSnackChoice, .NilValueFruitChoice, .AddOnNotConsumed, .MedicineNotTaken]
-    static func count ()  -> Int {
+    public static let values: [SnackValidationError] = [.NilValueSnackChoice, .NilValueFruitChoice, .AddOnNotConsumed, .MedicineNotTaken]
+    public static func count ()  -> Int {
         return values.count
     }
     
-    func message() -> String{
+    public func message() -> String{
         
         switch self{
         case NilValueSnackChoice:
@@ -311,31 +314,34 @@ enum SnackValidationError: Int {
     }
 }
 
-enum SnackTime: Int {
+public enum SnackTime: Int {
     case Morning,
     Afternoon,
     Evening
 }
-struct VMSnack {
+public struct VMSnack {
     
-    var snackChoice: String?
-    var fruitChoice: String?
+    public var snackChoice: String?
+    public var fruitChoice: String?
     
-    var snackTime: Int?
+    public var snackTime: Int?
     
-    var addOnRequired: Bool = false
-    var addOnText: String? = "Yogurt"
-    var addOnConsumed: Bool? = false
-    var meidicineRequired: Bool = false
-    var medicineText: String? = "Zinc"
-    var medicineConsumed: Bool? = false
+    public var addOnRequired: Bool = false
+    public var addOnText: String? = "Yogurt"
+    public var addOnConsumed: Bool? = false
+    public var meidicineRequired: Bool = false
+    public var medicineText: String? = "Zinc"
+    public var medicineConsumed: Bool? = false
     
-    var parentInitials: String?
-    var location: String?
-    var time: NSDate?
+    public var parentInitials: String?
+    public var location: String?
+    public var time: NSDate?
+    public init(){
+        
+    }
     
     
-    func validateWithSnackMenuCategoryEnum () -> ValidationResult {
+    public func validateWithSnackMenuCategoryEnum () -> ValidationResult {
         var errorMessages = [String]()
         //iterate over each section on the breakfast menu.  if an item is not required, it will not be part of the Breakfast  Categories enum and code below for that item will never be called.
         for i in 0 ..< SnackMenuCategory.count(){
@@ -375,7 +381,7 @@ struct VMSnack {
     }
 }
 
-enum DinnerValidationError: Int {
+public enum DinnerValidationError: Int {
     case NilValueMeatChoice = 0,
     NilValueStarchChoice,
     NilValueOilChoice,
@@ -411,33 +417,36 @@ enum DinnerValidationError: Int {
 }
 
 
-struct VMDinner {
+public struct VMDinner {
     
     //var dinnerChoice: String?
-    var meat: String?
+    public var meat: String?
     
    
-    var starch: String?
-    var oil: String?
-    var vegetable: String?
-    var requiredItemsText: String = "8 oz Milk and Salad"
-    var requiredItemsSubtext: String = "1 T Dressing or substitute"
-    var requiredItemsConsumed: Bool? = false
+    public var starch: String?
+    public var oil: String?
+    public var vegetable: String?
+    public  var requiredItemsText: String = "8 oz Milk and Salad"
+    public var requiredItemsSubtext: String = "1 T Dressing or substitute"
+    public var requiredItemsConsumed: Bool? = false
 
     
-    var addOnRequired: Bool = false
-    var addOnText: String? = "Yogurt"
-    var addOnConsumed: Bool? = false
-    var meidicineRequired: Bool = false
-    var medicineText: String? = "Zinc"
-    var medicineConsumed: Bool? = false
+    public var addOnRequired: Bool = false
+    public var addOnText: String? = "Yogurt"
+    public var addOnConsumed: Bool? = false
+    public var meidicineRequired: Bool = false
+    public var medicineText: String? = "Zinc"
+    public var medicineConsumed: Bool? = false
     
-    var parentInitials: String?
-    var location: String?
-    var time: NSDate?
+    public var parentInitials: String?
+    public var location: String?
+    public var time: NSDate?
     
+    public init(){
+        
+    }
     
-    func validateWithDinnerMenuCategoryEnum () -> ValidationResult {
+    public func validateWithDinnerMenuCategoryEnum () -> ValidationResult {
         var errorMessages = [String]()
         //iterate over each section on the breakfast menu.  if an item is not required, it will not be part of the Breakfast  Categories enum and code below for that item will never be called.
         for i in 0 ..< DinnerMenuCategory.count(){

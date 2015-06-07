@@ -8,62 +8,56 @@
 
 import UIKit
 
-class PrintViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
+class PrintViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate,
+UIScrollViewDelegate{
     
     var dataStore: DataStore!
     var appDelegate: AppDelegate?
 
+    var oldX: CGFloat = 0.0
+
+    @IBOutlet weak var scrollView: UIScrollView!
     
-    var selectedCellDateValue: String!
+    @IBOutlet weak var webView: UIWebView!
+    
+    //var selectedCellDateValue: String!
     
     var journalEntries: [String]!
-//    = [
-//        
-//        
-//        ("Wednesday, May 27, 2015", "Status: Complete"),
-//        ("Tuesday, May 26, 2015", "Status: Complete"),
-//        ("Monday, May 25, 2015", "Status: Complete"),
-//        ("Sunday, May 24, 2015", "Status: Complete"),
-//        ("Saturday, May 23, 2015", "Status: Complete"),
-//        ("Friday, May 22, 2015", "Status: Complete"),
-//        ("Thursday, May 21, 2015", "Status: Complete"),
-//        
-//    ]
-    
+    var selectedJournalEntryIdentifiers: [String] = [String]()
+
     @IBAction func printJournalEntry(sender: AnyObject) {
-        // 1
+        // 1 get the print controller
         let printController = UIPrintInteractionController.sharedPrintController()!
-        // 2
+        // 2 set up job info
         let printInfo = UIPrintInfo(dictionary:nil)!
         printInfo.outputType = UIPrintInfoOutputType.General
         printInfo.jobName = "Print Job"
         printController.printInfo = printInfo
         
-        // 3
+        // 3  pass text to formatter
         let formatter = UIMarkupTextPrintFormatter(markupText: previewTextView.text)
         formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72)
         printController.printFormatter = formatter
         
-        // 4
+        // 4 present the print interface
         printController.presentAnimated(true, completionHandler: nil)
     }
     @IBOutlet weak var previewTextView: UITextView!
     
     @IBAction func previewPrintJob(sender: AnyObject) {
-        var printVisitor = PrintVisitor()
         
-        var jItem = JournalItem(itemTitle: selectedCellDateValue)
-        var newItem = jItem.getTestJournalItem(selectedCellDateValue)
-        
-        newItem.accept(printVisitor)
-        
-        previewTextView.attributedText = printVisitor.reduceStringsArray(printVisitor.stringsArray)
+        var printService = PrintSevice()
+        if selectedJournalEntryIdentifiers.count > 0 {
+        let dateString = selectedJournalEntryIdentifiers[0]
+        let logEntryFormattedForPrinting = printService.getStringToPrint(dateString)
+        webView.loadHTMLString(logEntryFormattedForPrinting, baseURL: nil)
+        }
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        previewTextView.delegate = self
+        //previewTextView.delegate = self
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
 
@@ -107,7 +101,9 @@ class PrintViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        selectedCellDateValue = journalEntries[indexPath.row].0
+        let logEntryIdentifier = journalEntries[indexPath.row]
+        //only supporting single selection for now
+        self.selectedJournalEntryIdentifiers.insert(logEntryIdentifier, atIndex: 0)
     }
 
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
@@ -123,4 +119,9 @@ class PrintViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     */
 
+    //MARK: ScrollView Delegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        scrollView.setContentOffset(CGPointMake(oldX, scrollView.contentOffset.y), animated: false)
+    }
 }

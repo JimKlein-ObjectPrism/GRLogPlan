@@ -8,67 +8,6 @@
 
 import Foundation
 
-enum DinnerMenuCategory {
-    case Meat,
-    Starch,
-    Oil,
-    Vegetable,
-    RequiredItems,
-    
-    Medicine,
-    AddOn,
-    AdditionalInfo
-    
-    static var caseItems: [DinnerMenuCategory] = [DinnerMenuCategory]()
-    
-    static func count() -> Int { return caseItems.count }
-    
-    static func configureMenuChoice(profile: TempProfile){
-        caseItems.removeAll(keepCapacity: false)
-        caseItems.append(DinnerMenuCategory.Meat)
-        caseItems.append(DinnerMenuCategory.Starch)
-        caseItems.append(DinnerMenuCategory.Oil)
-        caseItems.append(DinnerMenuCategory.Vegetable)
-        caseItems.append(DinnerMenuCategory.RequiredItems)
-        
-        if profile.medicineRequired {
-            caseItems.append(.Medicine)
-        }
-        if profile.addOnRequired {
-            caseItems.append(.AddOn)
-        }
-        caseItems.append(.AdditionalInfo)
-    }
-    
-    init?(value: Int){
-        //fail if index out of bounds
-        if value >= DinnerMenuCategory.caseItems.count || value < 0 { return nil }
-        self = DinnerMenuCategory.caseItems[value]
-    }
-    
-    func unselectedHeaderTitle() -> String {
-        switch self {
-        case .Meat:
-            return "Choose one"
-        case .Starch:
-            return "Choose one"
-        case .Oil:
-            return "Choose one"
-        case .Vegetable:
-            return "Choose one"
-        case .RequiredItems:
-            return "Required Items"
-        
-        case .Medicine:
-            return "Medicine"
-        case .AddOn:
-            return "Add On"
-        case .AdditionalInfo:
-            return "Additional Information"
-        }
-    }
-}
-
 public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
     AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate, RequiredItemsSelectedDelegate
 {

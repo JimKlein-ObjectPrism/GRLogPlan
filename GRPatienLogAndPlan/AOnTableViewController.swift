@@ -42,7 +42,6 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
         } else {
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Add")
             self.navigationItem.rightBarButtonItem = sb
-            
         }
 
         

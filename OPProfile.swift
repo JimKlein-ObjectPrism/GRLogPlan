@@ -9,10 +9,10 @@
 import Foundation
 import CoreData
 @objc(OPProfile)
-class OPProfile: NSManagedObject {
+public class OPProfile: NSManagedObject {
 
-    @NSManaged var firstName: String
-    @NSManaged var lastName: String
+    @NSManaged var firstName: String?
+    @NSManaged var lastName: String?
     @NSManaged var morningSnackRequired: NSNumber
     @NSManaged var eveningSnackRequired: NSNumber
     @NSManaged var addOns: NSSet

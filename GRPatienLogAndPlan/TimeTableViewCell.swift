@@ -42,7 +42,7 @@ class TimeTableViewCell: UITableViewCell {
     }
     func handleDatePicker( sender: UIDatePicker) {
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.timeStyle = .ShortStyle
         
         timeTextField.text = dateFormatter.stringFromDate(sender.date)
         timeSelectedHandler?.timeSelectedHandler(sender.date)

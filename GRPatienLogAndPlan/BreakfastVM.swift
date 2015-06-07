@@ -8,55 +8,7 @@
 
 import Foundation
 
-
-enum BreakfastMenuCategory {
-    case FoodChoice,
-    Fruit,
-    Medicine,
-    AddOn,
-    AdditionalInfo
-    
-    static var caseItems: [BreakfastMenuCategory] = [BreakfastMenuCategory]()
-    
-    static func count() -> Int { return caseItems.count }
-    
-    static func configureMenuChoice(profile: TempProfile){
-        caseItems.removeAll(keepCapacity: false)
-        caseItems.append(BreakfastMenuCategory.FoodChoice)
-        caseItems.append(BreakfastMenuCategory.Fruit)
-        if profile.medicineRequired {
-            caseItems.append(.Medicine)
-        }
-        if profile.addOnRequired {
-            caseItems.append(.AddOn)
-        }
-        caseItems.append(.AdditionalInfo)
-    }
-    
-    init?(value: Int){
-        //fail if index out of bounds
-        if value >= BreakfastMenuCategory.caseItems.count || value < 0 { return nil }
-        self = BreakfastMenuCategory.caseItems[value]
-    }
-    
-    func unselectedHeaderTitle() -> String {
-        switch self {
-        case .FoodChoice:
-            return "Breakfast Item"
-        case .Fruit:
-            return "Fruit Choice"
-        case .Medicine:
-            return "Medicine"
-        case .AddOn:
-            return "Add On"
-        case .AdditionalInfo:
-            return "Additional Information"
-        }
-    }
-}
-
-
-class TempProfile {
+public class TempProfile {
     var addOnRequired = false
     var medicineRequired = false
     var morningSnackRequired = true
@@ -108,6 +60,9 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         //dataStore = dataStore
         
         self.breakfast = dataStore.getBreakfast_Today()
+        self.breakfast.time = NSDate()
+        // Set other defaults here for location and parent initials
+        
         self.foodItemArray = dataStore.buildFoodItemArray(filterString: "BreakfastItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
         
@@ -216,7 +171,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
                         return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
                     }
                 default:
-                    return tableCell(tableView, cellForTimeItem: indexPath, time: breakfast.time, timeSelectionHandler: self)
+                    return tableCell(tableView, cellForTimeItem: indexPath, time: breakfast.time , timeSelectionHandler: self)
                     
                 }
                 
@@ -328,8 +283,8 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     
     func timeSelectedHandler(selectedTime : NSDate){
         setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.breakfast.time)
-        
-    }
+        //self.breakfast.time = selectedTime
+            }
     //MARK: Alert View methods
     func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){
         
@@ -387,7 +342,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         
         let saveAnywayAction = UIAlertAction(title: "Save Anyway", style: .Default)  {
             (alert: UIAlertAction!) -> Void in
-            self.dataStore.saveBreakfast(self.breakfast, modelBreakfast: &self.targetOPBreakfast!)
+            self.dataStore.saveBreakfast(self.breakfast)//, modelBreakfast: &self.targetOPBreakfast!)
 
             self.tableviewController.navigationController?.popViewControllerAnimated(true)
         }
@@ -404,7 +359,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         case .Success:
             // send save message to data store
             //dismiss view
-            dataStore.saveBreakfast(self.breakfast, modelBreakfast: &self.targetOPBreakfast!)
+            dataStore.saveBreakfast(self.breakfast)//, modelBreakfast: &self.targetOPBreakfast!)
             tableviewController.navigationController?.popViewControllerAnimated(true)
 
         case let .Failure(errorCodes):

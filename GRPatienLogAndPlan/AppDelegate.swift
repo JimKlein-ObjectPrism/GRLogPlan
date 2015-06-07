@@ -21,15 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataStack = CoreDataStack()
 
     var dataStore: DataStore!
-
-//    class var profileDataStore: DataStore {
-//        //TODO: update in Swift 1.2
-//        struct Static {
-//            static let instance: DataStore = DataStore(managedContext: coreDataStack.managedContext)
-//        }
-//        return Static.instance
-//    }
     
+    static let printService: PrintSevice =  PrintSevice()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.        

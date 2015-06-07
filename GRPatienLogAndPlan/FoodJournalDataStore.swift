@@ -37,9 +37,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     var currentBreakfast: OPBreakfast!
 
-    lazy var today: String = {
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMM dd, yyyy"
+    var today: String = {
+       var dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .FullStyle
+        println(dateFormatter.stringFromDate(NSDate()))
         return dateFormatter.stringFromDate(NSDate())
     }()
     
@@ -546,6 +547,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             }
         }
         todayJournalEntry = currentJournalEntry
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            //return ( nil, error)
+        }
+        
     }
     
     
@@ -650,14 +658,18 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     
     func getJournalEntry (dateIdentifier: String) -> JournalEntryResult { // JournalItem{
-        
-        let journalEntryDate = today
-        //let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
+        let journalEntryDate = today// dateIdentifier
+        //  Fetch Request and Predicate:  array of args supports multiple days
         let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
-        jEntryFetch.predicate = NSPredicate(format: "date == %@", dateIdentifier)
-        //let recordFetch = NSFetchRequest(entityName: "OPJournalEntry")
-        
-        //recordFetch.predicate = NSPredicate(format: "date == %@", journalEntryDate)
+        //jEntryFetch.predicate = NSPredicate(format: "date == %@", journalEntryDate)
+        jEntryFetch.predicate = NSPredicate(format: "date == %@", argumentArray: [journalEntryDate])
+//        let journalEntryDate = dateIdentifier//today
+//        //let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
+//        let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
+//        //jEntryFetch.predicate = NSPredicate(format: "date == %@", dateIdentifier)
+//        //let recordFetch = NSFetchRequest(entityName: "OPJournalEntry")
+//        
+//        //recordFetch.predicate = NSPredicate(format: "date == %@", journalEntryDate)
         var error: NSError?
         
         let result = managedContext.executeFetchRequest(jEntryFetch, error: &error) as? [OPJournalEntry]  //(jEntryFetch, error: &error) as! [OPJournalEntry]?
@@ -760,7 +772,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return selectedDay
         
     }
-    func getFullStyleDateString(date: NSDate) -> String {
+    public func getFullStyleDateString(date: NSDate) -> String {
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .FullStyle
         println(dateFormatter.stringFromDate(date))
@@ -775,7 +787,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     
     func currentRecordAndProfile() -> OPPatientRecord {
-        // TODO: Implement me!
+
         //let managedCon = managedContext
         let recordEntity = NSEntityDescription.entityForName("OPPatientRecord",
             inManagedObjectContext: managedContext)
@@ -896,10 +908,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return self.breakfast//initialized in init
     }
     
-    func saveBreakfast(breakfast: VMBreakfast, inout modelBreakfast: OPBreakfast){
+    func saveBreakfast(breakfast: VMBreakfast){//, inout modelBreakfast: OPBreakfast){
         //use helper method to set property for optional values
         self.breakfast = breakfast
-        
+        let modelBreakfast = currentJournalEntry.breakfast
         
         let mBreakfast =  modelBreakfast
         self.currentJournalEntry.breakfast.foodChoice = breakfast.foodChoice!

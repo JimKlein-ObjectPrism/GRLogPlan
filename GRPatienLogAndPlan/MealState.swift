@@ -265,6 +265,6 @@ enum MealState {
             MealState.eveningSnackRange = TimeRange(rangeStart: nil, rangeEnd: nil)
             //if evening snack not required, don't append to array
         }
-//        self.stateArray = enumArray
+        MealState.stateArray = enumArray
     }
 }
