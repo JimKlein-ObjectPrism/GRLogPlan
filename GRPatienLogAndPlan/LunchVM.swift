@@ -115,19 +115,18 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         case .AdditionalInfo:
             switch indexPath.row {
             case 0:
-                let parentInitials: String? = self.lunch.parentInitials
-                return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: parentInitials, parentSelectionHandler: self)
+                return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: &self.lunch.parentInitials, parentSelectionHandler: self)
             case 1:
-                if let location = self.lunch.location {
-                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: location, locationSelectionHandler: self)
-                }
-                else{
-                    //set it to
-                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
-                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
-                }
+//                if let location = self.lunch.location {
+                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: &self.lunch.location, locationSelectionHandler: self)
+//                }
+//                else{
+//                    //set it to
+//                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
+//                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
+//                }
             default:
-                return tableCell(tableView, cellForTimeItem: indexPath, time: lunch.time, timeSelectionHandler: self)
+                return tableCell(tableView, cellForTimeItem: indexPath, time: &lunch.time, timeSelectionHandler: self)
                 
             }
             
@@ -240,9 +239,12 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.lunch.time)
-
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = .ShortStyle
+        var time = dateFormatter.stringFromDate(selectedTime)
         
+        setPropertyInModel(value: time, propertyInModel: &self.lunch.time)
+        //setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.lunch.time)
     }
     //MARK: Alert View methods
     func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){

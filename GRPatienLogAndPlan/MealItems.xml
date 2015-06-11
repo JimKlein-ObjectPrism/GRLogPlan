@@ -142,7 +142,7 @@
 		<menuItemType>OilDinnerItem</menuItemType>
 	</foodItem>
 <foodItem>
-		<name>Cheese</name>
+		<name>Hard Cheese</name>
 		<itemDescription>1 oz cheese</itemDescription>
 		<serving>
 			<measurement>1</measurement>
@@ -150,6 +150,36 @@
 			<servingDescription></servingDescription>
 		</serving>
 		<menuItemType>OilDinnerItem</menuItemType>
+	</foodItem>
+ <foodItem>
+ <name>Soft Cheese of Goat Cheese</name>
+ <itemDescription>1.5 oz cheese</itemDescription>
+ <serving>
+ <measurement>1</measurement>
+ <unit>oz</unit>
+ <servingDescription></servingDescription>
+ </serving>
+ <menuItemType>OilDinnerItem</menuItemType>
+	</foodItem>
+ <foodItem>
+ <name>Peanut Butter</name>
+ <itemDescription>2 TBSP</itemDescription>
+ <serving>
+ <measurement>1</measurement>
+ <unit>oz</unit>
+ <servingDescription></servingDescription>
+ </serving>
+ <menuItemType>OilDinnerItem</menuItemType>
+	</foodItem>
+ <foodItem>
+ <name>Cream Cheese</name>
+ <itemDescription>4 TBSP</itemDescription>
+ <serving>
+ <measurement>1</measurement>
+ <unit>oz</unit>
+ <servingDescription></servingDescription>
+ </serving>
+ <menuItemType>OilDinnerItem</menuItemType>
 	</foodItem>
 
 	<foodItem>
@@ -443,23 +473,63 @@
 
 	<foodItem>
 		<name>Granola and Milk</name>
-		<itemDescription>1 c granola and 1 c whole milk</itemDescription>
+		<itemDescription>1c granola and 1c whole milk</itemDescription>
 		<serving>
 			<measurement></measurement>
 			<unit></unit>
-			<servingDescription>1 c granola and 1 c whole milk</servingDescription>
+			<servingDescription>1c granola and 1c whole milk</servingDescription>
 		</serving>
 		<menuItemType>BreakfastItem</menuItemType>
 	</foodItem>
 	<foodItem>
 		<name>French Toast</name>
-		<itemDescription>2 pieces bread, 2 eggs, 1/3 c whole, 1/2 T butter</itemDescription>
+		<itemDescription>2 pieces bread, 2 eggs, 1/3c whole milk, 1/2 T butter</itemDescription>
 		<serving>
 			<measurement></measurement>
 			<unit></unit>
-			<servingDescription>2 pieces bread, 2 eggs, 1/3 c whole, 1/2 T butter</servingDescription>
+			<servingDescription>2 pieces bread, 2 eggs, 1/3 c whole milk, 1/2 T butter</servingDescription>
 		</serving>
 		<menuItemType>BreakfastItem</menuItemType>
+	</foodItem>
+<foodItem>
+ <name>2 Pieces of Toast</name>
+ <itemDescription>And 2T butter or peanut butter or 4T cream cheese</itemDescription>
+ <serving>
+ <measurement></measurement>
+ <unit></unit>
+ <servingDescription>And 2T butter or peanut butter or 4T cream cheese</servingDescription>
+ </serving>
+ <menuItemType>BreakfastItem</menuItemType>
+ </foodItem>
+ <foodItem>
+ <name>Large Bagel</name>
+ <itemDescription>And 2T butter or peanut butter or 4T cream cheese</itemDescription>
+ <serving>
+ <measurement></measurement>
+ <unit></unit>
+ <servingDescription>And 2T butter or peanut butter or 4T cream cheese</servingDescription>
+ </serving>
+ <menuItemType>BreakfastItem</menuItemType>
+ </foodItem>
+ <foodItem>
+  <name>Cereal and Eggs</name>
+ <itemDescription>1.5c cereal, 1c whole milk, 2 eggs</itemDescription>
+ <serving>
+ <measurement></measurement>
+ <unit></unit>
+ <servingDescription>1.5c cereal, 1c whole milk, 2 eggs</servingDescription>
+ </serving>
+ <menuItemType>BreakfastItem</menuItemType>
+	</foodItem>
+	<foodItem>
+ <name>Oatmeal and Eggs</name>
+ <itemDescription>1c oatmeal, 1c whole milk, 2 eggs</itemDescription>
+ <serving>
+ <measurement></measurement>
+ <unit></unit>
+ <servingDescription>1c oatmeal, 1c whole milk, 2 eggs</servingDescription>
+ </serving>
+ <menuItemType>BreakfastItem</menuItemType>
 	</foodItem>
 	<foodItem>
 		<name>Tuna</name>
@@ -468,26 +538,6 @@
 			<measurement></measurement>
 			<unit></unit>
 			<servingDescription>3 oz tuna with 1 TBSP mayo</servingDescription>
-		</serving>
-		<menuItemType>LunchItem</menuItemType>
-	</foodItem>
-	<foodItem>
-		<name>Tofu Pate</name>
-		<itemDescription>5 TBSP tofu pate</itemDescription>
-		<serving>
-			<measurement>5</measurement>
-			<unit>TBSP</unit>
-			<servingDescription></servingDescription>
-		</serving>
-		<menuItemType>LunchItem</menuItemType>
-	</foodItem>
-	<foodItem>
-		<name>Egg Salad</name>
-		<itemDescription>2 boiled eggs and 1 1/2 TBSP mayo</itemDescription>
-		<serving>
-			<measurement></measurement>
-			<unit></unit>
-			<servingDescription>2 boiled eggs and 1 1/2 TBSP mayo</servingDescription>
 		</serving>
 		<menuItemType>LunchItem</menuItemType>
 	</foodItem>
@@ -511,14 +561,34 @@
 		</serving>
 		<menuItemType>LunchItem</menuItemType>
 	</foodItem>
+	<foodItem>
+ <name>Tofu Pate</name>
+ <itemDescription>5 TBSP tofu pate</itemDescription>
+ <serving>
+ <measurement>5</measurement>
+ <unit>TBSP</unit>
+ <servingDescription></servingDescription>
+ </serving>
+ <menuItemType>LunchItem</menuItemType>
+	</foodItem>
+	<foodItem>
+ <name>Egg Salad</name>
+ <itemDescription>2 boiled eggs and 1 1/2 TBSP mayo</itemDescription>
+ <serving>
+ <measurement></measurement>
+ <unit></unit>
+ <servingDescription>2 boiled eggs and 1 1/2 TBSP mayo</servingDescription>
+ </serving>
+ <menuItemType>LunchItem</menuItemType>
+	</foodItem>
 
 	<foodItem>
 		<name>Crackers and Cheese</name>
-		<itemDescription>6 crackers and 1 oz cheese, 1 piece fruit</itemDescription>
+		<itemDescription>6 Triscuit crackers, 1 oz cheese, 1 piece fruit</itemDescription>
 		<serving>
 			<measurement></measurement>
 			<unit></unit>
-			<servingDescription>6 crackers and 1 oz cheese, 1 piece fruit</servingDescription>
+			<servingDescription>6 Triscuit crackers, 1 oz cheese, 1 piece fruit</servingDescription>
 		</serving>
 		<menuItemType>SnackItem</menuItemType>
 	</foodItem>
@@ -543,8 +613,8 @@
 		<menuItemType>SnackItem</menuItemType>
 	</foodItem>
 			<foodItem>
-		<name>Nuts and Raisins</name>
-		<itemDescription>1 oz Almonds, 1 oz Raisins</itemDescription>
+		<name>Nuts and Fruit</name>
+		<itemDescription>1 oz Nuts, 1 piece fruit</itemDescription>
 		<serving>
 			<measurement></measurement>
 			<unit></unit>
@@ -623,70 +693,6 @@
 					<servingDescription></servingDescription>
 				</serving>
 				<menuItemType>MeatDinnerItem</menuItemType>
-			</foodItem>
-		</choiceItems>
-	</foodItemWithChoice>
-	<foodItemWithChoice>
-		<name>Toast</name>
-		<itemDescription>Toast</itemDescription>
-		<serving>
-			<measurement>2</measurement>
-			<unit>pieces</unit>
-			<servingDescription></servingDescription>
-		</serving>
-		<menuItemType>BreakfastItem</menuItemType>
-		<choiceItems>
-			<foodItem>
-				<name>Butter</name>
-				<itemDescription>2T butter</itemDescription>
-				<serving>
-					<measurement>2</measurement>
-					<unit>TBSP</unit>
-					<servingDescription></servingDescription>
-				</serving>
-				<menuItemType>BreakfastItem</menuItemType>
-			</foodItem>
-			<foodItem>
-				<name>Cream Cheese</name>
-				<itemDescription>4T cream cheese</itemDescription>
-				<serving>
-					<measurement>4</measurement>
-					<unit>TBSP</unit>
-					<servingDescription></servingDescription>
-				</serving>
-				<menuItemType>BreakfastItem</menuItemType>
-			</foodItem>
-		</choiceItems>
-	</foodItemWithChoice>
-	<foodItemWithChoice>
-		<name>Bagel</name>
-		<itemDescription>Large bagel</itemDescription>
-		<serving>
-			<measurement></measurement>
-			<unit></unit>
-			<servingDescription>1 large bagel</servingDescription>
-		</serving>
-		<menuItemType>BreakfastItem</menuItemType>
-		<choiceItems>
-			<foodItem>
-				<name>Butter</name>
-				<itemDescription>2T butter</itemDescription>
-				<serving>
-					<measurement>2</measurement>
-					<unit>TBSP</unit>
-					<servingDescription></servingDescription>
-				</serving>
-				<menuItemType>BreakfastItem</menuItemType>
-			</foodItem>
-			<foodItem>
-				<name>Cream Cheese</name>
-				<itemDescription>4T cream cheese</itemDescription>
-				<serving>
-					<measurement>4</measurement>
-					<unit>TBSP</unit>
-					<servingDescription></servingDescription>
-				</serving>
-				<menuItemType>BreakfastItem</menuItemType>
 			</foodItem>
 		</choiceItems>
 	</foodItemWithChoice>

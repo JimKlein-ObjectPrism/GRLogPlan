@@ -781,8 +781,8 @@ enum ActivityListItem: Int {
 
 enum AddOnListItem: Int {
     case NestleBenecalorie = 0,
-    Yogurt,
-    ExtraSnack
+    Yogurt//,
+    //ExtraSnack
     
     var name: String {
         switch self {
@@ -792,13 +792,13 @@ enum AddOnListItem: Int {
             return brandName + " Benecalorie"
         case .Yogurt:
             return "Yogurt"
-        case .ExtraSnack:
-            return "Extra Snack"
+//        case .ExtraSnack:
+//            return "Extra Snack"
         }
     }
     
     static func all() -> [AddOnListItem] {
-        return [.NestleBenecalorie, .Yogurt, .ExtraSnack]
+        return [.NestleBenecalorie, .Yogurt ]//, .ExtraSnack]
     }
     static func count() -> Int {
         return self.all().count
@@ -824,94 +824,118 @@ enum AddOnListItem: Int {
     
 }
 
-public enum PrescribedTimeForAction: Int {
-    case BeforeBreakfast = 0,
-    BreakfastTime,
-    MidMorning,
+public enum PrescribedTimeForAction {
+    //case BeforeBreakfast = 0,
+    case BreakfastTime,
+//    MidMorning,
     MorningSnack,
     LunchTime,
     AfternoonSnack,
-    AfternoonSchool,
+//    AfternoonSchool,
     DinnerTime,
-    EveningSnack,
-    EightPM,
-    TenPM,
-    Bedtime,
-    MidNight,
-    TwoAM
+    EveningSnack
+//    EightPM,
+//    TenPM,
+//    Bedtime,
+//    MidNight,
+//    TwoAM
     
-    var name: String {
+    public init?(rawValue: Int){
+        //fail if index out of bounds
+        if rawValue >= Meals.mealArray.count || rawValue < 0 { return nil }
+        self = PrescribedTimeForAction.timeArray[rawValue]
+    }
+
+    public static var timeArray : [PrescribedTimeForAction] = [PrescribedTimeForAction]()
+    
+    func name() -> String {
         switch self {
-        case .BeforeBreakfast:
-            return "Before Breakfast"
+//        case .BeforeBreakfast:
+//            return "Before Breakfast"
         case .BreakfastTime:
-            return "Breakfast Time"
-        case .MidMorning:
-            return "Mid Morning"
+            return "Breakfast"
+//        case .MidMorning:
+//            return "Mid Morning"
         case .MorningSnack:
             return "Morning Snack"
         case .LunchTime:
-            return "Lunch Time"
+            return "Lunch"
         case .AfternoonSnack:
             return "Afternoon Snack"
-        case .AfternoonSchool:
-            return "After School"
+//        case .AfternoonSchool:
+//            return "After School"
         case .DinnerTime:
-            return "Dinner Time"
+            return "Dinner"
         case .EveningSnack:
-            return "Extra Snack"
-        case .EightPM:
-            return "8 p.m."
-        case .TenPM:
-            return "10 p.m."
-        case .Bedtime:
-            return "Bed Time"
-        case .MidNight:
-            return "Midnight"
-        case .TwoAM:
-            return "2 a.m."
+            return "Evening Snack"
+//        case .EightPM:
+//            return "8 p.m."
+//        case .TenPM:
+//            return "10 p.m."
+//        case .Bedtime:
+//            return "Bed Time"
+//        case .MidNight:
+//            return "Midnight"
+//        case .TwoAM:
+//            return "2 a.m."
         }
     }
     
     static func all() -> [PrescribedTimeForAction] {
-        return [
-            .BeforeBreakfast,
-            .BreakfastTime,
-            .MidMorning,
-            .MorningSnack,
-            .LunchTime,
-            .AfternoonSnack,
-            .AfternoonSchool,
-            .DinnerTime,
-            .EveningSnack,
-            .EightPM,
-            .TenPM,
-            .Bedtime,
-            .MidNight,
-            .TwoAM
-        ]
+
+        return timeArray
+//        return [
+//            .BeforeBreakfast,
+//            .BreakfastTime,
+//            .MidMorning,
+//            .MorningSnack,
+//            .LunchTime,
+//            .AfternoonSnack,
+//            .AfternoonSchool,
+//            .DinnerTime,
+//            .EveningSnack,
+//            .EightPM,
+//            .TenPM,
+//            .Bedtime,
+//            .MidNight,
+//            .TwoAM
+//        ]
     }
     static func count() -> Int {
-        return self.all().count
+        return self.timeArray.count
     }
     
-    //Subscript is read only
-    subscript(i: Int) -> PrescribedTimeForAction?
-        {
-        get
-        {
-            if 0 <= i && i < PrescribedTimeForAction.all().count {
-                if let a = PrescribedTimeForAction(rawValue: i) {
-                    return a
-                } else {
-                    return nil
-                }
-            }
-            else{
-                return nil
-            }
+    static func configureTimes (profile: OPProfile){
+        timeArray.removeAll(keepCapacity: false)
+        timeArray.append(PrescribedTimeForAction.BreakfastTime)
+        if profile.morningSnackRequired.boolValue {
+            timeArray.append(PrescribedTimeForAction.MorningSnack)
+        }
+        timeArray.append(PrescribedTimeForAction.LunchTime)
+        timeArray.append(PrescribedTimeForAction.AfternoonSnack)
+        timeArray.append(PrescribedTimeForAction.DinnerTime)
+        if profile.eveningSnackRequired.boolValue {
+            timeArray.append(PrescribedTimeForAction.EveningSnack)
         }
     }
+    
+//    //Subscript is read only
+//    subscript(i: Int) -> PrescribedTimeForAction?
+//        {
+//        get
+//        {
+//            if 0 <= i && i < PrescribedTimeForAction.all().count {
+//                if let a = PrescribedTimeForAction(rawValue: i) {
+//                    return a
+//                } else {
+//                    return nil
+//                }
+//            }
+//            else{
+//                return nil
+//            }
+//        }
+//    }
     
     
 }

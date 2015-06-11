@@ -1,3 +1,4 @@
+
 //
 //  swift
 //  GRPatienLogAndPlan
@@ -54,7 +55,7 @@ public class PrintSevice {
             
             if profile.morningSnackRequired.boolValue {
                 morningSnackString =   tableOpeningTags +
-                    buildMorningSnackHTML("Morning Snack", date: morningSnackLogEntry.time, snackLogEntry: morningSnackLogEntry) +
+                    buildMorningSnackHTML("Morning Snack", time: morningSnackLogEntry.time, snackLogEntry: morningSnackLogEntry) +
                     tableClosingTags +
                     spacerTags
             }
@@ -63,43 +64,43 @@ public class PrintSevice {
             
             if profile.eveningSnackRequired.boolValue {
                 eveningSnackString =   tableOpeningTags +
-                    buildEveningSnackHTML("Evening Snack", date: eveningSnackLogEntry.time, snackLogEntry: eveningSnackLogEntry) +
+                    buildEveningSnackHTML("Evening Snack", time: eveningSnackLogEntry.time, snackLogEntry: eveningSnackLogEntry) +
                     tableClosingTags +
                 spacerTags
             }
             
             
             var entryPage: String = htmlHeaderString +
-                buildFoodJournalHeader(profile, dateString: "June 4") +
+                buildFoodJournalHeader(profile, dateString: dataStore.currentJournalEntry.date) +
                 //breakfast
                 tableOpeningTags +
                 buildBreakfastHTML(breakfastLogEntry.time!, breakfastLogEntry: breakfastLogEntry) +
                 tableClosingTags +
                 spacerTags +
                 
-//                //morning snack - optional
-//                morningSnackString +
-//                
-//                //lunch
-//                tableOpeningTags +
-//                buildLunchHTML(lunchLogEntry.time, lunchLogEntry: lunchLogEntry) +
-//                tableClosingTags +
-//                spacerTags +
-//                
-//                //afternoon snack
-//                tableOpeningTags +
-//                buildAfternoonSnackHTML("Afternoon Snack", date: afternoonSnackLogEntry.time, snackLogEntry: afternoonSnackLogEntry) +
-//                tableClosingTags +
-//                spacerTags +
-//                
-//                //dinner
-//                tableOpeningTags +
-//                buildDinnerHTML(dinnerLogEntry.time, dinnerLogEntry: dinnerLogEntry) +
-//                tableClosingTags +
-//                spacerTags +
-//                
-//                //evening snack
-//                eveningSnackString +
+                //morning snack - optional
+                morningSnackString +
+                
+                //lunch
+                tableOpeningTags +
+                buildLunchHTML(lunchLogEntry.time, lunchLogEntry: lunchLogEntry) +
+                tableClosingTags +
+                spacerTags +
+                
+                //afternoon snack
+                tableOpeningTags +
+                buildAfternoonSnackHTML("Afternoon Snack", time: afternoonSnackLogEntry.time, snackLogEntry: afternoonSnackLogEntry) +
+                tableClosingTags +
+                spacerTags +
+                
+                //dinner
+                tableOpeningTags +
+                buildDinnerHTML(dinnerLogEntry.time, dinnerLogEntry: dinnerLogEntry) +
+                tableClosingTags +
+                spacerTags +
+                
+                //evening snack
+                eveningSnackString +
                 
                 pageClosingTags
             
@@ -108,61 +109,61 @@ public class PrintSevice {
     }
     func buildFoodJournalHeader(profile: OPProfile, dateString: String) ->String {
         var patientName: String = ""
-        if let firstName = profile.firstName, lastName = profile.lastName {
-            patientName = firstName + " " + lastName
+        if let firstName = profile.firstAndLastName {
+            patientName = firstName
         }
         
         var nameDateTableHeader =
-        "<body><h2>\(patientName)<br/>\(dateString)</h2>"
+        "<body><h3>\(patientName)<br/>\(dateString)</h3>"
         return nameDateTableHeader
     }
 
     
-    public func buildBreakfastHTML(date: NSDate, breakfastLogEntry: OPBreakfast) -> String{
+    public func buildBreakfastHTML(time: String?, breakfastLogEntry: OPBreakfast) -> String{
         
         var tableBody: String =
         buildTitleRow("Breakfast") +
             buildMealSummaryRow(breakfastLogEntry) +
-            additionalInfoTableRow(date , place: breakfastLogEntry.location, parentInitials: breakfastLogEntry.parentInitials )// +
+            additionalInfoTableRow(time , place: breakfastLogEntry.location, parentInitials: breakfastLogEntry.parentInitials )// +
         //"<p></p>"
         
         return tableBody
     }
-    public func buildLunchHTML(date: NSDate, lunchLogEntry: OPLunch) -> String{
+    public func buildLunchHTML(time: String?, lunchLogEntry: OPLunch) -> String{
         
-        var tableBody: String = buildTitleRow("Lunch") + buildMealSummaryRow(lunchLogEntry) + additionalInfoTableRow(date , place: lunchLogEntry.location, parentInitials: lunchLogEntry.parentInitials ) //+
+        var tableBody: String = buildTitleRow("Lunch") + buildMealSummaryRow(lunchLogEntry) + additionalInfoTableRow(time , place: lunchLogEntry.location, parentInitials: lunchLogEntry.parentInitials ) //+
         
         return tableBody
     }
-    public func buildMorningSnackHTML(snackName: String, date: NSDate, snackLogEntry: OPMorningSnack) -> String{
+    public func buildMorningSnackHTML(snackName: String, time: String?, snackLogEntry: OPMorningSnack) -> String{
         
         var tableBody: String = buildTitleRow(snackName) +
             buildMealSummaryRow(snackLogEntry) +
-            additionalInfoTableRow(date , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
+            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
         
         return tableBody
     }
-    public func buildAfternoonSnackHTML(snackName: String, date: NSDate, snackLogEntry: OPAfternoonSnack) -> String{
+    public func buildAfternoonSnackHTML(snackName: String, time: String?, snackLogEntry: OPAfternoonSnack) -> String{
         
         var tableBody: String = buildTitleRow(snackName) +
             buildMealSummaryRow(snackLogEntry) +
-            additionalInfoTableRow(date , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
+            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
         
         return tableBody
     }
-    public func buildEveningSnackHTML(snackName: String, date: NSDate, snackLogEntry: OPEveningSnack) -> String{
+    public func buildEveningSnackHTML(snackName: String, time: String?, snackLogEntry: OPEveningSnack) -> String{
         
         var tableBody: String = buildTitleRow(snackName) +
             buildMealSummaryRow(snackLogEntry) +
-            additionalInfoTableRow(date , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
+            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
         
         return tableBody
     }
-    public func buildDinnerHTML(date: NSDate, dinnerLogEntry: OPDinner) -> String {
+    public func buildDinnerHTML(time: String?, dinnerLogEntry: OPDinner) -> String {
         
         var tableBody: String = buildTitleRow("Dinner") +
             buildMealSummaryRow(dinnerLogEntry) +
-            additionalInfoTableRow(date , place: dinnerLogEntry.place, parentInitials: dinnerLogEntry.parentInitials ) //+
+            additionalInfoTableRow(time , place: dinnerLogEntry.place, parentInitials: dinnerLogEntry.parentInitials ) //+
         //"<p>-</p>"
         
         return tableBody
@@ -300,10 +301,10 @@ public class PrintSevice {
     }
     
     
-    public func additionalInfoTableRow (date: NSDate, place: String?, parentInitials: String?) -> String{
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = .ShortStyle
-        var time = dateFormatter.stringFromDate(NSDate())
+    public func additionalInfoTableRow (time: String?, place: String?, parentInitials: String?) -> String{
+//        var dateFormatter = NSDateFormatter()
+//        dateFormatter.timeStyle = .ShortStyle
+//        var time = dateFormatter.stringFromDate(NSDate())
         var p = place ?? nilEntryNote()
         var t = time ?? nilEntryNote()
         var pi = parentInitials ?? nilEntryNote()
@@ -332,6 +333,8 @@ public class PrintSevice {
         "#table-example-1 th.inline {padding: 0.2em; vertical-align: middle; text-align: center; font-weight: bold;} " +
         "#table-example-1 tbody td:first-child::after { content: leader(\". \"); } " +
         "body {padding: 0.2rem;} " +
+        "h3 {padding: 0.2rem; font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif;}" +
+        "h4 {padding: 0.2rem; font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif;}" +
     "</style></head>"
     
     public  var tableOpeningTags = "<table id=\"table-example-1\">"

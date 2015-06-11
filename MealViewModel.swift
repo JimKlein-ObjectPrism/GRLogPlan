@@ -124,51 +124,57 @@ public class MealViewModel: NSObject {
         return cell
         
     }
-    func tableCell(tableView: UITableView, cellForLocationItem indexPath: NSIndexPath, locationText: String?,  locationSelectionHandler: LocationSelectedDelegate) -> LocationTableViewCell
+    func tableCell(tableView: UITableView, cellForLocationItem indexPath: NSIndexPath, inout locationText: String?,  locationSelectionHandler: LocationSelectedDelegate) -> LocationTableViewCell
     {
         
         let cell: LocationTableViewCell = tableView.dequeueReusableCellWithIdentifier(LocationTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! LocationTableViewCell
         //cell.textLabel?.text = currentItem.name
         cell.locationButtonHandler = locationSelectionHandler
+        var location = ""
         if locationText != nil {
-            
+            location = locationText!
+        } else {
+            location = LocationForMeal(rawValue: 0)!.name()
+            locationText = LocationForMeal(rawValue: 0)!.name()
         }
         cell.locationButton.setTitle(locationText, forState: .Normal)
-        //cell.locationButton.titleLabel?.text = locationText
-        //cell.addOnSwitch.on = switchState
+
         return cell
-        
+    
     }
-    func tableCell(tableView: UITableView, cellForParentInitialsItem indexPath: NSIndexPath, parentInitialsText: String?,  parentSelectionHandler: ParentInitialsSelectedDelegate) -> ParentInitsTableViewCell
+    func tableCell(tableView: UITableView, cellForParentInitialsItem indexPath: NSIndexPath, inout parentInitialsText: String?,  parentSelectionHandler: ParentInitialsSelectedDelegate) -> ParentInitsTableViewCell
     {
-        
+        dataStore.defaultParentInitials()
         let cell: ParentInitsTableViewCell = tableView.dequeueReusableCellWithIdentifier(ParentInitsTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! ParentInitsTableViewCell
-        //cell.textLabel?.text = currentItem.name
         cell.parentButtonHandler = parentSelectionHandler
-        var defaultInitials = parentInitialsText
-        if defaultInitials == nil {
-            defaultInitials = getParentInitials()[0]
+        var pInitials = ""
+        if parentInitialsText != nil {
+            pInitials = parentInitialsText!
+        } else {
+        
+            pInitials = dataStore.defaultParentInitials() ?? "Parents Not Selected"
+            parentInitialsText = dataStore.defaultParentInitials()
         }
-        cell.parentInitsButton.setTitle(defaultInitials, forState: .Normal)
-        //cell.locationButton.titleLabel?.text = locationText
-        //cell.addOnSwitch.on = switchState
+        cell.parentInitsButton.setTitle(pInitials, forState: .Normal)
         return cell
         
     }
-    func tableCell(tableView: UITableView, cellForTimeItem indexPath: NSIndexPath, time: NSDate?,  timeSelectionHandler: TimeSelectedDelegate) -> TimeTableViewCell
+    func tableCell(tableView: UITableView, cellForTimeItem indexPath: NSIndexPath, inout time: String?,  timeSelectionHandler: TimeSelectedDelegate) -> TimeTableViewCell
     {
         
         let cell: TimeTableViewCell = tableView.dequeueReusableCellWithIdentifier(TimeTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! TimeTableViewCell
         
         cell.timeSelectedHandler = timeSelectionHandler
         
-        // nil coalescing operator !
-        var timeForPickerControl = time ?? NSDate()
-        
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = .ShortStyle
-        let time = dateFormatter.stringFromDate(timeForPickerControl)
-        cell.timeTextField.text = time
+        var timeForPickerControl = ""
+        if time != nil {
+            timeForPickerControl = time!
+        } else {
+            timeForPickerControl = dataStore.currentTime
+            // also initialize current meal item's time to current time
+            time = dataStore.currentTime
+        }
+        cell.timeTextField.text = timeForPickerControl
         return cell
         
     }

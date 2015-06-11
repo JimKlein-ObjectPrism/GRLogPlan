@@ -65,7 +65,7 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
     
     //MARK: Delegates
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        return PrescribedTimeForAction(rawValue: row)?.name
+        return PrescribedTimeForAction(rawValue: row)?.name()
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

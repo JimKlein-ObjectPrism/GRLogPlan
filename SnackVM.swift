@@ -52,10 +52,10 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return SnackMenuCategory.count()
+        return SnackMenuCategory.count(self.snackTime)
     }
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let menuSection = SnackMenuCategory(value: section){
+        if let menuSection = SnackMenuCategory(value: section, snackTime: self.snackTime){
             return menuSection.unselectedHeaderTitle()
         } else {
             //TODO: handle Index Out of Range error
@@ -66,13 +66,13 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     
     @objc public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let menuSection = SnackMenuCategory(value: section){
+        if let menuSection = SnackMenuCategory(value: section, snackTime: self.snackTime){
             
             switch menuSection {
             case .SnackChoice:
                 return self.currentSnackItemArray.count
-            case .Fruit:
-                return self.currentFruitArray.count
+//            case .Fruit:
+//                return self.currentFruitArray.count
             case .Medicine:
                 return 1
             case .AddOn:
@@ -91,7 +91,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     
     @objc public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let menuSection = SnackMenuCategory(value: indexPath.section)
+        let menuSection = SnackMenuCategory(value: indexPath.section, snackTime: self.snackTime)
         
         switch menuSection! {
         case .SnackChoice:
@@ -101,11 +101,11 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
                 choiceCell.segmentSelectionHandler = self
             }
             return cell
-        case .Fruit:
-            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFruitArray, foodItemName: self.snack.fruitChoice, viewModel: self)
-            if let choiceCell = cell as? NewChoiceTableViewCell {
-                choiceCell.segmentSelectionHandler = self
-            }
+//        case .Fruit:
+//            let cell = self.tableCell(tableView, cellForFoodItemAtIndexPath: indexPath, inArray: currentFruitArray, foodItemName: self.snack.fruitChoice, viewModel: self)
+//            if let choiceCell = cell as? NewChoiceTableViewCell {
+//                choiceCell.segmentSelectionHandler = self
+//            }
             return cell
         case .Medicine:
             let cell: MedicineTableViewCell = self.tableCell(tableView, cellForMedicineItem: indexPath, medicineText: snack.medicineText!, switchState: self.snack.medicineConsumed!)
@@ -117,19 +117,18 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         case .AdditionalInfo:
             switch indexPath.row {
             case 0:
-                let parentInitials: String? = self.snack.parentInitials
-                return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: parentInitials, parentSelectionHandler: self)
+                return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: &self.snack.parentInitials, parentSelectionHandler: self)
             case 1:
-                if let location = self.snack.location {
-                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: location, locationSelectionHandler: self)
-                }
-                else{
-                    //set it to
-                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
-                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
-                }
+                //if let location =  {
+                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: &self.snack.location, locationSelectionHandler: self)
+//                }
+//                else{
+//                    //set it to
+//                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
+//                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
+//                }
             default:
-                return tableCell(tableView, cellForTimeItem: indexPath, time: snack.time, timeSelectionHandler: self)
+                return tableCell(tableView, cellForTimeItem: indexPath, time: &snack.time, timeSelectionHandler: self)
                 
             }
             
@@ -143,7 +142,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     
     @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath) {
         //selectedItemTitle = dataSource[indexPath.row]
-        let menuSection = SnackMenuCategory( value: indexPath.section)
+        let menuSection = SnackMenuCategory( value: indexPath.section, snackTime: self.snackTime)
         
         switch menuSection!{
         case .SnackChoice:
@@ -153,13 +152,13 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
                 immutableArray: self.snackItemArray,
                 propertyInModel: &snack.snackChoice
             )
-        case .Fruit:
-            toggleSelectionArrayAndPropertyInModel(
-                indexPath,
-                mutableArray: &currentFruitArray,
-                immutableArray: self.fruitArray,
-                propertyInModel: &snack.fruitChoice
-            )
+//        case .Fruit:
+//            toggleSelectionArrayAndPropertyInModel(
+//                indexPath,
+//                mutableArray: &currentFruitArray,
+//                immutableArray: self.fruitArray,
+//                propertyInModel: &snack.fruitChoice
+//            )
         default:
             return
         }
@@ -169,14 +168,14 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     func choiceItemSelectedHandler(childItemIndex: Int, indexPath: NSIndexPath){
         //update current meal item
         
-        let menuSection = SnackMenuCategory(value: indexPath.section)
+        let menuSection = SnackMenuCategory(value: indexPath.section, snackTime: self.snackTime)
         
         switch menuSection! {
         case .SnackChoice:
             self.toggleSelectionArrayAndPropertyInModelForSegmentedControl(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: &self.currentSnackItemArray, immutableArray: self.snackItemArray, propertyInModel: &self.snack.snackChoice)
-        case .Fruit:
-            let itemNameAndSelectionName = self.getItemNameAndChoiceItemIndex(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
-            setPropertyInModel(value: itemNameAndSelectionName, propertyInModel: &self.snack.fruitChoice)
+//        case .Fruit:
+//            let itemNameAndSelectionName = self.getItemNameAndChoiceItemIndex(selectedIndexPath: indexPath, selectedSegment: childItemIndex, mutableArray: self.currentFruitArray)
+//            setPropertyInModel(value: itemNameAndSelectionName, propertyInModel: &self.snack.fruitChoice)
         default:
             return
         }
@@ -238,9 +237,11 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.snack.time)
-
-        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = .ShortStyle
+        var time = dateFormatter.stringFromDate(selectedTime)
+        setPropertyInModel(value: time, propertyInModel: &self.snack.time)
+        //setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.snack.time)
     }
     //MARK: Alert View methods
     func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){

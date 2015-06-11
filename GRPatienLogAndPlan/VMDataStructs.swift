@@ -130,7 +130,10 @@ public struct VMBreakfast {
     
     public var parentInitials: String?
     public var location: String?
-    public var time: NSDate?
+    public var time: String?
+    
+    public var note: String?
+
     public init(){
         
     }
@@ -140,15 +143,25 @@ public struct VMBreakfast {
         self.foodChoice = fromDataObject.foodChoice
         self.fruitChoice = fromDataObject.fruitChoice
         self.addOnRequired = fromDataObject.addOnRequired.boolValue
-        self.addOnConsumed = fromDataObject.addOnConsumed?.boolValue
-        self.addOnText = fromDataObject.addOnText
         self.medicineRequired = fromDataObject.medicineRequired.boolValue
-        self.medicineConsumed = fromDataObject.medicineConsumed?.boolValue
-        self.medicineText = fromDataObject.medicineText
-        
+
+        //conditionally set properties from Data Object if they exist
+        if let addOnT = fromDataObject.addOnText {
+            self.addOnText = addOnT
+        }
+        if let aC = fromDataObject.addOnConsumed {
+            self.addOnConsumed = aC.boolValue
+        }
+        if let mC = fromDataObject.medicineConsumed {
+            self.medicineConsumed = mC.boolValue
+        }
+        if let mT = fromDataObject.medicineText {
+            self.medicineText = mT
+        }
+
         //parent initials are set by VM using data from DataStore
         if let pi = fromDataObject.parentInitials {
-            self.parentInitials = fromDataObject.parentInitials
+            self.parentInitials = pi
         }
         
         self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
@@ -207,17 +220,52 @@ public struct VMLunch {
     public  var addOnRequired: Bool = false
     public var addOnText: String? = "Yogurt"
     public var addOnConsumed: Bool? = false
-    public var meidicineRequired: Bool = false
+    public var medicineRequired: Bool = false
     public var medicineText: String? = "Zinc"
     public var medicineConsumed: Bool? = false
     
     public var parentInitials: String?
     public var location: String?
-    public var time: NSDate?
+    public var time: String?
+    
+    public var note: String?
+
     public init(){
         
     }
-    
+    public init(fromDataObject: OPLunch){
+        
+        self.lunchChoice = fromDataObject.lunchChoice
+        self.fruitChoice = fromDataObject.fruitChoice
+        self.addOnRequired = fromDataObject.addOnRequired.boolValue
+        self.medicineRequired = fromDataObject.medicineRquired.boolValue
+        
+        //conditionally set properties from Data Object if they exist
+        if let addOnT = fromDataObject.addOnText {
+            self.addOnText = addOnT
+        }
+        if let aC = fromDataObject.addOnConsumed {
+            self.addOnConsumed = aC.boolValue
+        }
+        if let mC = fromDataObject.medicineConsumed {
+            self.medicineConsumed = mC.boolValue
+        }
+        if let mT = fromDataObject.medicineText {
+            self.medicineText = mT
+        }
+        
+        //parent initials are set by VM using data from DataStore
+        if let pi = fromDataObject.parentInitials {
+            self.parentInitials = pi
+        }
+        
+        self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
+        //time is set at the point that the cell is created by VM
+        if let t = fromDataObject.time {
+            self.time = t
+        }
+    }
+
     
     public func validateWithLunchMenuCategoryEnum () -> ValidationResult {
         var errorMessages = [String]()
@@ -315,10 +363,12 @@ public enum SnackValidationError: Int {
 }
 
 public enum SnackTime: Int {
-    case Morning,
+    case Morning = 0,
     Afternoon,
     Evening
 }
+
+
 public struct VMSnack {
     
     public var snackChoice: String?
@@ -329,31 +379,141 @@ public struct VMSnack {
     public var addOnRequired: Bool = false
     public var addOnText: String? = "Yogurt"
     public var addOnConsumed: Bool? = false
-    public var meidicineRequired: Bool = false
+    public var medicineRequired: Bool = false
     public var medicineText: String? = "Zinc"
     public var medicineConsumed: Bool? = false
     
     public var parentInitials: String?
     public var location: String?
-    public var time: NSDate?
+    public var time: String?
+    
+    public var note: String?
+
     public init(){
         
     }
+    
+    public init (fromSnackTime: SnackTime) {
+                self.snackTime = fromSnackTime.rawValue
+            }
+    
+    public init (fromDataObject: OPMorningSnack) {
+        self.snackTime = 0
+        self.snackChoice = fromDataObject.snackChoice
+        self.fruitChoice = fromDataObject.fruitChoice
+        self.addOnRequired = fromDataObject.addOnRequired.boolValue
+        self.medicineRequired = fromDataObject.medicineRequired.boolValue
+        
+        //conditionally set properties from Data Object if they exist
+        if let addOnT = fromDataObject.addOnText {
+            self.addOnText = addOnT
+        }
+        if let aC = fromDataObject.addOnConsumed {
+            self.addOnConsumed = aC.boolValue
+        }
+        if let mC = fromDataObject.medicineConsumed {
+            self.medicineConsumed = mC.boolValue
+        }
+        if let mT = fromDataObject.medicineText {
+            self.medicineText = mT
+        }
+        
+        //parent initials are set by VM using data from DataStore
+        if let pi = fromDataObject.parentInitials {
+            self.parentInitials = pi
+        }
+        
+        self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
+        //time is set at the point that the cell is created by VM
+        if let t = fromDataObject.time {
+            self.time = t
+        }
+
+    }
+    
+    public init (fromDataObject: OPAfternoonSnack) {
+        self.snackTime = 1
+        self.snackChoice = fromDataObject.snackChoice
+        self.fruitChoice = fromDataObject.fruitChoice
+        self.addOnRequired = fromDataObject.addOnRequired.boolValue
+        self.medicineRequired = fromDataObject.medicineRequired.boolValue
+        
+        //conditionally set properties from Data Object if they exist
+        if let addOnT = fromDataObject.addOnText {
+            self.addOnText = addOnT
+        }
+        if let aC = fromDataObject.addOnConsumed {
+            self.addOnConsumed = aC.boolValue
+        }
+        if let mC = fromDataObject.medicineConsumed {
+            self.medicineConsumed = mC.boolValue
+        }
+        if let mT = fromDataObject.medicineText {
+            self.medicineText = mT
+        }
+        
+        //parent initials are set by VM using data from DataStore
+        if let pi = fromDataObject.parentInitials {
+            self.parentInitials = pi
+        }
+        
+        self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
+        //time is set at the point that the cell is created by VM
+        if let t = fromDataObject.time {
+            self.time = t
+        }
+
+    }
+    
+    public init (fromDataObject: OPEveningSnack) {
+        self.snackTime = 2
+        self.snackChoice = fromDataObject.snackChoice
+        self.fruitChoice = fromDataObject.fruitChoice
+        self.addOnRequired = fromDataObject.addOnRequired.boolValue
+        self.medicineRequired = fromDataObject.medicineRequired.boolValue
+        
+        //conditionally set properties from Data Object if they exist
+        if let addOnT = fromDataObject.addOnText {
+            self.addOnText = addOnT
+        }
+        if let aC = fromDataObject.addOnConsumed {
+            self.addOnConsumed = aC.boolValue
+        }
+        if let mC = fromDataObject.medicineConsumed {
+            self.medicineConsumed = mC.boolValue
+        }
+        if let mT = fromDataObject.medicineText {
+            self.medicineText = mT
+        }
+        
+        //parent initials are set by VM using data from DataStore
+        if let pi = fromDataObject.parentInitials {
+            self.parentInitials = pi
+        }
+        
+        self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
+        //time is set at the point that the cell is created by VM
+        if let t = fromDataObject.time {
+            self.time = t
+        }
+
+    }
+    
     
     
     public func validateWithSnackMenuCategoryEnum () -> ValidationResult {
         var errorMessages = [String]()
         //iterate over each section on the breakfast menu.  if an item is not required, it will not be part of the Breakfast  Categories enum and code below for that item will never be called.
-        for i in 0 ..< SnackMenuCategory.count(){
-            switch SnackMenuCategory(value: i)!{
+        for i in 0 ..< SnackMenuCategory.count(SnackTime(rawValue: self.snackTime!)!){
+            switch SnackMenuCategory(value: i, snackTime: SnackTime(rawValue: self.snackTime!)!)!{
             case .SnackChoice:
                 if testNil(snackChoice)  {
                     errorMessages.append(SnackValidationError.NilValueSnackChoice.message())
                 }
-            case .Fruit:
-                if testNil(fruitChoice)  {
-                    errorMessages.append(SnackValidationError.NilValueFruitChoice.message())
-                }
+//            case .Fruit:
+//                if testNil(fruitChoice)  {
+//                    errorMessages.append(SnackValidationError.NilValueFruitChoice.message())
+//                }
                 
             case .AddOn:
                 if addOnConsumed != nil {
@@ -428,22 +588,44 @@ public struct VMDinner {
     public var vegetable: String?
     public  var requiredItemsText: String = "8 oz Milk and Salad"
     public var requiredItemsSubtext: String = "1 T Dressing or substitute"
-    public var requiredItemsConsumed: Bool? = false
+    public var requiredItemsConsumed: Bool = false
 
     
     public var addOnRequired: Bool = false
-    public var addOnText: String? = "Yogurt"
+    public var addOnText: String?
     public var addOnConsumed: Bool? = false
-    public var meidicineRequired: Bool = false
-    public var medicineText: String? = "Zinc"
+    public var medicineRequired: Bool = false
+    public var medicineText: String?
     public var medicineConsumed: Bool? = false
     
     public var parentInitials: String?
     public var location: String?
-    public var time: NSDate?
+    public var time: String?
     
-    public init(){
+    public var note: String?
+    
+    public init (){
         
+    }
+    
+    public init(fromDataObject: OPDinner){
+        self.meat = fromDataObject.meat
+        self.oil = fromDataObject.oil
+        self.starch = fromDataObject.starch
+        self.vegetable = fromDataObject.vegetable
+        self.addOnRequired = fromDataObject.addOnRequired.boolValue
+        self.medicineRequired = fromDataObject.medicineRequired.boolValue
+        if fromDataObject.addOnConsumed != nil {
+            self.addOnConsumed = fromDataObject.addOnConsumed!.boolValue
+        }
+        self.addOnText = fromDataObject.addOnText
+        self.medicineConsumed = fromDataObject.medicineConsumed?.boolValue
+        self.medicineText = fromDataObject.medicineText
+        self.parentInitials = fromDataObject.parentInitials
+        self.location = fromDataObject.place
+        self.time = fromDataObject.time
+
+        self.requiredItemsConsumed = fromDataObject.requiredItems.boolValue
     }
     
     public func validateWithDinnerMenuCategoryEnum () -> ValidationResult {
@@ -470,7 +652,7 @@ public struct VMDinner {
                 }
             case .RequiredItems:
                 if addOnConsumed != nil {
-                    if !requiredItemsConsumed! {
+                    if !requiredItemsConsumed {
                         errorMessages.append(DinnerValidationError.RequiredItemsNotConsumed.message())
                     }
                 }

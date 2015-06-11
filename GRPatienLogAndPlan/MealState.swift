@@ -229,10 +229,10 @@ enum MealState {
         return stateArray
     }
     
-    static func setUpMealMenuForProfile( profile: TempProfile) {
+    static func setUpMealMenuForProfile( profile: OPProfile) {
         
         var enumArray = [MealState]()
-        if profile.morningSnackRequired {
+        if profile.morningSnackRequired.boolValue {
             MealState.breakfastRange = TimeRange(rangeStart: (0,0), rangeEnd: (9,30))
             enumArray.append(MealState.Breakfast(MealState.breakfastRange))
             
@@ -252,7 +252,7 @@ enum MealState {
         enumArray.append(MealState.AfternoonSnack(MealState.afternoonSnackRange))
 
         
-        if profile.eveningSnackRequired {
+        if profile.eveningSnackRequired.boolValue {
             MealState.dinnerRange = TimeRange(rangeStart: (17,0), rangeEnd: (21,0))
             let dinner = MealState.Dinner(MealState.dinnerRange)
             enumArray.append(dinner)

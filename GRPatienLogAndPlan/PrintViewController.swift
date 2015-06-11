@@ -19,11 +19,23 @@ UIScrollViewDelegate{
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var webView: UIWebView!
-    
-    //var selectedCellDateValue: String!
-    
     var journalEntries: [String]!
     var selectedJournalEntryIdentifiers: [String] = [String]()
+ 
+    //var selectedCellDateValue: String!
+    
+    lazy var logEntryFormattedForPrinting: String = {
+        
+        var printService = PrintSevice()
+        
+        if self.selectedJournalEntryIdentifiers.count > 0 {
+            let dateString = self.selectedJournalEntryIdentifiers[0]
+            //TODO: MAKE FOLLOWING METHOD RETURN OPTIONAL STRING
+            return printService.getStringToPrint(dateString)
+        }
+        return ""
+    }()
+    
 
     @IBAction func printJournalEntry(sender: AnyObject) {
         // 1 get the print controller
@@ -35,8 +47,11 @@ UIScrollViewDelegate{
         printController.printInfo = printInfo
         
         // 3  pass text to formatter
-        let formatter = UIMarkupTextPrintFormatter(markupText: previewTextView.text)
-        formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72)
+//        let formatter = UIMarkupTextPrintFormatter(markupText: previewTextView.text)
+//        formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72)
+//        printController.printFormatter = formatter
+        let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting)
+        formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72) // 1" margins
         printController.printFormatter = formatter
         
         // 4 present the print interface
@@ -46,12 +61,13 @@ UIScrollViewDelegate{
     
     @IBAction func previewPrintJob(sender: AnyObject) {
         
-        var printService = PrintSevice()
-        if selectedJournalEntryIdentifiers.count > 0 {
-        let dateString = selectedJournalEntryIdentifiers[0]
-        let logEntryFormattedForPrinting = printService.getStringToPrint(dateString)
+//        var printService = PrintSevice()
+//        if selectedJournalEntryIdentifiers.count > 0 {
+//        let dateString = selectedJournalEntryIdentifiers[0]
+//            //TODO: MAKE FOLLOWING METHOD RETURN OPTIONAL STRING
+//        let logEntryFormattedForPrinting = printService.getStringToPrint(dateString)
         webView.loadHTMLString(logEntryFormattedForPrinting, baseURL: nil)
-        }
+     
         
     }
     override func viewDidLoad() {

@@ -288,9 +288,9 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                     let addOn = addOns![row]
                     //TODO:  finish implementing code here
                     cell.textLabel?.text = AddOnListItem(rawValue:  addOn.addOnItem.integerValue )?.name
-                    cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name
+                    cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name()
                     var name = AddOnListItem(rawValue:  addOn.addOnItem.integerValue )?.name
-                    var time = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name
+                    var time = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name()
                     println("addON \(name) , when \(time)") //("addON: \(name) \(addOnSelection), time: \(time) \(timeSelection)")
 
                     //cell.accessoryType = UITableViewCellAccessoryType.
@@ -306,7 +306,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 if let med = medicines?[row] {
                 //TODO:  finish implementing code here
                 cell.textLabel?.text = Medicines(rawValue: med.name.integerValue )?.name
-                cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: med.targetTimePeriodToTake.integerValue)?.name
+                cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: med.targetTimePeriodToTake.integerValue)?.name()
                 
                 //cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             

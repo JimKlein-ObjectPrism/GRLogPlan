@@ -70,7 +70,7 @@ class MedicineTableViewController: UITableViewController, UIPickerViewDataSource
         if x == 0{
             return Medicines(rawValue: row)?.name
         } else{
-            return PrescribedTimeForAction(rawValue: row)?.name
+            return PrescribedTimeForAction(rawValue: row)?.name()
                    }
     }
     

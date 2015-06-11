@@ -57,7 +57,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let status = dataStore.getLunch_Today().validateWithLunchMenuCategoryEnum()
             return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
         case .AfternoonSnack:
-            let status = dataStore.getSnack_Today(SnackTime.Afternoon).validateWithSnackMenuCategoryEnum()
+            let snack = dataStore.getSnack_Today(SnackTime.Afternoon)
+            let status = snack.validateWithSnackMenuCategoryEnum()
             return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
         case .Dinner:
             let status = dataStore.getDinner_Today().validateWithDinnerMenuCategoryEnum()

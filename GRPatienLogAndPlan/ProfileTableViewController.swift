@@ -13,8 +13,7 @@ enum ProfileVCSection: Int {
     AdditionalInfo
 }
 enum RequiredItem: Int {
-    case FirstName = 0,
-    LastName,
+    case FirstAndLastName = 0,
     Parents
 }
 enum AdditionalItems: Int {
@@ -32,6 +31,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     var dataArray: [AnyObject]!
     
     var dataStore: DataStore!
+    var profile: OPProfile!
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -42,14 +42,18 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         super.viewDidLoad()
     
         firstNameTextField.delegate = self
-        lastNameTextField.delegate = self
+        //lastNameTextField.delegate = self
         if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
             //set local property to data array in appDelegate
             self.appDelegate = appDelegate
             dataStore = appDelegate.dataStore
+            profile = dataStore.currentRecord.profile
         }
 
-
+        firstNameTextField.text = dataStore.currentRecord.profile.firstAndLastName ?? "First And Last Name"
+        morningSnackSwitch.setOn(profile.morningSnackRequired.boolValue, animated: false)
+        eveningSnackSwitch.setOn(profile.eveningSnackRequired.boolValue, animated: false)
+        
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         
         self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
@@ -62,18 +66,18 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     //MARK: Switch Actions
-
-
-    
+   
     @IBAction func morningSnackSwitchValeChanged(sender: UISwitch) {
+        dataStore.setMorningSnackRequired(sender.on)
     }
     @IBAction func eveningSnackSwitchSet(sender: UISwitch) {
+        dataStore.setEveningSnackRequired(sender.on)
     }
     
     //MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         firstNameTextField.resignFirstResponder()
-        lastNameTextField.resignFirstResponder()
+        //lastNameTextField.resignFirstResponder()
         return true
     }
     func DismissKeyboard(){
@@ -91,16 +95,9 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
         
-        
-//        let nameInput = textField.text
-//        let myArray: [String] = nameInput.componentsSeparatedByString(" ")
-//        var firstName: String? = myArray.first
-//        if myArray.count > 1 {
-//            var lastName: String? = myArray.last
-//            tableViewCellDelegate!.nameEntered(parentItemIndexInProfileSet!, firstName: firstName, lastName: lastName)
-//        } else {
-//            tableViewCellDelegate!.nameEntered(parentItemIndexInProfileSet!, firstName: firstName, lastName: nil)
-//        }
+        //TODO: add validation code for the name
+        dataStore.savePatientName(self.firstNameTextField.text)
+
         if view.gestureRecognizers?.count > 0 {
             view.gestureRecognizers?.removeAll(keepCapacity: true)
         }
@@ -120,7 +117,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         // Return the number of rows in the section.
         switch section{
         case 0:
-            return 3
+            return 2
         case 1:
             return 4
         default:
@@ -140,10 +137,8 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             
             let rowName = RequiredItem(rawValue: row)
             switch rowName! {
-            case RequiredItem.FirstName:
+            case RequiredItem.FirstAndLastName:
                 return
-            case RequiredItem.LastName:
-                println()
             case RequiredItem.Parents:
                 pushParentsVC()
             }
@@ -155,9 +150,9 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             case AdditionalItems.AddOns:
                 pushAddOnsVC()
             case RequiredItem.MorningSnackRequired:
-                println()
+                return
             case RequiredItem.EveningSnackRequired:
-                println()
+                return
 
             }
         }

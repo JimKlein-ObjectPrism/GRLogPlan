@@ -8,13 +8,59 @@
 
 import UIKit
 
-enum Meals: Int {
-    case Breakfast = 0,
+public enum Meals {
+    case Breakfast,
     MorningSnack,
     Lunch,
     AfternoonSnack ,
     Dinner,
     EveningSnack
+    
+    public static func configureMeals(profile: OPProfile){
+        mealArray.removeAll(keepCapacity: false)
+        mealArray.append(Meals.Breakfast)
+        if profile.morningSnackRequired.boolValue {
+            mealArray.append(Meals.MorningSnack)
+        }
+        mealArray.append(Meals.Lunch)
+        mealArray.append(Meals.AfternoonSnack)
+        mealArray.append(Meals.Dinner)
+        if profile.eveningSnackRequired.boolValue {
+            mealArray.append(Meals.EveningSnack)
+        }
+    }
+    public static func count() -> Int { return mealArray.count }
+    
+    static var mealArray: [Meals] = [Meals]()
+    
+    static func all() -> [Meals] {
+        return mealArray
+    }
+    
+    public init?(rawValue: Int){
+        //fail if index out of bounds
+        if rawValue >= Meals.mealArray.count || rawValue < 0 { return nil }
+        self = Meals.mealArray[rawValue]
+    }
+
+    
+    func mealName () -> String {
+        switch self{
+        case .Breakfast:
+            return "Breakfast"
+        case .MorningSnack:
+            return "Morning Snack"
+        case .Lunch:
+            return "Lunch"
+        case .AfternoonSnack:
+            return "Afternoon Snack"
+        case .Dinner:
+            return "Dinner"
+        case .EveningSnack:
+            return "Evening Snack"
+        }
+    }
+    
 }
 
 class FoodJournalTableViewController: UITableViewController {
@@ -40,12 +86,14 @@ class FoodJournalTableViewController: UITableViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         
         if  self.appDelegate != nil {
-        dataArray = appDelegate!.dataArray
+        //dataArray = appDelegate!.dataArray
         dataStore = appDelegate!.dataStore
         self.currentDateHeader = dataStore.today
         }
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        self.tableView.reloadData()
+    }
     func getLast7Days(){
         let calendar = NSCalendar.currentCalendar()
         let date = NSDate()
@@ -59,25 +107,10 @@ class FoodJournalTableViewController: UITableViewController {
   
     func previousDay() -> String {
         return dataStore.selectPreviousDayJournalEntry()
-//        if currentDateIndex < dates.count - 1 {
-//            currentDateIndex++
-//            return dates[currentDateIndex]
-//        } else {
-//            //return last day in array
-//            return dates[currentDateIndex]
-//        }
     }
     
     @IBAction func nextDay(sender: AnyObject) {
         currentDateHeader = dataStore.selectNextDayJournalEntry()
-//        // Use show Previous naminig convention
-//        if currentDateIndex > 0 {
-//            currentDateIndex--
-//            currentDateHeader = dates[currentDateIndex]
-//        } else {
-//            //return last day in array
-//            currentDateHeader = dates[currentDateIndex]
-//        }
        tableView.reloadData()
     }
 
@@ -98,11 +131,18 @@ class FoodJournalTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return Meals.count()
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.currentDateHeader
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        cell.textLabel!.text = Meals(rawValue: indexPath.row)?.mealName()
+        return cell
+
     }
     
     func showVC (navBarTitle: String, mealVMDelegage: MealViewModelDelegate){
@@ -127,17 +167,7 @@ class FoodJournalTableViewController: UITableViewController {
             
             showVC("Breakfast", mealVMDelegage: breakfastVM as MealViewModelDelegate)
 
-//            let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
-//            
-//            vc.navigationItem.title = "Breakfast"
-//            let vm: BreakfastVM =  BreakfastVM (dataStore: appDelegate!.dataStore)
-//            
-//            
-//            vc.vm = vm
-//            vm.tableView = vc.tableView
-//            vm.tableviewController = vc
-//            self.showViewController(vc as UIViewController, sender: vc)
-            
+           
         case .MorningSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Morning) as MealViewModelDelegate
             showVC("Morning Snack", mealVMDelegage: mSnack)

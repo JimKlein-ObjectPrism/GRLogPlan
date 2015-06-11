@@ -54,6 +54,7 @@
 		EF7D0C461B03E74F00ED50E5 /* ParentInitsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C451B03E74F00ED50E5 /* ParentInitsTableViewCell.swift */; };
 		EF7D0C481B03E76C00ED50E5 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C471B03E76C00ED50E5 /* LocationTableViewCell.swift */; };
 		EF7D0C4A1B03E77A00ED50E5 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C491B03E77A00ED50E5 /* TimeTableViewCell.swift */; };
+		EFB25FB11B27953B0086C85D /* OPProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB25FB01B27953B0086C85D /* OPProfile.swift */; };
 		EFBD36711ACCA14B006F32AA /* PrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36701ACCA14B006F32AA /* PrintViewController.swift */; };
 		EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */; };
 		EFBD36751ACCADC4006F32AA /* PrintVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */; };
@@ -63,7 +64,6 @@
 		EFCAF4A81B1646600039D784 /* OPAfternoonSnack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4A71B1646600039D784 /* OPAfternoonSnack.swift */; };
 		EFCAF4AA1B1646600039D784 /* OPParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4A91B1646600039D784 /* OPParent.swift */; };
 		EFCAF4AC1B1646600039D784 /* OPDinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4AB1B1646600039D784 /* OPDinner.swift */; };
-		EFCAF4AE1B1646600039D784 /* OPProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4AD1B1646600039D784 /* OPProfile.swift */; };
 		EFCAF4B01B1646600039D784 /* OPAddOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4AF1B1646600039D784 /* OPAddOn.swift */; };
 		EFCAF4B21B1646600039D784 /* OPBreakfast.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B11B1646600039D784 /* OPBreakfast.swift */; };
 		EFCAF4B41B1646610039D784 /* OPMedicine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF4B31B1646610039D784 /* OPMedicine.swift */; };
@@ -118,11 +118,11 @@
 		9864437E1A9E868500887579 /* GRPatienLogAndPlan-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRPatienLogAndPlan-Bridging-Header.h"; sourceTree = "<group>"; };
 		9864437F1A9E868600887579 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		986443801A9E868600887579 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		986443821A9E8B8C00887579 /* TrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTableViewController.swift; sourceTree = "<group>"; };
+		986443821A9E8B8C00887579 /* TrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackTableViewController.swift; path = GRPatienLogAndPlan/TrackTableViewController.swift; sourceTree = "<group>"; };
 		986443851A9E8D7C00887579 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		986443861A9E8D7C00887579 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
 		986443871A9E8D7C00887579 /* menu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@3x.png"; sourceTree = "<group>"; };
-		9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTrackTableViewController.swift; sourceTree = "<group>"; };
+		9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuTrackTableViewController.swift; path = GRPatienLogAndPlan/MenuTrackTableViewController.swift; sourceTree = "<group>"; };
 		98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		EF0D923C1B0FB36F00EE992B /* MealState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealState.swift; sourceTree = "<group>"; };
 		EF1367941B1D5204007F1649 /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
@@ -159,8 +159,9 @@
 		EF7D0C451B03E74F00ED50E5 /* ParentInitsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentInitsTableViewCell.swift; sourceTree = "<group>"; };
 		EF7D0C471B03E76C00ED50E5 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		EF7D0C491B03E77A00ED50E5 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
+		EFB25FB01B27953B0086C85D /* OPProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPProfile.swift; sourceTree = "<group>"; };
 		EFBD36701ACCA14B006F32AA /* PrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintViewController.swift; sourceTree = "<group>"; };
-		EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintTableViewCell.swift; sourceTree = "<group>"; };
+		EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrintTableViewCell.swift; path = GRPatienLogAndPlan/PrintTableViewCell.swift; sourceTree = "<group>"; };
 		EFBD36741ACCADC4006F32AA /* PrintVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintVisitor.swift; sourceTree = "<group>"; };
 		EFBD36761AD30122006F32AA /* profile_user-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_user-16.png"; sourceTree = "<group>"; };
 		EFBD36771AD30123006F32AA /* Settings_gear-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings_gear-16.png"; sourceTree = "<group>"; };
@@ -168,7 +169,6 @@
 		EFCAF4A71B1646600039D784 /* OPAfternoonSnack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPAfternoonSnack.swift; sourceTree = "<group>"; };
 		EFCAF4A91B1646600039D784 /* OPParent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPParent.swift; sourceTree = "<group>"; };
 		EFCAF4AB1B1646600039D784 /* OPDinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPDinner.swift; sourceTree = "<group>"; };
-		EFCAF4AD1B1646600039D784 /* OPProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPProfile.swift; sourceTree = "<group>"; };
 		EFCAF4AF1B1646600039D784 /* OPAddOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPAddOn.swift; sourceTree = "<group>"; };
 		EFCAF4B11B1646600039D784 /* OPBreakfast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPBreakfast.swift; sourceTree = "<group>"; };
 		EFCAF4B31B1646610039D784 /* OPMedicine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPMedicine.swift; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		EFF448951AB231EB004A099F /* home-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-16.png"; sourceTree = "<group>"; };
 		EFF4489A1AB24118004A099F /* HomeLogItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeLogItemTableViewCell.swift; sourceTree = "<group>"; };
 		EFF448CA1AB249B9004A099F /* DetailedJournalEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedJournalEntryTableViewCell.swift; sourceTree = "<group>"; };
-		EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverTableViewController.swift; sourceTree = "<group>"; };
+		EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopoverTableViewController.swift; path = GRPatienLogAndPlan/PopoverTableViewController.swift; sourceTree = "<group>"; };
 		EFF449631AB87E66004A099F /* Type Defs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type Defs.swift"; sourceTree = "<group>"; };
 		EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalItemProtocols.swift; sourceTree = "<group>"; };
 		EFF4CECD1B0CD7B10022A5B0 /* LunchVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchVM.swift; sourceTree = "<group>"; };
@@ -221,7 +221,6 @@
 		9864434B1A9E78FB00887579 = {
 			isa = PBXGroup;
 			children = (
-				EF1367931B1D5192007F1649 /* CoreDataFiles */,
 				986443561A9E78FB00887579 /* GRPatienLogAndPlan */,
 				9864436E1A9E78FB00887579 /* GRPatienLogAndPlanTests */,
 				986443551A9E78FB00887579 /* Products */,
@@ -240,36 +239,31 @@
 		986443561A9E78FB00887579 /* GRPatienLogAndPlan */ = {
 			isa = PBXGroup;
 			children = (
+				EF1367931B1D5192007F1649 /* CoreDataFiles */,
 				EF5D83701B224B3000D67E67 /* VM */,
+				EFB25FAD1B25FEA40086C85D /* NotInUse */,
 				EFF449C91ABB4535004A099F /* Visitor Protocol and Files */,
 				EFF448971AB24079004A099F /* Home View Table Cells */,
 				98FDCF0B1AA16BF80029F97E /* Data */,
 				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
 				986443591A9E78FB00887579 /* AppDelegate.swift */,
-				EF1367941B1D5204007F1649 /* ParentViewController.swift */,
-				EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */,
-				EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */,
 				EF13679A1B1D54A4007F1649 /* AddOnViewController.swift */,
-				EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */,
-				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */,
-				EF7D09E61B017B320029A824 /* MealTrackingTableViewController.swift */,
-				EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */,
-				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
 				EF157BB31AAE7C0200847AEE /* HomeViewController.swift */,
-				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
+				EF7D09E61B017B320029A824 /* MealTrackingTableViewController.swift */,
 				EFBD36701ACCA14B006F32AA /* PrintViewController.swift */,
+				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */,
-				9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */,
+				EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */,
+				EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */,
+				EF1367941B1D5204007F1649 /* ParentViewController.swift */,
+				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
 				EF157BC61AAF7FF400847AEE /* TableCells */,
 				986443621A9E78FB00887579 /* Images.xcassets */,
 				986443641A9E78FB00887579 /* LaunchScreen.xib */,
 				986443571A9E78FB00887579 /* Supporting Files */,
 				986443841A9E8D1400887579 /* Images */,
-				EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */,
-				EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */,
-				EF0D923C1B0FB36F00EE992B /* MealState.swift */,
 			);
 			path = GRPatienLogAndPlan;
 			sourceTree = "<group>";
@@ -342,6 +336,7 @@
 				EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */,
 				EF157BA51AAA597800847AEE /* MealItems.xml */,
 				EF5D836C1B213CCF00D67E67 /* PrintService.swift */,
+				EF0D923C1B0FB36F00EE992B /* MealState.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -349,6 +344,7 @@
 		EF1367931B1D5192007F1649 /* CoreDataFiles */ = {
 			isa = PBXGroup;
 			children = (
+				EFB25FB01B27953B0086C85D /* OPProfile.swift */,
 				EFCAF4BF1B1646610039D784 /* OPActivity.swift */,
 				EFCAF4BB1B1646610039D784 /* OPLunch.swift */,
 				EFCAF4B91B1646610039D784 /* OPEveningSnack.swift */,
@@ -357,18 +353,19 @@
 				EFCAF4B31B1646610039D784 /* OPMedicine.swift */,
 				EFCAF4B11B1646600039D784 /* OPBreakfast.swift */,
 				EFCAF4AF1B1646600039D784 /* OPAddOn.swift */,
-				EFCAF4AD1B1646600039D784 /* OPProfile.swift */,
 				EFCAF4AB1B1646600039D784 /* OPDinner.swift */,
 				EFCAF4A91B1646600039D784 /* OPParent.swift */,
 				EFCAF4A71B1646600039D784 /* OPAfternoonSnack.swift */,
 				EFCAF4C11B1785690039D784 /* OPJournalEntry.swift */,
 			);
 			name = CoreDataFiles;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		EF157BC61AAF7FF400847AEE /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
+				EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */,
 				EF59446A1B0E3C9C009ED145 /* RequiredItemTableViewCell.swift */,
 				EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */,
 				EF7D0C411B03AE7C00ED50E5 /* TableCellInputProtocols.swift */,
@@ -401,6 +398,7 @@
 		EF5D83701B224B3000D67E67 /* VM */ = {
 			isa = PBXGroup;
 			children = (
+				EFCDDBB01B0150D500A5F363 /* MealViewModel.swift */,
 				EF5D836E1B22477B00D67E67 /* MenuCatagories.swift */,
 				EF5944681B0D58F3009ED145 /* DinnerVM.swift */,
 				EF5944661B0D3905009ED145 /* SnackVM.swift */,
@@ -408,6 +406,18 @@
 				EFF4CECD1B0CD7B10022A5B0 /* LunchVM.swift */,
 			);
 			name = VM;
+			sourceTree = "<group>";
+		};
+		EFB25FAD1B25FEA40086C85D /* NotInUse */ = {
+			isa = PBXGroup;
+			children = (
+				EFF448CC1AB25CF8004A099F /* PopoverTableViewController.swift */,
+				9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */,
+				986443821A9E8B8C00887579 /* TrackTableViewController.swift */,
+				EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */,
+			);
+			name = NotInUse;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		EFF448971AB24079004A099F /* Home View Table Cells */ = {
@@ -557,6 +567,7 @@
 				EF5944691B0D58F3009ED145 /* DinnerVM.swift in Sources */,
 				EFCAF4BC1B1646610039D784 /* OPLunch.swift in Sources */,
 				EF49F8331AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld in Sources */,
+				EFB25FB11B27953B0086C85D /* OPProfile.swift in Sources */,
 				EF157BC11AAEA21300847AEE /* ParentInitialsTableViewCell.swift in Sources */,
 				EF7D0C441B03C00B00ED50E5 /* AddOnTableViewCell.swift in Sources */,
 				EF157BAE1AAE089A00847AEE /* FoodJournalDataStore.swift in Sources */,
@@ -596,7 +607,6 @@
 				EFF449641AB87E66004A099F /* Type Defs.swift in Sources */,
 				EFF448CD1AB25CF8004A099F /* PopoverTableViewController.swift in Sources */,
 				EF59446B1B0E3C9C009ED145 /* RequiredItemTableViewCell.swift in Sources */,
-				EFCAF4AE1B1646600039D784 /* OPProfile.swift in Sources */,
 				EFCAF4AC1B1646600039D784 /* OPDinner.swift in Sources */,
 				EF7D0C481B03E76C00ED50E5 /* LocationTableViewCell.swift in Sources */,
 				EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */,

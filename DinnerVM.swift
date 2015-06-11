@@ -77,7 +77,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
             
             switch menuSection {
             case .RequiredItems:
-                return 150.0
+                return 50.0
             default:
                 return 44.0
             }
@@ -162,7 +162,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
             }
             return cell
         case .RequiredItems:
-            let cell: RequiredItemTableViewCell = self.tableCell(tableView, cellForRequiredItemsItem: indexPath, switchState: dinner.requiredItemsConsumed!)
+            let cell: RequiredItemTableViewCell = self.tableCell(tableView, cellForRequiredItemsItem: indexPath, switchState: dinner.requiredItemsConsumed)
             cell.requiredItemsHandler = self
             return cell
         case .Medicine:
@@ -175,19 +175,18 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
         case .AdditionalInfo:
             switch indexPath.row {
             case 0:
-                let parentInitials: String? = self.dinner.parentInitials
-                return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: parentInitials, parentSelectionHandler: self)
+                return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: &self.dinner.parentInitials, parentSelectionHandler: self)
             case 1:
-                if let location = self.dinner.location {
-                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: location, locationSelectionHandler: self)
-                }
-                else{
-                    //set it to
-                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
-                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
-                }
+//                if let location = self.lunch.location {
+                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: &self.dinner.location, locationSelectionHandler: self)
+//                }
+//                else{
+//                    //set it to
+//                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
+//                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
+//                }
             default:
-                return tableCell(tableView, cellForTimeItem: indexPath, time: dinner.time, timeSelectionHandler: self)
+                return tableCell(tableView, cellForTimeItem: indexPath, time: &dinner.time, timeSelectionHandler: self)
                 
             }
             
@@ -257,7 +256,8 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
         setPropertyInModel(boolValue: medicineConsumed, boolPropertyInModel: &self.dinner.medicineConsumed)
     }
     func requiredItemSwitchSelectedHandler(requiredItemConsumed: Bool){
-        setPropertyInModel(boolValue: requiredItemConsumed, boolPropertyInModel: &self.dinner.requiredItemsConsumed)
+        dinner.requiredItemsConsumed = requiredItemConsumed
+        //setPropertyInModel(boolValue: requiredItemConsumed, boolPropertyInModel: &self.dinner.requiredItemsConsumed)
     }
     //MARK: Cell entry delegates
     func addOnItemSelectedHandler(addOnConsumed: Bool)
@@ -313,8 +313,16 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
     }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.dinner.time)        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = .ShortStyle
+        var time = dateFormatter.stringFromDate(selectedTime)
+        
+        setPropertyInModel(value: time, propertyInModel: &self.dinner.time)
+
+        //setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.dinner.time)
     }
+    
+    
     //MARK: Alert View methods
     func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){
         

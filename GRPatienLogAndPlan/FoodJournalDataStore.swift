@@ -37,6 +37,12 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     var currentBreakfast: OPBreakfast!
 
+    var currentTime: String = {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = .ShortStyle
+        var time = dateFormatter.stringFromDate(NSDate())
+        return time
+    }()
     var today: String = {
        var dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .FullStyle
@@ -48,6 +54,167 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     // Items that define or are used to define the contents of the Food Journal Log item
     var logEntryItems = [AnyObject]()
+    
+    //MARK: Data Objects for View Model
+    var breakfast: VMBreakfast!
+    var lunch: VMLunch!
+    var morningSnack: VMSnack!
+    var afternoonSnack: VMSnack!
+    var eveningSnack: VMSnack!
+    var dinner: VMDinner!
+    //MARK: Parsing Variables
+    var currentElementName = ""
+    
+    var currentElementValue = ""
+    
+    var foodItemArray = [FoodItem]()
+    
+    var foodItemStackArray = [FoodItem]()
+    
+    var currentFoodItem: FoodItem?
+    
+    var currentFoodItemWithChoice: FoodItemWithChoice?
+    
+    var currentMealItem: MealItem?
+    
+    //Stack variables
+    var currentIndexOfTopStackItem: Int = 0
+    
+    var stackIndexValue: Int = 0
+    
+    var mealState: MealState!
+    
+    var profileIsValid: Bool = false
+    
+    
+    //MARK: Delegates - currently only used method
+    var updateDetailViewDelegate: UpdateDetailViewDelegate!
+    
+    init(managedContext: NSManagedObjectContext) {
+        self.managedContext = managedContext
+        
+        super.init()
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(true, forKey: "profileIsValid")
+        
+        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
+            if profile == true {
+            
+                //initialize Patient Record
+                self.currentRecord = self.currentRecordAndProfile()
+                
+                //initialize Profile - use placeholder to initialize
+                let profile = currentRecord.profile
+                
+                //initialize journal entry
+                
+                if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
+                    self.currentJournalEntry = journalEntry
+                    
+                    //initialize meal items from existing entry
+                    //TODO:  Initialize Other Meals to FROM EXISTING ENTRY
+
+                    self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
+                    self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
+                    self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
+                    self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
+                    dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
+                    self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
+
+                } else {
+                    //create blank journal entries
+                    self.currentJournalEntry = getNewJournalEntry(today)
+                    
+                    //initialize using Default values in VM Meal Items
+                    //TODO:  Initialize Other Meals to VM default values
+                    self.breakfast = VMBreakfast()
+                    self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
+                    self.lunch = VMLunch()
+                    self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
+                    self.dinner = VMDinner()
+                    self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
+                }
+                //after configuring currentJournalEntry
+                // initialize items dependent on profile
+                parentsArray = getParentsArray(profile)
+                //MARK:  Home Controller Meal State Init
+                MealState.setUpMealMenuForProfile(profile)
+                self.mealState = MealState.getMealState(NSDate())
+                
+                
+                //MARK: update enums for View Model Initializations
+                updateItemChoiceEnums(profile)
+
+            } else {
+            profileIsValid = false
+            }
+        }
+        //super.init()
+        todayJournalEntry = currentJournalEntry
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            //return ( nil, error)
+        }
+        
+    }
+    func updateItemChoiceEnums (profile: OPProfile){
+        //used to
+        
+        //update enum used for FoodItem Choice View Controller
+        Meals.configureMeals(profile)
+        
+        PrescribedTimeForAction.configureTimes(profile)
+
+        updateMealCategoryEnumsAndProfileFields(profile)
+
+    }
+    
+    func updateMealCategoryEnumsAndProfileFields (profile: OPProfile){
+        
+        //update enums
+        //configure MenuChoice also sets medicine/addonRequired fields in journalentry.meal
+        BreakfastMenuCategory.configureMenuChoice(profile, journalEntry: &currentJournalEntry!)
+        LunchMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
+        SnackMenuCategory.configureMenuChoice(profile, journalEntry: self.currentJournalEntry!)
+        DinnerMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
+
+    }
+    //MARK: Profile Model
+    public func savePatientName (patientName: String) -> OPProfile {
+        currentRecord.profile.firstAndLastName = patientName
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            //return ( nil, error)
+        }
+
+        return currentRecord.profile
+    }
+    public func setMorningSnackRequired(isRequired: Bool) -> OPProfile {
+        currentRecord.profile.morningSnackRequired = isRequired
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            //return ( nil, error)
+        }
+        Meals.configureMeals(currentRecord.profile)
+        return currentRecord.profile
+    }
+    public func setEveningSnackRequired(isRequired: Bool) -> OPProfile {
+        currentRecord.profile.eveningSnackRequired = isRequired
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+            //return ( nil, error)
+        }
+        Meals.configureMeals(currentRecord.profile)
+
+        return currentRecord.profile
+    }
+    
     
     //MARK: Parents Model
     public func getParents() -> [OPParent] {
@@ -204,7 +371,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         }
         return currentMedicines
     }
-
+    
     func validateMedicineResult(medicine: Int, prescribedTimeForAction: Int) -> [MedicineValidation]{
         //TODO: Medicine Validation array:  What should be included?  No out of index range error if input is enum!
         var validationResult = [MedicineValidation]()
@@ -221,10 +388,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         if validationResult.count == 0  {
             //forced unwrap OK because no errors encountered
             let result = addMedicineToModel(medicine, prescribedTimeForAction: prescribedTimeForAction)
-            if let parent = result.0 {
+            if let medicine = result.0 {
                 // return value with no errors
                 validationResult.append(MedicineValidation.Success)
-                return (parent, validationResult)
+                updateItemChoiceEnums(currentRecord.profile)
+                return (medicine, validationResult)
             } else {
                 validationResult.append(MedicineValidation.CoreDataErrorEncountered)
             }
@@ -272,7 +440,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not save: \(error)")
             return (nil, error)
         }
-        
+        updateItemChoiceEnums(currentRecord.profile)
         return (medicineToDelete, nil)
     }
     
@@ -286,6 +454,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if let parent = result.0 {
                 // return value with no errors
                 validationResult.append(MedicineValidation.Success)
+                updateItemChoiceEnums(currentRecord.profile)
                 return (parent, validationResult)
             } else {
                 validationResult.append(MedicineValidation.CoreDataErrorEncountered)
@@ -345,6 +514,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if let parent = result.0 {
                 // return value with no errors
                 validationResult.append(AddOnValidation.Success)
+                updateItemChoiceEnums(currentRecord.profile)
                 return (parent, validationResult)
             } else {
                 validationResult.append(AddOnValidation.CoreDataErrorEncountered)
@@ -393,7 +563,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not save: \(error)")
             return (nil, error)
         }
-        
+        updateItemChoiceEnums(currentRecord.profile)
         return (addOnToDelete, nil)
     }
     
@@ -407,6 +577,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if let parent = result.0 {
                 // return value with no errors
                 validationResult.append(AddOnValidation.Success)
+                updateItemChoiceEnums(currentRecord.profile)
                 return (parent, validationResult)
             } else {
                 validationResult.append(AddOnValidation.CoreDataErrorEncountered)
@@ -436,130 +607,6 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return ( currentAddOn, nil)
         
     }
-    
-    
-
-    
-    
-    //MARK: Data Objects for View Model
-    var breakfast: VMBreakfast! //= {
-//        return VMBreakfast()
-//    }()
-    lazy var lunch: VMLunch = {
-        return VMLunch()
-        }()
-    
-    lazy var morningSnack: VMSnack = {
-        return VMSnack()
-        }()
-
-    lazy var afternoonSnack: VMSnack = {
-        return VMSnack()
-    }()
-
-    lazy var eveningSnack: VMSnack = {
-        return VMSnack()
-    }()
-
-    lazy var dinner: VMDinner = {
-        return VMDinner()
-    }()
-    
-    //MARK: Parsing Variables
-    var currentElementName = ""
-    
-    var currentElementValue = ""
-    
-    var foodItemArray = [FoodItem]()
-    
-    var foodItemStackArray = [FoodItem]()
-    
-    var currentFoodItem: FoodItem?
-    
-    var currentFoodItemWithChoice: FoodItemWithChoice?
-    
-    var currentMealItem: MealItem?
-    
-    //Stack variables
-    var currentIndexOfTopStackItem: Int = 0
-    
-    var stackIndexValue: Int = 0
-    
-    var mealState: MealState!
-    
-    var profileIsValid: Bool = false
-    
-    
-    //MARK: Delegates - currently only used method
-    var updateDetailViewDelegate: UpdateDetailViewDelegate!
-    
-    init(managedContext: NSManagedObjectContext) {
-        self.managedContext = managedContext
-        
-        super.init()
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(true, forKey: "profileIsValid")
-        
-        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
-            if profile == true {
-            
-                //initialize Patient Record
-                self.currentRecord = self.currentRecordAndProfile()
-                
-                //initialize Profile - use placeholder to initialize
-                let profile = TempProfile()
-                
-                //initialize journal entry
-                
-                if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
-                    self.currentJournalEntry = journalEntry
-                    
-                    //initialize meal items from existing entry
-                    
-                    breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
-
-                } else {
-                    //create blank journal entries
-                    self.currentJournalEntry = getNewJournalEntry(today)
-                    
-                    //initialize using Default values in VM Meal Items
-                    self.breakfast = VMBreakfast()
-                }
-                //after configuring currentJournalEntry
-                // initialize items dependent on profile
-                parentsArray = getParentsArray(profile)
-               
-                //MARK:  Home Controller Meal State Init
-                MealState.setUpMealMenuForProfile(profile)
-                self.mealState = MealState.getMealState(NSDate())
-                
-                
-                //MARK: View Model Initializations
-                BreakfastMenuCategory.configureMenuChoice(profile)
-                LunchMenuCategory.configureMenuChoice(profile )
-                SnackMenuCategory.configureMenuChoice(profile)
-                DinnerMenuCategory.configureMenuChoice(profile)
-     
-
-            } else {
-            profileIsValid = false
-            }
-        }
-        todayJournalEntry = currentJournalEntry
-        
-        var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
-            //return ( nil, error)
-        }
-        
-    }
-    
-    
-    //Get Model Objects
-    //Get Record and Profile
-    //Get Log Entry
     
     
     func currentProfile() -> OPPatientRecord {
@@ -615,7 +662,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         journalEntry.patientRecord = currentRecord
         
-        journalEntry.date = today
+        journalEntry.date = dateIdentifier
         
         let profileEntityBreakfast = NSEntityDescription.entityForName("OPBreakfast",
             inManagedObjectContext: managedContext)
@@ -625,6 +672,52 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         breakfastEntry.journalEntry = journalEntry
         
+        //lunch
+        let profileEntityLunch = NSEntityDescription.entityForName("OPLunch",
+            inManagedObjectContext: managedContext)
+
+        let lunchEntry =  OPLunch(entity: profileEntityLunch!,
+            insertIntoManagedObjectContext: managedContext)
+        
+        lunchEntry.journalEntry = journalEntry
+        
+        //morning snack
+        let profileEntitymSnack = NSEntityDescription.entityForName("OPMorningSnack",
+            inManagedObjectContext: managedContext)
+        
+        let mSnackEntry =  OPMorningSnack(entity: profileEntitymSnack!,
+            insertIntoManagedObjectContext: managedContext)
+        
+        mSnackEntry.journalEntry = journalEntry
+        
+        //afternoon snack
+        let profileEntityAfternoonSnack = NSEntityDescription.entityForName("OPAfternoonSnack",
+            inManagedObjectContext: managedContext)
+        
+        let aSnackEntry =  OPAfternoonSnack(entity: profileEntityAfternoonSnack!,
+            insertIntoManagedObjectContext: managedContext)
+        
+        aSnackEntry.journalEntry = journalEntry
+        
+        //evening snack
+        let profileEntityeSnack = NSEntityDescription.entityForName("OPEveningSnack",
+            inManagedObjectContext: managedContext)
+        
+        let eSnackEntry =  OPEveningSnack(entity: profileEntityeSnack!,
+            insertIntoManagedObjectContext: managedContext)
+        
+        eSnackEntry.journalEntry = journalEntry
+        
+        //dinner
+        let profileEntityDinner = NSEntityDescription.entityForName("OPDinner",
+            inManagedObjectContext: managedContext)
+        
+        let dinnerEntry =  OPDinner(entity: profileEntityDinner!,
+            insertIntoManagedObjectContext: managedContext)
+        
+        dinnerEntry.journalEntry = journalEntry
+        
+
        
         return journalEntry
     }
@@ -658,11 +751,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     
     func getJournalEntry (dateIdentifier: String) -> JournalEntryResult { // JournalItem{
-        let journalEntryDate = today// dateIdentifier
+        
         //  Fetch Request and Predicate:  array of args supports multiple days
         let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
         //jEntryFetch.predicate = NSPredicate(format: "date == %@", journalEntryDate)
-        jEntryFetch.predicate = NSPredicate(format: "date == %@", argumentArray: [journalEntryDate])
+        jEntryFetch.predicate = NSPredicate(format: "date == %@", argumentArray: [dateIdentifier])
 //        let journalEntryDate = dateIdentifier//today
 //        //let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
 //        let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
@@ -692,11 +785,20 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
     //MARK: Initialization Helper methods
     
-    func getParentsArray(profile: TempProfile) -> [String] {
-        return  ["Lisa Doe", "John Doe", "Jon Smith"]
+    func getParentsArray(profile: OPProfile) -> [String] {
+        var parentsArray = [String]()
+        for p in profile.parents {
+            let parent = p as? OPParent
+            let name = parent!.firstName + " " + parent!.lastName
+            parentsArray.append(name)
+        }
+        return  parentsArray
 
     }
     func defaultParentInitials() -> String?{
+        if parentsArray.count == 0 {
+            parentsArray = getParentsArray(currentRecord.profile)
+        }
         
         if parentsArray.count > 0 {
             
@@ -746,6 +848,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         
         //Get the date string for the selected day
+        
         let calendar = NSCalendar.currentCalendar()
         let components = NSDateComponents()
         
@@ -754,6 +857,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let newDate = calendar.dateByAddingComponents(components, toDate: NSDate(), options: nil)
         let selectedDay = getFullStyleDateString(newDate!)
 
+        println(selectedDay)
         
         // if core data holds journal entry for this day
         // else create new entry for selected day
@@ -762,8 +866,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         switch journalEntry {
         case let .Success(entry):
             currentJournalEntry = entry
+            updateJournalEntryToSelectedDate(entry)
         case .EntryDoesNotExist:
             currentJournalEntry = getNewJournalEntry(selectedDay)
+            updateJournalEntryToSelectedDate(currentJournalEntry)
         case .Error:
             println("Core Data error encountered.")
         
@@ -771,6 +877,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         return selectedDay
         
+    }
+    
+    public func updateJournalEntryToSelectedDate (journalEntry: OPJournalEntry) {
+        self.breakfast = VMBreakfast(fromDataObject: journalEntry.breakfast)
+    
     }
     public func getFullStyleDateString(date: NSDate) -> String {
         var dateFormatter = NSDateFormatter()
@@ -804,23 +915,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 self.currentRecord = OPPatientRecord(entity: recordEntity!,
                     insertIntoManagedObjectContext: managedContext)
                 
-                //                currentRecord.firstName = "First Name"
-                //                currentRecord.lastName = "Last Name"
-                
                 let profileEntity = NSEntityDescription.entityForName("OPProfile",
                     inManagedObjectContext: managedContext)
                 
                 currentRecord.profile = OPProfile(entity: profileEntity!,
                     insertIntoManagedObjectContext: managedContext)
-                
-                //                let p = currentRecord.profile
-                //                p.firstName = "Sarah"
-                //                p.lastName = "Snythe"
-                
-                
-                //                if !managedContext.save(&error) {
-                //                    println("Could not save: \(error)")
-                //                }
                 
                 return currentRecord
                 
@@ -829,13 +928,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 
                 return currentRecord
             }
-            
-            
         } else {
             println("Could not fetch: \(error)")
         }
-        
-        
         assert(false, "Unimplemented")
     }
     
@@ -907,6 +1002,28 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     func getBreakfast_Today() -> VMBreakfast {
         return self.breakfast//initialized in init
     }
+    func setOptionalStringProperty( inout stringProperty: String?, valuefromMealVM: String?) -> String? {
+        //conditionally sets optional property if value is not nil
+        if let value = valuefromMealVM  {
+            stringProperty = value
+            return value
+        }
+        return nil
+    }
+    
+    func setBoolProperty( inout property: NSNumber, valuefromMealVM: Bool) -> NSNumber {
+            let property = NSNumber(bool: valuefromMealVM)
+            return property
+    }
+    
+    func setOptionalBoolProperty( inout property: NSNumber?, valuefromMealVM: Bool?) -> NSNumber? {
+        //conditionally sets optional property if value is not nil
+        if let value = valuefromMealVM  {
+            property = NSNumber(bool: value)
+            return property
+        }
+        return nil
+    }
     
     func saveBreakfast(breakfast: VMBreakfast){//, inout modelBreakfast: OPBreakfast){
         //use helper method to set property for optional values
@@ -914,72 +1031,63 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let modelBreakfast = currentJournalEntry.breakfast
         
         let mBreakfast =  modelBreakfast
-        self.currentJournalEntry.breakfast.foodChoice = breakfast.foodChoice!
         
-        if let value = breakfast.foodChoice  {
-            mBreakfast.foodChoice = value
-        }
-        if let value = breakfast.fruitChoice  {
-            mBreakfast.fruitChoice = value
-        }
+        //self.currentJournalEntry.breakfast.foodChoice = breakfast.foodChoice!
+        
+//        if let value = breakfast.foodChoice  {
+//            mBreakfast.foodChoice = value
+//        }
+        //        if let value = breakfast.fruitChoice  {
+        //            mBreakfast.fruitChoice = value
+        //        }
+        setOptionalStringProperty(&mBreakfast.foodChoice, valuefromMealVM: breakfast.foodChoice)
+        setOptionalStringProperty(&mBreakfast.fruitChoice, valuefromMealVM: breakfast.fruitChoice)
         
         mBreakfast.addOnRequired = NSNumber(bool: breakfast.addOnRequired)
-        
-        if let value = breakfast.addOnText  {
-            mBreakfast.addOnText = value
-        }
-        if let value = breakfast.addOnConsumed  {
-            mBreakfast.addOnConsumed = NSNumber(bool: value)
-        }
+        setOptionalStringProperty(&mBreakfast.addOnText, valuefromMealVM: breakfast.addOnText)
+        setOptionalBoolProperty(&mBreakfast.addOnConsumed, valuefromMealVM: breakfast.addOnConsumed)
         
         mBreakfast.medicineRequired = NSNumber(bool: breakfast.medicineRequired)
+        setOptionalStringProperty(&mBreakfast.medicineText, valuefromMealVM: breakfast.medicineText)
+        setOptionalBoolProperty(&mBreakfast.medicineConsumed, valuefromMealVM: breakfast.medicineConsumed)
         
-        if let value = breakfast.medicineText  {
-            mBreakfast.medicineText = value
-        }
-        if let value = breakfast.medicineConsumed  {
-            mBreakfast.medicineConsumed = value
-        }
-        if let value = breakfast.parentInitials  {
-            mBreakfast.parentInitials = value
-        }
-        if let value = breakfast.location  {
-            mBreakfast.location = value
-        }
-        if let value = breakfast.time  {
-            
-            mBreakfast.time = value
-        }
+        
+        setOptionalStringProperty(&mBreakfast.parentInitials, valuefromMealVM: breakfast.parentInitials)
+        setOptionalStringProperty(&mBreakfast.location, valuefromMealVM: breakfast.location)
+        setOptionalStringProperty(&mBreakfast.time, valuefromMealVM: breakfast.time)
         var error: NSError?
         if !managedContext.save(&error) {
             println("Could not save: \(error)")
         }
+    }
 
-        
-       println("medicine required:  \(mBreakfast.medicineRequired.boolValue)")
- 
-    }
-    func setOptionalProperty( input: String? , inout property: String){
-        if let stringValue = input {
-            property = stringValue
-        }
-    }
-    func setOptionalProperty( input: Bool? , inout property: Bool){
-        if let stringValue = input {
-            property = stringValue
-        }
-    }
-    func setOptionalProperty( input: NSDate? , inout property: NSDate){
-        if let stringValue = input {
-            property = stringValue
-        }
-    }
     func getLunch_Today() -> VMLunch {
         return self.lunch//initialized in init
     }
     
     func saveLunch_Today(lunch: VMLunch){
         self.lunch = lunch
+
+        setOptionalStringProperty(&currentJournalEntry.lunch.lunchChoice, valuefromMealVM: lunch.lunchChoice)
+        setOptionalStringProperty(&currentJournalEntry.lunch.fruitChoice, valuefromMealVM: lunch.fruitChoice)
+        
+        currentJournalEntry.lunch.addOnRequired = NSNumber(bool: lunch.addOnRequired)
+        setOptionalStringProperty(&currentJournalEntry.lunch.addOnText, valuefromMealVM: lunch.addOnText)
+        setOptionalBoolProperty(&currentJournalEntry.lunch.addOnConsumed, valuefromMealVM: lunch.addOnConsumed)
+        
+        currentJournalEntry.lunch.medicineRquired = NSNumber(bool: lunch.medicineRequired)
+        setOptionalStringProperty(&currentJournalEntry.lunch.medicineText, valuefromMealVM: lunch.medicineText)
+        setOptionalBoolProperty(&currentJournalEntry.lunch.medicineConsumed, valuefromMealVM: lunch.medicineConsumed)
+        
+        setOptionalStringProperty(&currentJournalEntry.lunch.parentInitials, valuefromMealVM: lunch.parentInitials)
+        setOptionalStringProperty(&currentJournalEntry.lunch.location, valuefromMealVM: lunch.location)
+        setOptionalStringProperty(&currentJournalEntry.lunch.time, valuefromMealVM: lunch.time)
+
+                var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+        }
+        
     }
     
     func getSnack_Today(snackTime: SnackTime) -> VMSnack {
@@ -995,22 +1103,103 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
     }
     func saveSnack_Today(snack: VMSnack, snackTime: SnackTime){
+    
+        
         switch snackTime{
         case .Morning:
             self.morningSnack = snack
+            let modelSnack = currentJournalEntry.morningSnack
+            setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
+            setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
+            
+            modelSnack.addOnRequired = NSNumber(bool: snack.addOnRequired)
+            setOptionalStringProperty(&modelSnack.addOnText, valuefromMealVM: snack.addOnText)
+            setOptionalBoolProperty(&modelSnack.addOnConsumed, valuefromMealVM: snack.addOnConsumed)
+            
+            modelSnack.medicineRequired = NSNumber(bool: snack.medicineRequired)
+            setOptionalStringProperty(&modelSnack.medicineText, valuefromMealVM: snack.medicineText)
+            setOptionalBoolProperty(&modelSnack.medicineConsumed, valuefromMealVM: snack.medicineConsumed)
+            
+            setOptionalStringProperty(&modelSnack.parentInitials, valuefromMealVM: snack.parentInitials)
+            setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
+            setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
+
         case .Afternoon:
             self.afternoonSnack = snack
+            let modelSnack = currentJournalEntry.afternoonSnack
+            setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
+            setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
+            
+            modelSnack.addOnRequired = NSNumber(bool: snack.addOnRequired)
+            setOptionalStringProperty(&modelSnack.addOnText, valuefromMealVM: snack.addOnText)
+            setOptionalBoolProperty(&modelSnack.addOnConsumed, valuefromMealVM: snack.addOnConsumed)
+            
+            modelSnack.medicineRequired = NSNumber(bool: snack.medicineRequired)
+            setOptionalStringProperty(&modelSnack.medicineText, valuefromMealVM: snack.medicineText)
+            setOptionalBoolProperty(&modelSnack.medicineConsumed, valuefromMealVM: snack.medicineConsumed)
+            
+            setOptionalStringProperty(&modelSnack.parentInitials, valuefromMealVM: snack.parentInitials)
+            setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
+            setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
+
         case .Evening:
             self.eveningSnack = snack
+            let modelSnack = currentJournalEntry.eveningSnack
+            setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
+            setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
+            
+            modelSnack.addOnRequired = NSNumber(bool: snack.addOnRequired)
+            setOptionalStringProperty(&modelSnack.addOnText, valuefromMealVM: snack.addOnText)
+            setOptionalBoolProperty(&modelSnack.addOnConsumed, valuefromMealVM: snack.addOnConsumed)
+            
+            modelSnack.medicineRequired = NSNumber(bool: snack.medicineRequired)
+            setOptionalStringProperty(&modelSnack.medicineText, valuefromMealVM: snack.medicineText)
+            setOptionalBoolProperty(&modelSnack.medicineConsumed, valuefromMealVM: snack.medicineConsumed)
+            
+            setOptionalStringProperty(&modelSnack.parentInitials, valuefromMealVM: snack.parentInitials)
+            setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
+            setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
         }
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+        }
+
         
     }
+    
     func getDinner_Today() -> VMDinner {
         return self.dinner//initialized in init
     }
 
     func saveDinner_Today(dinner: VMDinner){
         self.dinner = dinner
+        
+        let modelDinner = currentJournalEntry.dinner
+        modelDinner.meat = dinner.meat
+        modelDinner.starch = dinner.starch
+        modelDinner.oil = dinner.oil
+        modelDinner.vegetable = dinner.vegetable
+        modelDinner.requiredItems = dinner.requiredItemsConsumed.boolValue
+        
+        modelDinner.medicineRequired = dinner.medicineRequired
+        modelDinner.medicineConsumed = dinner.medicineConsumed
+        modelDinner.medicineText = dinner.medicineText
+        
+        modelDinner.addOnConsumed = dinner.addOnConsumed
+        modelDinner.addOnRequired = dinner.addOnRequired
+        modelDinner.addOnText = dinner.addOnText
+        
+        modelDinner.parentInitials = dinner.parentInitials
+        modelDinner.place = dinner.location
+        modelDinner.time = dinner.time
+        
+        modelDinner.note = dinner.note
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error)")
+        }
+
     }
 
     

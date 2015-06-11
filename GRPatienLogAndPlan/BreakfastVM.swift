@@ -9,8 +9,8 @@
 import Foundation
 
 public class TempProfile {
-    var addOnRequired = false
-    var medicineRequired = false
+    var addOnRequired = true
+    var medicineRequired = true
     var morningSnackRequired = true
     var eveningSnackRequired = true
     var parentInitials = "A.B"
@@ -58,10 +58,13 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     override init(dataStore: DataStore)
     {
         //dataStore = dataStore
+        if let entry = dataStore.currentJournalEntry {
+            self.breakfast = VMBreakfast(fromDataObject: entry.breakfast)
+        } else {
+            self.breakfast = dataStore.getBreakfast_Today()
+        }
         
-        self.breakfast = dataStore.getBreakfast_Today()
-        self.breakfast.time = NSDate()
-        // Set other defaults here for location and parent initials
+        // Set up variables to keep track of togging from lists of choices
         
         self.foodItemArray = dataStore.buildFoodItemArray(filterString: "BreakfastItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
@@ -159,19 +162,18 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
             case .AdditionalInfo:
                 switch indexPath.row {
                 case 0:
-                    let parentInitials: String? = self.breakfast.parentInitials
-                    return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: parentInitials, parentSelectionHandler: self)
+                    return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: &self.breakfast.parentInitials, parentSelectionHandler: self)
                 case 1:
-                    if let location = self.breakfast.location {
-                        return tableCell(tableView , cellForLocationItem: indexPath, locationText: location, locationSelectionHandler: self)
-                    }
-                    else{
-                        //set it to
-                        var defaultLocation = LocationForMeal(rawValue: 0)?.name()
-                        return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
-                    }
+                    //if let location = self.breakfast.location {
+                        return tableCell(tableView , cellForLocationItem: indexPath, locationText: &self.breakfast.location, locationSelectionHandler: self)
+//                    }
+//                    else{
+//                        //set it to
+//                        var defaultLocation = LocationForMeal(rawValue: 0)?.name()
+//                        return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
+//                    }
                 default:
-                    return tableCell(tableView, cellForTimeItem: indexPath, time: breakfast.time , timeSelectionHandler: self)
+                    return tableCell(tableView, cellForTimeItem: indexPath, time: &breakfast.time , timeSelectionHandler: self)
                     
                 }
                 
@@ -223,6 +225,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
             return
         }
     }
+    //Medicine Switch Selection Handler
     func choiceItemSelectedHandler(medicineConsumed: Bool){
         setPropertyInModel(boolValue: medicineConsumed, boolPropertyInModel: &self.breakfast.medicineConsumed)
     }
@@ -282,7 +285,11 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.breakfast.time)
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = .ShortStyle
+        var time = dateFormatter.stringFromDate(selectedTime)
+
+        setPropertyInModel(value: time, propertyInModel: &self.breakfast.time)
         //self.breakfast.time = selectedTime
             }
     //MARK: Alert View methods
