@@ -782,7 +782,60 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         }
     }
     
+    //MARK: Print List of Journal Entries
+    func convertStringToDateAndReturnArrayInAscendingOrder(strings: [String]) -> [String] {
+        typealias stringDateTuple = (String, NSDate)
+        var tupleArray = [stringDateTuple]()
+        var dateArray = [NSDate]()
+        for s in strings {
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+            let date = dateFormatter.dateFromString(s)
+            tupleArray.append(stringDateTuple(s, date!))
+            dateArray.append(date!)
+        }
+        //tupleArray.sort({$0.date.compare($1.date) == NSComparisonResult.OrderedDEscending })
+        dateArray.sort({$0.compare($1) == NSComparisonResult.OrderedDescending })
+        var stringArray = [String]()
+        for date in dateArray{
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+            let dateString = dateFormatter.stringFromDate(date)
+            stringArray.append(dateString)
+        }
+        return stringArray
+    }
+    
+    func getListOfDatePropertyValuesForExisitingJournalEntries() -> [String] {
+        var dates: [String] = [String]()
+        let journalEntries = getAllJournalEntries()
+        if let entries = journalEntries {
+            for entry in entries {
+                dates.append(entry.date)
+            }
+        }
+        
+        return convertStringToDateAndReturnArrayInAscendingOrder(dates)
+        
+    }
+    func getAllJournalEntries () -> [OPJournalEntry]? {
+        
+        //  Fetch Request and Predicate:  array of args supports multiple days
+        let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
+        var error: NSError?
+        
+        var result = managedContext.executeFetchRequest(jEntryFetch, error: &error) as? [OPJournalEntry]
+        
+        if let entries = result {
+            //result!.sort({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
+            return entries
+        } else {
+            //ignore error return JournalEntryResult.Error(error)
+            return nil
+        }
+    }
 
+    
     //MARK: Initialization Helper methods
     
     func getParentsArray(profile: OPProfile) -> [String] {
@@ -842,11 +895,6 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
     func selectJournalEntry(offsetFromCurrentDay: Int) -> String {
-        
-        //increase offset from current Dat
-        //offsetNumberOfDaysFromCurrentDay++
-        
-        
         //Get the date string for the selected day
         
         let calendar = NSCalendar.currentCalendar()

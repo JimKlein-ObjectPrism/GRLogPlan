@@ -92,6 +92,7 @@ class FoodJournalTableViewController: UITableViewController {
         }
     }
     override func viewWillAppear(animated: Bool) {
+        
         self.tableView.reloadData()
     }
     func getLast7Days(){

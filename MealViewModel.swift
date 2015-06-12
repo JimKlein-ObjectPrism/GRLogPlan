@@ -247,12 +247,20 @@ public class MealViewModel: NSObject {
 
     func getItemNameAndChoiceItemIndex ( #selectedIndexPath: NSIndexPath, selectedSegment: Int, mutableArray: [FoodItem] ) -> String
     {
+        var itemName = ""
+        if mutableArray.count == 1 {
+            let selectedFoodItem = mutableArray[0] as? FoodItemWithChoice
+            itemName = selectedFoodItem!.name
+            //let choiceName = selectedFoodItem!.choiceItems[selectedSegment]
+        } else {
         // cast always succeeds because only FoodItemWithChoice items get the cells with the segmented controls
         let choiceItem = mutableArray[selectedIndexPath.row] as? FoodItemWithChoice
-        let itemName = choiceItem!.name
+        itemName = choiceItem!.name
         //let childChoiceItemName = choiceItem!.choiceItems[selectedSegment].name
+        }
         var compoundName = itemName + "," + String(selectedSegment)
         return compoundName
+
     }
     
 //    //MARK: Alert View methods

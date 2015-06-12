@@ -26,7 +26,7 @@ public class PrintSevice {
         case let JournalEntryResult.Success(entry):
                 let patientRecord = dataStore.currentProfile()
                 let profile = patientRecord.profile
-            let htmlString = buildLogEntryPrintOut(profile,  breakfastLogEntry: entry.breakfast, morningSnackLogEntry: entry.morningSnack, lunchLogEntry: entry.lunch, afternoonSnackLogEntry: entry.afternoonSnack, dinnerLogEntry: entry.dinner, eveningSnackLogEntry: entry.eveningSnack)
+            let htmlString = buildLogEntryPrintOut(journalEntryDateString, profile: profile,  breakfastLogEntry: entry.breakfast, morningSnackLogEntry: entry.morningSnack, lunchLogEntry: entry.lunch, afternoonSnackLogEntry: entry.afternoonSnack, dinnerLogEntry: entry.dinner, eveningSnackLogEntry: entry.eveningSnack)
                 return htmlString
         case .EntryDoesNotExist:
             println("no journal entry found")
@@ -42,7 +42,8 @@ public class PrintSevice {
         return "None Selected"
     }
     
-    public func buildLogEntryPrintOut(profile: OPProfile,
+    public func buildLogEntryPrintOut(date: String,
+        profile: OPProfile,
         breakfastLogEntry: OPBreakfast,
         morningSnackLogEntry: OPMorningSnack,
         lunchLogEntry: OPLunch,
@@ -71,7 +72,7 @@ public class PrintSevice {
             
             
             var entryPage: String = htmlHeaderString +
-                buildFoodJournalHeader(profile, dateString: dataStore.currentJournalEntry.date) +
+                buildFoodJournalHeader(profile, dateString: date) +
                 //breakfast
                 tableOpeningTags +
                 buildBreakfastHTML(breakfastLogEntry.time!, breakfastLogEntry: breakfastLogEntry) +
@@ -215,7 +216,7 @@ public class PrintSevice {
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         
         summaryRow = summaryRow + buildListItem("Main Item", listItem: mealLogEntry.snackChoice)
-        summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
+        //summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
         
         if mealLogEntry.addOnRequired.boolValue {
             summaryRow = summaryRow + buildListItem("Add On", listItem: mealLogEntry.addOnText)
@@ -234,7 +235,7 @@ public class PrintSevice {
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         
         summaryRow = summaryRow + buildListItem("Main Item", listItem: mealLogEntry.snackChoice)
-        summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
+        //summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
         
         if mealLogEntry.addOnRequired.boolValue {
             summaryRow = summaryRow + buildListItem("Add On", listItem: mealLogEntry.addOnText)
@@ -253,7 +254,7 @@ public class PrintSevice {
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         
         summaryRow = summaryRow + buildListItem("Main Item", listItem: mealLogEntry.snackChoice)
-        summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
+        //summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
         
         if mealLogEntry.addOnRequired.boolValue {
             summaryRow = summaryRow + buildListItem("Add On", listItem: mealLogEntry.addOnText)

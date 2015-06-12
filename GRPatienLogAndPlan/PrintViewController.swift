@@ -13,7 +13,10 @@ UIScrollViewDelegate{
     
     var dataStore: DataStore!
     var appDelegate: AppDelegate?
+    
+    var selectedItemDateString: String?
 
+    @IBOutlet weak var tableView: UITableView!
     var oldX: CGFloat = 0.0
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -24,20 +27,40 @@ UIScrollViewDelegate{
  
     //var selectedCellDateValue: String!
     
-    lazy var logEntryFormattedForPrinting: String = {
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+        self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        
+        if  self.appDelegate != nil {
+            dataStore = appDelegate!.dataStore
+            journalEntries = dataStore.getListOfDatePropertyValuesForExisitingJournalEntries()
+        }
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        journalEntries = dataStore.getListOfDatePropertyValuesForExisitingJournalEntries()
+        tableView.reloadData()
+        
+    }
+
+    func logEntryFormattedForPrinting(date: String) -> String {
         
         var printService = PrintSevice()
         
-        if self.selectedJournalEntryIdentifiers.count > 0 {
-            let dateString = self.selectedJournalEntryIdentifiers[0]
+//        if self.selectedJournalEntryIdentifiers.count > 0 {
+//            let dateString = self.selectedJournalEntryIdentifiers[0]
             //TODO: MAKE FOLLOWING METHOD RETURN OPTIONAL STRING
-            return printService.getStringToPrint(dateString)
+            return printService.getStringToPrint(date)
+//        }
+//        return ""
         }
-        return ""
-    }()
     
-
     @IBAction func printJournalEntry(sender: AnyObject) {
+        if self.selectedJournalEntryIdentifiers.count > 0 {
         // 1 get the print controller
         let printController = UIPrintInteractionController.sharedPrintController()!
         // 2 set up job info
@@ -47,44 +70,24 @@ UIScrollViewDelegate{
         printController.printInfo = printInfo
         
         // 3  pass text to formatter
-//        let formatter = UIMarkupTextPrintFormatter(markupText: previewTextView.text)
-//        formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72)
-//        printController.printFormatter = formatter
-        let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting)
+        let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting(selectedJournalEntryIdentifiers[0]))
         formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72) // 1" margins
         printController.printFormatter = formatter
         
         // 4 present the print interface
         printController.presentAnimated(true, completionHandler: nil)
+        }
     }
-    @IBOutlet weak var previewTextView: UITextView!
     
     @IBAction func previewPrintJob(sender: AnyObject) {
         
-//        var printService = PrintSevice()
-//        if selectedJournalEntryIdentifiers.count > 0 {
-//        let dateString = selectedJournalEntryIdentifiers[0]
-//            //TODO: MAKE FOLLOWING METHOD RETURN OPTIONAL STRING
-//        let logEntryFormattedForPrinting = printService.getStringToPrint(dateString)
-        webView.loadHTMLString(logEntryFormattedForPrinting, baseURL: nil)
-     
+        if selectedItemDateString != nil {
+            let htmlString = logEntryFormattedForPrinting(selectedItemDateString!)
+            webView.loadHTMLString(htmlString, baseURL: nil)
+        }
         
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        //previewTextView.delegate = self
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-        self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
 
-        if  self.appDelegate != nil {
-            dataStore = appDelegate!.dataStore
-            journalEntries = dataStore.getPastWeekOfDates()
-            //self.currentDateHeader = dataStore.today
-        }
-
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -119,7 +122,9 @@ UIScrollViewDelegate{
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let logEntryIdentifier = journalEntries[indexPath.row]
         //only supporting single selection for now
-        self.selectedJournalEntryIdentifiers.insert(logEntryIdentifier, atIndex: 0)
+        
+        selectedItemDateString = journalEntries[indexPath.row]
+        //self.selectedJournalEntryIdentifiers.insert(logEntryIdentifier, atIndex: indexPath.row)
     }
 
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
@@ -137,7 +142,7 @@ UIScrollViewDelegate{
 
     //MARK: ScrollView Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+        //prevents horizontal scrolling of UIWebView:
         scrollView.setContentOffset(CGPointMake(oldX, scrollView.contentOffset.y), animated: false)
     }
 }

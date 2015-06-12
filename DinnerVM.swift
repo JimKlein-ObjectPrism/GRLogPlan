@@ -171,7 +171,8 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
             return cell
         case .AddOn:
             //let handler: AddOnItemSelectedDelegate = (self as? AddOnItemSelectedDelegate)!
-            return tableCell(tableView, cellForAddOnItem: indexPath, addOnText: self.dinner.addOnText!, switchState: self.dinner.addOnConsumed!, switchSelectionHandler: self)
+            let addOnConsumed = self.dinner.addOnConsumed ?? false
+            return tableCell(tableView, cellForAddOnItem: indexPath, addOnText: self.dinner.addOnText!, switchState: addOnConsumed, switchSelectionHandler: self)
         case .AdditionalInfo:
             switch indexPath.row {
             case 0:

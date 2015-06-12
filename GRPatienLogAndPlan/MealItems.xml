@@ -645,8 +645,8 @@
 
 
 	<foodItemWithChoice>
-		<name>MeatChoice</name>
-		<itemDescription>4 oz</itemDescription>
+		<name>4 oz </name>
+		<itemDescription>4 oz </itemDescription>
 		<serving>
 			<measurement>4</measurement>
 			<unit>oz</unit>
@@ -655,7 +655,7 @@
 		<menuItemType>MeatDinnerItem</menuItemType>
 		<choiceItems>
 			<foodItem>
-				<name>DinnerPoultry</name>
+				<name>Poultry</name>
 				<itemDescription>Poultry</itemDescription>
 				<serving>
 					<measurement>4</measurement>
@@ -665,7 +665,7 @@
 				<menuItemType>MeatDinnerItem</menuItemType>
 			</foodItem>
 			<foodItem>
-				<name>DinnerFish</name>
+				<name>Fish</name>
 				<itemDescription>Fish</itemDescription>
 				<serving>
 					<measurement>4</measurement>
@@ -675,7 +675,7 @@
 				<menuItemType>MeatDinnerItem</menuItemType>
 			</foodItem>
 			<foodItem>
-				<name>DinnerBeef</name>
+				<name>Beef</name>
 				<itemDescription>Beef</itemDescription>
 				<serving>
 					<measurement>4</measurement>
@@ -685,7 +685,7 @@
 				<menuItemType>MeatDinnerItem</menuItemType>
 			</foodItem>
 			<foodItem>
-				<name>DinnerPork</name>
+				<name>Pork</name>
 				<itemDescription>Pork</itemDescription>
 				<serving>
 					<measurement>4</measurement>
