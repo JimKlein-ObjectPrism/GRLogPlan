@@ -221,7 +221,8 @@ enum MealState {
         case let x where mealTimeState(x, timeRange: MealState.eveningSnackRange):
             return MealState.EveningSnack(MealState.eveningSnackRange)
         default:
-            assert(false, "Out of Bounds error in Meal State")
+            //assert(false, "Out of Bounds error in Meal State")
+            return MealState.Breakfast(MealState.breakfastRange)
         }
     }
     

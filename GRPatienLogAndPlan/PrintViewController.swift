@@ -60,7 +60,7 @@ UIScrollViewDelegate{
         }
     
     @IBAction func printJournalEntry(sender: AnyObject) {
-        if self.selectedJournalEntryIdentifiers.count > 0 {
+        if selectedItemDateString != nil {
         // 1 get the print controller
         let printController = UIPrintInteractionController.sharedPrintController()!
         // 2 set up job info
@@ -70,7 +70,7 @@ UIScrollViewDelegate{
         printController.printInfo = printInfo
         
         // 3  pass text to formatter
-        let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting(selectedJournalEntryIdentifiers[0]))
+        let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting(selectedItemDateString!))
         formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72) // 1" margins
         printController.printFormatter = formatter
         

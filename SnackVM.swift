@@ -84,7 +84,8 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         else
         {
             //TODO: handle Index Out of Range error
-            assert(false, "Unimplemented error handler for Index Out of Range.")
+            //assert(false, "Unimplemented error handler for Index Out of Range.")
+            return 0
         }
     }
     
@@ -106,7 +107,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
 //            if let choiceCell = cell as? NewChoiceTableViewCell {
 //                choiceCell.segmentSelectionHandler = self
 //            }
-            return cell
+//            return cell
         case .Medicine:
             let cell: MedicineTableViewCell = self.tableCell(tableView, cellForMedicineItem: indexPath, medicineText: snack.medicineText!, switchState: self.snack.medicineConsumed!)
             cell.medicineTakenHandler = self

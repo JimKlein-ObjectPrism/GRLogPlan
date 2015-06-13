@@ -125,7 +125,8 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
         else
         {
             //TODO: handle Index Out of Range error
-            assert(false, "Unimplemented error handler for Index Out of Range.")
+            return 0
+            //assert(false, "Unimplemented error handler for Index Out of Range.")
         }
     }
     

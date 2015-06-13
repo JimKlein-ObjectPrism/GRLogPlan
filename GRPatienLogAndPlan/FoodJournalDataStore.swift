@@ -627,9 +627,6 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 self.currentRecord = OPPatientRecord(entity: recordEntity!,
                     insertIntoManagedObjectContext: managedContext)
                 
-                //                currentRecord.firstName = "First Name"
-                //                currentRecord.lastName = "Last Name"
-                
                 let profileEntity = NSEntityDescription.entityForName("OPProfile",
                     inManagedObjectContext: managedContext)
                 
@@ -649,8 +646,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not fetch: \(error)")
         }
         
-        
-        assert(false, "Unimplemented")
+        return currentRecord
+        //assert(false, "Unimplemented")
     }
     
     func getNewJournalEntry (dateIdentifier: String) -> OPJournalEntry {
@@ -745,7 +742,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         } else {
             println("Could not Fetch: \(error)")
             //TODO: handle error more gracefully
-            assert(false, "Core Data Error fetching Journal Entry.")
+            //assert(false, "Core Data Error fetching Journal Entry.")
+            return nil
         }
     }
     
@@ -948,8 +946,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     func currentRecordAndProfile() -> OPPatientRecord {
 
         //let managedCon = managedContext
-        let recordEntity = NSEntityDescription.entityForName("OPPatientRecord",
-            inManagedObjectContext: managedContext)
+        
         let recordFetch = NSFetchRequest(entityName: "OPPatientRecord")
         
         var error: NSError?
@@ -959,6 +956,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         if let records = result {
             
             if records.count == 0 {
+                // Create mew record and profile
+                let recordEntity = NSEntityDescription.entityForName("OPPatientRecord",
+                    inManagedObjectContext: managedContext)
                 
                 self.currentRecord = OPPatientRecord(entity: recordEntity!,
                     insertIntoManagedObjectContext: managedContext)
@@ -968,6 +968,36 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 
                 currentRecord.profile = OPProfile(entity: profileEntity!,
                     insertIntoManagedObjectContext: managedContext)
+                
+                currentRecord.profile.firstAndLastName = "Sarah Smith"
+                
+                //Add Parent Name
+                let profileEntityParent2 = NSEntityDescription.entityForName("OPParent",
+                    inManagedObjectContext: managedContext)
+                
+                let parentEntry2 =  OPParent(entity: profileEntityParent2!,
+                    insertIntoManagedObjectContext: managedContext)
+                
+                parentEntry2.firstName = "Jon"
+                parentEntry2.lastName = "Smith"
+                
+                parentEntry2.profile = currentRecord.profile
+                
+                
+                //Add Parent Name
+                let profileEntityParent = NSEntityDescription.entityForName("OPParent",
+                    inManagedObjectContext: managedContext)
+                
+                let parentEntry =  OPParent(entity: profileEntityParent!,
+                    insertIntoManagedObjectContext: managedContext)
+                
+                parentEntry.firstName = "Susan"
+                parentEntry.lastName = "Smith"
+                
+                parentEntry.profile = currentRecord.profile
+                
+                
+
                 
                 return currentRecord
                 
@@ -979,7 +1009,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         } else {
             println("Could not fetch: \(error)")
         }
-        assert(false, "Unimplemented")
+        //assert(false, "Unimplemented")
+        return currentRecord
     }
     
     
@@ -999,12 +1030,63 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
 
-    func setJournalEntryToNewValue(numberOfDaysBeforeToday: Int) {
-        
-        
-    }
-    
+   
+   
     //MARK: Printing Methods
+    func getPrintableFoodItemReference(foodItemString: String) -> String {
+        //Parse MealItem.FoodChoice -> FoodItem.name + ChildChoiceItem.INDEX
+        let myArray: [String] = foodItemString.componentsSeparatedByString(",")
+        if myArray.count > 1 && myArray[0] != "Milk"{
+        let indexString: String? = myArray.last
+        let indexValue = indexString?.toInt()
+        
+        let parentName = myArray.first
+
+        //Get parent food item & cast as FoodItemChoice
+        let printableText = getParentTextToPrintAndChildItemNameFromFoodItemWithChoice(parentName!, indexOfChild: indexValue!)
+        
+        
+        //  return concatenate Parent.name + Child.name
+        // -> 4 oz Poultry with 1 oz Cheese
+        
+        return printableText
+        } else {
+            //return input that doesn't have the comma separator
+            return foodItemString
+        }
+ 
+    }
+    func getParentTextToPrintAndChildItemNameFromFoodItemWithChoice(parentName: String, indexOfChild: Int) -> String {
+        
+        var childItemName = ""
+        var parentTextToPrint = ""
+        var fullString = ""
+        for item in foodItems {
+            if item.name == parentName {
+                if let choiceItem = item as? FoodItemWithChoice {
+                    let child = choiceItem.choiceItems[indexOfChild]
+                    childItemName = child.name
+                    let childItemDescription = child.itemDescription
+                    
+                    if choiceItem.menuItemType == "MeatDinnerItem" {
+                        parentTextToPrint = choiceItem.name
+                        return parentTextToPrint + childItemName
+                    }
+                    else {
+                        //only other case is lunch item
+                        fullString = "A sandwich with " + choiceItem.itemDescription + " and " + childItemDescription
+                        return fullString
+                    }
+                    
+                }
+            }
+            if item.name == parentName {
+                
+            }
+        }
+        return fullString
+    }
+ 
     func getPastWeekOfDates() -> [String] {
         //let todayTuple = (today, getFullStyleDateString(today))
         var dates = [String]()
@@ -1294,7 +1376,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     //MARK: Array Assembly Items
     
-    var foodItems = [FoodItem]()
+    lazy var foodItems: [FoodItem] = {
+        return self.loadFoodItems()
+        }()
     
     
    
@@ -1306,14 +1390,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         //var logEntryItems = [Any]()
         
         //foodItems Array used by all foodItems
-        self.foodItems = self.loadFoodItems()
+        //self.foodItems = self.loadFoodItems()
         
-        logEntryItems.append(buildBreakfastItems(profile, journalItem: journalItem))
-        logEntryItems.append(self.buildLunchItems(profile, journalItem: journalItem))
-        logEntryItems.append(Snack())
-        logEntryItems.append(self.buildDinnerItems(profile, journalItem: journalItem))
-        logEntryItems.append(Medicine())
-        logEntryItems.append(Activity())
+//        logEntryItems.append(buildBreakfastItems(profile, journalItem: journalItem))
+//        logEntryItems.append(self.buildLunchItems(profile, journalItem: journalItem))
+//        logEntryItems.append(Snack())
+//        logEntryItems.append(self.buildDinnerItems(profile, journalItem: journalItem))
+//        logEntryItems.append(Medicine())
+//        logEntryItems.append(Activity())
         //TODO:  Load additional meal items
         
         return logEntryItems

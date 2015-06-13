@@ -75,7 +75,7 @@ public class PrintSevice {
                 buildFoodJournalHeader(profile, dateString: date) +
                 //breakfast
                 tableOpeningTags +
-                buildBreakfastHTML(breakfastLogEntry.time!, breakfastLogEntry: breakfastLogEntry) +
+                buildBreakfastHTML(breakfastLogEntry.time, breakfastLogEntry: breakfastLogEntry) +
                 tableClosingTags +
                 spacerTags +
                 
@@ -196,7 +196,7 @@ public class PrintSevice {
     public func buildMealSummaryRow(mealLogEntry: OPLunch) -> String {
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         
-        summaryRow = summaryRow + buildListItem("Main Item", listItem: mealLogEntry.lunchChoice)
+        summaryRow = summaryRow + buildListItem("Sandwich Item", listItem: mealLogEntry.lunchChoice)
         summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
         
         if mealLogEntry.addOnRequired.boolValue {
@@ -295,9 +295,16 @@ public class PrintSevice {
     }
     
     public func buildListItem(caption: String, listItem: String?) -> String {
-        var itemString = listItem ?? nilEntryNote()
-        var listItemText = "<b>\(caption):  </b>"
-        var foodItem = listItemText  + itemString
+        var foodItem = ""
+        let listItemCaption = "<b>\(caption):  </b>"
+        if let stringToPrint = listItem {
+        var itemString = dataStore.getPrintableFoodItemReference(stringToPrint)
+        foodItem = listItemCaption  + itemString
+            
+        } else {
+            foodItem = listItemCaption + nilEntryNote()
+        }
+        
         return "<li>\(foodItem)</li>"
     }
     
