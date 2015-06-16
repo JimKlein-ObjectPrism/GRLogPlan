@@ -53,6 +53,10 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        //progammatically stops view controller from adding an inset equal to the height of the Nav bar to the top of the table view
+        self.automaticallyAdjustsScrollViewInsets = false
+
+        
         switch currentDisplayType! {
         case  ParentViewControllerDisplayType.Parents:
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped")

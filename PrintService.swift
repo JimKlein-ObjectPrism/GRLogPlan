@@ -24,7 +24,7 @@ public class PrintSevice {
 
         switch result {
         case let JournalEntryResult.Success(entry):
-                let patientRecord = dataStore.currentProfile()
+                let patientRecord = dataStore.currentRecord
                 let profile = patientRecord.profile
             let htmlString = buildLogEntryPrintOut(journalEntryDateString, profile: profile,  breakfastLogEntry: entry.breakfast, morningSnackLogEntry: entry.morningSnack, lunchLogEntry: entry.lunch, afternoonSnackLogEntry: entry.afternoonSnack, dinnerLogEntry: entry.dinner, eveningSnackLogEntry: entry.eveningSnack)
                 return htmlString
@@ -176,8 +176,8 @@ public class PrintSevice {
     public func buildMealSummaryRow(mealLogEntry: OPBreakfast) -> String {
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         
-        summaryRow = summaryRow + buildListItem("Main Item", listItem: mealLogEntry.foodChoice)
-        summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
+        summaryRow = summaryRow + buildListItem_FoodItem("Main Item", listItem: mealLogEntry.foodChoice)
+        summaryRow = summaryRow + buildListItem_FoodItem("Fruit", listItem: mealLogEntry.fruitChoice)
         
         if mealLogEntry.addOnRequired.boolValue {
             summaryRow = summaryRow + buildListItem("Add On", listItem: mealLogEntry.addOnText)
@@ -196,7 +196,7 @@ public class PrintSevice {
     public func buildMealSummaryRow(mealLogEntry: OPLunch) -> String {
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         
-        summaryRow = summaryRow + buildListItem("Sandwich Item", listItem: mealLogEntry.lunchChoice)
+        summaryRow = summaryRow + buildListItem_FoodItem("Sandwich Item", listItem: mealLogEntry.lunchChoice)
         summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
         
         if mealLogEntry.addOnRequired.boolValue {
@@ -215,7 +215,7 @@ public class PrintSevice {
     public func buildMealSummaryRow(mealLogEntry: OPMorningSnack) -> String{
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         
-        summaryRow = summaryRow + buildListItem("Main Item", listItem: mealLogEntry.snackChoice)
+        summaryRow = summaryRow + buildListItem_FoodItem("Main Item", listItem: mealLogEntry.snackChoice)
         //summaryRow = summaryRow + buildListItem("Fruit", listItem: mealLogEntry.fruitChoice)
         
         if mealLogEntry.addOnRequired.boolValue {
@@ -273,8 +273,8 @@ public class PrintSevice {
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         
         summaryRow = summaryRow +
-            buildListItem("First Choice", listItem: mealLogEntry.meat)
-            + buildListItem("Second Choice", listItem: mealLogEntry.starch)
+            buildListItem_FoodItem("First Choice", listItem: mealLogEntry.meat)
+            + buildListItem_FoodItem("Second Choice", listItem: mealLogEntry.starch)
             + buildListItem("Third Choice", listItem: mealLogEntry.oil)
             + buildListItem("Vegetable", listItem: mealLogEntry.vegetable)
             //+ buildListItem("Vegetable", mealLogEntry.vegetable)
@@ -294,7 +294,7 @@ public class PrintSevice {
         //"<tbody><tr><td colspan=\"3\"><li>French Toast</li><li>Banana</li><li><b>Add On:</b> Yogurt</li></td></tr>" +
     }
     
-    public func buildListItem(caption: String, listItem: String?) -> String {
+    public func buildListItem_FoodItem(caption: String, listItem: String?) -> String {
         var foodItem = ""
         let listItemCaption = "<b>\(caption):  </b>"
         if let stringToPrint = listItem {
@@ -307,7 +307,19 @@ public class PrintSevice {
         
         return "<li>\(foodItem)</li>"
     }
-    
+    public func buildListItem(caption: String, listItem: String?) -> String {
+        var foodItem = ""
+        let listItemCaption = "<b>\(caption):  </b>"
+        if let stringToPrint = listItem {
+            //var itemString = dataStore.getPrintableFoodItemReference(stringToPrint)
+            foodItem = listItemCaption  + stringToPrint
+            
+        } else {
+            foodItem = listItemCaption + nilEntryNote()
+        }
+        
+        return "<li>\(foodItem)</li>"
+    }
     
     public func additionalInfoTableRow (time: String?, place: String?, parentInitials: String?) -> String{
 //        var dateFormatter = NSDateFormatter()

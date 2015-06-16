@@ -29,8 +29,11 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
     {
         
         //self.dataStore = dataStore
-        
-        self.dinner = dataStore.getDinner_Today()
+        if let entry = dataStore.currentJournalEntry {
+            self.dinner = VMDinner(fromDataObject: entry.dinner)
+        } else {
+            self.dinner = dataStore.getDinner_Today()
+        }
         self.meatItemArray = dataStore.buildFoodItemArray(filterString: "MeatDinnerItem")
         self.starchArray = dataStore.buildFoodItemArray(filterString: "StarchDinnerItem")
         self.oilArray = dataStore.buildFoodItemArray(filterString: "OilDinnerItem")
@@ -167,7 +170,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
             cell.requiredItemsHandler = self
             return cell
         case .Medicine:
-            let cell: MedicineTableViewCell = self.tableCell(tableView, cellForMedicineItem: indexPath, medicineText: dinner.medicineText!, switchState: self.dinner.medicineConsumed!)
+            let cell: MedicineTableViewCell = self.tableCell(tableView, cellForMedicineItem: indexPath, medicineText: dinner.medicineText, switchState: self.dinner.medicineConsumed)
             cell.medicineTakenHandler = self
             return cell
         case .AddOn:

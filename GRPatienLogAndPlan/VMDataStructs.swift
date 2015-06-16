@@ -9,6 +9,20 @@
 import Foundation
 
 //MARK: Meal Item types
+//extension OPProfile {
+//    
+//    
+//}
+
+protocol MedicineAndAddOnMeal {
+     var addOnRequired: Bool { get set }
+     var addOnText: String? { get set }
+     var addOnConsumed: Bool? { get set }
+     var medicineRequired: Bool { get set }
+     var medicineText: String? { get set }
+     var medicineConsumed: Bool? { get set }
+    }
+
 public class VMProfile {
     /*
 var addOnRequired = false
@@ -593,10 +607,10 @@ public struct VMDinner {
     
     public var addOnRequired: Bool = false
     public var addOnText: String?
-    public var addOnConsumed: Bool? = false
+    public var addOnConsumed: Bool?
     public var medicineRequired: Bool = false
     public var medicineText: String?
-    public var medicineConsumed: Bool? = false
+    public var medicineConsumed: Bool?
     
     public var parentInitials: String?
     public var location: String?

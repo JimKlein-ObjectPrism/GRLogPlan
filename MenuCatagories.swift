@@ -61,32 +61,32 @@ public struct MenuCategoryEnumHelper {
         
         for o in profile.medicineLIst  {
             var medicineText = ""
-            if let item = o as? OPMedicine {
-                let pTime = PrescribedTimeForAction(rawValue: item.targetTimePeriodToTake.integerValue)!
+            if let medicine = o as? OPMedicine {
+                let pTime = PrescribedTimeForAction(rawValue: medicine.targetTimePeriodToTake.integerValue)!
                 switch pTime {
                 case PrescribedTimeForAction.BreakfastTime:
                     if mealOrSnackName == pTime.name() {
-                        setValues(item.name.integerValue)
+                        setValues(medicine.name.integerValue)
                      }
                 case .MorningSnack:
                     if mealOrSnackName == pTime.name() {
-                        setValues(item.name.integerValue)
+                        setValues(medicine.name.integerValue)
                     }
                 case .LunchTime:
                     if mealOrSnackName == pTime.name() {
-                        setValues(item.name.integerValue)
+                        setValues(medicine.name.integerValue)
                     }
                 case .AfternoonSnack:
                     if mealOrSnackName == pTime.name() {
-                        setValues(item.name.integerValue)
+                        setValues(medicine.name.integerValue)
                     }
                 case .DinnerTime:
                     if mealOrSnackName == pTime.name() {
-                        setValues(item.name.integerValue)
+                        setValues(medicine.name.integerValue)
                     }
                 case .EveningSnack:
                     if mealOrSnackName == pTime.name() {
-                        setValues(item.name.integerValue)
+                        setValues(medicine.name.integerValue)
                     }
                 }//end switch
             }//end if let
@@ -214,7 +214,7 @@ public enum SnackMenuCategory {
         
     }
     
-    public static func configureMenuChoice(profile: OPProfile, journalEntry: OPJournalEntry){
+    public static func configureMenuChoice(profile: OPProfile, inout journalEntry: OPJournalEntry){
         func configureMorningSnackMenuChoice(profile: OPProfile, journalEntry: OPJournalEntry){
             if profile.morningSnackRequired.boolValue {
                 morningSnackCaseItems.removeAll(keepCapacity: false)
@@ -440,6 +440,7 @@ public enum DinnerMenuCategory {
             caseItems.append(.Medicine)
             journalEntry.dinner.medicineRequired = true
             journalEntry.dinner.medicineText = medicineMatch.medicineName
+            
         }
         caseItems.append(.AdditionalInfo)
     }

@@ -29,6 +29,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
     
     var currentRecord: OPPatientRecord!
+    var currentProfile: OPProfile!
     var currentJournalEntry: OPJournalEntry!
     
     var todayJournalEntry: OPJournalEntry!
@@ -105,7 +106,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 self.currentRecord = self.currentRecordAndProfile()
                 
                 //initialize Profile - use placeholder to initialize
-                let profile = currentRecord.profile
+                currentProfile = currentRecord.profile
+                let profile = currentProfile
                 
                 //initialize journal entry
                 
@@ -168,19 +170,41 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         PrescribedTimeForAction.configureTimes(profile)
 
-        updateMealCategoryEnumsAndProfileFields(profile)
+        initializeMealCategoryEnumsAndProfileFields()
 
     }
     
-    func updateMealCategoryEnumsAndProfileFields (profile: OPProfile){
-        
+    func initializeMealCategoryEnumsAndProfileFields (){
+        let profile = currentProfile
         //update enums
         //configure MenuChoice also sets medicine/addonRequired fields in journalentry.meal
         BreakfastMenuCategory.configureMenuChoice(profile, journalEntry: &currentJournalEntry!)
         LunchMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
-        SnackMenuCategory.configureMenuChoice(profile, journalEntry: self.currentJournalEntry!)
+        SnackMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
         DinnerMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
 
+
+    }
+    
+    func updateMealCategoryEnumsAndProfileFields (){
+        let profile = currentProfile
+        //update enums
+        //configure MenuChoice also sets medicine/addonRequired fields in journalentry.meal
+        BreakfastMenuCategory.configureMenuChoice(profile, journalEntry: &currentJournalEntry!)
+        LunchMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
+        SnackMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
+        DinnerMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
+        
+        //configure todayJournalEntry
+        BreakfastMenuCategory.configureMenuChoice(profile, journalEntry: &self.todayJournalEntry!)
+        LunchMenuCategory.configureMenuChoice(profile, journalEntry: &self.self.todayJournalEntry!)
+        SnackMenuCategory.configureMenuChoice(profile, journalEntry: &self.self.todayJournalEntry!)
+        DinnerMenuCategory.configureMenuChoice(profile, journalEntry: &self.self.todayJournalEntry!)
+        
+        Meals.configureMeals(profile)
+        
+        PrescribedTimeForAction.configureTimes(profile)
+        
     }
     //MARK: Profile Model
     public func savePatientName (patientName: String) -> OPProfile {
@@ -200,6 +224,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not save: \(error)")
             //return ( nil, error)
         }
+        updateMealCategoryEnumsAndProfileFields()
+
         Meals.configureMeals(currentRecord.profile)
         return currentRecord.profile
     }
@@ -210,8 +236,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not save: \(error)")
             //return ( nil, error)
         }
-        Meals.configureMeals(currentRecord.profile)
+        updateMealCategoryEnumsAndProfileFields()
 
+        Meals.configureMeals(currentRecord.profile)
+        
         return currentRecord.profile
     }
     
@@ -299,7 +327,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         if lastName == nil {
             errors.append(ParentProfileValidation.LastNameIsNil)
         }
-        if atIndex < 0 || atIndex > currentProfile().profile.parents.count  {
+        if atIndex < 0 || atIndex > currentProfile.parents.count  {
             errors.append(ParentProfileValidation.IndexOutOfRange)
         }
         
@@ -608,47 +636,64 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
     }
     
-    
-    func currentProfile() -> OPPatientRecord {
-        // TODO: Implement me!
-        //let managedCon = managedContext
-        let recordEntity = NSEntityDescription.entityForName("OPPatientRecord",
-            inManagedObjectContext: managedContext)
-        let recordFetch = NSFetchRequest(entityName: "OPPatientRecord")
+    //VMMeal Initialization Helper
+    private func initializeMemebers(meal: MedicineAndAddOnMeal)
+    {
         
-        var error: NSError?
-        
-        let result = managedContext.executeFetchRequest(recordFetch, error: &error) as! [OPPatientRecord]?
-        
-        if let records = result {
-            
-            if records.count == 0 {
-                
-                self.currentRecord = OPPatientRecord(entity: recordEntity!,
-                    insertIntoManagedObjectContext: managedContext)
-                
-                let profileEntity = NSEntityDescription.entityForName("OPProfile",
-                    inManagedObjectContext: managedContext)
-                
-                currentRecord.profile = OPProfile(entity: profileEntity!,
-                    insertIntoManagedObjectContext: managedContext)
-                
-                return currentRecord
-                
-            } else {
-                currentRecord = records[0] //as OPPatientRecord
-                
-                return currentRecord
-            }
-            
-            
-        } else {
-            println("Could not fetch: \(error)")
-        }
-        
-        return currentRecord
-        //assert(false, "Unimplemented")
     }
+    func initializeMedicineMembers (breakfast: VMBreakfast){
+        var matchesMeal = false
+        for medicine in currentProfile.medicineLIst {
+            let time = PrescribedTimeForAction(rawValue: medicine.targetTimePeriodToTake.integerValue)
+                //if time = PrescribedTimeForAction.BreakfastTime {
+                    
+                //}
+            
+        }
+    }
+
+    
+    
+//    func currentRecord() -> OPPatientRecord {
+//        // TODO: Implement me!
+//        //let managedCon = managedContext
+//        let recordEntity = NSEntityDescription.entityForName("OPPatientRecord",
+//            inManagedObjectContext: managedContext)
+//        let recordFetch = NSFetchRequest(entityName: "OPPatientRecord")
+//        
+//        var error: NSError?
+//        
+//        let result = managedContext.executeFetchRequest(recordFetch, error: &error) as! [OPPatientRecord]?
+//        
+//        if let records = result {
+//            
+//            if records.count == 0 {
+//                
+//                self.currentRecord = OPPatientRecord(entity: recordEntity!,
+//                    insertIntoManagedObjectContext: managedContext)
+//                
+//                let profileEntity = NSEntityDescription.entityForName("OPProfile",
+//                    inManagedObjectContext: managedContext)
+//                
+//                currentRecord.profile = OPProfile(entity: profileEntity!,
+//                    insertIntoManagedObjectContext: managedContext)
+//                
+//                return currentRecord
+//                
+//            } else {
+//                currentRecord = records[0] //as OPPatientRecord
+//                
+//                return currentRecord
+//            }
+//            
+//            
+//        } else {
+//            println("Could not fetch: \(error)")
+//        }
+//        
+//        return currentRecord
+//        //assert(false, "Unimplemented")
+//    }
     
     func getNewJournalEntry (dateIdentifier: String) -> OPJournalEntry {
         let profileEntity = NSEntityDescription.entityForName("OPJournalEntry",

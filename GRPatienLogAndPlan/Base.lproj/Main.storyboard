@@ -437,6 +437,10 @@
                                         <exclude reference="86b-8P-5Kc"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <exclude reference="ErF-FV-s4D"/>
+                                        <exclude reference="ZGI-md-rGD"/>
+                                        <exclude reference="ZSE-7L-LAG"/>
+                                        <exclude reference="uVG-O3-S9O"/>
                                         <exclude reference="E0D-4c-CmW"/>
                                         <exclude reference="oPa-8G-GoA"/>
                                         <exclude reference="73g-DO-SbH"/>
@@ -450,10 +454,6 @@
                                         <exclude reference="Msn-LD-Ka6"/>
                                         <exclude reference="qSd-Gv-QC3"/>
                                         <exclude reference="vbp-Sl-fMD"/>
-                                        <exclude reference="ErF-FV-s4D"/>
-                                        <exclude reference="ZGI-md-rGD"/>
-                                        <exclude reference="ZSE-7L-LAG"/>
-                                        <exclude reference="uVG-O3-S9O"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
@@ -463,6 +463,10 @@
                                         <include reference="86b-8P-5Kc"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <include reference="ErF-FV-s4D"/>
+                                        <include reference="ZGI-md-rGD"/>
+                                        <include reference="ZSE-7L-LAG"/>
+                                        <include reference="uVG-O3-S9O"/>
                                         <include reference="E0D-4c-CmW"/>
                                         <include reference="oPa-8G-GoA"/>
                                         <include reference="73g-DO-SbH"/>
@@ -476,10 +480,6 @@
                                         <include reference="Msn-LD-Ka6"/>
                                         <include reference="qSd-Gv-QC3"/>
                                         <include reference="vbp-Sl-fMD"/>
-                                        <include reference="ErF-FV-s4D"/>
-                                        <include reference="ZGI-md-rGD"/>
-                                        <include reference="ZSE-7L-LAG"/>
-                                        <include reference="uVG-O3-S9O"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -628,6 +628,9 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="16" y="12" width="42" height="21"/>
+                                            </variation>
                                         </label>
                                     </subviews>
                                     <constraints>
@@ -2078,6 +2081,7 @@
                                             <exclude reference="0B0-aF-9vM"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <exclude reference="cPt-oA-AZi"/>
                                             <exclude reference="Tqi-nd-h6O"/>
                                             <exclude reference="WJY-1k-4xI"/>
                                             <exclude reference="reK-aT-jk8"/>
@@ -2085,7 +2089,6 @@
                                             <exclude reference="xUr-km-rg3"/>
                                             <exclude reference="ylw-BP-yvb"/>
                                             <exclude reference="zXM-Ko-Pbh"/>
-                                            <exclude reference="cPt-oA-AZi"/>
                                             <exclude reference="3CV-pF-ma3"/>
                                             <exclude reference="HaY-5m-9rK"/>
                                             <exclude reference="cWa-jz-Oux"/>
@@ -2104,6 +2107,7 @@
                                             <include reference="0B0-aF-9vM"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <include reference="cPt-oA-AZi"/>
                                             <include reference="Tqi-nd-h6O"/>
                                             <exclude reference="WJY-1k-4xI"/>
                                             <exclude reference="reK-aT-jk8"/>
@@ -2111,7 +2115,6 @@
                                             <include reference="xUr-km-rg3"/>
                                             <exclude reference="ylw-BP-yvb"/>
                                             <exclude reference="zXM-Ko-Pbh"/>
-                                            <include reference="cPt-oA-AZi"/>
                                             <include reference="3CV-pF-ma3"/>
                                             <exclude reference="HaY-5m-9rK"/>
                                             <include reference="cWa-jz-Oux"/>

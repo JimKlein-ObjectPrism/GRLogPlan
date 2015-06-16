@@ -93,14 +93,14 @@ public class MealViewModel: NSObject {
         
     }
     
-    func tableCell(tableView: UITableView, cellForMedicineItem indexPath: NSIndexPath, medicineText: String, switchState: Bool) -> MedicineTableViewCell
+    func tableCell(tableView: UITableView, cellForMedicineItem indexPath: NSIndexPath, medicineText: String?, switchState: Bool?) -> MedicineTableViewCell
     {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(MedicineTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! MedicineTableViewCell
         
         cell.medicineLabel.text = medicineText
-        cell.medicineListingLable?.text = medicineText
-        cell.medicineSwitch.on = switchState
+        cell.medicineListingLable?.text = medicineText ?? "None Selected"
+        cell.medicineSwitch.on = switchState ?? false
         return cell
         
     }
@@ -126,9 +126,9 @@ public class MealViewModel: NSObject {
     }
     func tableCell(tableView: UITableView, cellForLocationItem indexPath: NSIndexPath, inout locationText: String?,  locationSelectionHandler: LocationSelectedDelegate) -> LocationTableViewCell
     {
-        
+        // Location is set from the current meal item if it has been selected, if not, we set it to the first location in the LocationForMeal enum
         let cell: LocationTableViewCell = tableView.dequeueReusableCellWithIdentifier(LocationTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! LocationTableViewCell
-        //cell.textLabel?.text = currentItem.name
+        
         cell.locationButtonHandler = locationSelectionHandler
         var location = ""
         if locationText != nil {
@@ -144,6 +144,7 @@ public class MealViewModel: NSObject {
     }
     func tableCell(tableView: UITableView, cellForParentInitialsItem indexPath: NSIndexPath, inout parentInitialsText: String?,  parentSelectionHandler: ParentInitialsSelectedDelegate) -> ParentInitsTableViewCell
     {
+        //parent initals are set to selected value, or a default value of the initials for the first item in profile.Parents is displayed by dataStore method defaultParentInitials()
         dataStore.defaultParentInitials()
         let cell: ParentInitsTableViewCell = tableView.dequeueReusableCellWithIdentifier(ParentInitsTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! ParentInitsTableViewCell
         cell.parentButtonHandler = parentSelectionHandler
@@ -161,7 +162,7 @@ public class MealViewModel: NSObject {
     }
     func tableCell(tableView: UITableView, cellForTimeItem indexPath: NSIndexPath, inout time: String?,  timeSelectionHandler: TimeSelectedDelegate) -> TimeTableViewCell
     {
-        
+        //TODO: Initialize this to a median tme for the specific meal.  currently initializes to current time.
         let cell: TimeTableViewCell = tableView.dequeueReusableCellWithIdentifier(TimeTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! TimeTableViewCell
         
         cell.timeSelectedHandler = timeSelectionHandler

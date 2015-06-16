@@ -25,9 +25,29 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     init(dataStore: DataStore, snackTime: SnackTime)
     {
         self.snackTime = snackTime
-        //self.dataStore = dataStore
+        switch snackTime {
+        case SnackTime.Morning:
+            if let entry = dataStore.currentJournalEntry {
+                self.snack = VMSnack(fromDataObject: entry.morningSnack )
+            } else {
+                self.snack = dataStore.getSnack_Today(snackTime)
+            }
+        case .Afternoon:
+            if let entry = dataStore.currentJournalEntry {
+                self.snack = VMSnack(fromDataObject: entry.afternoonSnack )
+            } else {
+                self.snack = dataStore.getSnack_Today(snackTime)
+            }
+
+        case .Evening:
+        if let entry = dataStore.currentJournalEntry {
+            self.snack = VMSnack(fromDataObject: entry.eveningSnack )
+        } else {
+            self.snack = dataStore.getSnack_Today(snackTime)
+            }
+        }
         
-        self.snack = dataStore.getSnack_Today(snackTime)
+        //self.snack = dataStore.getSnack_Today(snackTime)
         self.snackItemArray = dataStore.buildFoodItemArray(filterString: "SnackItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
         

@@ -58,6 +58,8 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     override init(dataStore: DataStore)
     {
         //dataStore = dataStore
+        dataStore.updateMealCategoryEnumsAndProfileFields()
+
         if let entry = dataStore.currentJournalEntry {
             self.breakfast = VMBreakfast(fromDataObject: entry.breakfast)
         } else {
@@ -86,6 +88,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         }
 
         //TODO: Get time at init, i
+        dataStore.updateMealCategoryEnumsAndProfileFields()
 
     }
     

@@ -23,9 +23,11 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     
     override init(dataStore: DataStore)
     {
-        //self.dataStore = dataStore
-        
-        self.lunch = dataStore.getLunch_Today()
+        if let entry = dataStore.currentJournalEntry {
+            self.lunch = VMLunch(fromDataObject: entry.lunch)
+        } else {
+            self.lunch = dataStore.getLunch_Today()
+        }        
         self.lunchItemArray = dataStore.buildFoodItemArray(filterString: "LunchItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
         

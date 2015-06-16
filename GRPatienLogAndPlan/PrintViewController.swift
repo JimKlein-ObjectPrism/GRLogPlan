@@ -71,6 +71,8 @@ UIScrollViewDelegate{
         
         // 3  pass text to formatter
         let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting(selectedItemDateString!))
+           
+        //let formatter = UIMarkupTextPrintFormatter(markupText: "<br /><h2>Welcome to SourceFreeze!!!</h2>")
         formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72) // 1" margins
         printController.printFormatter = formatter
         
