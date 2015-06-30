@@ -67,6 +67,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         }
         
         // Set up variables to keep track of togging from lists of choices
+        // These may be moved to the Presenter in a VIPER refactor
         
         self.foodItemArray = dataStore.buildFoodItemArray(filterString: "BreakfastItem")
         self.fruitArray = dataStore.buildFoodItemArray(filterString: "FruitItem")
