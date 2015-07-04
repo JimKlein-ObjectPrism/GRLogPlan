@@ -61,6 +61,70 @@ public enum Meals {
         }
     }
     
+    func menuItemSelectionComplete ( currentJournalEntry: OPJournalEntry) -> Bool {
+        switch self {
+        case .Breakfast:
+            let breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
+            let result = breakfast.validate()
+            switch result {
+            case .Success:
+                return true
+            case .Failure:
+                return false
+            }
+            
+        case .MorningSnack:
+            let mSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
+            let result = mSnack.validate()
+            switch result {
+            case .Success:
+                return true
+            case .Failure:
+                return false
+            }
+
+        case .Lunch:
+            let lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
+            let result = lunch.validate()
+            switch result {
+            case .Success:
+                return true
+            case .Failure:
+                return false
+            }
+
+        case .AfternoonSnack:
+            let aSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
+            let result = aSnack.validate()
+            switch result {
+            case .Success:
+                return true
+            case .Failure:
+                return false
+            }
+        case .Dinner:
+            let dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
+            let result = dinner.validate()
+            switch result {
+            case .Success:
+                return true
+            case .Failure:
+                return false
+            }
+
+        case .EveningSnack:
+            let eSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
+            let result = eSnack.validate()
+            switch result {
+            case .Success:
+                return true
+            case .Failure:
+                return false
+            }
+
+        }
+    }
+    
 }
 
 class FoodJournalTableViewController: UITableViewController {

@@ -901,6 +901,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             let fullName = parentsArray[0]
             var fullNameArr = split(fullName) {$0 == " "}
             
+            if fullNameArr.count > 1 {
             var firstName: String = fullNameArr[0]
             var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count-1] : nil
             
@@ -908,6 +909,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             var lastInitial = lastName?[lastName!.startIndex]
             
             return "\(firstInitial). \(lastInitial!)."
+            }
         }
         return nil
     }
@@ -1014,33 +1016,33 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 currentRecord.profile = OPProfile(entity: profileEntity!,
                     insertIntoManagedObjectContext: managedContext)
                 
-                currentRecord.profile.firstAndLastName = "Sarah Smith"
+//                currentRecord.profile.firstAndLastName = "Sarah Smith"
                 
-                //Add Parent Name
-                let profileEntityParent2 = NSEntityDescription.entityForName("OPParent",
-                    inManagedObjectContext: managedContext)
+//                //Add Parent Name
+//                let profileEntityParent2 = NSEntityDescription.entityForName("OPParent",
+//                    inManagedObjectContext: managedContext)
+//                
+//                let parentEntry2 =  OPParent(entity: profileEntityParent2!,
+//                    insertIntoManagedObjectContext: managedContext)
+//                
+////                parentEntry2.firstName = "Jon"
+////                parentEntry2.lastName = "Smith"
+//                
+//                parentEntry2.profile = currentRecord.profile
                 
-                let parentEntry2 =  OPParent(entity: profileEntityParent2!,
-                    insertIntoManagedObjectContext: managedContext)
                 
-                parentEntry2.firstName = "Jon"
-                parentEntry2.lastName = "Smith"
-                
-                parentEntry2.profile = currentRecord.profile
-                
-                
-                //Add Parent Name
-                let profileEntityParent = NSEntityDescription.entityForName("OPParent",
-                    inManagedObjectContext: managedContext)
-                
-                let parentEntry =  OPParent(entity: profileEntityParent!,
-                    insertIntoManagedObjectContext: managedContext)
-                
-                parentEntry.firstName = "Susan"
-                parentEntry.lastName = "Smith"
-                
-                parentEntry.profile = currentRecord.profile
-                
+//                //Add Parent Name
+//                let profileEntityParent = NSEntityDescription.entityForName("OPParent",
+//                    inManagedObjectContext: managedContext)
+//                
+//                let parentEntry =  OPParent(entity: profileEntityParent!,
+//                    insertIntoManagedObjectContext: managedContext)
+//                
+//                parentEntry.firstName = "Susan"
+//                parentEntry.lastName = "Smith"
+//                
+//                parentEntry.profile = currentRecord.profile
+//                
                 
 
                 

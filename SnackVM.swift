@@ -332,7 +332,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     //MARK: Save button
     func saveButtonTapped() {//-> ValidationResult {
         //validate
-        let result = self.snack.validateWithSnackMenuCategoryEnum()
+        let result = self.snack.validate()
         
         switch result{
         case .Success:

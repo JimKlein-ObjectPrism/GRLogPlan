@@ -29,7 +29,42 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
 
+//        let vc = ThreeViewController(nibName: "ThreeViewController", bundle: nil)
+//        navigationController?.pushViewController(vc, animated: true )
+        let vc : ProfileTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileTableViewController") as! ProfileTableViewController
+        
+        vc.navigationItem.title = "Initial Setup"
+        var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonPressed:")
+        
+        vc.navigationItem.rightBarButtonItem = sb
+
+        vc.preferredContentSize = CGSizeMake(100, 100);
+        //vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
+        //This will be the size you want
+        //self.myViewController.preferredContentSize = CGSizeMake(822, 549);
+        //presentViewController(vc, animated: true, completion: nil)
+//        [self presentViewController:self.myViewController animated:YES completion:nil];
+        //navigationController?.pushViewController(vc, animated: true )
+        //navigationController?.presentViewController(vc, animated: true, completion: nil)
+        //var window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        //setting the initial screen bounds of the view
+//        //self.viewController = ViewController()
+//        //creating object of ViewController class
+var navigationController = UINavigationController(rootViewController: vc)
+        navigationController.preferredContentSize = CGSizeMake(100, 100);
+        //        //creating an instance of UINavigationController & setting the rootViewController
+//        window.rootViewController = navigationController
+//        //setting the initial VieController as UINavigationController
+//        
+//        window.makeKeyAndVisible()
+        presentViewController(navigationController, animated: true, completion: nil)
     }
+    func doneButtonPressed (sender: UIBarButtonItem ){
+        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+       // navigationController?.popViewControllerAnimated(true)
+    }
+
     
     override func viewWillAppear(animated: Bool) {
 
@@ -48,23 +83,23 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func checkMealStateValidationStatus(mealState: MealState) -> String {
         switch mealState{
         case .Breakfast:
-            let status = dataStore.getBreakfast_Today().validateWithBreakfastMenuCategoryEnum()
+            let status = dataStore.getBreakfast_Today().validate()
             return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
         case .MorningSnack:
-            let status = dataStore.getSnack_Today(SnackTime.Morning).validateWithSnackMenuCategoryEnum()
+            let status = dataStore.getSnack_Today(SnackTime.Morning).validate()
             return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
         case .Lunch:
-            let status = dataStore.getLunch_Today().validateWithLunchMenuCategoryEnum()
+            let status = dataStore.getLunch_Today().validate()
             return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
         case .AfternoonSnack:
             let snack = dataStore.getSnack_Today(SnackTime.Afternoon)
-            let status = snack.validateWithSnackMenuCategoryEnum()
+            let status = snack.validate()
             return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
         case .Dinner:
-            let status = dataStore.getDinner_Today().validateWithDinnerMenuCategoryEnum()
+            let status = dataStore.getDinner_Today().validate()
             return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
         case .EveningSnack:
-            let status = dataStore.getSnack_Today(SnackTime.Evening).validateWithSnackMenuCategoryEnum()
+            let status = dataStore.getSnack_Today(SnackTime.Evening).validate()
             return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
         }
     }

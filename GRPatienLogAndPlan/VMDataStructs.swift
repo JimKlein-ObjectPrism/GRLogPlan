@@ -184,7 +184,7 @@ public struct VMBreakfast {
             self.time = t
         }
     }
-    public func validateWithBreakfastMenuCategoryEnum () -> ValidationResult {
+    public func validate () -> ValidationResult {
         var errorMessages = [String]()
         //this next line isn't necessary when datastore initialized enum
         //BreakfastMenuCategory.configureMenuChoice(OPProfile())
@@ -258,6 +258,9 @@ public struct VMLunch {
         if let addOnT = fromDataObject.addOnText {
             self.addOnText = addOnT
         }
+        
+    //TODO: should use optional chaining instead of if let, or nil coalescing operator
+       // self.addOnConsumed = fromDataObject.addOnConsumed?.boolValue
         if let aC = fromDataObject.addOnConsumed {
             self.addOnConsumed = aC.boolValue
         }
@@ -281,7 +284,7 @@ public struct VMLunch {
     }
 
     
-    public func validateWithLunchMenuCategoryEnum () -> ValidationResult {
+    public func validate () -> ValidationResult {
         var errorMessages = [String]()
         //this next line isn't necessary when datastore initialized enum
         //BreakfastMenuCategory.configureMenuChoice(OPProfile())
@@ -515,7 +518,7 @@ public struct VMSnack {
     
     
     
-    public func validateWithSnackMenuCategoryEnum () -> ValidationResult {
+    public func validate () -> ValidationResult {
         var errorMessages = [String]()
         //iterate over each section on the breakfast menu.  if an item is not required, it will not be part of the Breakfast  Categories enum and code below for that item will never be called.
         for i in 0 ..< SnackMenuCategory.count(SnackTime(rawValue: self.snackTime!)!){
@@ -642,7 +645,7 @@ public struct VMDinner {
         self.requiredItemsConsumed = fromDataObject.requiredItems.boolValue
     }
     
-    public func validateWithDinnerMenuCategoryEnum () -> ValidationResult {
+    public func validate () -> ValidationResult {
         var errorMessages = [String]()
         //iterate over each section on the breakfast menu.  if an item is not required, it will not be part of the Breakfast  Categories enum and code below for that item will never be called.
         for i in 0 ..< DinnerMenuCategory.count(){

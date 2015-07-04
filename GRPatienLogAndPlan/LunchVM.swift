@@ -317,7 +317,7 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     //MARK: Save button
     func saveButtonTapped() {//-> ValidationResult {
         //validate
-        let result = self.lunch.validateWithLunchMenuCategoryEnum()
+        let result = self.lunch.validate()
         
         switch result{
         case .Success:

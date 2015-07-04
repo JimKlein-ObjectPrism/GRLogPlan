@@ -396,7 +396,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
     //MARK: Save button
     func saveButtonTapped() {//-> ValidationResult {
         //validate
-        let result = self.dinner.validateWithDinnerMenuCategoryEnum()
+        let result = self.dinner.validate()
         
         switch result{
         case .Success:

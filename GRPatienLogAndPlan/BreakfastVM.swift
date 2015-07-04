@@ -365,7 +365,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     //MARK: Save button
     func saveButtonTapped() {//-> ValidationResult {
         //validate
-        let result = self.breakfast.validateWithBreakfastMenuCategoryEnum()
+        let result = self.breakfast.validate()
         
         switch result{
         case .Success:
