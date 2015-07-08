@@ -43,7 +43,7 @@ public class TempProfile {
 //}
 
 public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
-    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
+    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate, NoteChangedDelegate
      {
     //let dataStore: DataStore
     var targetOPBreakfast: OPBreakfast?
@@ -54,6 +54,8 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     var currentFruitArray: [FoodItem]  = [FoodItem]()
     
     var breakfast: VMBreakfast
+    
+    var noteText: String? { return breakfast.note }
 
     override init(dataStore: DataStore)
     {
@@ -120,7 +122,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
             case .AddOn:
                 return 1
             case .AdditionalInfo:
-                return 3
+                return 4
             }
         }
         else
@@ -169,16 +171,11 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
                 case 0:
                     return tableCell(tableView, cellForParentInitialsItem: indexPath, parentInitialsText: &self.breakfast.parentInitials, parentSelectionHandler: self)
                 case 1:
-                    //if let location = self.breakfast.location {
-                        return tableCell(tableView , cellForLocationItem: indexPath, locationText: &self.breakfast.location, locationSelectionHandler: self)
-//                    }
-//                    else{
-//                        //set it to
-//                        var defaultLocation = LocationForMeal(rawValue: 0)?.name()
-//                        return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
-//                    }
-                default:
+                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: &self.breakfast.location, locationSelectionHandler: self)
+                case 2:
                     return tableCell(tableView, cellForTimeItem: indexPath, time: &breakfast.time , timeSelectionHandler: self)
+                default:
+                    return tableCell(tableView, cellForNoteItem: indexPath)
                     
                 }
                 
@@ -190,7 +187,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
 
     }
     
-    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath) {
+    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController) {
         //selectedItemTitle = dataSource[indexPath.row]
         let menuSection = BreakfastMenuCategory( value: indexPath.section)
             
@@ -209,6 +206,21 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
                     immutableArray: self.fruitArray,
                     propertyInModel: &breakfast.fruitChoice
                 )
+            case .AdditionalInfo:
+                if indexPath.row == 3 {
+                    let vc : NoteViewController = viewController.storyboard?.instantiateViewControllerWithIdentifier("NoteViewController") as! NoteViewController
+                    //vc.navigationItem.title = navBarTitle
+                    vc.vm = self
+                    vc.noteDelegate = self
+                    //vc.vm.tableView = vc.tableView
+                    //vc.vm.tableviewController = vc
+                    //vc.textView.text = breakfast.note ?? ""
+                    
+                    viewController.showViewController(vc as UIViewController, sender: vc)
+
+                    
+                }
+                return
             default:
                 return
             }
@@ -230,6 +242,11 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
             return
         }
     }
+    //Note Handler
+    func noteHandler(noteText: String){
+        setPropertyInModel(value: noteText, propertyInModel: &self.breakfast.note)
+    }
+
     //Medicine Switch Selection Handler
     func choiceItemSelectedHandler(medicineConsumed: Bool){
         setPropertyInModel(boolValue: medicineConsumed, boolPropertyInModel: &self.breakfast.medicineConsumed)

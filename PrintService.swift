@@ -125,7 +125,8 @@ public class PrintSevice {
         var tableBody: String =
         buildTitleRow("Breakfast") +
             buildMealSummaryRow(breakfastLogEntry) +
-            additionalInfoTableRow(time , place: breakfastLogEntry.location, parentInitials: breakfastLogEntry.parentInitials )// +
+            additionalInfoTableRow(time , place: breakfastLogEntry.location, parentInitials: breakfastLogEntry.parentInitials ) +
+            buildNoteRows(breakfastLogEntry.note)
         //"<p></p>"
         
         return tableBody
@@ -192,7 +193,16 @@ public class PrintSevice {
         return summaryRow + endingTags
         //"<tbody><tr><td colspan=\"3\"><li>French Toast</li><li>Banana</li><li><b>Add On:</b> Yogurt</li></td></tr>" +
     }
-    
+    public func buildNoteRows(noteText: String?) -> String {
+        if let text = noteText {
+            return "<tr><th colspan=\"3\" class=\"inline\">Note</th></tr>" +
+            "<tr><td colspan=\"3\" class=\"inline\">\(text)</td></tr>"
+
+        }
+        return ""
+
+    }
+
     public func buildMealSummaryRow(mealLogEntry: OPLunch) -> String {
         var summaryRow = "<tbody><tr><td colspan=\"3\">"
         

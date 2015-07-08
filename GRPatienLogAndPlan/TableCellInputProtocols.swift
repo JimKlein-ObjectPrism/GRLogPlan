@@ -32,4 +32,8 @@ protocol TimeSelectedDelegate {
     func timeSelectedHandler(selectedTime : NSDate)
 }
 
+protocol NoteChangedDelegate {
+    func noteHandler(noteText: String)
+    var noteText: String? { get }
+}
 

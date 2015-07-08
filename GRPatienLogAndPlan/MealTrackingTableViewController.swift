@@ -55,7 +55,7 @@ class MealTrackingTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        vm.didDeselectRowAtIndexPath( indexPath)
+        vm.didDeselectRowAtIndexPath( indexPath, viewController: self )
         //vm.tableView(tableView, didDeselectRowAtIndexPath: indexPath)
     }
     

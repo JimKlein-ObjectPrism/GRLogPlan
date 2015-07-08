@@ -203,7 +203,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
         
     }
     
-    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath) {
+    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController) {
 
         let menuSection = DinnerMenuCategory( value: indexPath.section)
         

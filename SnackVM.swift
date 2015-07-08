@@ -161,7 +161,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
     }
     
-    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath) {
+    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController) {
         //selectedItemTitle = dataSource[indexPath.row]
         let menuSection = SnackMenuCategory( value: indexPath.section, snackTime: self.snackTime)
         

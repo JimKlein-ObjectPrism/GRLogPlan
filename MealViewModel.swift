@@ -16,7 +16,7 @@ protocol MealViewModelDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
-    func didDeselectRowAtIndexPath (indexPath: NSIndexPath)
+    func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController)
     func saveButtonTapped()
     
     weak var tableView: UITableView! {get set}
@@ -178,6 +178,15 @@ public class MealViewModel: NSObject {
         cell.timeTextField.text = timeForPickerControl
         return cell
         
+    }
+    
+    func tableCell(tableView: UITableView, cellForNoteItem indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("NoteTableCell", forIndexPath: indexPath) as! UITableViewCell
+        
+        // Configure the cell...
+        //cell.textLabel?.text
+        
+        return cell
     }
     
     //MARK: Toggle Food Item Rows

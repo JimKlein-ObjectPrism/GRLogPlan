@@ -30,6 +30,8 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     
     var dataArray: [AnyObject]!
     
+    var initialSetup: Bool = false
+    
     var dataStore: DataStore!
     var profile: OPProfile!
 
@@ -48,6 +50,8 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             self.appDelegate = appDelegate
             dataStore = appDelegate.dataStore
             profile = dataStore.currentRecord.profile
+            
+            
         }
 
         firstNameTextField.text = dataStore.currentRecord.profile.firstAndLastName ?? "First And Last Name"
@@ -58,9 +62,51 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         
         self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
+        if initialSetup {
+            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonPressed:")
+            
+            self.navigationItem.rightBarButtonItem = sb
+            initialSetup = false
+
+        }
+        
 
     }
+    func doneButtonPressed (sender: UIBarButtonItem ){
+        let parents = dataStore.getParents()
+        if parents.count == 1 && parents[0].firstName == "" {
+            // Add alert message here
+            
+            let alertController = UIAlertController(title: "Parent Names Required", message: "Please add Parent Names.", preferredStyle: .Alert)
+            
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+//                // ...
+//            }
+//            alertController.addAction(cancelAction)
+            
+            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                // ...
+            }
+            alertController.addAction(OKAction)
+            
+            self.presentViewController(alertController, animated: true) {
+                // ...
+            }
+        } else {
+            //save patient name
+            dataStore.savePatientName(firstNameTextField.text)
+            navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            
+            let defaults = NSUserDefaults.standardUserDefaults()
+            
+            defaults.setBool(true, forKey: "profileIsValid")
+            
+        }
+        //TODO:  Add validation code here
+        // navigationController?.popViewControllerAnimated(true)
+    }
     
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

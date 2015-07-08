@@ -93,6 +93,7 @@
 		EFF449641AB87E66004A099F /* Type Defs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF449631AB87E66004A099F /* Type Defs.swift */; };
 		EFF449CB1ABB45C2004A099F /* JournalItemProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */; };
 		EFF4CECE1B0CD7B10022A5B0 /* LunchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4CECD1B0CD7B10022A5B0 /* LunchVM.swift */; };
+		EFF7874C1B4B378D00CAABF8 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7874B1B4B378D00CAABF8 /* NoteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,6 +199,7 @@
 		EFF449631AB87E66004A099F /* Type Defs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type Defs.swift"; sourceTree = "<group>"; };
 		EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalItemProtocols.swift; sourceTree = "<group>"; };
 		EFF4CECD1B0CD7B10022A5B0 /* LunchVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchVM.swift; sourceTree = "<group>"; };
+		EFF7874B1B4B378D00CAABF8 /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +258,7 @@
 				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */,
 				EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */,
+				EFF7874B1B4B378D00CAABF8 /* NoteViewController.swift */,
 				EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */,
 				EF1367941B1D5204007F1649 /* ParentViewController.swift */,
 				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
@@ -482,6 +485,7 @@
 		9864434C1A9E78FB00887579 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "ObjectPrism Corp.";
 				TargetAttributes = {
@@ -614,6 +618,7 @@
 				EF1367971B1D53CB007F1649 /* ParentViewTableViewCell.swift in Sources */,
 				EFCAF4AA1B1646600039D784 /* OPParent.swift in Sources */,
 				EF3587FE1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift in Sources */,
+				EFF7874C1B4B378D00CAABF8 /* NoteViewController.swift in Sources */,
 				EFCAF4B21B1646600039D784 /* OPBreakfast.swift in Sources */,
 				EFCAF4B61B1646610039D784 /* OPMorningSnack.swift in Sources */,
 				EF5D836D1B213CCF00D67E67 /* PrintService.swift in Sources */,

@@ -97,11 +97,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         super.init()
         
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(true, forKey: "profileIsValid")
         
-        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
-            if profile == true {
-            
+//        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
+//            if profile == true {
+//            
                 //initialize Patient Record
                 self.currentRecord = self.currentRecordAndProfile()
                 
@@ -148,10 +147,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 //MARK: update enums for View Model Initializations
                 updateItemChoiceEnums(profile)
 
-            } else {
-            profileIsValid = false
-            }
-        }
+//            }
+//            else {
+//            profileIsValid = false
+//            }
+//        }
         //super.init()
         todayJournalEntry = currentJournalEntry
         
@@ -214,7 +214,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not save: \(error)")
             //return ( nil, error)
         }
-
+        
         return currentRecord.profile
     }
     public func setMorningSnackRequired(isRequired: Bool) -> OPProfile {
@@ -837,7 +837,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             tupleArray.append(stringDateTuple(s, date!))
             dateArray.append(date!)
         }
-        //tupleArray.sort({$0.date.compare($1.date) == NSComparisonResult.OrderedDEscending })
+        
         dateArray.sort({$0.compare($1) == NSComparisonResult.OrderedDescending })
         var stringArray = [String]()
         for date in dateArray{
@@ -1232,6 +1232,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         setOptionalStringProperty(&mBreakfast.parentInitials, valuefromMealVM: breakfast.parentInitials)
         setOptionalStringProperty(&mBreakfast.location, valuefromMealVM: breakfast.location)
         setOptionalStringProperty(&mBreakfast.time, valuefromMealVM: breakfast.time)
+        setOptionalStringProperty(&mBreakfast.note, valuefromMealVM: breakfast.note)
         var error: NSError?
         if !managedContext.save(&error) {
             println("Could not save: \(error)")

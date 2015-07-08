@@ -141,7 +141,7 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
     }
     
-    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath) {
+    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController) {
         //selectedItemTitle = dataSource[indexPath.row]
         let menuSection = LunchMenuCategory( value: indexPath.section)
         

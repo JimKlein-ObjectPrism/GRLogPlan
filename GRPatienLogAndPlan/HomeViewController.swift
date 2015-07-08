@@ -24,45 +24,40 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
 
+        //TODO
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
+            if profile == true { // profile incomplete, so display profile vc
+                    return
+            }
+            else
+            {  // setup incomplete
+                displayInitialSetup()            }
+            }
+        else  // key doesn't exist:  display profile vc
+        {
+            displayInitialSetup()
+        }
+        
         //Timer for updating meal state
         let timerPeriod = dataStore.mealState.timeRemainingInCurrentTimeRange()
         
         NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
 
-//        let vc = ThreeViewController(nibName: "ThreeViewController", bundle: nil)
-//        navigationController?.pushViewController(vc, animated: true )
+    }
+    func displayInitialSetup () {
         let vc : ProfileTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileTableViewController") as! ProfileTableViewController
         
         vc.navigationItem.title = "Initial Setup"
-        var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonPressed:")
+        vc.initialSetup = true
         
-        vc.navigationItem.rightBarButtonItem = sb
-
         vc.preferredContentSize = CGSizeMake(100, 100);
-        //vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
-        //This will be the size you want
-        //self.myViewController.preferredContentSize = CGSizeMake(822, 549);
-        //presentViewController(vc, animated: true, completion: nil)
-//        [self presentViewController:self.myViewController animated:YES completion:nil];
-        //navigationController?.pushViewController(vc, animated: true )
-        //navigationController?.presentViewController(vc, animated: true, completion: nil)
-        //var window = UIWindow(frame: UIScreen.mainScreen().bounds)
-//        //setting the initial screen bounds of the view
-//        //self.viewController = ViewController()
-//        //creating object of ViewController class
-var navigationController = UINavigationController(rootViewController: vc)
+        var navigationController = UINavigationController(rootViewController: vc)
         navigationController.preferredContentSize = CGSizeMake(100, 100);
-        //        //creating an instance of UINavigationController & setting the rootViewController
-//        window.rootViewController = navigationController
-//        //setting the initial VieController as UINavigationController
-//        
-//        window.makeKeyAndVisible()
         presentViewController(navigationController, animated: true, completion: nil)
-    }
-    func doneButtonPressed (sender: UIBarButtonItem ){
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
-       // navigationController?.popViewControllerAnimated(true)
+        
     }
 
     
