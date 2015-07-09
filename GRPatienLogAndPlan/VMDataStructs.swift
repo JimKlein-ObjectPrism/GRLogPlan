@@ -183,6 +183,10 @@ public struct VMBreakfast {
         if let t = fromDataObject.time {
             self.time = t
         }
+        if let note = fromDataObject.note {
+            self.note = note
+        }
+
     }
     public func validate () -> ValidationResult {
         var errorMessages = [String]()
@@ -281,6 +285,10 @@ public struct VMLunch {
         if let t = fromDataObject.time {
             self.time = t
         }
+        if let note = fromDataObject.note {
+            self.note = note
+        }
+
     }
 
     
@@ -445,6 +453,9 @@ public struct VMSnack {
         if let t = fromDataObject.time {
             self.time = t
         }
+        if let note = fromDataObject.note {
+            self.note = note
+        }
 
     }
     
@@ -479,6 +490,9 @@ public struct VMSnack {
         if let t = fromDataObject.time {
             self.time = t
         }
+        if let note = fromDataObject.note {
+            self.note = note
+        }
 
     }
     
@@ -512,6 +526,9 @@ public struct VMSnack {
         //time is set at the point that the cell is created by VM
         if let t = fromDataObject.time {
             self.time = t
+        }
+        if let note = fromDataObject.note {
+            self.note = note
         }
 
     }

@@ -1260,6 +1260,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         setOptionalStringProperty(&currentJournalEntry.lunch.parentInitials, valuefromMealVM: lunch.parentInitials)
         setOptionalStringProperty(&currentJournalEntry.lunch.location, valuefromMealVM: lunch.location)
         setOptionalStringProperty(&currentJournalEntry.lunch.time, valuefromMealVM: lunch.time)
+        setOptionalStringProperty(&currentJournalEntry.lunch.note, valuefromMealVM: lunch.note)
+        
 
                 var error: NSError?
         if !managedContext.save(&error) {
@@ -1301,6 +1303,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             setOptionalStringProperty(&modelSnack.parentInitials, valuefromMealVM: snack.parentInitials)
             setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
             setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
+            setOptionalStringProperty(&modelSnack.note, valuefromMealVM: snack.note)
 
         case .Afternoon:
             self.afternoonSnack = snack
@@ -1319,6 +1322,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             setOptionalStringProperty(&modelSnack.parentInitials, valuefromMealVM: snack.parentInitials)
             setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
             setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
+            setOptionalStringProperty(&modelSnack.note, valuefromMealVM: snack.note)
 
         case .Evening:
             self.eveningSnack = snack
@@ -1337,6 +1341,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             setOptionalStringProperty(&modelSnack.parentInitials, valuefromMealVM: snack.parentInitials)
             setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
             setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
+            setOptionalStringProperty(&modelSnack.note, valuefromMealVM: snack.note)
         }
         var error: NSError?
         if !managedContext.save(&error) {

@@ -133,40 +133,42 @@ public class PrintSevice {
     }
     public func buildLunchHTML(time: String?, lunchLogEntry: OPLunch) -> String{
         
-        var tableBody: String = buildTitleRow("Lunch") + buildMealSummaryRow(lunchLogEntry) + additionalInfoTableRow(time , place: lunchLogEntry.location, parentInitials: lunchLogEntry.parentInitials ) //+
-        
+        var tableBody: String = buildTitleRow("Lunch") +
+            buildMealSummaryRow(lunchLogEntry) +
+            additionalInfoTableRow(time , place: lunchLogEntry.location, parentInitials: lunchLogEntry.parentInitials ) +
+            buildNoteRows(lunchLogEntry.note)
         return tableBody
     }
     public func buildMorningSnackHTML(snackName: String, time: String?, snackLogEntry: OPMorningSnack) -> String{
         
         var tableBody: String = buildTitleRow(snackName) +
             buildMealSummaryRow(snackLogEntry) +
-            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
-        
+            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
+            buildNoteRows(snackLogEntry.note)
         return tableBody
     }
     public func buildAfternoonSnackHTML(snackName: String, time: String?, snackLogEntry: OPAfternoonSnack) -> String{
         
         var tableBody: String = buildTitleRow(snackName) +
             buildMealSummaryRow(snackLogEntry) +
-            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
-        
+            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
+            buildNoteRows(snackLogEntry.note)
         return tableBody
     }
     public func buildEveningSnackHTML(snackName: String, time: String?, snackLogEntry: OPEveningSnack) -> String{
         
         var tableBody: String = buildTitleRow(snackName) +
             buildMealSummaryRow(snackLogEntry) +
-            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) //+
-        
+            additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
+            buildNoteRows(snackLogEntry.note)
         return tableBody
     }
     public func buildDinnerHTML(time: String?, dinnerLogEntry: OPDinner) -> String {
         
         var tableBody: String = buildTitleRow("Dinner") +
             buildMealSummaryRow(dinnerLogEntry) +
-            additionalInfoTableRow(time , place: dinnerLogEntry.place, parentInitials: dinnerLogEntry.parentInitials ) //+
-        //"<p>-</p>"
+            additionalInfoTableRow(time , place: dinnerLogEntry.place, parentInitials: dinnerLogEntry.parentInitials ) +
+            buildNoteRows(dinnerLogEntry.note)
         
         return tableBody
     }

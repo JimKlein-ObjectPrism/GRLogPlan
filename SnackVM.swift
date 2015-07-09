@@ -10,7 +10,7 @@ import Foundation
 
 
 public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
-    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
+    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate, NoteChangedDelegate
 {
     var snackTime: SnackTime
     //let dataStore: DataStore
@@ -21,6 +21,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     var currentFruitArray: [FoodItem]  = [FoodItem]()
     
     var snack: VMSnack
+    var noteText: String? { return snack.note }
     
     init(dataStore: DataStore, snackTime: SnackTime)
     {
@@ -98,7 +99,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
             case .AddOn:
                 return 1
             case .AdditionalInfo:
-                return 3
+                return 4
             }
         }
         else
@@ -148,8 +149,10 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
 //                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
 //                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
 //                }
-            default:
+            case 2:
                 return tableCell(tableView, cellForTimeItem: indexPath, time: &snack.time, timeSelectionHandler: self)
+            default:
+                return tableCell(tableView, cellForNoteItem: indexPath)
                 
             }
             
@@ -173,13 +176,15 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
                 immutableArray: self.snackItemArray,
                 propertyInModel: &snack.snackChoice
             )
-//        case .Fruit:
-//            toggleSelectionArrayAndPropertyInModel(
-//                indexPath,
-//                mutableArray: &currentFruitArray,
-//                immutableArray: self.fruitArray,
-//                propertyInModel: &snack.fruitChoice
-//            )
+        case .AdditionalInfo:
+            if indexPath.row == 3 {
+                let vc : NoteViewController = viewController.storyboard?.instantiateViewControllerWithIdentifier("NoteViewController") as! NoteViewController
+                vc.vm = self
+                vc.noteDelegate = self
+                
+                viewController.showViewController(vc as UIViewController, sender: vc)
+            }
+
         default:
             return
         }
@@ -256,7 +261,11 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         let returnString: () = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &self.snack.parentInitials)
         
     }
-    
+    //Note Handler
+    func noteHandler(noteText: String){
+        setPropertyInModel(value: noteText, propertyInModel: &self.snack.note)
+    }
+
     func timeSelectedHandler(selectedTime : NSDate){
         var dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle

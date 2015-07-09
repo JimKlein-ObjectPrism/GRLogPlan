@@ -9,7 +9,7 @@
 import Foundation
 
 public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
-    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate, RequiredItemsSelectedDelegate
+    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate, RequiredItemsSelectedDelegate, NoteChangedDelegate
 {
    
     //let dataStore: DataStore
@@ -24,7 +24,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
     var currentVegetableArray: [FoodItem]  = [FoodItem]()
 
     var dinner: VMDinner
-    
+    var noteText: String? { return dinner.note }
     override init(dataStore: DataStore)
     {
         
@@ -122,7 +122,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
             case .AddOn:
                 return 1
             case .AdditionalInfo:
-                return 3
+                return 4
             }
         }
         else
@@ -190,8 +190,10 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
 //                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
 //                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
 //                }
-            default:
+            case 2:
                 return tableCell(tableView, cellForTimeItem: indexPath, time: &dinner.time, timeSelectionHandler: self)
+            default:
+                return tableCell(tableView, cellForNoteItem: indexPath)
                 
             }
             
@@ -236,6 +238,15 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
                 immutableArray: self.vegetableArray,
                 propertyInModel: &dinner.vegetable
             )
+        case .AdditionalInfo:
+            if indexPath.row == 3 {
+                let vc : NoteViewController = viewController.storyboard?.instantiateViewControllerWithIdentifier("NoteViewController") as! NoteViewController
+                vc.vm = self
+                vc.noteDelegate = self
+                
+                viewController.showViewController(vc as UIViewController, sender: vc)
+            }
+
         default:
             return
         }
@@ -326,7 +337,10 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
 
         //setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.dinner.time)
     }
-    
+    //Note Handler
+    func noteHandler(noteText: String){
+        setPropertyInModel(value: noteText, propertyInModel: &self.dinner.note)
+    }
     
     //MARK: Alert View methods
     func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){

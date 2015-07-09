@@ -10,7 +10,7 @@ import Foundation
 
 
 public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSource, UITableViewDelegate, ChoiceItemSelectedDelegate, MedicineItemSelectedDelegate,
-    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate
+    AddOnItemSelectedDelegate, LocationSelectedDelegate, ParentInitialsSelectedDelegate, TimeSelectedDelegate, NoteChangedDelegate
 {
     //let dataStore: DataStore
     
@@ -18,7 +18,7 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     var currentLunchItemArray: [FoodItem] = [FoodItem]()
     let fruitArray: [FoodItem]
     var currentFruitArray: [FoodItem]  = [FoodItem]()
-    
+    var noteText: String? { return lunch.note }
     var lunch: VMLunch
     
     override init(dataStore: DataStore)
@@ -78,7 +78,7 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
             case .AddOn:
                 return 1
             case .AdditionalInfo:
-                return 3
+                return 4
             }
         }
         else
@@ -128,8 +128,10 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
 //                    var defaultLocation = LocationForMeal(rawValue: 0)?.name()
 //                    return tableCell(tableView , cellForLocationItem: indexPath, locationText: defaultLocation, locationSelectionHandler: self)
 //                }
-            default:
+            case 2:
                 return tableCell(tableView, cellForTimeItem: indexPath, time: &lunch.time, timeSelectionHandler: self)
+            default:
+                return tableCell(tableView, cellForNoteItem: indexPath)
                 
             }
             
@@ -160,6 +162,15 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
                 immutableArray: self.fruitArray,
                 propertyInModel: &lunch.fruitChoice
             )
+        case .AdditionalInfo:
+            if indexPath.row == 3 {
+                let vc : NoteViewController = viewController.storyboard?.instantiateViewControllerWithIdentifier("NoteViewController") as! NoteViewController
+                vc.vm = self
+                vc.noteDelegate = self
+                
+                viewController.showViewController(vc as UIViewController, sender: vc)
+            }
+
         default:
             return
         }
@@ -240,6 +251,11 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         let returnString: () = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &self.lunch.parentInitials)
         
     }
+    //Note Handler
+    func noteHandler(noteText: String){
+        setPropertyInModel(value: noteText, propertyInModel: &self.lunch.note)
+    }
+
     
     func timeSelectedHandler(selectedTime : NSDate){
         var dateFormatter = NSDateFormatter()
