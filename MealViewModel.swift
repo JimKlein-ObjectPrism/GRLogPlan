@@ -69,7 +69,7 @@ public class MealViewModel: NSObject {
                 let myArray: [String] = foodItemName!.componentsSeparatedByString(",")
                 //var firstName: String? = myArray.first
                 //if myArray.count > 1 {
-                
+                 
                 var choiceItemIndex = myArray.last?.toInt()
                 let selectedSegment = choiceItemIndex ?? 0
 
