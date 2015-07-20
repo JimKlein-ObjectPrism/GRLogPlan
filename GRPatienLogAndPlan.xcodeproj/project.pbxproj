@@ -38,6 +38,10 @@
 		EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */; };
 		EF157BC51AAF4A5500847AEE /* TimeEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */; };
 		EF157BCB1AB0940400847AEE /* MenuDetailDisplayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */; };
+		EF27C3951B5D54E800A7AC7E /* TextDrawItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27C3941B5D54E800A7AC7E /* TextDrawItem.swift */; };
+		EF27C3971B5D54F600A7AC7E /* PDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27C3961B5D54F600A7AC7E /* PDFWriter.swift */; };
+		EF27C3991B5D550100A7AC7E /* MealTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27C3981B5D550100A7AC7E /* MealTable.swift */; };
+		EF27C39B1B5D550B00A7AC7E /* HeaderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27C39A1B5D550B00A7AC7E /* HeaderInfo.swift */; };
 		EF3587FE1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */; };
 		EF374C7C1B0B904A005A29BE /* VMDataStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */; };
 		EF49F8331AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF49F8311AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld */; };
@@ -144,6 +148,10 @@
 		EF157BC21AAEA21900847AEE /* PlaceEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BC41AAF4A5500847AEE /* TimeEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeEntryTableViewCell.swift; sourceTree = "<group>"; };
 		EF157BCA1AB0940400847AEE /* MenuDetailDisplayProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDetailDisplayProtocols.swift; path = ../MenuDetailDisplayProtocols.swift; sourceTree = "<group>"; };
+		EF27C3941B5D54E800A7AC7E /* TextDrawItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDrawItem.swift; sourceTree = "<group>"; };
+		EF27C3961B5D54F600A7AC7E /* PDFWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFWriter.swift; sourceTree = "<group>"; };
+		EF27C3981B5D550100A7AC7E /* MealTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTable.swift; sourceTree = "<group>"; };
+		EF27C39A1B5D550B00A7AC7E /* HeaderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderInfo.swift; sourceTree = "<group>"; };
 		EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedsAddOnTableViewCell.swift; sourceTree = "<group>"; };
 		EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VMDataStructs.swift; sourceTree = "<group>"; };
 		EF49F8321AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GRPatientLogAndPlan.xcdatamodel; sourceTree = "<group>"; };
@@ -241,6 +249,7 @@
 		986443561A9E78FB00887579 /* GRPatienLogAndPlan */ = {
 			isa = PBXGroup;
 			children = (
+				EF27C3931B5D54A000A7AC7E /* PdfWriter */,
 				EF1367931B1D5192007F1649 /* CoreDataFiles */,
 				EF5D83701B224B3000D67E67 /* VM */,
 				EFB25FAD1B25FEA40086C85D /* NotInUse */,
@@ -396,6 +405,17 @@
 				EFF449631AB87E66004A099F /* Type Defs.swift */,
 			);
 			name = "Protocols and Type Defs";
+			sourceTree = "<group>";
+		};
+		EF27C3931B5D54A000A7AC7E /* PdfWriter */ = {
+			isa = PBXGroup;
+			children = (
+				EF27C39A1B5D550B00A7AC7E /* HeaderInfo.swift */,
+				EF27C3981B5D550100A7AC7E /* MealTable.swift */,
+				EF27C3961B5D54F600A7AC7E /* PDFWriter.swift */,
+				EF27C3941B5D54E800A7AC7E /* TextDrawItem.swift */,
+			);
+			name = PdfWriter;
 			sourceTree = "<group>";
 		};
 		EF5D83701B224B3000D67E67 /* VM */ = {
@@ -582,6 +602,7 @@
 				EFCAF4C01B1646610039D784 /* OPActivity.swift in Sources */,
 				EF5944671B0D3905009ED145 /* SnackVM.swift in Sources */,
 				EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */,
+				EF27C39B1B5D550B00A7AC7E /* HeaderInfo.swift in Sources */,
 				EFCDDBB11B0150D500A5F363 /* MealViewModel.swift in Sources */,
 				EF1367991B1D543F007F1649 /* ProfileDataStoreDelegate.swift in Sources */,
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
@@ -620,10 +641,13 @@
 				EF3587FE1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift in Sources */,
 				EFF7874C1B4B378D00CAABF8 /* NoteViewController.swift in Sources */,
 				EFCAF4B21B1646600039D784 /* OPBreakfast.swift in Sources */,
+				EF27C3991B5D550100A7AC7E /* MealTable.swift in Sources */,
 				EFCAF4B61B1646610039D784 /* OPMorningSnack.swift in Sources */,
 				EF5D836D1B213CCF00D67E67 /* PrintService.swift in Sources */,
 				EF1367951B1D5204007F1649 /* ParentViewController.swift in Sources */,
 				EF157BBD1AAEA20300847AEE /* MenuCellTableViewCell.swift in Sources */,
+				EF27C3951B5D54E800A7AC7E /* TextDrawItem.swift in Sources */,
+				EF27C3971B5D54F600A7AC7E /* PDFWriter.swift in Sources */,
 				EF7D0C421B03AE7C00ED50E5 /* TableCellInputProtocols.swift in Sources */,
 				986443811A9E868600887579 /* SWRevealViewController.m in Sources */,
 			);

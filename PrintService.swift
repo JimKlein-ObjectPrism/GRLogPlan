@@ -129,6 +129,7 @@ public class PrintSevice {
             buildNoteRows(breakfastLogEntry.note)
         //"<p></p>"
         
+        var summaryStrings: [String]
         return tableBody
     }
     public func buildLunchHTML(time: String?, lunchLogEntry: OPLunch) -> String{
