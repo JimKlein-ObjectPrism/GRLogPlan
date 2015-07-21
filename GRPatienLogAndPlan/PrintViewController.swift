@@ -51,12 +51,7 @@ UIScrollViewDelegate{
         
         var printService = PrintSevice()
         
-//        if self.selectedJournalEntryIdentifiers.count > 0 {
-//            let dateString = self.selectedJournalEntryIdentifiers[0]
-            //TODO: MAKE FOLLOWING METHOD RETURN OPTIONAL STRING
-            return printService.getStringToPrint(date)
-//        }
-//        return ""
+            return printService.getLogEntryToPrint(date).htmlString
         }
     
     @IBAction func printJournalEntry(sender: AnyObject) {
@@ -83,8 +78,8 @@ UIScrollViewDelegate{
     
     @IBAction func previewPrintJob(sender: AnyObject) {
         
-        if selectedItemDateString != nil {
-            let htmlString = logEntryFormattedForPrinting(selectedItemDateString!)
+        if let date = selectedItemDateString {
+            let htmlString = logEntryFormattedForPrinting(date)
             webView.loadHTMLString(htmlString, baseURL: nil)
         }
         
@@ -126,7 +121,12 @@ UIScrollViewDelegate{
         //only supporting single selection for now
         
         selectedItemDateString = journalEntries[indexPath.row]
-        //self.selectedJournalEntryIdentifiers.insert(logEntryIdentifier, atIndex: indexPath.row)
+        
+        if let date = selectedItemDateString {
+            let htmlString = logEntryFormattedForPrinting(date)
+            webView.loadHTMLString(htmlString, baseURL: nil)
+        }
+
     }
 
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {

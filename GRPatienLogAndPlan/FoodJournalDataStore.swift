@@ -1083,6 +1083,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     func getPrintableFoodItemReference(foodItemString: String) -> String {
         //Parse MealItem.FoodChoice -> FoodItem.name + ChildChoiceItem.INDEX
         let myArray: [String] = foodItemString.componentsSeparatedByString(",")
+        
         if myArray.count > 1 && myArray[0] != "Milk"{
         let indexString: String? = myArray.last
         let indexValue = indexString?.toInt()
@@ -1099,7 +1100,22 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return printableText
         } else {
             //return input that doesn't have the comma separator
-            return foodItemString
+            var fullString = ""
+            for item in foodItems {
+                if item.name == foodItemString {
+                    if item.menuItemType == "FruitItem" || item.menuItemType == "SnackItem" || item.menuItemType == "StarchDinnerItem" || item.menuItemType == "OilDinnerItem"{
+                        return item.itemDescription
+                    }
+                    if item.menuItemType == "VegetableItem" {
+                        
+                        return item.serving.servingDescription + " " + item.itemDescription
+                    }
+                    fullString = item.name + ", " + item.itemDescription
+                    
+                }
+            }
+
+            return fullString
         }
  
     }

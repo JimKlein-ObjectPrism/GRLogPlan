@@ -26,20 +26,28 @@ struct TableLineItems {
     let verticalYEndIndex: Int
 }
 
-struct MealInfoItem {
+public struct MealTableInfoItem {
     let logItems: [String]
-    let place: String
-    let time: String
-    let parent: String
+    let place: String?
+    let time: String?
+    let parent: String?
     let note: String?
-}
+    init (logItems: [String], place: String?, time: String?, parent: String?, note: String?)
+    {
+        self.logItems = logItems
+        self.place = place ?? "None Selected"
+        self.time = time ?? "None Selected"
+        self.parent = parent ?? "None Selected"
+        self.note = note
+    }
+   }
 
 class MealTable {
     //let drawItem: TextDrawingItem
     let logItems: [String]
-    let place: String
-    let time: String
-    let parent: String
+    let place: String?
+    let time: String?
+    let parent: String?
     let note: String?
     
     let immutableRowHeight: Int = 22
@@ -100,6 +108,13 @@ class MealTable {
     func buildLogItems() -> [String]{
         
         return logItems
+    }
+    init ( mealItem:  MealTableInfoItem){
+        logItems = mealItem.logItems
+        place = mealItem.place
+        time = mealItem.time
+        parent = mealItem.parent
+        note = mealItem.note
     }
     init ()
     {
