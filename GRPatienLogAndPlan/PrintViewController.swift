@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import MessageUI
 
 class PrintViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate,
-UIScrollViewDelegate{
+UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
     
     var dataStore: DataStore!
     var appDelegate: AppDelegate?
@@ -49,11 +50,27 @@ UIScrollViewDelegate{
 
     func logEntryFormattedForPrinting(date: String) -> String {
         
-        var printService = PrintSevice()
+            var printService = PrintSevice()
         
             return printService.getLogEntryToPrint(date).htmlString
         }
     
+    func getPDFFileName(patientName: String, date: String) -> String {
+        //file format Food Journal:  First Name Last Name - Date
+        var fileName = "Food Journal: " + patientName + " - " + date + ".pdf"
+        
+        if let arrayPaths: [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true) as? [String] {
+            
+            let path = arrayPaths[0]
+            
+            let pdfFileName: String = path.stringByAppendingPathComponent(fileName)
+            
+            fileName = pdfFileName
+            
+        }
+        
+        return fileName
+    }
     @IBAction func printJournalEntry(sender: AnyObject) {
         if selectedItemDateString != nil {
         // 1 get the print controller
@@ -67,7 +84,7 @@ UIScrollViewDelegate{
         // 3  pass text to formatter
         let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting(selectedItemDateString!))
            
-        //let formatter = UIMarkupTextPrintFormatter(markupText: "<br /><h2>Welcome to SourceFreeze!!!</h2>")
+        //let formatter = UIMarkupTextPrintFormatter(markupText: "<br /><h2>Hello World!!!</h2>")
         formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72) // 1" margins
         printController.printFormatter = formatter
         
@@ -77,12 +94,58 @@ UIScrollViewDelegate{
     }
     
     @IBAction func previewPrintJob(sender: AnyObject) {
+        // this will be the email button
+        
+        let name = dataStore.currentProfile.firstAndLastName
         
         if let date = selectedItemDateString {
-            let htmlString = logEntryFormattedForPrinting(date)
-            webView.loadHTMLString(htmlString, baseURL: nil)
+            let writer = PDFWriter()
+            let filePath = getPDFFileName(name, date: date)
+            let printService = PrintSevice()
+            let entry = printService.getLogEntryToPrint(date)
+            
+            writer.drawPDF(filePath, date: date, profile: dataStore.currentProfile, logEntryPrintItem: entry)
+            
+//            showPDFPreview(filePath)
+            
+            let emailSubjectLine = "Food Journal: " + name + " - " + date
+            sendPDFAsEmailAttachment(filePath, subjectLine: emailSubjectLine, fileName: emailSubjectLine)
+            
         }
         
+    }
+    func showPDFPreview (filePath: String) {
+        let vc = PDFViewController()
+        vc.filePath = filePath
+        self.showViewController(vc as UIViewController, sender: vc)
+
+    }
+    
+    func sendPDFAsEmailAttachment (pdfFilePath: String, subjectLine: String,  fileName: String) {
+        //Check to see the device can send email.
+        if( MFMailComposeViewController.canSendMail() ) {
+            println("Can send email.")
+            let mailComposer = MFMailComposeViewController()
+            
+            mailComposer.mailComposeDelegate = self
+            //Set the subject and message of the email
+            mailComposer.setSubject(subjectLine)
+            mailComposer.setMessageBody("Please find food journal log entry attached.", isHTML: false)
+            mailComposer.setToRecipients(["j.mesklein@gmail.com"])
+            
+            if let fileData = NSData(contentsOfFile: pdfFilePath) {
+                println("File data loaded.")
+                
+                mailComposer.addAttachmentData(fileData, mimeType: "application/pdf", fileName: fileName)
+                
+                self.presentViewController(mailComposer, animated: true, completion: nil)
+            }
+                
+//            }
+        }
+        else {
+            UIAlertView(title: NSLocalizedString("Error", value: "Error", comment: ""), message: NSLocalizedString("Your device doesn't support Mail messaging", value: "Your device doesn't support Mail messaging", comment: ""), delegate: nil, cancelButtonTitle: NSLocalizedString("OK", value: "OK", comment: "")).show()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -147,4 +210,10 @@ UIScrollViewDelegate{
         //prevents horizontal scrolling of UIWebView:
         scrollView.setContentOffset(CGPointMake(oldX, scrollView.contentOffset.y), animated: false)
     }
+    
+    //MARK: Mail delegate
+    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
 }

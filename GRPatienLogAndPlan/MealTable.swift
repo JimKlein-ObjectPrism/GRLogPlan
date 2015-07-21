@@ -27,13 +27,15 @@ struct TableLineItems {
 }
 
 public struct MealTableInfoItem {
+    let mealName : String
     let logItems: [String]
     let place: String?
     let time: String?
     let parent: String?
     let note: String?
-    init (logItems: [String], place: String?, time: String?, parent: String?, note: String?)
+    init (mealName: String, logItems: [String], place: String?, time: String?, parent: String?, note: String?)
     {
+        self.mealName = mealName
         self.logItems = logItems
         self.place = place ?? "None Selected"
         self.time = time ?? "None Selected"
@@ -44,31 +46,72 @@ public struct MealTableInfoItem {
 
 class MealTable {
     //let drawItem: TextDrawingItem
+    let mealName: String
     let logItems: [String]
-    let place: String?
-    let time: String?
-    let parent: String?
+    let place: String
+    let time: String
+    let parent: String
     let note: String?
     
     let immutableRowHeight: Int = 22
+    typealias LogEntryStringResult = (logEntryString: String, boldRanges: [ CFRange])
     
-    var logEntryString:String {
+    func logEntryString() -> LogEntryStringResult {
+        var rangeStart = 0
+        var ranges = [CFRange]()
+        
         var item = ""
         //  add a bullet to the string
-        for s in logItems {
-            item += appendStringToBullet(s)
+        for i in 0..<self.logItems.count {
+            var stringWithBullet = appendStringToBullet(logItems[i])
+           
+            if i < logItems.count - 1 {
+                stringWithBullet += "\n"
+            }
+            
+            item += stringWithBullet
+            
+            let stringLength = count(stringWithBullet)
+            
+            //get range of bolded text from start of line to colon:  * Main Item: Ham Sandwich
+            let pos = getPositionOfColon(stringWithBullet)
+            
+            ranges.append(CFRangeMake(rangeStart, pos))
+            
+            //increase counter for range start
+            rangeStart += stringLength
+            
         }
-        return item
+        return (item, ranges)
     }
     
+    func getPositionOfColon ( item: String) -> Int {
+        var pos = 0
+        let needle: Character = ":"
+        if let idx = find(item, needle) {
+            pos = distance(item.startIndex, idx)
+        }
+        return pos
+    }
+    
+    func appendStringToBullet(s: String) -> String{
+        var testString = ""
+        let bulletString = UnicodeScalar(0x2022)
+        testString.append(bulletString)
+        testString += "  "
+        testString += s
+        return testString
+    }
+    
+    
     var logEntriesHeight: Int {
-        return getHeightOfString(logEntryString)
+        return getHeightOfString(self.logEntryString().logEntryString)
     }
     
     var noteEntryHeight: Int {
-        var h = 0
+        var h = immutableRowHeight //height of Note Title row
         if note != nil {
-            h = getHeightOfString(note!)
+            h += getHeightOfString(note!) + 25//fudge for bottom row padding
         }
         return h
     }
@@ -94,14 +137,14 @@ class MealTable {
         }
         return h
     }
-    func getTableHeight (text: String) -> Int
+    func getTableHeight () -> Int
     {
         let h = immutableRowHeight + //Table Title: Meal Name
             logEntriesHeight +
             immutableRowHeight + //Addtional Items Titles
             immutableRowHeight + //Addtional Items Values
             immutableRowHeight + //Note Title
-        noteEntryHeight // Note text
+            noteEntryHeight // Note text
         
         return h
     }
@@ -110,36 +153,35 @@ class MealTable {
         return logItems
     }
     init ( mealItem:  MealTableInfoItem){
+        self.mealName = mealItem.mealName
         logItems = mealItem.logItems
-        place = mealItem.place
-        time = mealItem.time
-        parent = mealItem.parent
+        place = mealItem.place!//OK to force unwrap because MealTableInfoItem uses nil colascing operator to set default values in init()
+        time = mealItem.time!
+        parent = mealItem.parent!
         note = mealItem.note
     }
-    init ()
-    {
-        
-        var items =
-        ["Food Choice:  French Toast, 2 silices bread, 2 eggs, 1 c Milk \n",
-            "Fruit:  Cherries, 3/4 c"
-        ]
-        var bulletedItems = [String]()
-        
-        
-        
-        logItems = items
-        
-        place =  "Kitchen"
-        time =  "7:30 AM"
-        parent =  "J.S."
-        
-        note =  "Had this meal while visiting relatives away from home.  Fortunately, they have a very healthy live style."
-        for index in 0...items.count - 1 {
-            
-            bulletedItems.append(appendStringToBullet(items[index]))
-        }
- 
-    }
+//    init ()
+//    {
+//        mealName = "Placeholder"
+//        var items =
+//        ["Food Choice:  French Toast, 2 silices bread, 2 eggs, 1 c Milk \n",
+//            "Fruit:  Cherries, 3/4 c"
+//        ]
+//        var bulletedItems = [String]()
+//       
+//        logItems = items
+//        
+//        place =  "Kitchen"
+//        time =  "7:30 AM"
+//        parent =  "J.S."
+//        
+//        note =  "Had this meal while visiting relatives away from home.  Fortunately, they have a very healthy live style."
+//        for index in 0...items.count - 1 {
+//            
+//            bulletedItems.append(appendStringToBullet(items[index]))
+//        }
+// 
+//    }
     
     func buildMealTable(yIndexForTable: Int) -> (textItems:[TextDrawingItem], tableLines: TableLineItems)  {
         var drawingItems = [TextDrawingItem]()
@@ -148,13 +190,13 @@ class MealTable {
         
         horizontalLineIndices.append(yIndexForTable)
         // BEGIN TO ASSEMBLE TABLE
-        let drawingItem = singleEntryPerRowTitleCell("Breakfast", currentYValue: currentYOnPage)
+        let drawingItem = singleEntryPerRowTitleCell(mealName, currentYValue: currentYOnPage)
         drawingItems.append(drawingItem)
         horizontalLineIndices.append(Int(drawingItem.height))
         
         currentYOnPage = drawingItem.height//+= Int(drawingItem.frameRect.height)
         
-        var logItem = logEntryCell(logEntryString, currentYValue: currentYOnPage)
+        var logItem = logEntryCell(self.logEntryString(), currentYValue: currentYOnPage)
         drawingItems.append(logItem)
         
         currentYOnPage += Int(logItem.frameRect.height)
@@ -162,7 +204,7 @@ class MealTable {
         let verticalYStartIndex = Int(logItem.height - 4 )
         
         
-        let additionalInfoDrawItems = additionalInfoItems(["Kitchen","7:15 AM", "A.B."], currentYValue: currentYOnPage)
+        let additionalInfoDrawItems = additionalInfoItems([place,time, parent], currentYValue: currentYOnPage)
         for i in 0...2 {
             drawingItems.append(additionalInfoDrawItems[i])
         }
@@ -186,7 +228,7 @@ class MealTable {
             drawingItems.append(noteItem)
             horizontalLineIndices.append(Int(noteItem.height - 12))
         }
-        var x = getTableHeight("what'")
+        //var x = getTableHeight()
         let tableLines = TableLineItems(horizontalLineIndices: horizontalLineIndices, verticalYStartIndex: verticalYStartIndex, verticalYEndIndex: verticalYEndIndex)
         return (drawingItems, tableLines)
     }//end func
@@ -203,24 +245,78 @@ class MealTable {
         
         return TextDrawingItem(textToDraw: mutableStringRef, frameRect: frameRect )
     }
-    
-    func logEntryCell(entries: String, currentYValue: Int) -> TextDrawingItem {
+    func logEntryCell(entries: LogEntryStringResult, currentYValue: Int) -> TextDrawingItem {
         
         //TODO: use parameter "entries" instead of hard coded logItems string
-        var logItems = entries
+        var logItems = entries.logEntryString
         
         var font = UIFont(name: "Helvetica", size: 12.0)
-        let size = font?.sizeOfString(logItems, constrainedToWidth: 500.0)
+        let size = font?.sizeOfString(logItems, constrainedToWidth: 468.0)
         
         let mutableRefStr = buildMutableAttributedStringRef(logItems)
+        
+        for range in entries.boldRanges {
+            setTextBoldingForRange(range, text: mutableRefStr, fontSize: 12)
+        }
+        
         let height = size!.height
         
         let padding: CGFloat = 10
         //let frameRect = CGRectMake(CGFloat(72.0), CGFloat(currentYValue) + height + padding, CGFloat(612 - 144), height + padding/2)
         
-        let frameRect = cGRectForItem(72 , currentYValue: currentYValue, sizeOfFontOrItemCell: Int(height) + 10, leftPadding: 10, verticalPadding: 10, pageWidth: 612 - 144)
+        let frameRect = cGRectForItem(72 , currentYValue: currentYValue, sizeOfFontOrItemCell: Int(height) + 10, leftPadding: 10, verticalPadding: 10, pageWidth: 612 - 144 - 20)//subtract padding in width calculation
         return TextDrawingItem(textToDraw: mutableRefStr, frameRect: frameRect )
     }
+//    func logEntryCell(entries: [String], currentYValue: Int) -> TextDrawingItem {
+//        
+//        var plainStringToUseWithMeasureFunction: String = ""
+//        var mString = NSMutableAttributedString(string: "")
+//        //for each entry:  
+//        for i in 0..<entries.count{
+//            
+//            var string = entries[i]
+//            // Add new line \n to log entries  to count - 1, the last line in list
+//            if i < entries.count - 1 {
+//                string = string + "\n"
+//                plainStringToUseWithMeasureFunction += string
+//            }
+//            // Get index of :
+//            let needle: Character = ":"
+//            var mutableString = buildMutableAttributedStringRef(string)
+//            
+//            if let idx = find(string, needle) {
+//                let pos = distance(string.startIndex, idx)
+//                //println("Found \(needle) at position \(pos)")
+//                
+//                let mutableString = buildMutableAttributedStringRef(string)
+//                setTextBoldingToIndex(pos, text: mutableString, fontSize: 12)
+//                mString.ap
+//            }
+//            else {
+//                println("Error in Log Item formatting:  Colon Not found")
+//            }
+//        
+//            
+//        
+//        //Bold characters upto and including :
+//        
+//        
+//        
+//        }
+//        //var logItems = entries
+//        
+//        var font = UIFont(name: "Helvetica", size: 12.0)
+//        let size = font?.sizeOfString(plainStringToUseWithMeasureFunction, constrainedToWidth: 468)
+//        
+//        //let mutableRefStr = buildMutableAttributedStringRef(logItems)
+//        let height = size!.height
+//        
+//        let padding: CGFloat = 10
+//        //let frameRect = CGRectMake(CGFloat(72.0), CGFloat(currentYValue) + height + padding, CGFloat(612 - 144), height + padding/2)
+//        
+//        let frameRect = cGRectForItem(72 , currentYValue: currentYValue, sizeOfFontOrItemCell: Int(height) + 10, leftPadding: 10, verticalPadding: 10, pageWidth: 612 - 144)
+//        return TextDrawingItem(textToDraw: mutableRefStr, frameRect: frameRect )
+//    }
     
     func additionalInfoItems (values: [String], currentYValue: Int) -> [TextDrawingItem] {
         var drawItems = [TextDrawingItem]()
@@ -301,7 +397,6 @@ class MealTable {
     func buildMutableAttributedStringRef(textToDraw:String)  -> CFMutableAttributedStringRef {
         let stringRef = textToDraw as CFStringRef
         
-        // Prepare the text using a Core Text Framesetter.
         let currentText: CFAttributedStringRef =  CFAttributedStringCreate(nil , stringRef, nil)
         let mutableAttriburedStringRef: CFMutableAttributedStringRef = CFAttributedStringCreateMutableCopy(nil , 0, currentText)
         return mutableAttriburedStringRef
@@ -324,6 +419,16 @@ class MealTable {
         let fontBold = CTFontCreateWithName("Helvetica-Bold", size, nil)
         CFAttributedStringSetAttribute(text , CFRangeMake(0, stringLength ), kCTFontAttributeName, fontBold)
     }
+    
+    func setTextBoldingForRange(range: CFRange, text:  CFMutableAttributedStringRef,  fontSize: Int){
+        let size: CGFloat = CGFloat(fontSize)
+        
+        //let stringLength = count(originalString)
+        let fontBold = CTFontCreateWithName("Helvetica-Bold", size, nil)
+        CFAttributedStringSetAttribute(text , range, kCTFontAttributeName, fontBold)
+    }
+    
+    //func formatLogEntryItems (items: [String]) -> [
 
     func columnTripletDrawItem(text: String, isBoldText: Bool, columnIndex: Int,  leftMargin: Int , currentYValue: Int, sizeOfFontOrItemCell: Int, leftPadding: Int,  verticalPadding: Int, pageWidth: Int ) -> TextDrawingItem {
         
@@ -354,13 +459,6 @@ class MealTable {
     
 
     
-    func appendStringToBullet(s: String) -> String{
-        var testString = ""
-        let bulletString = UnicodeScalar(0x2022)
-        testString.append(bulletString)
-        testString += "  "
-        testString += s
-        return testString
-    }
+
 
 }

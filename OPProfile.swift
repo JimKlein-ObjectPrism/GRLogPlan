@@ -12,7 +12,7 @@ import CoreData
 public class OPProfile: NSManagedObject {
 
     @NSManaged var eveningSnackRequired: NSNumber
-    @NSManaged var firstAndLastName: String?
+    @NSManaged var firstAndLastName: String!
     @NSManaged var morningSnackRequired: NSNumber
     @NSManaged var addOns: NSSet
     @NSManaged var medicineLIst: NSSet

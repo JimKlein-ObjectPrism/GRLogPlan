@@ -9,9 +9,9 @@ public struct HeaderInfo {
     let date: String
     var initialYOnPage: Int = 72
     
-    init(profile: OPProfile, journalEntry: OPJournalEntry){
-        patientName = profile.firstAndLastName!
-        date = journalEntry.date
+    init(profile: OPProfile, date: String){
+        patientName = profile.firstAndLastName
+        self.date = date
     }
     
     

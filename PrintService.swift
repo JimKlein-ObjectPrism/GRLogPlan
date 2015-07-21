@@ -9,6 +9,8 @@
 
 import Foundation
 
+public typealias LogEntryPrintOutItem = (htmlString: String, mealTableItems: [MealTableInfoItem])
+
 public class PrintSevice {
     
     var dataStore: DataStore
@@ -54,7 +56,6 @@ public class PrintSevice {
     func nilEntryNote () -> String {
         return "None Selected"
     }
-    public typealias LogEntryPrintOutItem = (htmlString: String, mealTableItems: [MealTableInfoItem])
     public func buildLogEntryPrintOut(date: String,
         profile: OPProfile,
         breakfastLogEntry: OPBreakfast,
@@ -153,7 +154,7 @@ public class PrintSevice {
             additionalInfoTableRow(time , place: breakfastLogEntry.location, parentInitials: breakfastLogEntry.parentInitials ) +
             buildNoteRows(breakfastLogEntry.note)
         
-        let pdfTableInfo = MealTableInfoItem(logItems: summaryRow.pdfStrings, place: breakfastLogEntry.location, time: time, parent: breakfastLogEntry.parentInitials, note: breakfastLogEntry.note)
+        let pdfTableInfo = MealTableInfoItem(mealName: "Breakfast", logItems: summaryRow.pdfStrings, place: breakfastLogEntry.location, time: time, parent: breakfastLogEntry.parentInitials, note: breakfastLogEntry.note)
         return (tableBody, pdfTableInfo)
     }
     public func buildLunchHTML(time: String?, lunchLogEntry: OPLunch) -> MealTableItem{
@@ -164,7 +165,7 @@ public class PrintSevice {
             additionalInfoTableRow(time , place: lunchLogEntry.location, parentInitials: lunchLogEntry.parentInitials ) +
             buildNoteRows(lunchLogEntry.note)
         
-        let pdfTableInfo = MealTableInfoItem(logItems: summaryRow.pdfStrings, place: lunchLogEntry.location, time: time, parent: lunchLogEntry.parentInitials, note: lunchLogEntry.note)
+        let pdfTableInfo = MealTableInfoItem(mealName: "Lunch", logItems: summaryRow.pdfStrings, place: lunchLogEntry.location, time: time, parent: lunchLogEntry.parentInitials, note: lunchLogEntry.note)
         return (tableBody, pdfTableInfo)
     }
     public func buildMorningSnackHTML(snackName: String, time: String?, snackLogEntry: OPMorningSnack) -> MealTableItem
@@ -176,7 +177,7 @@ public class PrintSevice {
             additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
             buildNoteRows(snackLogEntry.note)
         
-        let pdfTableInfo = MealTableInfoItem(logItems: summaryRow.pdfStrings, place: snackLogEntry.location, time: time, parent: snackLogEntry.parentInitials, note: snackLogEntry.note)
+        let pdfTableInfo = MealTableInfoItem(mealName: "Morning Snack", logItems: summaryRow.pdfStrings, place: snackLogEntry.location, time: time, parent: snackLogEntry.parentInitials, note: snackLogEntry.note)
         return (tableBody, pdfTableInfo)
 
     }
@@ -187,7 +188,7 @@ public class PrintSevice {
             summaryRow.htmlString +  //buildMealSummaryRow(snackLogEntry) +
             additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
             buildNoteRows(snackLogEntry.note)
-        let pdfTableInfo = MealTableInfoItem(logItems: summaryRow.pdfStrings, place: snackLogEntry.location, time: time, parent: snackLogEntry.parentInitials, note: snackLogEntry.note)
+        let pdfTableInfo = MealTableInfoItem(mealName: "Afternoon Snack", logItems: summaryRow.pdfStrings, place: snackLogEntry.location, time: time, parent: snackLogEntry.parentInitials, note: snackLogEntry.note)
         return (tableBody, pdfTableInfo)
     }
     public func buildEveningSnackHTML(snackName: String, time: String?, snackLogEntry: OPEveningSnack) -> MealTableItem{
@@ -197,7 +198,7 @@ public class PrintSevice {
             summaryRow.htmlString +  //buildMealSummaryRow(snackLogEntry) +
             additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
             buildNoteRows(snackLogEntry.note)
-        let pdfTableInfo = MealTableInfoItem(logItems: summaryRow.pdfStrings, place: snackLogEntry.location, time: time, parent: snackLogEntry.parentInitials, note: snackLogEntry.note)
+        let pdfTableInfo = MealTableInfoItem(mealName: "Evening Snack", logItems: summaryRow.pdfStrings, place: snackLogEntry.location, time: time, parent: snackLogEntry.parentInitials, note: snackLogEntry.note)
         return (tableBody, pdfTableInfo)
 
     }
@@ -209,7 +210,7 @@ public class PrintSevice {
             additionalInfoTableRow(time , place: dinnerLogEntry.place, parentInitials: dinnerLogEntry.parentInitials ) +
             buildNoteRows(dinnerLogEntry.note)
         
-        let pdfTableInfo = MealTableInfoItem(logItems: summaryRow.pdfStrings, place: dinnerLogEntry.place, time: time, parent: dinnerLogEntry.parentInitials, note: dinnerLogEntry.note)
+        let pdfTableInfo = MealTableInfoItem(mealName: "Dinner", logItems: summaryRow.pdfStrings, place: dinnerLogEntry.place, time: time, parent: dinnerLogEntry.parentInitials, note: dinnerLogEntry.note)
         return (tableBody, pdfTableInfo)
     }
     

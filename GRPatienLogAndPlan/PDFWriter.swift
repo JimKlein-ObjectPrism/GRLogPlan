@@ -6,33 +6,62 @@ import CoreText
 
 class PDFWriter {
     // fileName : patient Name. Food Journal. dd/mm/yyyy
-    func drawPDF (fileName: String) {
+    func drawPDF (fileName: String, date: String, profile: OPProfile, logEntryPrintItem: LogEntryPrintOutItem) {
         // Create the PDF context using the default page size of 612 x 792.
         UIGraphicsBeginPDFContextToFile(fileName, CGRectZero, nil);
         
         // Mark the beginning of a new page.
-        UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, 612, 792), nil);
+        UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, 612, 792), nil)
         
-        let profile = OPProfile()
-        profile.firstAndLastName = "Jane Smithe"
-        let journalEntry = OPJournalEntry()
-        journalEntry.date = "Tuesday, August 9, 2014"
-        
-        let header = HeaderInfo(profile: profile, journalEntry: journalEntry)
+        let header = HeaderInfo(profile: profile, date: date)
         header.nameAndDateTableDrawItems(72)
         
-        drawHeader()
+        drawHeader(header)
+        var yPosition = 146
+        for mTable in logEntryPrintItem.mealTableItems {
         
-        let mealTable = MealTable()
+            let mealTable = MealTable(mealItem: mTable)
+            
+            if 648 < yPosition + mealTable.getTableHeight() {
+                UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, 612, 792), nil)
+                yPosition = 72
+            }
         
-        mealTable.buildMealTable(72)
-        drawTableAtY(mealTable, startYCoordinate: 146, printableAreaWidth: 468, leftMargin: 72)
-        drawTableAtY(mealTable, startYCoordinate: 336, printableAreaWidth: 468, leftMargin: 72)
-        
+            mealTable.buildMealTable(yPosition)
+            drawTableAtY(mealTable, startYCoordinate: yPosition, printableAreaWidth: 468, leftMargin: 72)
+            yPosition += mealTable.getTableHeight()
+        }
         
         // Close the PDF context and write the contents out.
         UIGraphicsEndPDFContext()
     }
+//    func drawPDF (fileName: String) {
+//        // Create the PDF context using the default page size of 612 x 792.
+//        UIGraphicsBeginPDFContextToFile(fileName, CGRectZero, nil);
+//        
+//        // Mark the beginning of a new page.
+//        UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, 612, 792), nil);
+//        
+//        let profile = OPProfile()
+//        profile.firstAndLastName = "Jane Smithe"
+//        let journalEntry = OPJournalEntry()
+//        journalEntry.date = "Tuesday, August 9, 2014"
+//        
+//        let header = HeaderInfo(profile: profile, date: journalEntry.date)
+//        //header.nameAndDateTableDrawItems(72)
+//        
+//        drawHeader(header)
+//        
+//        let mealTable = MealTable()
+//        
+//        mealTable.buildMealTable(72)
+//        drawTableAtY(mealTable, startYCoordinate: 146, printableAreaWidth: 468, leftMargin: 72)
+//        drawTableAtY(mealTable, startYCoordinate: 336, printableAreaWidth: 468, leftMargin: 72)
+//        
+//        
+//        // Close the PDF context and write the contents out.
+//        UIGraphicsEndPDFContext()
+//    }
     func drawTable(startYCoordinate: Int,
         printableAreaWidth: Int,
         leftMargin: Int ,
@@ -64,12 +93,12 @@ class PDFWriter {
     }
     
     
-    func drawHeader () {
+    func drawHeader (header: HeaderInfo) {
         var currentYOnPage = 72
         
         //drawLineAtY(currentYOnPage)
         
-        let patientName = "Jane Sample"
+        let patientName = header.patientName
         let patientNameFontSize = 26
         let patientNameYPadding = 10
         let patientNameTotalHeight = patientNameFontSize + patientNameYPadding
@@ -85,7 +114,7 @@ class PDFWriter {
         let logEntryDateFontSize = 18
         let logEntryPadding = 8
         let logEntryTotalHeight =  logEntryDateFontSize + logEntryPadding
-        let logEntryDate = "Food Journal: Saturday, July 11, 2015"
+        let logEntryDate = "Food Journal: " + header.date
         let drawTextJournalEntryDate = drawableTextFromString(logEntryDate)
         setTextBoldingAndFontSizeFullString(drawTextJournalEntryDate, originalString: logEntryDate,  fontSize: logEntryDateFontSize )
         
