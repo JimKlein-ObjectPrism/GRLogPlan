@@ -101,59 +101,54 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 //        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
 //            if profile == true {
 //            
-                //initialize Patient Record
-                self.currentRecord = self.currentRecordAndProfile()
-                
-                //initialize Profile - use placeholder to initialize
-                currentProfile = currentRecord.profile
-                let profile = currentProfile
-                
+        
                 //initialize journal entry
-                
-                if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
-                    self.currentJournalEntry = journalEntry
-                    
-                    //initialize meal items from existing entry
-                    //TODO:  Initialize Other Meals to FROM EXISTING ENTRY
-
-                    self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
-                    self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
-                    self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
-                    self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
-                    dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
-                    self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
-
-                } else {
-                    //create blank journal entries
-                    self.currentJournalEntry = getNewJournalEntry(today)
-                    
-                    //initialize using Default values in VM Meal Items
-                    //TODO:  Initialize Other Meals to VM default values
-                    self.breakfast = VMBreakfast()
-                    self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
-                    self.lunch = VMLunch()
-                    self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
-                    self.dinner = VMDinner()
-                    self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
-                }
-                //after configuring currentJournalEntry
-                // initialize items dependent on profile
-                parentsArray = getParentsArray(profile)
-                //MARK:  Home Controller Meal State Init
-                MealState.setUpMealMenuForProfile(profile)
-                self.mealState = MealState.getMealState(NSDate())
-                
-                
-                //MARK: update enums for View Model Initializations
-                updateItemChoiceEnums(profile)
-
-//            }
-//            else {
-//            profileIsValid = false
-//            }
-//        }
-        //super.init()
+                //initializeJournalEntryForCurrentDay()
+        //initialize Patient Record
+        self.currentRecord = self.currentRecordAndProfile()
+        
+        //initialize Profile - use placeholder to initialize
+        currentProfile = currentRecord.profile
+        let profile = currentProfile
+        
+        if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
+            self.currentJournalEntry = journalEntry
+            
+            //initialize meal items from existing entry
+            //TODO:  Initialize Other Meals to FROM EXISTING ENTRY
+            
+            self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
+            self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
+            self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
+            self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
+            dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
+            self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
+            
+        } else {
+            //create blank journal entries
+            self.currentJournalEntry = getNewJournalEntry(today)
+            
+            //initialize using Default values in VM Meal Items
+            //TODO:  Initialize Other Meals to VM default values
+            self.breakfast = VMBreakfast()
+            self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
+            self.lunch = VMLunch()
+            self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
+            self.dinner = VMDinner()
+            self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
+        }
+        
         todayJournalEntry = currentJournalEntry
+        //after configuring currentJournalEntry
+        // initialize items dependent on profile
+        parentsArray = getParentsArray(profile)
+        //MARK:  Home Controller Meal State Init
+        MealState.setUpMealMenuForProfile(profile)
+        self.mealState = MealState.getMealState(NSDate())
+        
+        
+        //MARK: update enums for View Model Initializations
+        updateItemChoiceEnums(profile)
         
         var error: NSError?
         if !managedContext.save(&error) {
@@ -161,6 +156,56 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             //return ( nil, error)
         }
         
+    }
+    
+    func initializeJournalEntryForCurrentDay ()
+    {
+        //initialize Patient Record
+        self.currentRecord = self.currentRecordAndProfile()
+        
+        //initialize Profile - use placeholder to initialize
+        currentProfile = currentRecord.profile
+        let profile = currentProfile
+        
+        if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
+            self.currentJournalEntry = journalEntry
+            
+            //initialize meal items from existing entry
+            //TODO:  Initialize Other Meals to FROM EXISTING ENTRY
+            
+            self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
+            self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
+            self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
+            self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
+            dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
+            self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
+            
+        } else {
+            //create blank journal entries
+            self.currentJournalEntry = getNewJournalEntry(today)
+            
+            //initialize using Default values in VM Meal Items
+            //TODO:  Initialize Other Meals to VM default values
+            self.breakfast = VMBreakfast()
+            self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
+            self.lunch = VMLunch()
+            self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
+            self.dinner = VMDinner()
+            self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
+        }
+        
+        todayJournalEntry = currentJournalEntry
+        //after configuring currentJournalEntry
+        // initialize items dependent on profile
+        parentsArray = getParentsArray(profile)
+        //MARK:  Home Controller Meal State Init
+        MealState.setUpMealMenuForProfile(profile)
+        self.mealState = MealState.getMealState(NSDate())
+        
+        
+        //MARK: update enums for View Model Initializations
+        updateItemChoiceEnums(profile)
+
     }
     func updateItemChoiceEnums (profile: OPProfile){
         //used to

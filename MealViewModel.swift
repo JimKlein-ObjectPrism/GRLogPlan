@@ -87,7 +87,15 @@ public class MealViewModel: NSObject {
             //handle plain FoodItem
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)  as! UITableViewCell
             cell.textLabel?.text = currentItem.name
-            cell.detailTextLabel?.text = currentItem.itemDescription
+            var itemDescription: String = ""
+            if currentItem.menuItemType == "VegetableItem" {
+                
+                itemDescription = currentItem.serving.servingDescription + " " + currentItem.itemDescription
+            } else {
+                itemDescription = currentItem.itemDescription
+            }
+
+            cell.detailTextLabel?.text = itemDescription
             return cell
         }
         

@@ -244,7 +244,7 @@ class PDFWriter {
     func drawLineFromPoint(from: CGPoint, to: CGPoint) {
         let context = UIGraphicsGetCurrentContext()
         
-        CGContextSetLineWidth(context, 2.0)
+        CGContextSetLineWidth(context, 1.0)
         
         let color = UIColor.blackColor().CGColor//CGColorCreate(colorspace, components)
         

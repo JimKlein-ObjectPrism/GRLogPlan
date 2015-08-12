@@ -164,7 +164,8 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 //self.parents? = dataStoreDelegate.getParents()
 //                parents?.removeAll(keepCapacity: false)
             default:
-                println(errorItem.rawValue)
+                displayErrorAlert("Parent First and Last Name Required.", message: "Please enter Parent First and Last Name.")
+                //println(errorItem.rawValue)
             }
         }
         else
@@ -173,11 +174,27 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 println(x.rawValue)
             }
         }
-        
-        
-
     }
 
+    
+    func displayErrorAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        //            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        //                // ...
+        //            }
+        //            alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            // ...
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+        
+    }
     
     // MARK: - Table view data source
     
@@ -392,6 +409,8 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     func doneButtonTapped(){
         view.endEditing(true)
         self.navigationController?.popViewControllerAnimated(true)
+        
+        
     }
         
     //MARK: Push Methods

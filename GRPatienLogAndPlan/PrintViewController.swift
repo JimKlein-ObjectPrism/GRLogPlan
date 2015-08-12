@@ -72,47 +72,72 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
         return fileName
     }
     @IBAction func printJournalEntry(sender: AnyObject) {
-        if selectedItemDateString != nil {
-        // 1 get the print controller
-        let printController = UIPrintInteractionController.sharedPrintController()!
-        // 2 set up job info
-        let printInfo = UIPrintInfo(dictionary:nil)!
-        printInfo.outputType = UIPrintInfoOutputType.General
-        printInfo.jobName = "Print Job"
-        printController.printInfo = printInfo
         
-        // 3  pass text to formatter
-        let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting(selectedItemDateString!))
-           
-        //let formatter = UIMarkupTextPrintFormatter(markupText: "<br /><h2>Hello World!!!</h2>")
-        formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72) // 1" margins
-        printController.printFormatter = formatter
+        if let date = selectedItemDateString {
+            let name = dataStore.currentProfile.firstAndLastName
+            let filePath = getPDFFileName(name, date: date)
+            writeLogEntryPDF(date, name: name, filePath: filePath)
+            
+            
+            if let url = NSURL(fileURLWithPath: filePath)  {
+                if UIPrintInteractionController.canPrintURL(url) {
+                    let printInfo = UIPrintInfo(dictionary: nil)
+                    printInfo.jobName = url.lastPathComponent
+                    printInfo.outputType = UIPrintInfoOutputType.General
+                    
+                    let printController = UIPrintInteractionController.sharedPrintController()!
+                    printController.printInfo = printInfo
+                    printController.showsNumberOfCopies = false
+                    
+                    printController.printingItem = url
+                    
+                    printController.presentAnimated(true, completionHandler: nil)
+                }
+            }
+            
+//
+//       if selectedItemDateString != nil {
+//        // 1 get the print controller
+//        let printController = UIPrintInteractionController.sharedPrintController()!
+//        // 2 set up job info
+//        let printInfo = UIPrintInfo(dictionary:nil)!
+//        printInfo.outputType = UIPrintInfoOutputType.General
+//        printInfo.jobName = "Print Job"
+//        printController.printInfo = printInfo
+//        printController.printingItem =
+//        // 3  pass text to formatter
+//        let formatter = UIMarkupTextPrintFormatter(markupText: logEntryFormattedForPrinting(selectedItemDateString!))
+//           
+//        //let formatter = UIMarkupTextPrintFormatter(markupText: "<br /><h2>Hello World!!!</h2>")
+//        formatter.contentInsets = UIEdgeInsets(top: 72, left: 72, bottom: 72, right: 72) // 1" margins
+//        printController.printFormatter = formatter
         
         // 4 present the print interface
-        printController.presentAnimated(true, completionHandler: nil)
+        //printController.presentAnimated(true, completionHandler: nil)
         }
     }
     
     @IBAction func previewPrintJob(sender: AnyObject) {
         // this will be the email button
         
-        let name = dataStore.currentProfile.firstAndLastName
-        
         if let date = selectedItemDateString {
-            let writer = PDFWriter()
+            let name = dataStore.currentProfile.firstAndLastName
             let filePath = getPDFFileName(name, date: date)
-            let printService = PrintSevice()
-            let entry = printService.getLogEntryToPrint(date)
-            
-            writer.drawPDF(filePath, date: date, profile: dataStore.currentProfile, logEntryPrintItem: entry)
-            
-//            showPDFPreview(filePath)
-            
+            writeLogEntryPDF(date, name: name, filePath: filePath)
             let emailSubjectLine = "Food Journal: " + name + " - " + date
             sendPDFAsEmailAttachment(filePath, subjectLine: emailSubjectLine, fileName: emailSubjectLine)
             
-        }
+        }        
+    }
+    
+    func writeLogEntryPDF(date: String, name: String, filePath:String)  {
+        let printService = PrintSevice()
+        let entry = printService.getLogEntryToPrint(date)
+
+        let writer = PDFWriter()
         
+        writer.drawPDF(filePath, date: date, profile: dataStore.currentProfile, logEntryPrintItem: entry)
+
     }
     func showPDFPreview (filePath: String) {
         let vc = PDFViewController()

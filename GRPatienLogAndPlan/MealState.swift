@@ -199,6 +199,7 @@ enum MealState {
     
     static func getMealState ( timeOfDay: NSDate) -> MealState
     {
+        
         var time = MealState.covertTimeToTuple(timeOfDay)
         println("time \(timeOfDay) tupple time end: \(MealState.afternoonSnackRange.rangeEnd)")
 

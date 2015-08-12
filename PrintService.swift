@@ -68,6 +68,11 @@ public class PrintSevice {
             
             var morningSnackString = ""
             var mealTableItems = [MealTableInfoItem]()
+            var eveningSnackString = ""
+            
+            var breakfastPrintItems = buildBreakfastHTML(breakfastLogEntry.time, breakfastLogEntry: breakfastLogEntry)
+            mealTableItems.append(breakfastPrintItems.pdfInfoItem)
+            
             
             if profile.morningSnackRequired.boolValue {
                 var morningSnack = buildMorningSnackHTML("Morning Snack", time: morningSnackLogEntry.time, snackLogEntry: morningSnackLogEntry)
@@ -77,7 +82,12 @@ public class PrintSevice {
                 mealTableItems.append(morningSnack.pdfInfoItem)
             }
             
-            var eveningSnackString = ""
+            var lunchPrintItems = buildLunchHTML(lunchLogEntry.time, lunchLogEntry: lunchLogEntry)
+            mealTableItems.append(lunchPrintItems.pdfInfoItem)
+            var afternoonSnackItems = buildAfternoonSnackHTML("Afternoon Snack", time: afternoonSnackLogEntry.time, snackLogEntry: afternoonSnackLogEntry)
+            mealTableItems.append(afternoonSnackItems.pdfInfoItem)
+            var dinnerPrintItems = buildDinnerHTML(dinnerLogEntry.time, dinnerLogEntry: dinnerLogEntry)
+            mealTableItems.append(dinnerPrintItems.pdfInfoItem)
             
             if profile.eveningSnackRequired.boolValue {
                 var eveningSnack = buildEveningSnackHTML("Evening Snack", time: eveningSnackLogEntry.time, snackLogEntry: eveningSnackLogEntry)
@@ -87,15 +97,7 @@ public class PrintSevice {
                 mealTableItems.append(eveningSnack.pdfInfoItem)
             }
             
-            var breakfastPrintItems = buildBreakfastHTML(breakfastLogEntry.time, breakfastLogEntry: breakfastLogEntry)
-            mealTableItems.append(breakfastPrintItems.pdfInfoItem)
-            var lunchPrintItems = buildLunchHTML(lunchLogEntry.time, lunchLogEntry: lunchLogEntry)
-            mealTableItems.append(lunchPrintItems.pdfInfoItem)
-            var afternoonSnackItems = buildAfternoonSnackHTML("Afternoon Snack", time: afternoonSnackLogEntry.time, snackLogEntry: afternoonSnackLogEntry)
-            mealTableItems.append(afternoonSnackItems.pdfInfoItem)
-            var dinnerPrintItems = buildDinnerHTML(dinnerLogEntry.time, dinnerLogEntry: dinnerLogEntry)
-            mealTableItems.append(dinnerPrintItems.pdfInfoItem)
-            
+         
             var entryPage: String = htmlHeaderString +
                 buildFoodJournalHeader(profile, dateString: date) +
                 tableOpeningTags +

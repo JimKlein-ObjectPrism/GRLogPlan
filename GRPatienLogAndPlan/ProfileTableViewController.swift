@@ -54,7 +54,9 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             
         }
 
-        firstNameTextField.text = dataStore.currentRecord.profile.firstAndLastName ?? "First And Last Name"
+        if let name = dataStore.currentRecord.profile.firstAndLastName {
+            firstNameTextField.text = name
+        }
         morningSnackSwitch.setOn(profile.morningSnackRequired.boolValue, animated: false)
         eveningSnackSwitch.setOn(profile.eveningSnackRequired.boolValue, animated: false)
         
@@ -73,26 +75,37 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
 
     }
     func doneButtonPressed (sender: UIBarButtonItem ){
+        view.endEditing(true)
         let parents = dataStore.getParents()
-        if parents.count == 1 && parents[0].firstName == "" {
-            // Add alert message here
+        let profile = dataStore.currentProfile
+        
+        if firstNameTextField.text != "" {
             
-            let alertController = UIAlertController(title: "Parent Names Required", message: "Please add Parent Names.", preferredStyle: .Alert)
+        
+        var fullName = firstNameTextField.text
+        var fullNameArr = split(fullName) {$0 == " "}
+        var firstName: String = fullNameArr[0]
+        var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count - 1] : nil
+
+        if firstNameTextField.text == "Patient First and Last Name" {
+            displayErrorAlert("Patient Name Required.", message: "Please enter Patient First and Last Name.")
+        }
+        else if firstNameTextField.text == nil{
+            displayErrorAlert("Patient Name is Required", message: "Please add Patient First and Last Name.")
+        
+        }
+        else if fullNameArr.count < 2 {
+            displayErrorAlert("Patient First and Last Name are Required", message: "Please enter Patient First and Last Name, separated by a space.")
             
-//            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-//                // ...
-//            }
-//            alertController.addAction(cancelAction)
+        }
+
+        else if parents.count == 1 && parents[0].firstName == "" {
+            displayErrorAlert("Parent Names Required", message: "Please add Parent Names.")
+            // An empty parent object is going to be there.
             
-            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-                // ...
-            }
-            alertController.addAction(OKAction)
-            
-            self.presentViewController(alertController, animated: true) {
-                // ...
-            }
-        } else {
+        }
+
+        else {
             //save patient name
             dataStore.savePatientName(firstNameTextField.text)
             navigationController?.dismissViewControllerAnimated(true, completion: nil)
@@ -102,11 +115,31 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             defaults.setBool(true, forKey: "profileIsValid")
             
         }
-        //TODO:  Add validation code here
-        // navigationController?.popViewControllerAnimated(true)
-    }
+            
+        } else {
+            displayErrorAlert("Patient Name Required.", message: "Please enter Patient First and Last Name.")
+        }
+   }
     
 
+    func displayErrorAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        //            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        //                // ...
+        //            }
+        //            alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            // ...
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -142,7 +175,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
         
-        //TODO: add validation code for the name
+        
         dataStore.savePatientName(self.firstNameTextField.text)
 
         if view.gestureRecognizers?.count > 0 {
@@ -150,7 +183,8 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         }
 
     }
-
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
