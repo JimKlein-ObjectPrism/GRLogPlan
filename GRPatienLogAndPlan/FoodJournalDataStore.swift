@@ -376,9 +376,38 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             errors.append(ParentProfileValidation.IndexOutOfRange)
         }
         
+        if let fName = firstName  {
+            
+            if !validateName(fName, pattern: "^[a-z]{1,10}$") {
+                errors.append(ParentProfileValidation.FirstNameInvalidCharacter)
+            }
+        }
+        if let lName = lastName {
+            if !validateName(lName, pattern: "^([^-'])([a-z'-]){2,20}([^-'])$") {
+                errors.append(ParentProfileValidation.LastNameInvalidCharacter)
+            }
+
+        }
         return (errors)
         
     }
+    
+    public func validateName( name: String , pattern: String ) -> Bool {
+        if let regex = NSRegularExpression(pattern: pattern, options: .CaseInsensitive, error: nil) {
+            let text = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            let range = NSMakeRange(0, count(text))
+            
+            let matchRange = regex.rangeOfFirstMatchInString(text, options: .ReportProgress, range: range)
+            
+            let valid = matchRange.location != NSNotFound
+            
+            return valid
+            //textField.textColor = (valid) ? UIColor.trueColor() : UIColor.falseColor()
+        }
+        return false
+    }
+    
+    
     public func updateParentInModel( atIndex: Int, firstName: String?, lastName: String?) -> (parent: OPParent?, errorArray: [ParentProfileValidation]){
         
         var validationResult = validateParentInput(atIndex, firstName: firstName, lastName: lastName)
@@ -400,6 +429,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         // return value when errors occur
         return (nil, validationResult)
     }
+    
+    
     
     
     func updateParent ( atIndex: Int, firstName: String, lastName: String) -> (OPParent?, NSError?)  {
@@ -449,6 +480,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         //TODO: Medicine Validation array:  What should be included?  No out of index range error if input is enum!
         var validationResult = [MedicineValidation]()
         
+        let profileMedicines = getMedicines()
+        let result = profileMedicines.filter{
+            $0.name.integerValue == medicine && $0.targetTimePeriodToTake.integerValue == prescribedTimeForAction
+        }
+        if  result.count > 0 {
+            validationResult.append(MedicineValidation.DuplicateMedicineEntry)
+        }
         
         return validationResult
     }

@@ -19,6 +19,7 @@
 		9864438A1A9E8D7C00887579 /* menu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 986443871A9E8D7C00887579 /* menu@3x.png */; };
 		9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */; };
 		98FDCF0A1AA16ABF0029F97E /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */; };
+		EF0A25B01B7E982300040CC1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0A25AF1B7E982300040CC1 /* Extensions.swift */; };
 		EF0D923D1B0FB36F00EE992B /* MealState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D923C1B0FB36F00EE992B /* MealState.swift */; };
 		EF1367951B1D5204007F1649 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367941B1D5204007F1649 /* ParentViewController.swift */; };
 		EF1367971B1D53CB007F1649 /* ParentViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */; };
@@ -84,6 +85,7 @@
 		EFCF29101AF057C900B8CF72 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */; };
 		EFCF29121AF0634100B8CF72 /* print-16.png in Resources */ = {isa = PBXBuildFile; fileRef = EFCF29111AF0634100B8CF72 /* print-16.png */; };
 		EFCF291C1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */; };
+		EFD976C71B7BE3E400CD8D64 /* RegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD976C61B7BE3E400CD8D64 /* RegEx.swift */; };
 		EFE08A2E1AD9AFF4004C80C3 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE08A2D1AD9AFF4004C80C3 /* CoreDataStack.swift */; };
 		EFF448881AB1FEA9004A099F /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF448871AB1FEA9004A099F /* beach.jpg */; };
 		EFF4488C1AB20620004A099F /* print.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF4488B1AB20620004A099F /* print.png */; };
@@ -130,6 +132,7 @@
 		986443871A9E8D7C00887579 /* menu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@3x.png"; sourceTree = "<group>"; };
 		9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuTrackTableViewController.swift; path = GRPatienLogAndPlan/MenuTrackTableViewController.swift; sourceTree = "<group>"; };
 		98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
+		EF0A25AF1B7E982300040CC1 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EF0D923C1B0FB36F00EE992B /* MealState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealState.swift; sourceTree = "<group>"; };
 		EF1367941B1D5204007F1649 /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -195,6 +198,7 @@
 		EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		EFCF29111AF0634100B8CF72 /* print-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "print-16.png"; sourceTree = "<group>"; };
 		EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodJournalTableViewController.swift; sourceTree = "<group>"; };
+		EFD976C61B7BE3E400CD8D64 /* RegEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegEx.swift; sourceTree = "<group>"; };
 		EFE08A2D1AD9AFF4004C80C3 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		EFF448871AB1FEA9004A099F /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach.jpg; sourceTree = "<group>"; };
 		EFF4488B1AB20620004A099F /* print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = print.png; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 				986443641A9E78FB00887579 /* LaunchScreen.xib */,
 				986443571A9E78FB00887579 /* Supporting Files */,
 				986443841A9E8D1400887579 /* Images */,
+				EF0A25AF1B7E982300040CC1 /* Extensions.swift */,
 			);
 			path = GRPatienLogAndPlan;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 				EF157BA51AAA597800847AEE /* MealItems.xml */,
 				EF5D836C1B213CCF00D67E67 /* PrintService.swift */,
 				EF0D923C1B0FB36F00EE992B /* MealState.swift */,
+				EFD976C61B7BE3E400CD8D64 /* RegEx.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -610,6 +616,7 @@
 				EF1367991B1D543F007F1649 /* ProfileDataStoreDelegate.swift in Sources */,
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				EF0D923D1B0FB36F00EE992B /* MealState.swift in Sources */,
+				EFD976C71B7BE3E400CD8D64 /* RegEx.swift in Sources */,
 				EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */,
 				EF27C39D1B5E915900A7AC7E /* PDFViewController.swift in Sources */,
 				EF157BBB1AAEA1D600847AEE /* ChoiceItemsTableViewCell.swift in Sources */,
@@ -650,6 +657,7 @@
 				EF5D836D1B213CCF00D67E67 /* PrintService.swift in Sources */,
 				EF1367951B1D5204007F1649 /* ParentViewController.swift in Sources */,
 				EF157BBD1AAEA20300847AEE /* MenuCellTableViewCell.swift in Sources */,
+				EF0A25B01B7E982300040CC1 /* Extensions.swift in Sources */,
 				EF27C3951B5D54E800A7AC7E /* TextDrawItem.swift in Sources */,
 				EF27C3971B5D54F600A7AC7E /* PDFWriter.swift in Sources */,
 				EF7D0C421B03AE7C00ED50E5 /* TableCellInputProtocols.swift in Sources */,

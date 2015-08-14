@@ -37,6 +37,7 @@ protocol ProfileDataStoreDelegate {
 
 public enum MedicineValidation: String {
     case Success = "Success",
+    DuplicateMedicineEntry = "This entry already exists.",
     CoreDataErrorEncountered = "CoreData Error.  Please Close and Restart the App.",
     IndexOutOfRangeMedicine = "Index Out of Range: Medicine Selection",
     IndexOutOfRangeTimeForAction = "Index Out of Range: TimeForActionSelection"
@@ -44,6 +45,7 @@ public enum MedicineValidation: String {
 
 public enum AddOnValidation: String {
     case Success = "Success",
+    DuplicateAddOnEntry = "This entry already exists.",
     CoreDataErrorEncountered = "CoreData Error.  Please Close and Restart the App.",
     IndexOutOfRangeMedicine = "Index Out of Range: AddOn Selection",
     IndexOutOfRangeTimeForAction = "Index Out of Range: TimeForActionSelection"
@@ -54,6 +56,9 @@ public enum ParentProfileValidation: String  {
     CoreDataErrorEncountered = "CoreData Error.  Please Close and Restart the App.",
     FirstNameIsNil = "A First Name is required.",
     LastNameIsNil = "A Last Name is required.",
+    FirstNameInvalidCharacter = "A First Name can contain only letter characters and cannot be more than 15 letters long.",
+    LastNameInvalidCharacter = "A Last Name can contain only alphabet characters and \"'\" and \"-\". It must start and end with an alphabet character.  It must be between 2 and 20 letters long.",
+    DuplicateParentEntry = "An entry for this parent already exists.",
     IndexOutOfRange = "Index Out of Range."
 }
 

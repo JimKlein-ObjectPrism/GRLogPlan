@@ -164,7 +164,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 //self.parents? = dataStoreDelegate.getParents()
 //                parents?.removeAll(keepCapacity: false)
             default:
-                displayErrorAlert("Parent First and Last Name Required.", message: "Please enter Parent First and Last Name.")
+                displayErrorAlert("Invalid Name.", message: errorItem.rawValue )
                 //println(errorItem.rawValue)
             }
         }
@@ -179,11 +179,6 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     
     func displayErrorAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        //            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-        //                // ...
-        //            }
-        //            alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
             // ...
@@ -388,15 +383,6 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         
         return true
     }
-//    func bindData(medicines: [OPMedicine]) -> Bool {
-//        
-//        currentDisplayType = ParentViewControllerDisplayType.Medicines
-//        self.medicines = medicines
-//        tableView.reloadData()
-//        
-//        return true
-//    }
-//    
     
 
     @IBAction func editButtonTapped(sender: AnyObject) {
