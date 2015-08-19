@@ -122,24 +122,24 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
    }
     
 
-    func displayErrorAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        //            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-        //                // ...
-        //            }
-        //            alertController.addAction(cancelAction)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            // ...
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-
-    }
+//    func displayErrorAlert(title: String, message: String) {
+//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+//        
+//        //            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+//        //                // ...
+//        //            }
+//        //            alertController.addAction(cancelAction)
+//        
+//        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+//            // ...
+//        }
+//        alertController.addAction(OKAction)
+//        
+//        self.presentViewController(alertController, animated: true) {
+//            // ...
+//        }
+//
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -174,6 +174,16 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
+//        let nameInput = textField.text
+//        let myArray: [String] = nameInput.componentsSeparatedByString(" ")
+//        var firstName: String? = myArray.first
+//        if myArray.count > 1 {
+//            var lastName: String? = myArray.last
+//            tableViewCellDelegate!.nameEntered(parentItemIndexInProfileSet!, firstName: firstName, lastName: lastName)
+//        } else {
+//            tableViewCellDelegate!.nameEntered(parentItemIndexInProfileSet!, firstName: firstName, lastName: nil)
+//        }
+
         
         
         dataStore.savePatientName(self.firstNameTextField.text)

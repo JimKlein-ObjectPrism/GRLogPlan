@@ -56,7 +56,7 @@ public enum ParentProfileValidation: String  {
     CoreDataErrorEncountered = "CoreData Error.  Please Close and Restart the App.",
     FirstNameIsNil = "A First Name is required.",
     LastNameIsNil = "A Last Name is required.",
-    FirstNameInvalidCharacter = "A First Name can contain only letter characters and cannot be more than 15 letters long.",
+    FirstNameInvalidCharacter = "A First Name can contain only letter characters and must be between 1 and 15 letters long.",
     LastNameInvalidCharacter = "A Last Name can contain only alphabet characters and \"'\" and \"-\". It must start and end with an alphabet character.  It must be between 2 and 20 letters long.",
     DuplicateParentEntry = "An entry for this parent already exists.",
     IndexOutOfRange = "Index Out of Range."

@@ -89,7 +89,8 @@ class MedicineTableViewController: UITableViewController, UIPickerViewDataSource
             self.navigationController?.popViewControllerAnimated(true)
         } else {
             if result.errorArray.count > 0 {
-                
+                let errorMessages = result.errorArray.map{$0.rawValue}
+                displayErrorAlert("Medicine Item", messages: errorMessages)
             }
         }
     }

@@ -153,7 +153,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         */
         let result = dataStoreDelegate.updateParentInModel(atIndex, firstName: firstName, lastName: lastName)
         
-        if result.errorArray.count == 1 {
+        if result.errorArray.count > 0 {
             let errorItem = result.errorArray[0]
             switch errorItem{
             case ParentProfileValidation.Success:
@@ -164,7 +164,9 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 //self.parents? = dataStoreDelegate.getParents()
 //                parents?.removeAll(keepCapacity: false)
             default:
-                displayErrorAlert("Invalid Name.", message: errorItem.rawValue )
+                let errorStrings = result.errorArray.map{$0.rawValue}
+                
+                displayErrorAlert("Invalid Name", messages: errorStrings )
                 //println(errorItem.rawValue)
             }
         }
@@ -177,20 +179,20 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
 
     
-    func displayErrorAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            // ...
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-        
-    }
-    
+//    func displayErrorAlert(title: String, message: String) {
+//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+//        
+//        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+//            // ...
+//        }
+//        alertController.addAction(OKAction)
+//        
+//        self.presentViewController(alertController, animated: true) {
+//            // ...
+//        }
+//        
+//    }
+//    
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

@@ -91,6 +91,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     //MARK: Delegates - currently only used method
     var updateDetailViewDelegate: UpdateDetailViewDelegate!
     
+    public override init() {
+        //used for testing validation
+        self.managedContext = NSManagedObjectContext()
+    }
+    
     init(managedContext: NSManagedObjectContext) {
         self.managedContext = managedContext
         
@@ -253,6 +258,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     //MARK: Profile Model
     public func savePatientName (patientName: String) -> OPProfile {
+        
+        
+        
         currentRecord.profile.firstAndLastName = patientName
         var error: NSError?
         if !managedContext.save(&error) {
@@ -363,8 +371,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return (nil, errors)
     }
     
-    public func validateParentInput (atIndex: Int, firstName: String?, lastName: String?) -> [ParentProfileValidation] {
+    public func validateParentInput (firstName: String?, lastName: String?) -> [ParentProfileValidation] {
         var errors = [ParentProfileValidation]()
+        
+        
         
         if firstName == nil {
             errors.append(ParentProfileValidation.FirstNameIsNil)
@@ -372,22 +382,22 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         if lastName == nil {
             errors.append(ParentProfileValidation.LastNameIsNil)
         }
-        if atIndex < 0 || atIndex > currentProfile.parents.count  {
-            errors.append(ParentProfileValidation.IndexOutOfRange)
-        }
+//        if atIndex < 0 || atIndex > currentProfile.parents.count  {
+//            errors.append(ParentProfileValidation.IndexOutOfRange)
+//        }
         
         if let fName = firstName  {
-            
-            if !validateName(fName, pattern: "^[a-z]{1,10}$") {
+            if !validateName(fName, pattern: "^[a-z]{1,15}$") {
                 errors.append(ParentProfileValidation.FirstNameInvalidCharacter)
             }
         }
         if let lName = lastName {
-            if !validateName(lName, pattern: "^([^-'])([a-z'-]){2,20}([^-'])$") {
+            if !validateName(lName, pattern: "^([^-'\\d])([A-Za-z]?['-]?){2,20}([^-'\\d])$" ){//"^([^-'\\d])([A-Za-z]?['-]?){1,21}([^-'\\d])$") {
                 errors.append(ParentProfileValidation.LastNameInvalidCharacter)
             }
 
         }
+        
         return (errors)
         
     }
@@ -410,7 +420,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     public func updateParentInModel( atIndex: Int, firstName: String?, lastName: String?) -> (parent: OPParent?, errorArray: [ParentProfileValidation]){
         
-        var validationResult = validateParentInput(atIndex, firstName: firstName, lastName: lastName)
+        var validationResult = validateParentInput(firstName, lastName: lastName)
         
         if validationResult.count == 0  {
             //forced unwrap OK because no errors encountered
