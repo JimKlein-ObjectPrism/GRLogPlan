@@ -20,8 +20,8 @@
 		9864438C1A9E8F7600887579 /* MenuTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */; };
 		98FDCF0A1AA16ABF0029F97E /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */; };
 		EF0A25B01B7E982300040CC1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0A25AF1B7E982300040CC1 /* Extensions.swift */; };
-		EF0A25B21B83A65900040CC1 /* UserInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0A25B11B83A65900040CC1 /* UserInfoTests.swift */; };
-		EF0A25B31B85453600040CC1 /* FoodJournalDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF157BAD1AAE089A00847AEE /* FoodJournalDataStore.swift */; };
+		EF0A25B21B83A65900040CC1 /* UserInfoValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0A25B11B83A65900040CC1 /* UserInfoValidationTests.swift */; };
+		EF0A25B51B86572E00040CC1 /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0A25B41B86572E00040CC1 /* TestCoreDataStack.swift */; };
 		EF0D923D1B0FB36F00EE992B /* MealState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D923C1B0FB36F00EE992B /* MealState.swift */; };
 		EF1367951B1D5204007F1649 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367941B1D5204007F1649 /* ParentViewController.swift */; };
 		EF1367971B1D53CB007F1649 /* ParentViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */; };
@@ -135,7 +135,8 @@
 		9864438B1A9E8F7600887579 /* MenuTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuTrackTableViewController.swift; path = GRPatienLogAndPlan/MenuTrackTableViewController.swift; sourceTree = "<group>"; };
 		98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		EF0A25AF1B7E982300040CC1 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		EF0A25B11B83A65900040CC1 /* UserInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoTests.swift; sourceTree = "<group>"; };
+		EF0A25B11B83A65900040CC1 /* UserInfoValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoValidationTests.swift; sourceTree = "<group>"; };
+		EF0A25B41B86572E00040CC1 /* TestCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		EF0D923C1B0FB36F00EE992B /* MealState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealState.swift; sourceTree = "<group>"; };
 		EF1367941B1D5204007F1649 /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -302,9 +303,10 @@
 		9864436E1A9E78FB00887579 /* GRPatienLogAndPlanTests */ = {
 			isa = PBXGroup;
 			children = (
+				EF0A25B41B86572E00040CC1 /* TestCoreDataStack.swift */,
 				986443711A9E78FB00887579 /* GRPatienLogAndPlanTests.swift */,
 				9864436F1A9E78FB00887579 /* Supporting Files */,
-				EF0A25B11B83A65900040CC1 /* UserInfoTests.swift */,
+				EF0A25B11B83A65900040CC1 /* UserInfoValidationTests.swift */,
 			);
 			path = GRPatienLogAndPlanTests;
 			sourceTree = "<group>";
@@ -673,9 +675,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF0A25B21B83A65900040CC1 /* UserInfoTests.swift in Sources */,
-				EF0A25B31B85453600040CC1 /* FoodJournalDataStore.swift in Sources */,
+				EF0A25B21B83A65900040CC1 /* UserInfoValidationTests.swift in Sources */,
 				986443721A9E78FB00887579 /* GRPatienLogAndPlanTests.swift in Sources */,
+				EF0A25B51B86572E00040CC1 /* TestCoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

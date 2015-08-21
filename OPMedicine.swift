@@ -11,8 +11,8 @@ import CoreData
 @objc(OPMedicine)
 public class OPMedicine: NSManagedObject {
 
-    @NSManaged var name: NSNumber
-    @NSManaged var targetTimePeriodToTake: NSNumber
-    @NSManaged var profile: OPProfile
+    @NSManaged public var name: NSNumber
+    @NSManaged public var targetTimePeriodToTake: NSNumber
+    @NSManaged public var profile: OPProfile
 
 }

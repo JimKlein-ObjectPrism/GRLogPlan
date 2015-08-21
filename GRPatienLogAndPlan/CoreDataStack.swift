@@ -22,13 +22,13 @@
 
 import CoreData
 
-class CoreDataStack {
-  let context:NSManagedObjectContext
-  let psc:NSPersistentStoreCoordinator
-  let model:NSManagedObjectModel
-  let store:NSPersistentStore?
+public class CoreDataStack {
+  public let context:NSManagedObjectContext
+  public var psc:NSPersistentStoreCoordinator
+  public let model:NSManagedObjectModel
+  public let store:NSPersistentStore?
 
-  init() {
+  public init() {
     //1
     let bundle = NSBundle.mainBundle()
     let modelURL =

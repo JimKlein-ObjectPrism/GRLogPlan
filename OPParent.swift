@@ -11,8 +11,8 @@ import CoreData
 @objc(OPParent)
 public class OPParent: NSManagedObject {
 
-    @NSManaged var firstName: String
-    @NSManaged var lastName: String
-    @NSManaged var profile: OPProfile
+    @NSManaged public var firstName: String
+    @NSManaged public var lastName: String
+    @NSManaged public var profile: OPProfile
 
 }

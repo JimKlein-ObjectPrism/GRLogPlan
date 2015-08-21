@@ -52,18 +52,18 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             profile = dataStore.currentRecord.profile
             
             
-        }
+        
 
-        if let name = dataStore.currentRecord.profile.firstAndLastName {
-            firstNameTextField.text = name
+            if let name = dataStore.currentRecord.profile.firstAndLastName {
+                firstNameTextField.text = name
+            }
+        
+            morningSnackSwitch.setOn(profile.morningSnackRequired.boolValue, animated: false)
+            eveningSnackSwitch.setOn(profile.eveningSnackRequired.boolValue, animated: false)
+            
+            self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+        
         }
-        morningSnackSwitch.setOn(profile.morningSnackRequired.boolValue, animated: false)
-        eveningSnackSwitch.setOn(profile.eveningSnackRequired.boolValue, animated: false)
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-        
-        self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-        
         if initialSetup {
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonPressed:")
             

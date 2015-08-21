@@ -29,7 +29,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
     
     var currentRecord: OPPatientRecord!
-    var currentProfile: OPProfile!
+    public 	var currentProfile: OPProfile!
     var currentJournalEntry: OPJournalEntry!
     
     var todayJournalEntry: OPJournalEntry!
@@ -96,7 +96,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         self.managedContext = NSManagedObjectContext()
     }
     
-    init(managedContext: NSManagedObjectContext) {
+    public init(managedContext: NSManagedObjectContext) {
         self.managedContext = managedContext
         
         super.init()
@@ -371,10 +371,18 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return (nil, errors)
     }
     
-    public func validateParentInput (firstName: String?, lastName: String?) -> [ParentProfileValidation] {
+    public func validateParentInput (firstName: String?, lastName: String?, profile: OPProfile) -> [ParentProfileValidation] {
         var errors = [ParentProfileValidation]()
         
-        
+        //check current parents for duplicate name
+        let parents = profile.parents
+        for parent in parents {
+            if parent.firstName == firstName && parent.lastName == lastName {
+                errors.append(ParentProfileValidation.DuplicateParentEntry)
+                break
+            }
+        }
+      
         
         if firstName == nil {
             errors.append(ParentProfileValidation.FirstNameIsNil)
@@ -392,7 +400,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             }
         }
         if let lName = lastName {
-            if !validateName(lName, pattern: "^([^-'\\d])([A-Za-z]?['-]?){2,20}([^-'\\d])$" ){//"^([^-'\\d])([A-Za-z]?['-]?){1,21}([^-'\\d])$") {
+            if !validateName(lName, pattern: "^([^-'\\d])([A-Za-z]?['-]?){2,18}([^-'\\d])$" ){// name length limit actually 20 chars, since there is a one char group on each end of string  18 + 1 + 1 //"^([^-'\\d])([A-Za-z]?['-]?){1,21}([^-'\\d])$") {
                 errors.append(ParentProfileValidation.LastNameInvalidCharacter)
             }
 
@@ -420,7 +428,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     public func updateParentInModel( atIndex: Int, firstName: String?, lastName: String?) -> (parent: OPParent?, errorArray: [ParentProfileValidation]){
         
-        var validationResult = validateParentInput(firstName, lastName: lastName)
+        var validationResult = validateParentInput(firstName, lastName: lastName, profile: currentProfile)
         
         if validationResult.count == 0  {
             //forced unwrap OK because no errors encountered
@@ -477,7 +485,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
     //MARK: Medicine Model
-    func getMedicines() -> [OPMedicine] {
+    public func getMedicines() -> [OPMedicine] {
         let profileMedicines = currentRecord.profile.medicineLIst
         currentMedicines = [OPMedicine]()
         for x in profileMedicines {
@@ -486,11 +494,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return currentMedicines
     }
     
-    func validateMedicineResult(medicine: Int, prescribedTimeForAction: Int) -> [MedicineValidation]{
+    public func validateMedicineResult(medicine: Int, prescribedTimeForAction: Int, profileMedicines: [OPMedicine]) -> [MedicineValidation]{
         //TODO: Medicine Validation array:  What should be included?  No out of index range error if input is enum!
         var validationResult = [MedicineValidation]()
         
-        let profileMedicines = getMedicines()
+//        let profileMedicines = getMedicines()
         let result = profileMedicines.filter{
             $0.name.integerValue == medicine && $0.targetTimePeriodToTake.integerValue == prescribedTimeForAction
         }
@@ -503,7 +511,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     public func addMedicine (medicine: Int, prescribedTimeForAction: Int) -> (medObject: OPMedicine?, errorArray: [MedicineValidation]) {
         // validate input
-        var validationResult = validateMedicineResult(medicine , prescribedTimeForAction: prescribedTimeForAction)
+        var validationResult = validateMedicineResult(medicine , prescribedTimeForAction: prescribedTimeForAction, profileMedicines: getMedicines())
         
         
         if validationResult.count == 0  {
@@ -568,7 +576,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     func updateMedicine (atIndex: Int, medicine: Int, prescribedTimeForAction: Int) -> ( medObject: OPMedicine?, errorArray: [MedicineValidation])
     {
         // validate input
-        var validationResult = validateMedicineResult(medicine , prescribedTimeForAction: prescribedTimeForAction)
+        var validationResult = validateMedicineResult(medicine , prescribedTimeForAction: prescribedTimeForAction, profileMedicines: getMedicines())
         if validationResult.count == 0  {
             //forced unwrap OK because no errors encountered
             let result = updateMedicineInModel(atIndex, medicine: medicine, prescribedTimeForAction: prescribedTimeForAction)
@@ -608,7 +616,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     
     //MARK:  AddOn Model
-    func getAddOns() -> [OPAddOn] {
+    public func getAddOns() -> [OPAddOn] {
         let profileAddOns = currentRecord.profile.addOns
         currentAddOns.removeAll(keepCapacity: false)// = [OPAddOn]()
         for x in profileAddOns {
@@ -617,16 +625,24 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return currentAddOns
     }
     
-    public func validateAddOnResult(addOn: Int, prescribedTimeForAction: Int) -> [AddOnValidation]{
+    public func validateAddOnResult(addOn: Int, prescribedTimeForAction: Int, profileAddOns: [OPAddOn]) -> [AddOnValidation]{
         //TODO: AddOn Validation array:  What should be included?  No out of index range error if input is enum!
         var validationResult = [AddOnValidation]()
+        let a = profileAddOns[0]
         
+        let result = profileAddOns.filter{
+            $0.addOnItem.integerValue == addOn && $0.targetMealOrSnack.integerValue == prescribedTimeForAction
+        }
+        if  result.count > 0 {
+            validationResult.append(AddOnValidation.DuplicateAddOnEntry)
+        }
+       
         
         return validationResult
     }
     public func addAddOn (addOn: Int, prescribedTimeForAction: Int) -> (addOnObject: OPAddOn?, errorArray: [AddOnValidation]) {
         // validate input
-        var validationResult = validateAddOnResult(addOn , prescribedTimeForAction: prescribedTimeForAction)
+        var validationResult = validateAddOnResult(addOn , prescribedTimeForAction: prescribedTimeForAction, profileAddOns: getAddOns())
         
         
         if validationResult.count == 0  {
@@ -691,7 +707,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     func updateAddOn (atIndex: Int, addOn: Int, prescribedTimeForAction: Int) -> ( addOnObject: OPAddOn?, errorArray: [AddOnValidation])
     {
         // validate input
-        var validationResult = validateAddOnResult(addOn , prescribedTimeForAction: prescribedTimeForAction)
+        var validationResult = validateAddOnResult(addOn , prescribedTimeForAction: prescribedTimeForAction, profileAddOns: getAddOns())
         if validationResult.count == 0  {
             //forced unwrap OK because no errors encountered
             let result = updateAddOnInModel(atIndex, addOn: addOn, prescribedTimeForAction: prescribedTimeForAction)
@@ -737,7 +753,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     func initializeMedicineMembers (breakfast: VMBreakfast){
         var matchesMeal = false
         for medicine in currentProfile.medicineLIst {
-            let time = PrescribedTimeForAction(rawValue: medicine.targetTimePeriodToTake.integerValue)
+            //let time = PrescribedTimeForAction(rawValue: medicine.targetTimePeriodToTake.integerValue)
                 //if time = PrescribedTimeForAction.BreakfastTime {
                     
                 //}

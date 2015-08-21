@@ -667,9 +667,6 @@
                                             <state key="normal" title="J. D.">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <variation key="widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="352" y="8" width="32" height="29"/>
-                                            </variation>
                                             <connections>
                                                 <action selector="showAlertForParentInitials:" destination="y5B-jC-mGF" eventType="touchUpInside" id="OXl-WB-uAq"/>
                                             </connections>
@@ -1068,7 +1065,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="onh-wA-7eB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2088" y="1052"/>
+            <point key="canvasLocation" x="2076" y="1052"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="JlE-uV-I6T">

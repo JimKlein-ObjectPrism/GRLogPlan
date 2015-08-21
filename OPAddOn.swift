@@ -11,8 +11,8 @@ import CoreData
 @objc(OPAddOn)
 public class OPAddOn: NSManagedObject {
 
-    @NSManaged var addOnItem: NSNumber
-    @NSManaged var targetMealOrSnack: NSNumber
-    @NSManaged var profile: OPProfile
+    @NSManaged public var addOnItem: NSNumber
+    @NSManaged public var targetMealOrSnack: NSNumber
+    @NSManaged public var profile: OPProfile
 
 }
