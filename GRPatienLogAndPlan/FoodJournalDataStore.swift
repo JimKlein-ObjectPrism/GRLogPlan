@@ -257,19 +257,28 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
     }
     //MARK: Profile Model
-    public func savePatientName (patientName: String) -> OPProfile {
+    public func savePatientName (patientName: String) -> (profile: OPProfile?, errorArray: [ParentProfileValidation]) {
         
-        
-        
-        currentRecord.profile.firstAndLastName = patientName
-        var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
-            //return ( nil, error)
+        let nameInput = patientName
+        let myArray: [String] = nameInput.componentsSeparatedByString(" ")
+        var firstName: String? = myArray.first
+        var lastName: String? = nil
+        if myArray.count > 1 {
+            lastName = myArray.last
         }
+        let validationResult = validatePatientNameInput(firstName, lastName: lastName)
         
-        return currentRecord.profile
+        //return currentRecord.profile
+        if validationResult.count == 0  {
+            currentProfile.firstAndLastName = patientName
+            return (currentProfile, validationResult)
+        }
+        // return value when errors occur
+        return (nil, validationResult)
+
     }
+
+    
     public func setMorningSnackRequired(isRequired: Bool) -> OPProfile {
         currentRecord.profile.morningSnackRequired = isRequired
         var error: NSError?
@@ -382,7 +391,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 break
             }
         }
-      
+        
         
         if firstName == nil {
             errors.append(ParentProfileValidation.FirstNameIsNil)
@@ -390,9 +399,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         if lastName == nil {
             errors.append(ParentProfileValidation.LastNameIsNil)
         }
-//        if atIndex < 0 || atIndex > currentProfile.parents.count  {
-//            errors.append(ParentProfileValidation.IndexOutOfRange)
-//        }
+        //        if atIndex < 0 || atIndex > currentProfile.parents.count  {
+        //            errors.append(ParentProfileValidation.IndexOutOfRange)
+        //        }
         
         if let fName = firstName  {
             if !validateName(fName, pattern: "^[a-z]{1,15}$") {
@@ -403,7 +412,33 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if !validateName(lName, pattern: "^([^-'\\d])([A-Za-z]?['-]?){2,18}([^-'\\d])$" ){// name length limit actually 20 chars, since there is a one char group on each end of string  18 + 1 + 1 //"^([^-'\\d])([A-Za-z]?['-]?){1,21}([^-'\\d])$") {
                 errors.append(ParentProfileValidation.LastNameInvalidCharacter)
             }
+            
+        }
+        
+        return (errors)
+        
+    }
+    public func validatePatientNameInput (firstName: String?, lastName: String?) -> [ParentProfileValidation] {
+        //using parent validation enum here:  refactor for Swift 2.0 to NameValildation enum
+        var errors = [ParentProfileValidation]()
+        
+        if let fName = firstName  {
+            if !validateName(fName, pattern: "^[a-z]{1,15}$") {
+                errors.append(ParentProfileValidation.FirstNameInvalidCharacter)
+            }
+        }
+        else{
+            errors.append(ParentProfileValidation.FirstNameIsNil)
+        }
 
+        
+        if let lName = lastName {
+            if !validateName(lName, pattern: "^([^-'\\d])([A-Za-z]?['-]?){2,18}([^-'\\d])$" ){// name length limit actually 20 chars, since there is a one char group on each end of string  18 + 1 + 1 //"^([^-'\\d])([A-Za-z]?['-]?){1,21}([^-'\\d])$") {
+                errors.append(ParentProfileValidation.LastNameInvalidCharacter)
+            }
+            
+        } else {
+            errors.append(ParentProfileValidation.LastNameIsNil)
         }
         
         return (errors)

@@ -68,6 +68,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonPressed:")
             
             self.navigationItem.rightBarButtonItem = sb
+            self.navigationItem.title = "Initial Setup"
             initialSetup = false
 
         }
@@ -82,64 +83,45 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         if firstNameTextField.text != "" {
             
         
-        var fullName = firstNameTextField.text
-        var fullNameArr = split(fullName) {$0 == " "}
-        var firstName: String = fullNameArr[0]
-        var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count - 1] : nil
+            var fullName = firstNameTextField.text
+            var fullNameArr = split(fullName) {$0 == " "}
+            var firstName: String = fullNameArr[0]
+            var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count - 1] : nil
 
-        if firstNameTextField.text == "Patient First and Last Name" {
-            displayErrorAlert("Patient Name Required.", message: "Please enter Patient First and Last Name.")
-        }
-        else if firstNameTextField.text == nil{
-            displayErrorAlert("Patient Name is Required", message: "Please add Patient First and Last Name.")
-        
-        }
-        else if fullNameArr.count < 2 {
-            displayErrorAlert("Patient First and Last Name are Required", message: "Please enter Patient First and Last Name, separated by a space.")
+            if firstNameTextField.text == "Patient First and Last Name" {
+                displayErrorAlert("Patient Name Required.", message: "Please enter Patient First and Last Name.")
+            }
+            else if firstNameTextField.text == nil{
+                displayErrorAlert("Patient Name is Required", message: "Please add Patient First and Last Name.")
             
-        }
+            }
+            else if fullNameArr.count < 2 {
+                displayErrorAlert("Patient First and Last Name are Required", message: "Please enter Patient First and Last Name, separated by a space.")
+                
+            }
 
-        else if parents.count == 1 && parents[0].firstName == "" {
-            displayErrorAlert("Parent Names Required", message: "Please add Parent Names.")
-            // An empty parent object is going to be there.
-            
-        }
+            else if parents.count == 1 && parents[0].firstName == "" {
+                displayErrorAlert("Parent Names Required", message: "Please add Parent Names.")
+                // An empty parent object is going to be there.
+                
+            }
 
-        else {
-            //save patient name
-            dataStore.savePatientName(firstNameTextField.text)
-            navigationController?.dismissViewControllerAnimated(true, completion: nil)
-            
-            let defaults = NSUserDefaults.standardUserDefaults()
-            
-            defaults.setBool(true, forKey: "profileIsValid")
-            
-        }
+            else {
+                //save patient name
+                dataStore.savePatientName(firstNameTextField.text)
+                navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                
+                let defaults = NSUserDefaults.standardUserDefaults()
+                
+                defaults.setBool(true, forKey: "profileIsValid")
+                
+            }
             
         } else {
             displayErrorAlert("Patient Name Required.", message: "Please enter Patient First and Last Name.")
         }
    }
     
-
-//    func displayErrorAlert(title: String, message: String) {
-//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-//        
-//        //            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-//        //                // ...
-//        //            }
-//        //            alertController.addAction(cancelAction)
-//        
-//        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-//            // ...
-//        }
-//        alertController.addAction(OKAction)
-//        
-//        self.presentViewController(alertController, animated: true) {
-//            // ...
-//        }
-//
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -174,22 +156,18 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-//        let nameInput = textField.text
-//        let myArray: [String] = nameInput.componentsSeparatedByString(" ")
-//        var firstName: String? = myArray.first
-//        if myArray.count > 1 {
-//            var lastName: String? = myArray.last
-//            tableViewCellDelegate!.nameEntered(parentItemIndexInProfileSet!, firstName: firstName, lastName: lastName)
-//        } else {
-//            tableViewCellDelegate!.nameEntered(parentItemIndexInProfileSet!, firstName: firstName, lastName: nil)
-//        }
 
+        let result = dataStore.savePatientName(self.firstNameTextField.text)
         
-        
-        dataStore.savePatientName(self.firstNameTextField.text)
+        if let name = result.profile {
+            //Success
+            if view.gestureRecognizers?.count > 0 {
+                view.gestureRecognizers?.removeAll(keepCapacity: true)
+            }
+        } else {
+            let errorStrings = result.errorArray.map{$0.rawValue}
+            displayErrorAlert("Invalid Name", messages: errorStrings )
 
-        if view.gestureRecognizers?.count > 0 {
-            view.gestureRecognizers?.removeAll(keepCapacity: true)
         }
 
     }

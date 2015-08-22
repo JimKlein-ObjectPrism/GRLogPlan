@@ -222,7 +222,7 @@ class UserInfoValidationTests: XCTestCase {
         
         let result = dataStore.validateParentInput(parentFirstName, lastName: parentLastName, profile: profile)
         
-        XCTAssert(result[0] == ParentProfileValidation.LastNameInvalidCharacter, "A first name with a digit should not pass.")
+        XCTAssert(result[0] == ParentProfileValidation.LastNameInvalidCharacter, "A last name with a digit should not pass.")
     }
 
     func testLastNameCanNotStartWithHyphenOrApostrophe ()

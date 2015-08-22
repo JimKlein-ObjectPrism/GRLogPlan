@@ -167,7 +167,6 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 let errorStrings = result.errorArray.map{$0.rawValue}
                 
                 displayErrorAlert("Invalid Name", messages: errorStrings )
-                //println(errorItem.rawValue)
             }
         }
         else

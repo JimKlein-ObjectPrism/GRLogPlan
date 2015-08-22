@@ -96,11 +96,18 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
         // OK this is addon only onthe vc.
         let addOnSelection = self.addOnSegmentedControl.selectedSegmentIndex
         let timeSelection = prescribedTimeUIPicker.selectedRowInComponent(0)
-//        let name = AddOnListItem(rawValue: addOnSelection)?.name
-//        let time = PrescribedTimeForAction(rawValue: timeSelection)?.name
-//        println("addON: \(name) \(addOnSelection), time: \(time) \(timeSelection)")
-        dataStoreDelegate.addAddOn(addOnSelection, prescribedTimeForAction: timeSelection)
-        self.navigationController?.popViewControllerAnimated(true)
+        
+        let result = dataStoreDelegate.addAddOn(addOnSelection, prescribedTimeForAction: timeSelection)
+        if let med = result.addOnObject {
+            //no errors
+            self.navigationController?.popViewControllerAnimated(true)
+        } else {
+            if result.errorArray.count > 0 {
+                let errorMessages = result.errorArray.map{$0.rawValue}
+                displayErrorAlert("AddOn Item", messages: errorMessages)
+            }
+        }
+
     }
     func doneButtonTapped_Update()
     {
