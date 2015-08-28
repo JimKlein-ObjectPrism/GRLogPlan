@@ -109,6 +109,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             else {
                 //save patient name
                 dataStore.savePatientName(firstNameTextField.text)
+                
                 navigationController?.dismissViewControllerAnimated(true, completion: nil)
                 
                 let defaults = NSUserDefaults.standardUserDefaults()

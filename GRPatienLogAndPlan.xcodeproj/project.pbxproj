@@ -48,6 +48,7 @@
 		EF27C39D1B5E915900A7AC7E /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27C39C1B5E915900A7AC7E /* PDFViewController.swift */; };
 		EF3587FE1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */; };
 		EF374C7C1B0B904A005A29BE /* VMDataStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */; };
+		EF44341E1B8BBA9B00D3C9BD /* beach2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF44341D1B8BBA9B00D3C9BD /* beach2.jpg */; };
 		EF49F8331AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF49F8311AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld */; };
 		EF5944671B0D3905009ED145 /* SnackVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5944661B0D3905009ED145 /* SnackVM.swift */; };
 		EF5944691B0D58F3009ED145 /* DinnerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5944681B0D58F3009ED145 /* DinnerVM.swift */; };
@@ -163,6 +164,7 @@
 		EF27C39C1B5E915900A7AC7E /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedsAddOnTableViewCell.swift; sourceTree = "<group>"; };
 		EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VMDataStructs.swift; sourceTree = "<group>"; };
+		EF44341D1B8BBA9B00D3C9BD /* beach2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach2.jpg; sourceTree = "<group>"; };
 		EF49F8321AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GRPatientLogAndPlan.xcdatamodel; sourceTree = "<group>"; };
 		EF5944661B0D3905009ED145 /* SnackVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnackVM.swift; path = ../SnackVM.swift; sourceTree = "<group>"; };
 		EF5944681B0D58F3009ED145 /* DinnerVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DinnerVM.swift; path = ../DinnerVM.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 		986443841A9E8D1400887579 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				EF44341D1B8BBA9B00D3C9BD /* beach2.jpg */,
 				EFBD36761AD30122006F32AA /* profile_user-16.png */,
 				EFBD367A1AD30AFB006F32AA /* calendar_day-16.png */,
 				EFBD36771AD30123006F32AA /* Settings_gear-16.png */,
@@ -558,6 +561,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF44341E1B8BBA9B00D3C9BD /* beach2.jpg in Resources */,
 				EFF448921AB22DF6004A099F /* 20pixelTrack.png in Resources */,
 				EFBD36781AD30123006F32AA /* profile_user-16.png in Resources */,
 				EF157BA61AAA597800847AEE /* MealItems.xml in Resources */,

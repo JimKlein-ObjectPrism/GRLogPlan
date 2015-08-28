@@ -128,7 +128,7 @@ public enum Meals {
 }
 
 class FoodJournalTableViewController: UITableViewController {
-
+    
     let dates = ["Wednesday, May 27, 2015","Tuesday, May 26, 2015","Monday, May 25, 2015","Sunday, May 24, 2015","Saturday, May 23, 2015", "Friday, May 22, 2015", "Thursday, May 21, 2015"]
     var currentDateIndex = 0
     var currentDateHeader = "Wednesday, May 27, 2015"
@@ -176,6 +176,7 @@ class FoodJournalTableViewController: UITableViewController {
     
     @IBAction func nextDay(sender: AnyObject) {
         currentDateHeader = dataStore.selectNextDayJournalEntry()
+        
        tableView.reloadData()
     }
 
@@ -205,9 +206,62 @@ class FoodJournalTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        
         cell.textLabel!.text = Meals(rawValue: indexPath.row)?.mealName()
+        cell.textLabel?.textColor = UIColor.blackColor()
+        cell.detailTextLabel?.text = "reset"
+        cell.detailTextLabel?.textColor = UIColor.clearColor()
+        
+        
+        switch checkMealStateValidationStatus(indexPath.row)
+        {
+        case .Success:
+            cell.detailTextLabel!.text = "Complete"
+            cell.detailTextLabel?.textColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+            //cell.textLabel?.textColor = UIColor.()
+        case .Failure:
+            cell.textLabel?.textColor = UIColor.blackColor()
+            
+            //cell.detailTextLabel?.text = "reset"
+        }
+//        if testSwitch{
+//            cell.detailTextLabel?.text = "Complete"
+//            cell.detailTextLabel?.textColor = UIColor.greenColor()
+//        }
         return cell
 
+    }
+    func checkMealStateValidationStatus(row: Int) -> ValidationResult {
+        if let result = Meals(rawValue: row) {
+        switch result{
+            case .Breakfast:
+                return dataStore.breakfast.validate()
+                //return  VMBreakfast(fromDataObject: dataStore.currentJournalEntry.breakfast).validate()
+                //return dataStore.getBreakfast_Today().validate()
+                
+            case .MorningSnack:
+                return dataStore.morningSnack.validate()
+                //return dataStore.getSnack_Today(SnackTime.Morning).validate()
+                
+            case .Lunch:
+                return dataStore.lunch.validate()
+                //return dataStore.getLunch_Today().validate()
+                
+            case .AfternoonSnack:
+                return dataStore.afternoonSnack.validate()
+                //return dataStore.getSnack_Today(SnackTime.Afternoon).validate()
+               
+            case .Dinner:
+                return dataStore.dinner.validate()
+                //return dataStore.getDinner_Today().validate()
+                
+            case .EveningSnack:
+                return dataStore.eveningSnack.validate()
+                //return dataStore.getSnack_Today(SnackTime.Evening).validate()
+                
+        }
+        }
+        return ValidationResult.Failure([])
     }
     
     func showVC (navBarTitle: String, mealVMDelegage: MealViewModelDelegate){
@@ -219,7 +273,6 @@ class FoodJournalTableViewController: UITableViewController {
         self.showViewController(vc as UIViewController, sender: vc)
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         //Fill the detail view controller with the choices for the currently selected item.
         let selectedIndex = indexPath.row
         let meal = Meals(rawValue: selectedIndex)!

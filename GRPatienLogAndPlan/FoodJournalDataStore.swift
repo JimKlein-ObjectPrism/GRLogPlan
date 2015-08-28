@@ -116,12 +116,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         currentProfile = currentRecord.profile
         let profile = currentProfile
         
-        if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
-            self.currentJournalEntry = journalEntry
+//        if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
+            self.currentJournalEntry = getJournalEntry_Today()//journalEntry
             
             //initialize meal items from existing entry
-            //TODO:  Initialize Other Meals to FROM EXISTING ENTRY
-            
+            initializeMealDataItems(currentJournalEntry)
             self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
             self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
             self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
@@ -129,19 +128,19 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
             self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
             
-        } else {
-            //create blank journal entries
-            self.currentJournalEntry = getNewJournalEntry(today)
-            
-            //initialize using Default values in VM Meal Items
-            //TODO:  Initialize Other Meals to VM default values
-            self.breakfast = VMBreakfast()
-            self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
-            self.lunch = VMLunch()
-            self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
-            self.dinner = VMDinner()
-            self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
-        }
+//        } else {
+//            //create blank journal entries
+//            self.currentJournalEntry = getJournalEntry_Today()
+//            
+//            //initialize using Default values in VM Meal Items
+//            //TODO:  Initialize Other Meals to VM default values
+//            self.breakfast = VMBreakfast()
+//            self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
+//            self.lunch = VMLunch()
+//            self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
+//            self.dinner = VMDinner()
+//            self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
+//        }
         
         todayJournalEntry = currentJournalEntry
         //after configuring currentJournalEntry
@@ -163,6 +162,15 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
     }
     
+    func initializeMealDataItems( journalEntry: OPJournalEntry ){
+        self.breakfast = VMBreakfast(fromDataObject: journalEntry.breakfast)
+        self.morningSnack = VMSnack(fromDataObject: journalEntry.morningSnack)
+        self.lunch = VMLunch(fromDataObject: journalEntry.lunch)
+        self.afternoonSnack = VMSnack(fromDataObject: journalEntry.afternoonSnack)
+        dinner = VMDinner(fromDataObject: journalEntry.dinner)
+        self.eveningSnack = VMSnack(fromDataObject: journalEntry.eveningSnack)
+    }
+    
     func initializeJournalEntryForCurrentDay ()
     {
         //initialize Patient Record
@@ -172,32 +180,32 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         currentProfile = currentRecord.profile
         let profile = currentProfile
         
-        if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
-            self.currentJournalEntry = journalEntry
-            
-            //initialize meal items from existing entry
-            //TODO:  Initialize Other Meals to FROM EXISTING ENTRY
-            
-            self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
-            self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
-            self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
-            self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
-            dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
-            self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
-            
-        } else {
-            //create blank journal entries
-            self.currentJournalEntry = getNewJournalEntry(today)
-            
-            //initialize using Default values in VM Meal Items
-            //TODO:  Initialize Other Meals to VM default values
-            self.breakfast = VMBreakfast()
-            self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
-            self.lunch = VMLunch()
-            self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
-            self.dinner = VMDinner()
-            self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
-        }
+//        if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
+//            self.currentJournalEntry = journalEntry
+//            
+//            //initialize meal items from existing entry
+//            //TODO:  Initialize Other Meals to FROM EXISTING ENTRY
+//            
+//            self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
+//            self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
+//            self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
+//            self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
+//            dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
+//            self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
+//            
+//        } else {
+//            //create blank journal entries
+//            self.currentJournalEntry = getJournalEntry_Today()
+//            
+//            //initialize using Default values in VM Meal Items
+//            //TODO:  Initialize Other Meals to VM default values
+//            self.breakfast = VMBreakfast()
+//            self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
+//            self.lunch = VMLunch()
+//            self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
+//            self.dinner = VMDinner()
+//            self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
+//        }
         
         todayJournalEntry = currentJournalEntry
         //after configuring currentJournalEntry
@@ -212,6 +220,56 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         updateItemChoiceEnums(profile)
 
     }
+    func initializeTodayJournalEntryForCurrentDay()
+    {
+        //initialize Patient Record
+        self.currentRecord = self.currentRecordAndProfile()
+        
+        //initialize Profile - use placeholder to initialize
+        currentProfile = currentRecord.profile
+        let profile = currentProfile
+        
+        //        if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
+        //            self.currentJournalEntry = journalEntry
+        //
+        //            //initialize meal items from existing entry
+        //            //TODO:  Initialize Other Meals to FROM EXISTING ENTRY
+        //
+        //            self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
+        //            self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
+        //            self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
+        //            self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
+        //            dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
+        //            self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
+        //
+        //        } else {
+        //            //create blank journal entries
+        //            self.currentJournalEntry = getJournalEntry_Today()
+        //
+        //            //initialize using Default values in VM Meal Items
+        //            //TODO:  Initialize Other Meals to VM default values
+        //            self.breakfast = VMBreakfast()
+        //            self.morningSnack = VMSnack(fromSnackTime: SnackTime.Morning)
+        //            self.lunch = VMLunch()
+        //            self.afternoonSnack = VMSnack(fromSnackTime: SnackTime.Afternoon)
+        //            self.dinner = VMDinner()
+        //            self.eveningSnack = VMSnack(fromSnackTime: SnackTime.Evening)
+        //        }
+        
+        todayJournalEntry = getJournalEntry_Today()
+        //after configuring currentJournalEntry
+        // initialize items dependent on profile
+        parentsArray = getParentsArray(profile)
+        //MARK:  Home Controller Meal State Init
+        MealState.setUpMealMenuForProfile(profile)
+        self.mealState = MealState.getMealState(NSDate())
+        
+        
+        //MARK: update enums for View Model Initializations
+        updateItemChoiceEnums(profile)
+        
+    }
+
     func updateItemChoiceEnums (profile: OPProfile){
         //used to
         
@@ -260,12 +318,23 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     public func savePatientName (patientName: String) -> (profile: OPProfile?, errorArray: [ParentProfileValidation]) {
         
         let nameInput = patientName
-        let myArray: [String] = nameInput.componentsSeparatedByString(" ")
-        var firstName: String? = myArray.first
-        var lastName: String? = nil
-        if myArray.count > 1 {
-            lastName = myArray.last
+        var firstName: String? //= myArray.first
+        var lastName: String? //= nil
+
+        if patientName == "" {
+            firstName = nil
+            lastName = nil
+            
+        } else {
+            let myArray: [String] = nameInput.componentsSeparatedByString(" ")
+            firstName = myArray.first
+            lastName = nil
+
+            if myArray.count > 1 {
+                lastName = myArray.last
+            }
         }
+        
         let validationResult = validatePatientNameInput(firstName, lastName: lastName)
         
         //return currentRecord.profile
@@ -275,7 +344,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         }
         // return value when errors occur
         return (nil, validationResult)
-
+        
     }
 
     
@@ -908,31 +977,30 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return journalEntry
     }
     
-    func getJournalEntry_Today ( ) -> OPJournalEntry? { // JournalItem{
+    func getJournalEntry_Today ( ) -> OPJournalEntry { // JournalItem{
         
         let journalEntryDate = today
         //  Fetch Request and Predicate:  array of args supports multiple days
         let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
         //jEntryFetch.predicate = NSPredicate(format: "date == %@", journalEntryDate)
-        jEntryFetch.predicate = NSPredicate(format: "date == %@", argumentArray: [journalEntryDate])   //(format: "date IN %@", @[journalEntryDate])
+        jEntryFetch.predicate = NSPredicate(format: "date == %@", argumentArray: [journalEntryDate])
+        //(format: "date IN %@", @[journalEntryDate])
         
         var error: NSError?
         
         let result = managedContext.executeFetchRequest(jEntryFetch, error: &error) as? [OPJournalEntry]
         
-        if let entries = result {
+         if let entries = result {
             if entries.count > 0 {
                 let entry = entries[0] as OPJournalEntry
                 println(entry.date)
                 return entries[0]
             } else {
-                return nil
+                return getNewJournalEntry(today)
             }
+            
         } else {
-            println("Could not Fetch: \(error)")
-            //TODO: handle error more gracefully
-            //assert(false, "Core Data Error fetching Journal Entry.")
-            return nil
+            return getNewJournalEntry(today)
         }
     }
     
@@ -1118,6 +1186,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     public func updateJournalEntryToSelectedDate (journalEntry: OPJournalEntry) {
         self.breakfast = VMBreakfast(fromDataObject: journalEntry.breakfast)
+        self.morningSnack = VMSnack(fromDataObject: journalEntry.morningSnack)
+        self.lunch = VMLunch(fromDataObject: journalEntry.lunch)
+        self.afternoonSnack = VMSnack(fromDataObject: journalEntry.afternoonSnack)
+        self.dinner = VMDinner(fromDataObject: journalEntry.dinner)
+        self.eveningSnack = VMSnack(fromDataObject: journalEntry.eveningSnack)
     
     }
     public func getFullStyleDateString(date: NSDate) -> String {
@@ -1337,7 +1410,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     //MARK:  Data Object API
     func getBreakfast_Today() -> VMBreakfast {
-        return self.breakfast//initialized in init
+        
+        return VMBreakfast(fromDataObject: getJournalEntry_Today().breakfast )
+        //return self.breakfast//initialized in init
     }
     func setOptionalStringProperty( inout stringProperty: String?, valuefromMealVM: String?) -> String? {
         //conditionally sets optional property if value is not nil
@@ -1400,6 +1475,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
 
     func getLunch_Today() -> VMLunch {
+        
         return self.lunch//initialized in init
     }
     
@@ -1433,11 +1509,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     func getSnack_Today(snackTime: SnackTime) -> VMSnack {
         switch snackTime{
         case .Morning:
-            return self.morningSnack
+            return VMSnack(fromDataObject: getJournalEntry_Today().morningSnack)
         case .Afternoon:
-            return self.afternoonSnack
+            return VMSnack(fromDataObject: getJournalEntry_Today().afternoonSnack)
         case .Evening:
-            return self.eveningSnack
+            return VMSnack(fromDataObject: getJournalEntry_Today().eveningSnack)
         }
        // return self.snack!//initialized in init
         
@@ -1448,7 +1524,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         switch snackTime{
         case .Morning:
             self.morningSnack = snack
-            let modelSnack = currentJournalEntry.morningSnack
+            let modelSnack = getJournalEntry_Today().morningSnack
             setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
             setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
             
@@ -1467,7 +1543,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
         case .Afternoon:
             self.afternoonSnack = snack
-            let modelSnack = currentJournalEntry.afternoonSnack
+            let modelSnack = getJournalEntry_Today().afternoonSnack
             setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
             setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
             
@@ -1486,7 +1562,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
         case .Evening:
             self.eveningSnack = snack
-            let modelSnack = currentJournalEntry.eveningSnack
+            let modelSnack = getJournalEntry_Today().eveningSnack
             setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
             setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
             

@@ -8,43 +8,46 @@
 
 import UIKit
 
+
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
 
     var dataStore: DataStore!
+    var appDelegate: AppDelegate!
     @IBOutlet weak var summaryTextView: UITextView!
     
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var mealTitle: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
+        if let aDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
             //set local property to data array in appDelegate
-                dataStore = appDelegate.dataStore
+                dataStore = aDelegate.dataStore
+                appDelegate = aDelegate
+                appDelegate.todaysDate = dataStore.today
              }
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
 
-        //TODO
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
-            if profile == true { // profile incomplete, so display profile vc
-                    return
-            }
-            else
-            {  // setup incomplete
-                displayInitialSetup()            }
-            }
-        else  // key doesn't exist:  display profile vc
-        {
-            displayInitialSetup()
-        }
-        
         //Timer for updating meal state
         let timerPeriod = dataStore.mealState.timeRemainingInCurrentTimeRange()
         
         NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "applicationDidBecomeActive:",
+            name: UIApplicationDidBecomeActiveNotification,
+            object: nil)
 
+    }
+    func applicationDidBecomeActive(notification: NSNotification) {
+        // do something
+        let a = "something"
+        print("HomeViewController:  applicationDidBecomeActive called")
+        if appDelegate.todaysDate != dataStore.today {
+            //then the date has changed while the app was InActive, so call
+            dataStore.getJournalEntry_Today()
+        }
     }
     func displayInitialSetup () {
         let vc : ProfileTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileTableViewController") as! ProfileTableViewController
@@ -56,11 +59,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         var navigationController = UINavigationController(rootViewController: vc)
         navigationController.preferredContentSize = CGSizeMake(100, 100);
-        presentViewController(navigationController, animated: true, completion: nil)
+        //presentViewController(navigationController, animated: true, completion: nil)
+//        let identifier = QOS_CLASS_BACKGROUND
+//        let queue = dispatch_get_global_queue(identifier, 0)
+        //dispatch_async(queue) { self.showController(self.tabBarController!, navController: navigationController ) }
         
+        //dispatch_async_f(
+        //dispatch_async_f( dispatch_get_global_queue(identifier, 0), nil, showController(self.tabBarController!, navigationController) )
+        self.navigationController!.presentViewController(navigationController, animated: true, completion: nil)
     }
 
-    
+    func showController ( tabBarController: UITabBarController,  navController: UINavigationController ) {
+        tabBarController.presentViewController(navController, animated: true, completion: nil)
+    }
     override func viewWillAppear(animated: Bool) {
 
         var ms = dataStore.mealState
@@ -72,10 +83,30 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         dayLabel.text = dateFormatter.stringFromDate(NSDate())
 
         summaryTextView.text = checkMealStateValidationStatus(ms)
+    }
+    
+    override func  viewDidAppear(animated: Bool) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
+            if profile == true { // profile incomplete, so display profile vc
+                return
+            }
+            else
+            {  // setup incomplete
+                displayInitialSetup()
+            }
+        }
+        else  // key doesn't exist:  display profile vc
+        {
+            displayInitialSetup()
+        }
         
     }
     
     func checkMealStateValidationStatus(mealState: MealState) -> String {
+        dataStore.currentJournalEntry = dataStore.todayJournalEntry
+        
         switch mealState{
         case .Breakfast:
             let status = dataStore.getBreakfast_Today().validate()
@@ -178,7 +209,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     @IBAction func showMealSelectionView(sender: AnyObject) {
-        
+        dataStore.currentJournalEntry = dataStore.getNewJournalEntry(dataStore.today)
         
         let meal = dataStore.mealState!
         switch meal {

@@ -268,9 +268,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-eW-haT">
-                                <rect key="frame" x="0.0" y="64" width="600" height="224"/>
-                            </imageView>
                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="900" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogx-nG-Eoa">
                                 <rect key="frame" x="0.0" y="288" width="600" height="312"/>
                                 <subviews>
@@ -282,6 +279,9 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
+                                                <variation key="widthClass=compact" misplaced="YES">
+                                                    <rect key="frame" x="130" y="13" width="143" height="24"/>
+                                                </variation>
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.58664146437576592" green="0.7234253479777778" blue="0.46440326229819351" alpha="1" colorSpace="calibratedRGB"/>
@@ -332,6 +332,9 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
+                                                <variation key="widthClass=compact" misplaced="YES">
+                                                    <rect key="frame" x="174" y="19" width="55" height="24"/>
+                                                </variation>
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.58664146439999998" green="0.72342534800000002" blue="0.46440326230000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -483,6 +486,24 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="beach2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-eW-haT">
+                                <rect key="frame" x="0.0" y="64" width="600" height="224"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="322" id="ava-Gj-dFL">
+                                        <variation key="widthClass=compact" constant="224"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ava-Gj-dFL"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="ava-Gj-dFL"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -667,6 +688,9 @@
                                             <state key="normal" title="J. D.">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="352" y="8" width="32" height="29"/>
+                                            </variation>
                                             <connections>
                                                 <action selector="showAlertForParentInitials:" destination="y5B-jC-mGF" eventType="touchUpInside" id="OXl-WB-uAq"/>
                                             </connections>
@@ -980,7 +1004,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PnL-Sb-lfE">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="widthClass=compact">
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -989,7 +1013,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PzF-8r-4H2">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="widthClass=compact">
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -2461,7 +2485,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="beach.jpg" width="400" height="227.15492248535156"/>
+        <image name="beach2.jpg" width="500" height="322"/>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
