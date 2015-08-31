@@ -32,7 +32,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     public 	var currentProfile: OPProfile!
     var currentJournalEntry: OPJournalEntry!
     
-    var todayJournalEntry: OPJournalEntry!
+    var todayJournalEntry: OPJournalEntry?
     
     var offsetNumberOfDaysFromCurrentDay: Int = 0
     
@@ -91,10 +91,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     //MARK: Delegates - currently only used method
     var updateDetailViewDelegate: UpdateDetailViewDelegate!
     
-    public override init() {
-        //used for testing validation
-        self.managedContext = NSManagedObjectContext()
-    }
+//    public override init() {
+//        //used for testing validation
+//        self.managedContext = NSManagedObjectContext()
+//    }
     
     public init(managedContext: NSManagedObjectContext) {
         self.managedContext = managedContext
@@ -110,7 +110,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 //initialize journal entry
                 //initializeJournalEntryForCurrentDay()
         //initialize Patient Record
-        self.currentRecord = self.currentRecordAndProfile()
+        currentRecord = currentRecordAndProfile()
         
         //initialize Profile - use placeholder to initialize
         currentProfile = currentRecord.profile
@@ -118,16 +118,16 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
 //        if let journalEntry = getJournalEntry_Today() {//?? getNewJournalEntry()
             self.currentJournalEntry = getJournalEntry_Today()//journalEntry
-            
+            todayJournalEntry = currentJournalEntry
             //initialize meal items from existing entry
             initializeMealDataItems(currentJournalEntry)
-            self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
-            self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
-            self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
-            self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
-            dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
-            self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
-            
+//            self.breakfast = VMBreakfast(fromDataObject: currentJournalEntry.breakfast)
+//            self.morningSnack = VMSnack(fromDataObject: currentJournalEntry.morningSnack)
+//            self.lunch = VMLunch(fromDataObject: currentJournalEntry.lunch)
+//            self.afternoonSnack = VMSnack(fromDataObject: currentJournalEntry.afternoonSnack)
+//            dinner = VMDinner(fromDataObject: currentJournalEntry.dinner)
+//            self.eveningSnack = VMSnack(fromDataObject: currentJournalEntry.eveningSnack)
+        
 //        } else {
 //            //create blank journal entries
 //            self.currentJournalEntry = getJournalEntry_Today()
@@ -159,7 +159,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not save: \(error)")
             //return ( nil, error)
         }
-        
+        //super.init()
+
     }
     
     func initializeMealDataItems( journalEntry: OPJournalEntry ){
@@ -257,9 +258,12 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         //        }
         
         todayJournalEntry = getJournalEntry_Today()
+        currentJournalEntry = todayJournalEntry
         //after configuring currentJournalEntry
         // initialize items dependent on profile
         parentsArray = getParentsArray(profile)
+        initializeMealDataItems(todayJournalEntry!)
+        
         //MARK:  Home Controller Meal State Init
         MealState.setUpMealMenuForProfile(profile)
         self.mealState = MealState.getMealState(NSDate())
@@ -1011,13 +1015,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
         //jEntryFetch.predicate = NSPredicate(format: "date == %@", journalEntryDate)
         jEntryFetch.predicate = NSPredicate(format: "date == %@", argumentArray: [dateIdentifier])
-//        let journalEntryDate = dateIdentifier//today
-//        //let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
-//        let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
-//        //jEntryFetch.predicate = NSPredicate(format: "date == %@", dateIdentifier)
-//        //let recordFetch = NSFetchRequest(entityName: "OPJournalEntry")
-//        
-//        //recordFetch.predicate = NSPredicate(format: "date == %@", journalEntryDate)
+
         var error: NSError?
         
         let result = managedContext.executeFetchRequest(jEntryFetch, error: &error) as? [OPJournalEntry]  //(jEntryFetch, error: &error) as! [OPJournalEntry]?
@@ -1479,7 +1477,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return self.lunch//initialized in init
     }
     
-    func saveLunch_Today(lunch: VMLunch){
+    func saveLunch(lunch: VMLunch){
         self.lunch = lunch
 
         setOptionalStringProperty(&currentJournalEntry.lunch.lunchChoice, valuefromMealVM: lunch.lunchChoice)
@@ -1524,7 +1522,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         switch snackTime{
         case .Morning:
             self.morningSnack = snack
-            let modelSnack = getJournalEntry_Today().morningSnack
+            let modelSnack = currentJournalEntry.morningSnack
             setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
             setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
             
@@ -1543,7 +1541,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
         case .Afternoon:
             self.afternoonSnack = snack
-            let modelSnack = getJournalEntry_Today().afternoonSnack
+            let modelSnack = currentJournalEntry.afternoonSnack
             setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
             setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
             
@@ -1562,7 +1560,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
         case .Evening:
             self.eveningSnack = snack
-            let modelSnack = getJournalEntry_Today().eveningSnack
+            let modelSnack = currentJournalEntry.eveningSnack
             setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
             setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
             
@@ -1591,7 +1589,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         return self.dinner//initialized in init
     }
 
-    func saveDinner_Today(dinner: VMDinner){
+    func saveDinner(dinner: VMDinner){
         self.dinner = dinner
         
         let modelDinner = currentJournalEntry.dinner

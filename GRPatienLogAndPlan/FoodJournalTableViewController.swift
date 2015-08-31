@@ -131,7 +131,9 @@ class FoodJournalTableViewController: UITableViewController {
     
     let dates = ["Wednesday, May 27, 2015","Tuesday, May 26, 2015","Monday, May 25, 2015","Sunday, May 24, 2015","Saturday, May 23, 2015", "Friday, May 22, 2015", "Thursday, May 21, 2015"]
     var currentDateIndex = 0
-    var currentDateHeader = "Wednesday, May 27, 2015"
+    var currentDateHeader: String!
+    
+    var selectedDate: String!
     
     var appDelegate: AppDelegate?
     
@@ -156,7 +158,19 @@ class FoodJournalTableViewController: UITableViewController {
         }
     }
     override func viewWillAppear(animated: Bool) {
-        
+        if currentDateHeader != dataStore.currentJournalEntry.date {
+            let result = dataStore.getJournalEntry(currentDateHeader)
+            //let a = entry.
+            switch result {
+            case .Success(let entry):
+                dataStore.currentJournalEntry = entry
+                dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+            case .EntryDoesNotExist:
+                print("Entry does not exist.")
+            case .Error:
+                print("Error encountered accessing Core Data.")
+            }
+        }
         self.tableView.reloadData()
     }
     func getLast7Days(){
@@ -171,7 +185,8 @@ class FoodJournalTableViewController: UITableViewController {
     }
   
     func previousDay() -> String {
-        return dataStore.selectPreviousDayJournalEntry()
+        let newCurrentJournalEntry = dataStore.selectPreviousDayJournalEntry()
+        return newCurrentJournalEntry
     }
     
     @IBAction func nextDay(sender: AnyObject) {
@@ -235,29 +250,29 @@ class FoodJournalTableViewController: UITableViewController {
         if let result = Meals(rawValue: row) {
         switch result{
             case .Breakfast:
-                return dataStore.breakfast.validate()
-                //return  VMBreakfast(fromDataObject: dataStore.currentJournalEntry.breakfast).validate()
+                //return dataStore.breakfast.validate()
+                return  VMBreakfast(fromDataObject: dataStore.currentJournalEntry.breakfast).validate()
                 //return dataStore.getBreakfast_Today().validate()
                 
             case .MorningSnack:
-                return dataStore.morningSnack.validate()
-                //return dataStore.getSnack_Today(SnackTime.Morning).validate()
+                //return dataStore.morningSnack.validate()
+                return VMSnack(fromDataObject: dataStore.currentJournalEntry.morningSnack).validate()// dataStore.getSnack_Today(SnackTime.Morning).validate()
                 
             case .Lunch:
-                return dataStore.lunch.validate()
-                //return dataStore.getLunch_Today().validate()
+                //return dataStore.lunch.validate()
+                return dataStore.getLunch_Today().validate()
                 
             case .AfternoonSnack:
-                return dataStore.afternoonSnack.validate()
-                //return dataStore.getSnack_Today(SnackTime.Afternoon).validate()
+                //return dataStore.afternoonSnack.validate()
+                return VMSnack(fromDataObject: dataStore.currentJournalEntry.afternoonSnack).validate()//dataStore.getSnack_Today(SnackTime.Afternoon).validate()
                
             case .Dinner:
-                return dataStore.dinner.validate()
-                //return dataStore.getDinner_Today().validate()
+                //return dataStore.dinner.validate()
+                return dataStore.getDinner_Today().validate()
                 
             case .EveningSnack:
-                return dataStore.eveningSnack.validate()
-                //return dataStore.getSnack_Today(SnackTime.Evening).validate()
+                //return dataStore.eveningSnack.validate()
+                return VMSnack(fromDataObject: dataStore.currentJournalEntry.eveningSnack).validate()//dataStore.getSnack_Today(SnackTime.Evening).validate()
                 
         }
         }

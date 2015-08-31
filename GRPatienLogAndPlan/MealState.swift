@@ -70,14 +70,14 @@ enum MealState {
             if MealState.morningSnackRange.rangeStart == nil {
                 self = .Lunch(MealState.lunchRange)
             } else {
-                self = MealState.AfternoonSnack(MealState.afternoonSnackRange)
+                self = MealState.MorningSnack(MealState.morningSnackRange)
             }
         case .MorningSnack:
             self = .Lunch(MealState.lunchRange)
         case .Lunch:
             self = .AfternoonSnack(MealState.afternoonSnackRange)
         case .AfternoonSnack:
-            self = MealState.Breakfast(MealState.dinnerRange)
+            self = MealState.Dinner(MealState.dinnerRange)
         case .Dinner:
             if MealState.eveningSnackRange?.rangeStart == nil {
                 self = MealState.Breakfast(MealState.breakfastRange)

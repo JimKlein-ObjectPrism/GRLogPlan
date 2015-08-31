@@ -322,7 +322,7 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
         let saveAnywayAction = UIAlertAction(title: "Save Anyway", style: .Default)  {
             (alert: UIAlertAction!) -> Void in
-            self.dataStore.saveLunch_Today(self.lunch)
+            self.dataStore.saveLunch(self.lunch)
             
             self.tableviewController.navigationController?.popViewControllerAnimated(true)
         }
@@ -339,7 +339,7 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         case .Success:
             // send save message to data store
             //dismiss view
-            dataStore.saveLunch_Today(self.lunch)
+            dataStore.saveLunch(self.lunch)
             tableviewController.navigationController?.popViewControllerAnimated(true)
             
         case let .Failure(errorCodes):

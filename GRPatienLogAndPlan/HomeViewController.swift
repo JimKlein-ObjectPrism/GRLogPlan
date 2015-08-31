@@ -11,6 +11,8 @@ import UIKit
 
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
 
+    var timer: NSTimer!
+    
     var dataStore: DataStore!
     var appDelegate: AppDelegate!
     @IBOutlet weak var summaryTextView: UITextView!
@@ -28,27 +30,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
 
-        //Timer for updating meal state
-        let timerPeriod = dataStore.mealState.timeRemainingInCurrentTimeRange()
+//        //Timer for updating meal state
+//        let timerPeriod = 10//dataStore.mealState.timeRemainingInCurrentTimeRange()
+//        
+//        self.timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
         
-        NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
-        
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: "applicationDidBecomeActive:",
-            name: UIApplicationDidBecomeActiveNotification,
-            object: nil)
 
     }
-    func applicationDidBecomeActive(notification: NSNotification) {
-        // do something
-        let a = "something"
-        print("HomeViewController:  applicationDidBecomeActive called")
-        if appDelegate.todaysDate != dataStore.today {
-            //then the date has changed while the app was InActive, so call
-            dataStore.getJournalEntry_Today()
-        }
-    }
+
     func displayInitialSetup () {
         let vc : ProfileTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileTableViewController") as! ProfileTableViewController
         
@@ -72,9 +61,18 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func showController ( tabBarController: UITabBarController,  navController: UINavigationController ) {
         tabBarController.presentViewController(navController, animated: true, completion: nil)
     }
+    override func viewWillDisappear(animated: Bool) {
+        if timer != nil {
+            timer.invalidate()
+            timer = nil
+        }
+    }
     override func viewWillAppear(animated: Bool) {
 
-        var ms = dataStore.mealState
+        dataStore.currentJournalEntry = dataStore.getJournalEntry_Today()
+        dataStore.initializeMealDataItems(dataStore.getJournalEntry_Today())
+        let ms = MealState.getMealState(NSDate())
+        dataStore.mealState = ms
         mealTitle.text = ms.mealName()
         
         var dateFormatter = NSDateFormatter()
@@ -82,7 +80,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         dayLabel.text = dateFormatter.stringFromDate(NSDate())
 
-        summaryTextView.text = checkMealStateValidationStatus(ms)
+        summaryTextView.text = getMealStateValidationStatus(ms)
+        
+        //Timer for updating meal state
+        let timerPeriod = dataStore.mealState.timeRemainingInCurrentTimeRange()
+        
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
+
     }
     
     override func  viewDidAppear(animated: Bool) {
@@ -104,30 +108,32 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-    func checkMealStateValidationStatus(mealState: MealState) -> String {
+    func getMealStateValidationStatus(mealState: MealState) -> String {
         dataStore.currentJournalEntry = dataStore.todayJournalEntry
+        dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+        return statusStringForCurrentMeal(mealState.mealName(), validationResult: checkMealStateValidationStatus(mealState, dataStore: dataStore))
         
-        switch mealState{
-        case .Breakfast:
-            let status = dataStore.getBreakfast_Today().validate()
-            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
-        case .MorningSnack:
-            let status = dataStore.getSnack_Today(SnackTime.Morning).validate()
-            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
-        case .Lunch:
-            let status = dataStore.getLunch_Today().validate()
-            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
-        case .AfternoonSnack:
-            let snack = dataStore.getSnack_Today(SnackTime.Afternoon)
-            let status = snack.validate()
-            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
-        case .Dinner:
-            let status = dataStore.getDinner_Today().validate()
-            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
-        case .EveningSnack:
-            let status = dataStore.getSnack_Today(SnackTime.Evening).validate()
-            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
-        }
+//        switch mealState{
+//        case .Breakfast:
+//            let status = VMBreakfast(fromDataObject: dataStore.currentJournalEntry.breakfast).validate()
+//            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+//        case .MorningSnack:
+//            let status = dataStore.getSnack_Today(SnackTime.Morning).validate()
+//            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+//        case .Lunch:
+//            let status = dataStore.getLunch_Today().validate()
+//            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+//        case .AfternoonSnack:
+//            let snack = dataStore.getSnack_Today(SnackTime.Afternoon)
+//            let status = snack.validate()
+//            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+//        case .Dinner:
+//            let status = dataStore.getDinner_Today().validate()
+//            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+//        case .EveningSnack:
+//            let status = dataStore.getSnack_Today(SnackTime.Evening).validate()
+//            return statusStringForCurrentMeal(mealState.mealName(), validationResult: status)
+//        }
     }
     
     func statusStringForCurrentMeal(mealName: String, validationResult: ValidationResult) -> String{
@@ -142,12 +148,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func updateMealState () {
         var ms = dataStore.mealState
         ms.next()
-
+        let a = ms
         let fullPeriodToNextUpdate = dataStore.mealState.timeRangeLength()
-        NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(fullPeriodToNextUpdate), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
+        timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(fullPeriodToNextUpdate), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
         mealTitle.text = ms.mealName()
-        summaryTextView.text = checkMealStateValidationStatus(ms)
-
+        summaryTextView.text = getMealStateValidationStatus(ms)
+        dataStore.mealState = ms
         
 
     }
@@ -209,13 +215,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     @IBAction func showMealSelectionView(sender: AnyObject) {
-        dataStore.currentJournalEntry = dataStore.getNewJournalEntry(dataStore.today)
-        
+        dataStore.currentJournalEntry = dataStore.getJournalEntry_Today()
         let meal = dataStore.mealState!
         switch meal {
         case .Breakfast:
             let breakfastVM = BreakfastVM(dataStore: self.dataStore)
-            breakfastVM.targetOPBreakfast = self.dataStore.todayJournalEntry.breakfast
+            //breakfastVM.targetOPBreakfast = self.dataStore.todayJournalEntry.breakfast
             showVC(meal.mealName(), mealVMDelegage: breakfastVM as MealViewModelDelegate)
             
         case .MorningSnack:
