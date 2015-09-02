@@ -76,7 +76,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         mealTitle.text = ms.mealName()
         
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMMM dd"
+        dateFormatter.dateFormat = "EEEE, MMMM d"
         
         dayLabel.text = dateFormatter.stringFromDate(NSDate())
 

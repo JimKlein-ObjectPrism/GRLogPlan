@@ -1142,10 +1142,22 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     func selectNextDayJournalEntry() -> String {
         if offsetNumberOfDaysFromCurrentDay == 0 {
+            if today != currentJournalEntry.date {
+                //condition occurs when Track tab has been active at midnight: create a new journal entry for the new day
+                currentJournalEntry = getJournalEntry_Today()
+                updateJournalEntryToSelectedDate(currentJournalEntry)
+            }
             return today
         } else {
+            // handle case where offset was set previous day, but app was inactive and it's now a new day
+            if today != currentJournalEntry.date && offsetNumberOfDaysFromCurrentDay == 1 {
+                offsetNumberOfDaysFromCurrentDay--
+                return selectJournalEntry(0)
+            } else {
+                //handle operation within the same day
             offsetNumberOfDaysFromCurrentDay--
             return selectJournalEntry(-offsetNumberOfDaysFromCurrentDay)
+            }
         }
     }
     

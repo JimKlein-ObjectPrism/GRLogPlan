@@ -103,6 +103,7 @@
 		EFF449641AB87E66004A099F /* Type Defs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF449631AB87E66004A099F /* Type Defs.swift */; };
 		EFF449CB1ABB45C2004A099F /* JournalItemProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */; };
 		EFF4CECE1B0CD7B10022A5B0 /* LunchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4CECD1B0CD7B10022A5B0 /* LunchVM.swift */; };
+		EFF576071B9646FE007A8340 /* TrackTabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF576061B9646FD007A8340 /* TrackTabTests.swift */; };
 		EFF7874C1B4B378D00CAABF8 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7874B1B4B378D00CAABF8 /* NoteViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -219,6 +220,7 @@
 		EFF449631AB87E66004A099F /* Type Defs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type Defs.swift"; sourceTree = "<group>"; };
 		EFF449CA1ABB45C2004A099F /* JournalItemProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalItemProtocols.swift; sourceTree = "<group>"; };
 		EFF4CECD1B0CD7B10022A5B0 /* LunchVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchVM.swift; sourceTree = "<group>"; };
+		EFF576061B9646FD007A8340 /* TrackTabTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTabTests.swift; sourceTree = "<group>"; };
 		EFF7874B1B4B378D00CAABF8 /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -309,6 +311,7 @@
 				986443711A9E78FB00887579 /* GRPatienLogAndPlanTests.swift */,
 				9864436F1A9E78FB00887579 /* Supporting Files */,
 				EF0A25B11B83A65900040CC1 /* UserInfoValidationTests.swift */,
+				EFF576061B9646FD007A8340 /* TrackTabTests.swift */,
 			);
 			path = GRPatienLogAndPlanTests;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF0A25B21B83A65900040CC1 /* UserInfoValidationTests.swift in Sources */,
+				EFF576071B9646FE007A8340 /* TrackTabTests.swift in Sources */,
 				986443721A9E78FB00887579 /* GRPatienLogAndPlanTests.swift in Sources */,
 				EF0A25B51B86572E00040CC1 /* TestCoreDataStack.swift in Sources */,
 			);
@@ -819,6 +823,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "DISABLE_PUSH_NOTIFICATIONS=1";
 				INFOPLIST_FILE = GRPatienLogAndPlan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

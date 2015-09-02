@@ -152,8 +152,8 @@
 		<menuItemType>OilDinnerItem</menuItemType>
 	</foodItem>
  <foodItem>
- <name>Soft Cheese of Goat Cheese</name>
- <itemDescription>1.5 oz Soft Cheese of Goat Cheese</itemDescription>
+ <name>Soft Cheese or Goat Cheese</name>
+ <itemDescription>1.5 oz Soft Cheese or Goat Cheese</itemDescription>
  <serving>
  <measurement>1</measurement>
  <unit>oz</unit>
@@ -161,6 +161,50 @@
  </serving>
  <menuItemType>OilDinnerItem</menuItemType>
 	</foodItem>
+ 
+ <foodItem>
+ <name>Olive Oil + Butter</name>
+ <itemDescription>1.5oz Olive Oil + 1.5 TBSP Butter</itemDescription>
+ <serving>
+ <measurement>1</measurement>
+ <unit>oz</unit>
+ <servingDescription></servingDescription>
+ </serving>
+ <menuItemType>OilDinnerItem</menuItemType>
+	</foodItem>
+  <foodItem>
+ <name>Olive Oil + Hard Cheese</name>
+ <itemDescription>1.5oz Olive Oil + 1.5oz Cheese</itemDescription>
+ <serving>
+ <measurement>1</measurement>
+ <unit>oz</unit>
+ <servingDescription></servingDescription>
+ </serving>
+ <menuItemType>OilDinnerItem</menuItemType>
+	</foodItem>
+  
+ <foodItem>
+ <name>Butter + Cream Cheese</name>
+ <itemDescription>1.5T Butter + 1.5oz Cream Cheese</itemDescription>
+ <serving>
+ <measurement>1</measurement>
+ <unit>oz</unit>
+ <servingDescription></servingDescription>
+ </serving>
+ <menuItemType>OilDinnerItem</menuItemType>
+	</foodItem>
+ <foodItem>
+ <name>Sour Cream + Hard Cheese</name>
+ <itemDescription>2T Sour Cream + .5oz Hard Cheese</itemDescription>
+ <serving>
+ <measurement>1</measurement>
+ <unit>oz</unit>
+ <servingDescription></servingDescription>
+ </serving>
+ <menuItemType>OilDinnerItem</menuItemType>
+	</foodItem>
+ 
+
  <foodItem>
  <name>Peanut Butter</name>
  <itemDescription>2 TBSP Peanut Butter</itemDescription>
@@ -181,6 +225,8 @@
  </serving>
  <menuItemType>OilDinnerItem</menuItemType>
 	</foodItem>
+ 
+ 
 
 	<foodItem>
 		<name>Salad</name>
