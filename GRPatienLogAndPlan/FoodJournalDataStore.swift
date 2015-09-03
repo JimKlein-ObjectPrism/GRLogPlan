@@ -30,7 +30,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     var currentRecord: OPPatientRecord!
     public 	var currentProfile: OPProfile!
-    var currentJournalEntry: OPJournalEntry!
+    var currentJournalEntry: OPJournalEntry! {
+        didSet(entry){
+            println(entry.date)
+        }
+    }
     
     var todayJournalEntry: OPJournalEntry?
     

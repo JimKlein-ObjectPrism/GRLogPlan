@@ -173,6 +173,7 @@ class FoodJournalTableViewController: UITableViewController {
         }
         self.tableView.reloadData()
     }
+    
     func getLast7Days(){
         let calendar = NSCalendar.currentCalendar()
         let date = NSDate()
