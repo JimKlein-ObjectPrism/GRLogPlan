@@ -16,6 +16,7 @@ struct TimeRange {
     
     var timerValue: Int? {
         get{
+            
             var seconds: Int = 0
             if rangeStart != nil && rangeEnd != nil {
                 var hours: Int = rangeEnd!.hour - rangeStart!.hour

@@ -158,20 +158,27 @@ class FoodJournalTableViewController: UITableViewController {
         }
     }
     override func viewWillAppear(animated: Bool) {
-        if currentDateHeader != dataStore.currentJournalEntry.date {
-            let result = dataStore.getJournalEntry(currentDateHeader)
-            //let a = entry.
-            switch result {
-            case .Success(let entry):
-                dataStore.currentJournalEntry = entry
-                dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
-            case .EntryDoesNotExist:
-                print("Entry does not exist.")
-            case .Error:
-                print("Error encountered accessing Core Data.")
-            }
-        }
+//        if currentDateHeader != dataStore.currentJournalEntry.date {
+//        }
+        getJournalEntryForDay(currentDateHeader)
         self.tableView.reloadData()
+    }
+    func getJournalEntryForDay(day: String) -> String {
+        let result = dataStore.getJournalEntry(day)
+        //let a = entry.
+        switch result {
+        case .Success(let entry):
+            dataStore.currentJournalEntry = entry
+            dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+            return entry.date
+        case .EntryDoesNotExist:
+            dataStore.currentJournalEntry = dataStore.getNewJournalEntry(day)
+            dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+            return dataStore.currentJournalEntry.date
+        case .Error:
+            print("Error encountered accessing Core Data.")
+            return "Error."
+        }
     }
     
     func getLast7Days(){
@@ -186,16 +193,92 @@ class FoodJournalTableViewController: UITableViewController {
     }
   
     func previousDay() -> String {
-        let newCurrentJournalEntry = dataStore.selectPreviousDayJournalEntry()
-        return newCurrentJournalEntry
+        returnPreviousDay(currentDateHeader)
+        //let newCurrentJournalEntry = dataStore.selectPreviousDayJournalEntry()
+        return currentDateHeader
     }
     
     @IBAction func nextDay(sender: AnyObject) {
-        currentDateHeader = dataStore.selectNextDayJournalEntry()
+        //currentDateHeader = dataStore.selectNextDayJournalEntry()
+        returnNextDay(currentDateHeader)
         
        tableView.reloadData()
     }
+    
+    func returnNextDay(currentlySelectedDate: String)  {
+        
+        let currentSelection = getDateFromString(currentlySelectedDate)
+        let dayAfterCurrentSelectedDate = getDayFromOffSet(1, date: currentSelection)
+        //let dStore = DataStore()
+        let todaysDate = getDateFromString(dataStore.today)
+        
+        if currentSelection.compare(todaysDate) == NSComparisonResult.OrderedSame {
+            // do nothing, reset to today's date
+            currentDateHeader = getJournalEntryForDay(currentlySelectedDate)
+            //return dStore.getJournalEntryForDate(todaysDate)
+        } else if currentSelection.compare(todaysDate) == NSComparisonResult.OrderedAscending {
+            //currentlySelectedDate occurs before today's date, so test
+            currentDateHeader = getJournalEntryForDay(dayAfterCurrentSelectedDate)
+        } else {
+            //return today's date, the given date is out of range, return today's entry
+            //fatalError("Index Out of Range")
+            currentDateHeader = getJournalEntryForDay(currentlySelectedDate)
+        }
+    }
+    func returnPreviousDay(currentlySelectedDate: String)  {
+        
+        let currentSelection = getDateFromString(currentlySelectedDate)
+        let dayBeforeCurrentSelectedDate = getDayFromOffSet(-1, date: currentSelection)
+        //let dStore = DataStore()
+        let todaysDate = getDateFromString(dataStore.today)
+        
+        currentDateHeader = getJournalEntryForDay(dayBeforeCurrentSelectedDate)
+//        if currentSelection.compare(todaysDate) == NSComparisonResult.OrderedSame {
+//            // do nothing, reset to today's date
+//            currentDateHeader = getJournalEntryForDay(currentlySelectedDate)
+//            //return dStore.getJournalEntryForDate(todaysDate)
+//        } else if currentSelection.compare(todaysDate) == NSComparisonResult.OrderedAscending {
+//            //currentlySelectedDate occurs before today's date, so test
+//            currentDateHeader = getJournalEntryForDay(dayBeforeCurrentSelectedDate)
+//        } else {
+//            //return today's date, the given date is out of range, return today's entry
+//            //fatalError("Index Out of Range")
+//            currentDateHeader = getJournalEntryForDay(currentlySelectedDate)
+//        }
+    }
 
+    
+    func getDateFromString(dateStr:String) -> NSDate {
+        var dateFmt = NSDateFormatter()
+        dateFmt.dateFormat = "EEEE, MMMM d, yyyy"
+        
+        let newDate = dateFmt.dateFromString(dateStr)!
+        
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        
+        
+        //dateFormatter.timeZone = NSTimeZone()
+        let localDate = dateFormatter.stringFromDate(date)
+        
+        
+        return newDate
+    }
+    func getDayFromOffSet (offset: Int, date: NSDate) -> String{
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMMM d, yyyy"
+        dateFormatter.dateStyle = .FullStyle
+        dateFormatter.stringFromDate(date)
+        
+        
+        let calendar = NSCalendar.currentCalendar()
+        let components = NSDateComponents()
+        
+        
+        components.day = offset
+        return dateFormatter.stringFromDate(calendar.dateByAddingComponents(components, toDate: date, options: nil)!)
+    }
+    
     @IBAction func showPreviousDateButton(sender: AnyObject) {
         currentDateHeader = previousDay()
         tableView.reloadData()

@@ -35,7 +35,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        
 //        self.timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
         
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("applicationDidBecomeActive:"), name: UIApplicationDidBecomeActiveNotification, object: nil)
+    
     }
 
     func displayInitialSetup () {
@@ -67,6 +68,35 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             timer = nil
         }
     }
+    func applicationDidBecomeActive(notification: NSNotification) {
+        if let topController = UIApplication.topViewController()
+        {
+            if let currentVC = topController as? HomeViewController {
+                dataStore.mealState = MealState.getMealState(NSDate())
+                dataStore.currentJournalEntry = dataStore.getJournalEntry_Today()
+                dataStore.initializeMealDataItems(dataStore.getJournalEntry_Today())
+                println("Home Tab: app did become active")
+                var dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "EEEE, MMMM d"
+                
+                dayLabel.text = dateFormatter.stringFromDate(NSDate())
+                mealTitle.text = dataStore.mealState.mealName()
+                println(mealTitle.text)
+
+                summaryTextView.text = getMealStateValidationStatus(dataStore.mealState)
+                
+                //Timer for updating meal state
+                let timerPeriod = dataStore.mealState.timeRemainingInCurrentTimeRange()
+                
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealInfo", userInfo: nil, repeats: false)
+
+            }
+        }
+        
+ 
+        
+    }
+
     override func viewWillAppear(animated: Bool) {
 
         dataStore.currentJournalEntry = dataStore.getJournalEntry_Today()
@@ -74,7 +104,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let ms = MealState.getMealState(NSDate())
         dataStore.mealState = ms
         mealTitle.text = ms.mealName()
-        
+        println("View Will Appear: \(mealTitle.text)")
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
         
@@ -85,7 +115,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //Timer for updating meal state
         let timerPeriod = dataStore.mealState.timeRemainingInCurrentTimeRange()
         
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timerPeriod), target: self, selector: "applicationDidBecomeActive:", userInfo: nil, repeats: false)
 
     }
     
@@ -145,19 +175,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func updateMealState () {
-        var ms = dataStore.mealState
-        ms.next()
-        let a = ms
+    func updateMealInfo () {
+        dataStore.mealState.next()
+        timer.invalidate()
         let fullPeriodToNextUpdate = dataStore.mealState.timeRangeLength()
-        timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(fullPeriodToNextUpdate), target: self, selector: "updateMealState", userInfo: nil, repeats: false)
-        mealTitle.text = ms.mealName()
-        summaryTextView.text = getMealStateValidationStatus(ms)
-        dataStore.mealState = ms
-        
-
+        timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(fullPeriodToNextUpdate), target: self, selector: "updateMealInfo", userInfo: nil, repeats: false)
+        mealTitle.text = dataStore.mealState.mealName()
+        summaryTextView.text = getMealStateValidationStatus(dataStore.mealState)
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -293,5 +318,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func saveButtonPressed (sender: UIBarButtonItem ){
         
         
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

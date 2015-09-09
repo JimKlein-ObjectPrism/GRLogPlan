@@ -44,26 +44,20 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         super.viewDidLoad()
     
         firstNameTextField.delegate = self
-        //lastNameTextField.delegate = self
-        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate{
-            //set local property to data array in appDelegate
-            self.appDelegate = appDelegate
-            dataStore = appDelegate.dataStore
-            profile = dataStore.currentRecord.profile
-            
-            
-        
-
-            if let name = dataStore.currentRecord.profile.firstAndLastName {
+        self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        dataStore = appDelegate.dataStore
+        if let name = dataStore?.currentRecord?.profile.firstAndLastName {
+            if !name.isEmpty{
                 firstNameTextField.text = name
             }
-        
-            morningSnackSwitch.setOn(profile.morningSnackRequired.boolValue, animated: false)
-            eveningSnackSwitch.setOn(profile.eveningSnackRequired.boolValue, animated: false)
-            
-            self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-        
         }
+        let morningSnack = dataStore?.currentProfile?.morningSnackRequired.boolValue ?? false
+        let eveningSnack = dataStore?.currentProfile?.eveningSnackRequired.boolValue ?? false
+        morningSnackSwitch.setOn(morningSnack, animated: false)
+        eveningSnackSwitch.setOn(eveningSnack, animated: false)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+
         if initialSetup {
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonPressed:")
             
@@ -79,8 +73,8 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         view.endEditing(true)
         let parents = dataStore.getParents()
         let profile = dataStore.currentProfile
-        
-        if firstNameTextField.text != "" {
+        let fieldText = firstNameTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        if fieldText != "" {
             
         
             var fullName = firstNameTextField.text
@@ -108,13 +102,19 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
 
             else {
                 //save patient name
-                dataStore.savePatientName(firstNameTextField.text)
                 
-                navigationController?.dismissViewControllerAnimated(true, completion: nil)
-                
-                let defaults = NSUserDefaults.standardUserDefaults()
-                
-                defaults.setBool(true, forKey: "profileIsValid")
+                let result = dataStore.savePatientName(fieldText)
+                if let profile = result.profile {
+                    
+                    MealState.setUpMealMenuForProfile(dataStore.currentProfile)
+//                    dataStore.mealState = MealState.getMealState(NSDate())
+                    
+                    navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    
+                    defaults.setBool(true, forKey: "profileIsValid")
+                }
                 
             }
             

@@ -69,4 +69,38 @@ extension UIViewController {
     func testDateOfCurrentJournalEntry( date: String, journalEntry: OPJournalEntry ) -> Bool {
         return date == journalEntry.date
     }
+    
 }
+
+//MARK: Top View Controller
+extension UIApplication {
+    class func topViewController(base: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return topViewController(base: selected)
+            }
+        }
+        if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+        return base
+    }
+}
+
+//MARK: UIButtonBarItem convenience initializer
+//extension UIBarButtonItem {
+//    //let a = UIBarButtonItem(
+//    convenience init(title: String,
+//        style: UIBarButtonItemStyle,
+//        target: AnyObject?,
+//        buttonAction: (UIBarButtonItem) -> () ){
+//        self.init()
+//            self.title = title
+//            self.style = style
+//            self.target = target
+//            action = buttonAction
+//    }
+//}

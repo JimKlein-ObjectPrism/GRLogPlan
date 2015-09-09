@@ -81,4 +81,26 @@ class AddOnViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         addOnSegmentedControl.apportionsSegmentWidthsByContent = true
 
     }
+    
+//    func doneButtonTapped_Add()
+//    {
+//        let medSelection = medicineUIPicker.selectedRowInComponent(0)
+//        let timeSelection = prescribedTimeUIPicker.selectedRowInComponent(0)
+//        let result = dataStoreDelegate.addMedicine( medSelection, prescribedTimeForAction: timeSelection)
+//        if let med = result.medObject {
+//            //no errors
+//            self.navigationController?.popViewControllerAnimated(true)
+//        } else {
+//            if result.errorArray.count > 0 {
+//                let errorMessages = result.errorArray.map{$0.rawValue}
+//                displayErrorAlert("Medicine Item", messages: errorMessages)
+//            }
+//        }
+//    }
+//    func doneButtonTapped_Update()
+//    {
+//        dataStoreDelegate.updateMedicine(selectedIndex!, medicine: medicineUIPicker.selectedRowInComponent(0), prescribedTimeForAction: prescribedTimeUIPicker.selectedRowInComponent(0))
+//        self.navigationController?.popViewControllerAnimated(true)
+//    }
+
 }

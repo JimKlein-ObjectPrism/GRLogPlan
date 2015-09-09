@@ -63,6 +63,7 @@
 		EF7D0C461B03E74F00ED50E5 /* ParentInitsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C451B03E74F00ED50E5 /* ParentInitsTableViewCell.swift */; };
 		EF7D0C481B03E76C00ED50E5 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C471B03E76C00ED50E5 /* LocationTableViewCell.swift */; };
 		EF7D0C4A1B03E77A00ED50E5 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D0C491B03E77A00ED50E5 /* TimeTableViewCell.swift */; };
+		EF9F19E71BA0CC9400610DF6 /* TestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9F19E61BA0CC9400610DF6 /* TestExtensions.swift */; };
 		EFB25FB11B27953B0086C85D /* OPProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB25FB01B27953B0086C85D /* OPProfile.swift */; };
 		EFBD36711ACCA14B006F32AA /* PrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36701ACCA14B006F32AA /* PrintViewController.swift */; };
 		EFBD36731ACCA6AC006F32AA /* PrintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */; };
@@ -180,6 +181,7 @@
 		EF7D0C451B03E74F00ED50E5 /* ParentInitsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentInitsTableViewCell.swift; sourceTree = "<group>"; };
 		EF7D0C471B03E76C00ED50E5 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		EF7D0C491B03E77A00ED50E5 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
+		EF9F19E61BA0CC9400610DF6 /* TestExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestExtensions.swift; sourceTree = "<group>"; };
 		EFB25FB01B27953B0086C85D /* OPProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OPProfile.swift; sourceTree = "<group>"; };
 		EFBD36701ACCA14B006F32AA /* PrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintViewController.swift; sourceTree = "<group>"; };
 		EFBD36721ACCA6AC006F32AA /* PrintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrintTableViewCell.swift; path = GRPatienLogAndPlan/PrintTableViewCell.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 		9864436E1A9E78FB00887579 /* GRPatienLogAndPlanTests */ = {
 			isa = PBXGroup;
 			children = (
+				EF9F19E61BA0CC9400610DF6 /* TestExtensions.swift */,
 				EF0A25B41B86572E00040CC1 /* TestCoreDataStack.swift */,
 				986443711A9E78FB00887579 /* GRPatienLogAndPlanTests.swift */,
 				9864436F1A9E78FB00887579 /* Supporting Files */,
@@ -685,6 +688,7 @@
 				EF0A25B21B83A65900040CC1 /* UserInfoValidationTests.swift in Sources */,
 				EFF576071B9646FE007A8340 /* TrackTabTests.swift in Sources */,
 				986443721A9E78FB00887579 /* GRPatienLogAndPlanTests.swift in Sources */,
+				EF9F19E71BA0CC9400610DF6 /* TestExtensions.swift in Sources */,
 				EF0A25B51B86572E00040CC1 /* TestCoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

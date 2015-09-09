@@ -48,12 +48,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         var time = dateFormatter.stringFromDate(NSDate())
         return time
     }()
-    var today: String = {
-       var dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .FullStyle
-        println(dateFormatter.stringFromDate(NSDate()))
-        return dateFormatter.stringFromDate(NSDate())
-    }()
+    var today: String  {
+        get {
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = .FullStyle
+            //println(dateFormatter.stringFromDate(NSDate()))
+            return dateFormatter.stringFromDate(NSDate())
+        }
+    }
     
     
     
@@ -325,11 +327,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     //MARK: Profile Model
     public func savePatientName (patientName: String) -> (profile: OPProfile?, errorArray: [ParentProfileValidation]) {
         
-        let nameInput = patientName
+        let nameInput = patientName.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         var firstName: String? //= myArray.first
         var lastName: String? //= nil
 
-        if patientName == "" {
+        if nameInput == "" {
             firstName = nil
             lastName = nil
             
@@ -339,7 +341,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             lastName = nil
 
             if myArray.count > 1 {
-                lastName = myArray.last
+                var name = myArray[myArray.count - 1]
+                lastName = name
             }
         }
         
@@ -638,10 +641,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 validationResult.append(MedicineValidation.CoreDataErrorEncountered)
             }
         }
-        else {
-            //TODO: handle error message here
-        }
-        // return value when errors occur
+        // return when errors occur
         return (nil, validationResult)
         
     }
@@ -738,7 +738,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
     public func validateAddOnResult(addOn: Int, prescribedTimeForAction: Int, profileAddOns: [OPAddOn]) -> [AddOnValidation]{
-        //TODO: AddOn Validation array:  What should be included?  No out of index range error if input is enum!
+        
         var validationResult = [AddOnValidation]()
         let a = profileAddOns[0]
         
@@ -768,9 +768,6 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             } else {
                 validationResult.append(AddOnValidation.CoreDataErrorEncountered)
             }
-        }
-        else {
-            //TODO: handle error message here
         }
         // return value when errors occur
         return (nil, validationResult)
@@ -1065,14 +1062,15 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     func getListOfDatePropertyValuesForExisitingJournalEntries() -> [String] {
         var dates: [String] = [String]()
-        let journalEntries = getAllJournalEntries()
-        if let entries = journalEntries {
+        
+        if let entries = getAllJournalEntries() {
             for entry in entries {
                 dates.append(entry.date)
             }
+            return convertStringToDateAndReturnArrayInAscendingOrder(dates)
         }
         
-        return convertStringToDateAndReturnArrayInAscendingOrder(dates)
+        return dates
         
     }
     func getAllJournalEntries () -> [OPJournalEntry]? {
@@ -1145,6 +1143,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
     }
     func selectNextDayJournalEntry() -> String {
+        
         if offsetNumberOfDaysFromCurrentDay == 0 {
             if today != currentJournalEntry.date {
                 //condition occurs when Track tab has been active at midnight: create a new journal entry for the new day
@@ -1247,7 +1246,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 currentRecord.profile = OPProfile(entity: profileEntity!,
                     insertIntoManagedObjectContext: managedContext)
                 
-//                currentRecord.profile.firstAndLastName = "Sarah Smith"
+                currentRecord.profile.firstAndLastName = ""
                 
 //                //Add Parent Name
 //                let profileEntityParent2 = NSEntityDescription.entityForName("OPParent",

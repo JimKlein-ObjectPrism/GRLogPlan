@@ -37,13 +37,13 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
         self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
         if  self.appDelegate != nil {
-            dataStore = appDelegate!.dataStore
-            journalEntries = dataStore.getListOfDatePropertyValuesForExisitingJournalEntries()
+            dataStore = appDelegate?.dataStore
+            journalEntries = dataStore?.getListOfDatePropertyValuesForExisitingJournalEntries()
         }
         
     }
     override func viewWillAppear(animated: Bool) {
-        journalEntries = dataStore.getListOfDatePropertyValuesForExisitingJournalEntries()
+        journalEntries = dataStore?.getListOfDatePropertyValuesForExisitingJournalEntries() ?? [String]()
         tableView.reloadData()
         
     }
