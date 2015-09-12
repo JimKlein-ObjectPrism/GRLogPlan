@@ -15,7 +15,7 @@ class MealTrackingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         //Save Button
         var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonTapped")
         self.navigationItem.rightBarButtonItem = sb
@@ -23,8 +23,7 @@ class MealTrackingTableViewController: UITableViewController {
         //MARK: back button
         var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
         self.navigationItem.leftBarButtonItem = b
-
-
+        self.hidesBottomBarWhenPushed = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,18 +66,8 @@ class MealTrackingTableViewController: UITableViewController {
         }
         
     }
-    /*
-    override  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    var currentItemsArray = sectionData[indexPath.section]
-    
-    let currentItem: AnyObject = currentItemsArray[indexPath.row]
-    if  let timeCell = currentItem as? Time {
-    return 200.0
-    }
-    return 50.0
-    }
 
-*/
+    
     func backButtonPressed (sender: UIBarButtonItem ){
         self.navigationController?.popViewControllerAnimated(true)
     }

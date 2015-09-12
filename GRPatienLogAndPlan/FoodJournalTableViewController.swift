@@ -43,7 +43,22 @@ public enum Meals {
         self = Meals.mealArray[rawValue]
     }
 
-    
+    public static func defaultMealTime (meal: Meals) -> String {
+        switch meal {
+        case .Breakfast:
+            return "7:00 AM"
+        case .MorningSnack:
+            return "10:00 AM"
+        case .Lunch:
+            return "12:00 PM"
+        case .AfternoonSnack:
+            return "2:00 PM"
+        case .Dinner:
+            return "6:00 PM"
+        case .EveningSnack:
+            return "9:00 PM"
+        }
+    }
     func mealName () -> String {
         switch self{
         case .Breakfast:
@@ -363,12 +378,15 @@ class FoodJournalTableViewController: UITableViewController {
         return ValidationResult.Failure([])
     }
     
-    func showVC (navBarTitle: String, mealVMDelegage: MealViewModelDelegate){
+    func showVC (navBarTitle: String, mealVMDelegage: MealViewModelDelegate, defaultMealTime: String){
         let vc : MealTrackingTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MealTrackingVC") as! MealTrackingTableViewController
         vc.navigationItem.title = navBarTitle
         vc.vm = mealVMDelegage
         vc.vm.tableView = vc.tableView
         vc.vm.tableviewController = vc
+        if let mealViewModel = vc.vm as? MealViewModel {
+            mealViewModel.defaultMealTime = defaultMealTime
+        }
         self.showViewController(vc as UIViewController, sender: vc)
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -382,28 +400,29 @@ class FoodJournalTableViewController: UITableViewController {
             let breakfastVM = BreakfastVM(dataStore: self.dataStore)
             breakfastVM.targetOPBreakfast = self.dataStore.currentJournalEntry.breakfast
             
-            showVC("Breakfast", mealVMDelegage: breakfastVM as MealViewModelDelegate)
+            //set time to default when you set the target.  make default time a type method
+            showVC("Breakfast", mealVMDelegage: breakfastVM as MealViewModelDelegate, defaultMealTime: Meals.defaultMealTime(meal))
 
            
         case .MorningSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Morning) as MealViewModelDelegate
-            showVC("Morning Snack", mealVMDelegage: mSnack)
+            showVC("Morning Snack", mealVMDelegage: mSnack, defaultMealTime: Meals.defaultMealTime(meal))
 
         case .Lunch:
             let lunch: MealViewModelDelegate = LunchVM(dataStore: self.dataStore) as MealViewModelDelegate
-            showVC("Lunch", mealVMDelegage: lunch)
+            showVC("Lunch", mealVMDelegage: lunch, defaultMealTime: Meals.defaultMealTime(meal))
            
         case .AfternoonSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Afternoon) as MealViewModelDelegate
-            showVC("Afternoon Snack", mealVMDelegage: mSnack)
+            showVC("Afternoon Snack", mealVMDelegage: mSnack, defaultMealTime: Meals.defaultMealTime(meal))
            
         case .Dinner:
             let dinner: MealViewModelDelegate = DinnerVM(dataStore: self.dataStore) as MealViewModelDelegate
-            showVC("Dinner", mealVMDelegage: dinner)
+            showVC("Dinner", mealVMDelegage: dinner, defaultMealTime: Meals.defaultMealTime(meal))
 
         case .EveningSnack:
             let mSnack: MealViewModelDelegate = SnackVM(dataStore: self.dataStore, snackTime: SnackTime.Evening) as MealViewModelDelegate
-            showVC("Evening Snack", mealVMDelegage: mSnack)
+            showVC("Evening Snack", mealVMDelegage: mSnack, defaultMealTime: Meals.defaultMealTime(meal))
         }
     }
     

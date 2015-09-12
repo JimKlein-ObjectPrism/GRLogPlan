@@ -42,12 +42,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     var currentBreakfast: OPBreakfast!
 
-    var currentTime: String = {
+    var currentTime: String  {
+        get {
         var dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
         var time = dateFormatter.stringFromDate(NSDate())
         return time
-    }()
+        }
+    }
     var today: String  {
         get {
             var dateFormatter = NSDateFormatter()
@@ -740,7 +742,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     public func validateAddOnResult(addOn: Int, prescribedTimeForAction: Int, profileAddOns: [OPAddOn]) -> [AddOnValidation]{
         
         var validationResult = [AddOnValidation]()
-        let a = profileAddOns[0]
+        //let a = profileAddOns[0]
         
         let result = profileAddOns.filter{
             $0.addOnItem.integerValue == addOn && $0.targetMealOrSnack.integerValue == prescribedTimeForAction
@@ -829,9 +831,6 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 validationResult.append(AddOnValidation.CoreDataErrorEncountered)
                 //TODO: handle Core Data error
             }
-        }
-        else {
-            //TODO: handle error messages here
         }
         // return value when errors occur
         return (nil, validationResult)
@@ -1432,8 +1431,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         if let value = valuefromMealVM  {
             stringProperty = value
             return value
+        } else {
+            stringProperty = nil
+            return stringProperty
         }
-        return nil
     }
     
     func setBoolProperty( inout property: NSNumber, valuefromMealVM: Bool) -> NSNumber {

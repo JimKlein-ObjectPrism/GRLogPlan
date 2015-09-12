@@ -26,7 +26,6 @@
 		EF1367951B1D5204007F1649 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367941B1D5204007F1649 /* ParentViewController.swift */; };
 		EF1367971B1D53CB007F1649 /* ParentViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */; };
 		EF1367991B1D543F007F1649 /* ProfileDataStoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1367981B1D543F007F1649 /* ProfileDataStoreDelegate.swift */; };
-		EF13679C1B1D54A4007F1649 /* AddOnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13679A1B1D54A4007F1649 /* AddOnViewController.swift */; };
 		EF13679D1B1D54A4007F1649 /* MedicineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */; };
 		EF13679F1B1D7220007F1649 /* AOnTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */; };
 		EF157BA61AAA597800847AEE /* MealItems.xml in Resources */ = {isa = PBXBuildFile; fileRef = EF157BA51AAA597800847AEE /* MealItems.xml */; };
@@ -144,7 +143,6 @@
 		EF1367941B1D5204007F1649 /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		EF1367961B1D53CB007F1649 /* ParentViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewTableViewCell.swift; sourceTree = "<group>"; };
 		EF1367981B1D543F007F1649 /* ProfileDataStoreDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDataStoreDelegate.swift; sourceTree = "<group>"; };
-		EF13679A1B1D54A4007F1649 /* AddOnViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOnViewController.swift; sourceTree = "<group>"; };
 		EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicineTableViewController.swift; sourceTree = "<group>"; };
 		EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOnTableViewController.swift; sourceTree = "<group>"; };
 		EF157BA51AAA597800847AEE /* MealItems.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MealItems.xml; sourceTree = "<group>"; };
@@ -275,7 +273,6 @@
 				9864437D1A9E864B00887579 /* SWRevealViewController */,
 				9864435F1A9E78FB00887579 /* Main.storyboard */,
 				986443591A9E78FB00887579 /* AppDelegate.swift */,
-				EF13679A1B1D54A4007F1649 /* AddOnViewController.swift */,
 				EFCF291B1AF1DA4300B8CF72 /* FoodJournalTableViewController.swift */,
 				EF157BB31AAE7C0200847AEE /* HomeViewController.swift */,
 				EF7D09E61B017B320029A824 /* MealTrackingTableViewController.swift */,
@@ -284,8 +281,8 @@
 				EFCF290F1AF057C900B8CF72 /* ProfileTableViewController.swift */,
 				98FDCF091AA16ABF0029F97E /* HomeTabBarController.swift */,
 				EF13679B1B1D54A4007F1649 /* MedicineTableViewController.swift */,
-				EFF7874B1B4B378D00CAABF8 /* NoteViewController.swift */,
 				EF13679E1B1D7220007F1649 /* AOnTableViewController.swift */,
+				EFF7874B1B4B378D00CAABF8 /* NoteViewController.swift */,
 				EF1367941B1D5204007F1649 /* ParentViewController.swift */,
 				EFCD097A1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift */,
 				EF0A25AF1B7E982300040CC1 /* Extensions.swift */,
@@ -623,7 +620,6 @@
 				9864435A1A9E78FB00887579 /* AppDelegate.swift in Sources */,
 				EFCAF4BA1B1646610039D784 /* OPEveningSnack.swift in Sources */,
 				EF157BC31AAEA21900847AEE /* PlaceEntryTableViewCell.swift in Sources */,
-				EF13679C1B1D54A4007F1649 /* AddOnViewController.swift in Sources */,
 				EFCAF4C01B1646610039D784 /* OPActivity.swift in Sources */,
 				EF5944671B0D3905009ED145 /* SnackVM.swift in Sources */,
 				EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */,

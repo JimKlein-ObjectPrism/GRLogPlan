@@ -29,6 +29,10 @@ public class MealViewModel: NSObject {
     weak var tableviewController: UITableViewController!
     let dataStore: DataStore
     
+    //Used in displaying current or default meal time
+    var parentViewControllerIsHomeViewController = false
+    var defaultMealTime: String?
+    
     init(dataStore: DataStore){
         self.dataStore = dataStore
     }
@@ -176,12 +180,14 @@ public class MealViewModel: NSObject {
         cell.timeSelectedHandler = timeSelectionHandler
         
         var timeForPickerControl = ""
-        if time != nil {
-            timeForPickerControl = time!
+        if let mealTime = time {
+            timeForPickerControl = mealTime
         } else {
-            timeForPickerControl = dataStore.currentTime
-            // also initialize current meal item's time to current time
-            time = dataStore.currentTime
+            if self.parentViewControllerIsHomeViewController  {
+                timeForPickerControl = dataStore.currentTime
+            } else {
+                timeForPickerControl = self.defaultMealTime ?? dataStore.currentTime
+            }
         }
         cell.timeTextField.text = timeForPickerControl
         return cell
@@ -204,7 +210,8 @@ public class MealViewModel: NSObject {
             // selecting row when only one row in section, deselects row and displays full list of options
             mutableArray = immutableArray  //immutable array contains full list of values
             propertyInModel = nil
-            tableView.reloadData()
+            animateRowInsertion(getIndexPathArrayOfRowsToInsert(indexPath, countOfArrayOfFoodItems: immutableArray.count))
+            //tableView.reloadData()
         } else {
             //
             if let choiceItem = immutableArray[indexPath.row] as? FoodItemWithChoice {
@@ -262,6 +269,27 @@ public class MealViewModel: NSObject {
         tableView.deleteRowsAtIndexPaths(rowsToDelete, withRowAnimation: UITableViewRowAnimation.Automatic)
         tableView.endUpdates()
     }
+    func getIndexPathArrayOfRowsToInsert ( indexPathOfSelectedItem: NSIndexPath, countOfArrayOfFoodItems: Int) -> [NSIndexPath]
+    {
+        var pathSet: [NSIndexPath] = [NSIndexPath]()
+        for index in 0 ..< countOfArrayOfFoodItems {
+            
+            if index  != indexPathOfSelectedItem.row {
+                pathSet.append( NSIndexPath(forRow: index , inSection: indexPathOfSelectedItem.section) )
+            }
+        }
+
+//        for index in 0 ..< countOfArrayOfFoodItems {
+//            pathSet.append(NSIndexPath(forRow: index , inSection: indexPathOfSelectedItem.section))
+//        }
+        return pathSet
+    }
+    
+    func animateRowInsertion ( rowsToInsert: [AnyObject] ) {
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths(rowsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
+        tableView.endUpdates()
+    }
 
     func getItemNameAndChoiceItemIndex ( #selectedIndexPath: NSIndexPath, selectedSegment: Int, mutableArray: [FoodItem] ) -> String
     {
@@ -280,41 +308,6 @@ public class MealViewModel: NSObject {
         return compoundName
 
     }
-    
-//    //MARK: Alert View methods
-//    func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){
-//        
-//        let cancel = "Cancel"
-//        
-//        // create controller
-//        let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
-//        
-//        //let button = sender as! UIButton
-//        
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-//            // ...
-//        }
-//        alertController.addAction(cancelAction)
-//        var a: String? = "a"
-//        
-//        var b:String? = ""
-//        for i in 0 ..< buttonValues.count {
-//            
-//            var buttonIndex = i
-//            
-//            var action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
-//                (alert: UIAlertAction!) -> Void in
-//                self.setPropertyInModel(value: buttonValues[i], propertyInModel: &modelProperty)
-//                //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.breakfast.parentInitials)
-//                self.tableView.reloadData()
-//            })
-//            
-//            alertController.addAction(action)
-//        }
-//        
-//        self.tableviewController.presentViewController(alertController, animated: true, completion: nil)
-//
-//    }
     
     
      //MARK: Helper Methods

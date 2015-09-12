@@ -107,6 +107,9 @@ enum MealState {
         }
     }
     
+
+
+    
     func timeRangeLength () -> Int {
         switch self{
         case .Breakfast:

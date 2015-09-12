@@ -17,7 +17,6 @@ class MedicineTableViewController: UITableViewController, UIPickerViewDataSource
     var isUpdate = false
     var medicineToUpdate: OPMedicine?
     
-    
     @IBOutlet weak var prescribedTimeUIPicker: UIPickerView!
     @IBOutlet weak var medicineUIPicker: UIPickerView!
     override func viewDidLoad() {
@@ -31,15 +30,14 @@ class MedicineTableViewController: UITableViewController, UIPickerViewDataSource
         if isUpdate {
             
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Update")
-            
             self.navigationItem.rightBarButtonItem = sb
-            prescribedTimeUIPicker.selectRow(medicineToUpdate!.name.integerValue, inComponent: 0, animated: false)
-            medicineUIPicker.selectRow(medicineToUpdate!.targetTimePeriodToTake.integerValue, inComponent: 0, animated: false)
+            
+            prescribedTimeUIPicker.selectRow(medicineToUpdate!.targetTimePeriodToTake.integerValue, inComponent: 0, animated: false)
+            medicineUIPicker.selectRow(medicineToUpdate!.name.integerValue, inComponent: 0, animated: false)
 
         } else {
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Add")
             self.navigationItem.rightBarButtonItem = sb
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem()                        
         }
     }
 
@@ -95,8 +93,19 @@ class MedicineTableViewController: UITableViewController, UIPickerViewDataSource
     }
     func doneButtonTapped_Update()
     {
-        dataStoreDelegate.updateMedicine(selectedIndex!, medicine: medicineUIPicker.selectedRowInComponent(0), prescribedTimeForAction: prescribedTimeUIPicker.selectedRowInComponent(0))
-        self.navigationController?.popViewControllerAnimated(true)
+        let medSelection = medicineUIPicker.selectedRowInComponent(0)
+        let timeSelection = prescribedTimeUIPicker.selectedRowInComponent(0)
+        let result = dataStoreDelegate.updateMedicine(selectedIndex!, medicine: medSelection, prescribedTimeForAction: timeSelection)
+        if let med = result.medObject {
+            //no errors
+            self.navigationController?.popViewControllerAnimated(true)
+        } else {
+            if result.errorArray.count > 0 {
+                let errorMessages = result.errorArray.map{$0.rawValue}
+                displayErrorAlert("Medicine Item", messages: errorMessages)
+            }
+        }
+
     }
  
 }

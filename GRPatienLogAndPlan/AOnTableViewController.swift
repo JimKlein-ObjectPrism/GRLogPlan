@@ -27,26 +27,26 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
+        
         buildSegmentedControls()
         prescribedTimeUIPicker.delegate = self
         prescribedTimeUIPicker.dataSource = self
         if isUpdate {
-            //addOnSegmentedControl.set
             addOnSegmentedControl.selectedSegmentIndex = addOnToUpdate!.addOnItem.integerValue
             prescribedTimeUIPicker.selectRow(addOnToUpdate!.targetMealOrSnack.integerValue, inComponent: 0, animated: false)
-            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Update")
-            self.navigationItem.rightBarButtonItem = sb
+            
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "Done",
+                style: UIBarButtonItemStyle.Plain,
+                target: self,
+                action: "doneButtonTapped_Update")
             
         } else {
             var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Add")
             self.navigationItem.rightBarButtonItem = sb
         }
 
-        
         self.tableView.reloadData()
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,7 +111,19 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
     }
     func doneButtonTapped_Update()
     {
-        dataStoreDelegate.updateAddOn(selectedIndex!, addOn: self.addOnSegmentedControl.selectedSegmentIndex, prescribedTimeForAction: self.prescribedTimeUIPicker.selectedRowInComponent(0))
-        self.navigationController?.popViewControllerAnimated(true)
+        // OK this is addon only onthe vc.
+        let addOnSelection = self.addOnSegmentedControl.selectedSegmentIndex
+        let timeSelection = prescribedTimeUIPicker.selectedRowInComponent(0)
+        
+        let result = dataStoreDelegate.updateAddOn(selectedIndex!, addOn: addOnSelection, prescribedTimeForAction: timeSelection)
+        if let med = result.addOnObject {
+            //no errors
+            self.navigationController?.popViewControllerAnimated(true)
+        } else {
+            if result.errorArray.count > 0 {
+                let errorMessages = result.errorArray.map{$0.rawValue}
+                displayErrorAlert("AddOn Item", messages: errorMessages)
+            }
+        }
     }
 }

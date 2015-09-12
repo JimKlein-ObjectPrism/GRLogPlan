@@ -682,9 +682,6 @@
                                             <state key="normal" title="J. D.">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <variation key="widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="352" y="8" width="32" height="29"/>
-                                            </variation>
                                             <connections>
                                                 <action selector="showAlertForParentInitials:" destination="y5B-jC-mGF" eventType="touchUpInside" id="OXl-WB-uAq"/>
                                             </connections>
@@ -1423,7 +1420,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ParentTableViewCell" rowHeight="102" id="LOF-9O-pnF" customClass="ParentViewTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="ParentTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ParentTableViewCell" rowHeight="102" id="LOF-9O-pnF" customClass="ParentViewTableViewCell" customModule="GRPatienLogAndPlan" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LOF-9O-pnF" id="hr5-zV-AIV">
@@ -1442,8 +1439,7 @@
                                                             <exclude reference="3oD-1z-j9M"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="30" y="36" width="260" height="30"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="3oD-1z-j9M"/>
                                                         </mask>

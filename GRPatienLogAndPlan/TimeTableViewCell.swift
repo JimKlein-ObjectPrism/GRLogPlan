@@ -34,6 +34,13 @@ class TimeTableViewCell: UITableViewCell {
         datePickerView.datePickerMode = UIDatePickerMode.Time
         datePickerView.minuteInterval = 15
         sender.inputView = datePickerView
+        
+        let dateAsString = timeTextField.text
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        if let date = dateFormatter.dateFromString(dateAsString) {
+            datePickerView.date = date
+        }
 
         datePickerView.addTarget(self, action: "handleDatePicker:", forControlEvents: UIControlEvents.AllEvents)
     }

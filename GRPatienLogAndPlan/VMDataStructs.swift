@@ -9,10 +9,6 @@
 import Foundation
 
 //MARK: Meal Item types
-//extension OPProfile {
-//    
-//    
-//}
 
 protocol MedicineAndAddOnMeal {
      var addOnRequired: Bool { get set }
@@ -24,16 +20,7 @@ protocol MedicineAndAddOnMeal {
     }
 
 public class VMProfile {
-    /*
-var addOnRequired = false
-var medicineRequired = false
-var parentInitials = "A.B"
-let location = "Kitchen"
-let time = NSDate()
-var medicine: Int?
-var parents: [String] = ["Joe Smith", "Jane Doe"]
-*/
-
+    
     //required Items
     var patientFirstName: String?
     var patientLastName: String?
@@ -186,6 +173,9 @@ public struct VMBreakfast {
         if let note = fromDataObject.note {
             self.note = note
         }
+        if fromDataObject.time == nil {
+            self.time = Meals.defaultMealTime(Meals.Breakfast)
+        }
 
     }
     public func validate () -> ValidationResult {
@@ -287,6 +277,9 @@ public struct VMLunch {
         }
         if let note = fromDataObject.note {
             self.note = note
+        }
+        if fromDataObject.time == nil {
+            self.time = Meals.defaultMealTime(Meals.Lunch)
         }
 
     }
@@ -456,6 +449,10 @@ public struct VMSnack {
         if let note = fromDataObject.note {
             self.note = note
         }
+        
+        if fromDataObject.time == nil {
+            self.time = Meals.defaultMealTime(Meals.MorningSnack)
+        }
 
     }
     
@@ -492,6 +489,9 @@ public struct VMSnack {
         }
         if let note = fromDataObject.note {
             self.note = note
+        }
+        if fromDataObject.time == nil {
+            self.time = Meals.defaultMealTime(Meals.AfternoonSnack)
         }
 
     }
@@ -530,7 +530,9 @@ public struct VMSnack {
         if let note = fromDataObject.note {
             self.note = note
         }
-
+        if fromDataObject.time == nil {
+            self.time = Meals.defaultMealTime(Meals.EveningSnack)
+        }
     }
     
     
@@ -660,6 +662,11 @@ public struct VMDinner {
         self.time = fromDataObject.time
 
         self.requiredItemsConsumed = fromDataObject.requiredItems.boolValue
+        
+        if fromDataObject.time == nil {
+            self.time = Meals.defaultMealTime(Meals.Dinner)
+        }
+
     }
     
     public func validate () -> ValidationResult {
