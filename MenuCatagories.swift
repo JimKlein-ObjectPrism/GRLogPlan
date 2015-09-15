@@ -225,16 +225,16 @@ public enum SnackMenuCategory {
                 let addOnMatch = MenuCategoryEnumHelper.matchAddOnPrescribedTime("Morning Snack", profile: profile)
                 if addOnMatch.isMatch {
                     morningSnackCaseItems.append(.AddOn)
-                    journalEntry.morningSnack.addOnRequired = true
-                    journalEntry.morningSnack.addOnText = addOnMatch.addOnName
+                    journalEntry.morningSnack?.addOnRequired = true
+                    journalEntry.morningSnack?.addOnText = addOnMatch.addOnName
                 }
                 
                 let medicineMatch = MenuCategoryEnumHelper.matchMedicinePrescribedTime("Morning Snack", profile: profile)
                 if medicineMatch.isMatch {
                     //if the profile contains a medicine, then add enum item, and set isRequired and medicineName fields in the meal object
                     morningSnackCaseItems.append(.Medicine)
-                    journalEntry.morningSnack.medicineRequired = true
-                    journalEntry.morningSnack.medicineText = medicineMatch.medicineName
+                    journalEntry.morningSnack?.medicineRequired = true
+                    journalEntry.morningSnack?.medicineText = medicineMatch.medicineName
                 }
                 morningSnackCaseItems.append(.AdditionalInfo)
             }
@@ -273,16 +273,16 @@ public enum SnackMenuCategory {
                     let addOnMatch = MenuCategoryEnumHelper.matchAddOnPrescribedTime("Evening Snack", profile: profile)
                     if addOnMatch.isMatch {
                         eveningSnackCaseItems.append(.AddOn)
-                        journalEntry.eveningSnack.addOnRequired = true
-                        journalEntry.eveningSnack.addOnText = addOnMatch.addOnName
+                        journalEntry.eveningSnack?.addOnRequired = true
+                        journalEntry.eveningSnack?.addOnText = addOnMatch.addOnName
                     }
                     
                     let medicineMatch = MenuCategoryEnumHelper.matchMedicinePrescribedTime("Evening Snack", profile: profile)
                     if medicineMatch.isMatch {
                         //if the profile contains a medicine, then add enum item, and set isRequired and medicineName fields in the meal object
                         eveningSnackCaseItems.append(.Medicine)
-                        journalEntry.eveningSnack.medicineRequired = true
-                        journalEntry.eveningSnack.medicineText = medicineMatch.medicineName
+                        journalEntry.eveningSnack?.medicineRequired = true
+                        journalEntry.eveningSnack?.medicineText = medicineMatch.medicineName
                     }
                     eveningSnackCaseItems.append(.AdditionalInfo)
                 }

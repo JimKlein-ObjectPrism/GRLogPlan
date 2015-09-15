@@ -131,13 +131,13 @@ public struct VMBreakfast {
     
     public var parentInitials: String?
     public var location: String?
-    public var time: String?
+    public var time: String
     
     public var note: String?
 
-    public init(){
-        
-    }
+//    public init(){
+//        
+//    }
     
     public init(fromDataObject: OPBreakfast){
         
@@ -173,10 +173,8 @@ public struct VMBreakfast {
         if let note = fromDataObject.note {
             self.note = note
         }
-        if fromDataObject.time == nil {
-            self.time = Meals.defaultMealTime(Meals.Breakfast)
-        }
-
+        
+        self.time = fromDataObject.time ?? Meals.defaultMealTime(Meals.Lunch)
     }
     public func validate () -> ValidationResult {
         var errorMessages = [String]()
@@ -234,13 +232,13 @@ public struct VMLunch {
     
     public var parentInitials: String?
     public var location: String?
-    public var time: String?
+    public var time: String
     
     public var note: String?
 
-    public init(){
-        
-    }
+//    public init(){
+//        
+//    }
     public init(fromDataObject: OPLunch){
         
         self.lunchChoice = fromDataObject.lunchChoice
@@ -272,16 +270,11 @@ public struct VMLunch {
         
         self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
         //time is set at the point that the cell is created by VM
-        if let t = fromDataObject.time {
-            self.time = t
-        }
         if let note = fromDataObject.note {
             self.note = note
         }
-        if fromDataObject.time == nil {
-            self.time = Meals.defaultMealTime(Meals.Lunch)
-        }
-
+        
+        self.time = fromDataObject.time ?? Meals.defaultMealTime(Meals.Lunch)
     }
 
     
@@ -403,57 +396,64 @@ public struct VMSnack {
     
     public var parentInitials: String?
     public var location: String?
-    public var time: String?
+    public var time: String
     
     public var note: String?
 
-    public init(){
-        
-    }
+//    public init(){
+//        
+//    }
     
-    public init (fromSnackTime: SnackTime) {
-                self.snackTime = fromSnackTime.rawValue
-            }
+//    public init (fromSnackTime: SnackTime) {
+//                self.snackTime = fromSnackTime.rawValue
+//            }
     
-    public init (fromDataObject: OPMorningSnack) {
+    public init (fromDataObject: OPMorningSnack?) {
         self.snackTime = 0
-        self.snackChoice = fromDataObject.snackChoice
-        self.fruitChoice = fromDataObject.fruitChoice
-        self.addOnRequired = fromDataObject.addOnRequired.boolValue
-        self.medicineRequired = fromDataObject.medicineRequired.boolValue
-        
-        //conditionally set properties from Data Object if they exist
-        if let addOnT = fromDataObject.addOnText {
-            self.addOnText = addOnT
-        }
-        if let aC = fromDataObject.addOnConsumed {
-            self.addOnConsumed = aC.boolValue
-        }
-        if let mC = fromDataObject.medicineConsumed {
-            self.medicineConsumed = mC.boolValue
-        }
-        if let mT = fromDataObject.medicineText {
-            self.medicineText = mT
-        }
-        
-        //parent initials are set by VM using data from DataStore
-        if let pi = fromDataObject.parentInitials {
-            self.parentInitials = pi
-        }
-        
-        self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
-        //time is set at the point that the cell is created by VM
-        if let t = fromDataObject.time {
-            self.time = t
-        }
-        if let note = fromDataObject.note {
-            self.note = note
-        }
-        
-        if fromDataObject.time == nil {
-            self.time = Meals.defaultMealTime(Meals.MorningSnack)
-        }
 
+        if let snack = fromDataObject {
+            self.snackChoice = snack.snackChoice
+            self.fruitChoice = snack.fruitChoice
+            self.addOnRequired = snack.addOnRequired.boolValue
+            self.medicineRequired = snack.medicineRequired.boolValue
+            self.time = snack.time ?? Meals.defaultMealTime(Meals.MorningSnack)
+            self.location = snack.location ?? LocationForMeal.defaultLocation()
+           
+            //conditionally set properties from Data Object if they exist
+            if let addOnT = snack.addOnText {
+                self.addOnText = addOnT
+            }
+            if let aC = snack.addOnConsumed {
+                self.addOnConsumed = aC.boolValue
+            }
+            if let mC = snack.medicineConsumed {
+                self.medicineConsumed = mC.boolValue
+            }
+            if let mT = snack.medicineText {
+                self.medicineText = mT
+            }
+            
+            //parent initials are set by VM using data from DataStore
+            if let pi = snack.parentInitials {
+                self.parentInitials = pi
+            }
+            //time is set at the point that the cell is created by VM
+            if let t = snack.time {
+                self.time = t
+            }
+            if let note = snack.note {
+                self.note = note
+            }
+        } else {
+            self.snackChoice = nil
+            self.fruitChoice = nil
+            self.addOnRequired = false
+            self.medicineRequired = false
+            self.time = Meals.defaultMealTime(Meals.MorningSnack)
+            self.location = LocationForMeal.defaultLocation()
+
+        }
+    
     }
     
     public init (fromDataObject: OPAfternoonSnack) {
@@ -490,52 +490,56 @@ public struct VMSnack {
         if let note = fromDataObject.note {
             self.note = note
         }
-        if fromDataObject.time == nil {
-            self.time = Meals.defaultMealTime(Meals.AfternoonSnack)
-        }
-
+        self.time = fromDataObject.time ?? Meals.defaultMealTime(Meals.AfternoonSnack)
     }
     
-    public init (fromDataObject: OPEveningSnack) {
+    public init (fromDataObject: OPEveningSnack?) {
         self.snackTime = 2
-        self.snackChoice = fromDataObject.snackChoice
-        self.fruitChoice = fromDataObject.fruitChoice
-        self.addOnRequired = fromDataObject.addOnRequired.boolValue
-        self.medicineRequired = fromDataObject.medicineRequired.boolValue
         
-        //conditionally set properties from Data Object if they exist
-        if let addOnT = fromDataObject.addOnText {
-            self.addOnText = addOnT
-        }
-        if let aC = fromDataObject.addOnConsumed {
-            self.addOnConsumed = aC.boolValue
-        }
-        if let mC = fromDataObject.medicineConsumed {
-            self.medicineConsumed = mC.boolValue
-        }
-        if let mT = fromDataObject.medicineText {
-            self.medicineText = mT
-        }
-        
-        //parent initials are set by VM using data from DataStore
-        if let pi = fromDataObject.parentInitials {
-            self.parentInitials = pi
-        }
-        
-        self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
-        //time is set at the point that the cell is created by VM
-        if let t = fromDataObject.time {
-            self.time = t
-        }
-        if let note = fromDataObject.note {
-            self.note = note
-        }
-        if fromDataObject.time == nil {
+        if let snack = fromDataObject {
+            self.snackChoice = snack.snackChoice
+            self.fruitChoice = snack.fruitChoice
+            self.addOnRequired = snack.addOnRequired.boolValue
+            self.medicineRequired = snack.medicineRequired.boolValue
+            self.time = snack.time ?? Meals.defaultMealTime(Meals.EveningSnack)
+
+            //conditionally set properties from Data Object if they exist
+            if let addOnT = snack.addOnText {
+                self.addOnText = addOnT
+            }
+            if let aC = snack.addOnConsumed {
+                self.addOnConsumed = aC.boolValue
+            }
+            if let mC = snack.medicineConsumed {
+                self.medicineConsumed = mC.boolValue
+            }
+            if let mT = snack.medicineText {
+                self.medicineText = mT
+            }
+            
+            //parent initials are set by VM using data from DataStore
+            if let pi = snack.parentInitials {
+                self.parentInitials = pi
+            }
+            
+            self.location = snack.location ?? LocationForMeal.defaultLocation()
+            //time is set at the point that the cell is created by VM
+            if let t = snack.time {
+                self.time = t
+            }
+            if let note = snack.note {
+                self.note = note
+            }
+            
+        } else {
+            self.snackChoice = nil
+            self.fruitChoice = nil
+            self.addOnRequired = false
+            self.medicineRequired = false
             self.time = Meals.defaultMealTime(Meals.EveningSnack)
         }
+    
     }
-    
-    
     
     public func validate () -> ValidationResult {
         var errorMessages = [String]()
@@ -636,14 +640,14 @@ public struct VMDinner {
     
     public var parentInitials: String?
     public var location: String?
-    public var time: String?
+    public var time: String
     
     public var note: String?
     
-    public init (){
-        
-    }
-    
+//    public init (){
+//        
+//    }
+//    
     public init(fromDataObject: OPDinner){
         self.meat = fromDataObject.meat
         self.oil = fromDataObject.oil
@@ -659,14 +663,9 @@ public struct VMDinner {
         self.medicineText = fromDataObject.medicineText
         self.parentInitials = fromDataObject.parentInitials
         self.location = fromDataObject.place
-        self.time = fromDataObject.time
+        self.time = fromDataObject.time ?? Meals.defaultMealTime(Meals.Dinner)
 
         self.requiredItemsConsumed = fromDataObject.requiredItems.boolValue
-        
-        if fromDataObject.time == nil {
-            self.time = Meals.defaultMealTime(Meals.Dinner)
-        }
-
     }
     
     public func validate () -> ValidationResult {

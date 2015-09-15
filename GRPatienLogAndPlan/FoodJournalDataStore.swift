@@ -1538,7 +1538,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         switch snackTime{
         case .Morning:
             self.morningSnack = snack
-            let modelSnack = currentJournalEntry.morningSnack
+            if let modelSnack = currentJournalEntry.morningSnack {
+        
             setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
             setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
             
@@ -1554,6 +1555,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
             setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
             setOptionalStringProperty(&modelSnack.note, valuefromMealVM: snack.note)
+            }
 
         case .Afternoon:
             self.afternoonSnack = snack
@@ -1576,22 +1578,23 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
         case .Evening:
             self.eveningSnack = snack
-            let modelSnack = currentJournalEntry.eveningSnack
-            setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
-            setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
-            
-            modelSnack.addOnRequired = NSNumber(bool: snack.addOnRequired)
-            setOptionalStringProperty(&modelSnack.addOnText, valuefromMealVM: snack.addOnText)
-            setOptionalBoolProperty(&modelSnack.addOnConsumed, valuefromMealVM: snack.addOnConsumed)
-            
-            modelSnack.medicineRequired = NSNumber(bool: snack.medicineRequired)
-            setOptionalStringProperty(&modelSnack.medicineText, valuefromMealVM: snack.medicineText)
-            setOptionalBoolProperty(&modelSnack.medicineConsumed, valuefromMealVM: snack.medicineConsumed)
-            
-            setOptionalStringProperty(&modelSnack.parentInitials, valuefromMealVM: snack.parentInitials)
-            setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
-            setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
-            setOptionalStringProperty(&modelSnack.note, valuefromMealVM: snack.note)
+            if let modelSnack = currentJournalEntry.eveningSnack {
+                setOptionalStringProperty(&modelSnack.snackChoice, valuefromMealVM: snack.snackChoice)
+                setOptionalStringProperty(&modelSnack.fruitChoice, valuefromMealVM: snack.fruitChoice)
+                
+                modelSnack.addOnRequired = NSNumber(bool: snack.addOnRequired)
+                setOptionalStringProperty(&modelSnack.addOnText, valuefromMealVM: snack.addOnText)
+                setOptionalBoolProperty(&modelSnack.addOnConsumed, valuefromMealVM: snack.addOnConsumed)
+                
+                modelSnack.medicineRequired = NSNumber(bool: snack.medicineRequired)
+                setOptionalStringProperty(&modelSnack.medicineText, valuefromMealVM: snack.medicineText)
+                setOptionalBoolProperty(&modelSnack.medicineConsumed, valuefromMealVM: snack.medicineConsumed)
+                
+                setOptionalStringProperty(&modelSnack.parentInitials, valuefromMealVM: snack.parentInitials)
+                setOptionalStringProperty(&modelSnack.location, valuefromMealVM: snack.location)
+                setOptionalStringProperty(&modelSnack.time, valuefromMealVM: snack.time)
+                setOptionalStringProperty(&modelSnack.note, valuefromMealVM: snack.note)
+            }
         }
         var error: NSError?
         if !managedContext.save(&error) {

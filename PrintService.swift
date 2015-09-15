@@ -59,11 +59,11 @@ public class PrintSevice {
     public func buildLogEntryPrintOut(date: String,
         profile: OPProfile,
         breakfastLogEntry: OPBreakfast,
-        morningSnackLogEntry: OPMorningSnack,
+        morningSnackLogEntry: OPMorningSnack?,
         lunchLogEntry: OPLunch,
         afternoonSnackLogEntry: OPAfternoonSnack,
         dinnerLogEntry: OPDinner,
-        eveningSnackLogEntry: OPEveningSnack
+        eveningSnackLogEntry: OPEveningSnack?
         ) -> LogEntryPrintOutItem {
             
             var morningSnackString = ""
@@ -75,11 +75,13 @@ public class PrintSevice {
             
             
             if profile.morningSnackRequired.boolValue {
-                var morningSnack = buildMorningSnackHTML("Morning Snack", time: morningSnackLogEntry.time, snackLogEntry: morningSnackLogEntry)
+                if let snack = morningSnackLogEntry {
+                var morningSnack = buildMorningSnackHTML("Morning Snack", time: snack.time, snackLogEntry: snack)
                 morningSnackString =   tableOpeningTags +
                     morningSnack.htmlTableString +
                     tableClosingTags + spacerTags
                 mealTableItems.append(morningSnack.pdfInfoItem)
+                }
             }
             
             var lunchPrintItems = buildLunchHTML(lunchLogEntry.time, lunchLogEntry: lunchLogEntry)
@@ -90,14 +92,15 @@ public class PrintSevice {
             mealTableItems.append(dinnerPrintItems.pdfInfoItem)
             
             if profile.eveningSnackRequired.boolValue {
-                var eveningSnack = buildEveningSnackHTML("Evening Snack", time: eveningSnackLogEntry.time, snackLogEntry: eveningSnackLogEntry)
-                eveningSnackString =   tableOpeningTags +
-                    eveningSnack.htmlTableString +
-                    tableClosingTags + spacerTags
-                mealTableItems.append(eveningSnack.pdfInfoItem)
+                if let snack = eveningSnackLogEntry {
+                    var eveningSnack = buildEveningSnackHTML("Evening Snack", time: snack.time, snackLogEntry: snack)
+                    eveningSnackString =   tableOpeningTags +
+                        eveningSnack.htmlTableString +
+                        tableClosingTags + spacerTags
+                    mealTableItems.append(eveningSnack.pdfInfoItem)
+                }
             }
             
-         
             var entryPage: String = htmlHeaderString +
                 buildFoodJournalHeader(profile, dateString: date) +
                 tableOpeningTags +

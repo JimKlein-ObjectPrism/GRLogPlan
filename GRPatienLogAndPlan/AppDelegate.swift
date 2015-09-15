@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     //Array that holds Food Journal Log Item

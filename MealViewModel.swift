@@ -172,24 +172,14 @@ public class MealViewModel: NSObject {
         return cell
         
     }
-    func tableCell(tableView: UITableView, cellForTimeItem indexPath: NSIndexPath, inout time: String?,  timeSelectionHandler: TimeSelectedDelegate) -> TimeTableViewCell
+    func tableCell(tableView: UITableView, cellForTimeItem indexPath: NSIndexPath, inout time: String,  timeSelectionHandler: TimeSelectedDelegate) -> TimeTableViewCell
     {
         //TODO: Initialize this to a median tme for the specific meal.  currently initializes to current time.
         let cell: TimeTableViewCell = tableView.dequeueReusableCellWithIdentifier(TimeTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! TimeTableViewCell
         
         cell.timeSelectedHandler = timeSelectionHandler
         
-        var timeForPickerControl = ""
-        if let mealTime = time {
-            timeForPickerControl = mealTime
-        } else {
-            if self.parentViewControllerIsHomeViewController  {
-                timeForPickerControl = dataStore.currentTime
-            } else {
-                timeForPickerControl = self.defaultMealTime ?? dataStore.currentTime
-            }
-        }
-        cell.timeTextField.text = timeForPickerControl
+        cell.timeTextField.text = time
         return cell
         
     }
@@ -315,14 +305,14 @@ public class MealViewModel: NSObject {
     func setPropertyInModel (#value: String, inout propertyInModel: String?){
         propertyInModel = value
     }
+    func setPropertyInModel (#value: String, inout propertyInModel: String){
+        propertyInModel = value
+    }
     func setPropertyInModel (#boolValue: Bool, inout boolPropertyInModel: Bool?){
         boolPropertyInModel = boolValue
     }
     func setPropertyInModel (#dateValue: NSDate, inout datePropertyInModel: NSDate?){
         datePropertyInModel = dateValue
-//        var error: NSError?
-//        if !managedContext.save(&error) {
-//            println("Could not save: \(error)")
 
     }
     

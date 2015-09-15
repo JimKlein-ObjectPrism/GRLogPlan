@@ -15,9 +15,9 @@ public class OPJournalEntry: NSManagedObject {
     @NSManaged var afternoonSnack: OPAfternoonSnack
     @NSManaged var breakfast: OPBreakfast
     @NSManaged var dinner: OPDinner
-    @NSManaged var eveningSnack: OPEveningSnack
+    @NSManaged var eveningSnack: OPEveningSnack?
     @NSManaged var lunch: OPLunch
-    @NSManaged var morningSnack: OPMorningSnack
+    @NSManaged var morningSnack: OPMorningSnack?
     @NSManaged var patientRecord: OPPatientRecord
     
 

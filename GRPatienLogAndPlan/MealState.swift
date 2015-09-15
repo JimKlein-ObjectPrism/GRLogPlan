@@ -237,8 +237,18 @@ enum MealState {
     
     static func setUpMealMenuForProfile( profile: OPProfile) {
         
+        MealState.stateArray = configureMealState(profile.morningSnackRequired.boolValue, eveningSnackRequired: profile.eveningSnackRequired.boolValue)
+    }
+    
+    static func setUpMealMenuForProfile( journalEntry: OPJournalEntry) {
+        let morningSnack = journalEntry.morningSnack != nil
+        let eveningSnack = journalEntry.eveningSnack != nil
+        MealState.stateArray = configureMealState( morningSnack, eveningSnackRequired: eveningSnack )
+    }
+
+    static func configureMealState (morningSnackRequired: Bool, eveningSnackRequired: Bool) -> [MealState]{
         var enumArray = [MealState]()
-        if profile.morningSnackRequired.boolValue {
+        if morningSnackRequired {
             MealState.breakfastRange = TimeRange(rangeStart: (0,0), rangeEnd: (9,30))
             enumArray.append(MealState.Breakfast(MealState.breakfastRange))
             
@@ -256,9 +266,9 @@ enum MealState {
         
         MealState.afternoonSnackRange = TimeRange(rangeStart: (13,30), rangeEnd: (17,0))
         enumArray.append(MealState.AfternoonSnack(MealState.afternoonSnackRange))
-
         
-        if profile.eveningSnackRequired.boolValue {
+        
+        if eveningSnackRequired {
             MealState.dinnerRange = TimeRange(rangeStart: (17,0), rangeEnd: (21,0))
             let dinner = MealState.Dinner(MealState.dinnerRange)
             enumArray.append(dinner)
@@ -271,6 +281,6 @@ enum MealState {
             MealState.eveningSnackRange = TimeRange(rangeStart: nil, rangeEnd: nil)
             //if evening snack not required, don't append to array
         }
-        MealState.stateArray = enumArray
+        return enumArray
     }
 }

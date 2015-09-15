@@ -10,7 +10,6 @@ import Foundation
 import XCTest
 import CoreData
 import GRPatienLogAndPlan
-
 extension XCTestCase {
     
     func setupMedicineAndAddOnDummyData ( profile: OPProfile,  dataStore: DataStore, coreDataStack: CoreDataStack) {
