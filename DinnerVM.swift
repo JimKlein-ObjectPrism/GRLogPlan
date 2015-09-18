@@ -205,7 +205,7 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
         
     }
     
-    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController) {
+    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController, choiceTableCell: NewChoiceTableViewCell?) {
 
         let menuSection = DinnerMenuCategory( value: indexPath.section)
         
@@ -215,28 +215,32 @@ public class DinnerVM: MealViewModel, MealViewModelDelegate, UITableViewDataSour
                 indexPath,
                 mutableArray: &self.currentMeatItemArray,
                 immutableArray: self.meatItemArray,
-                propertyInModel: &dinner.meat
+                propertyInModel: &dinner.meat,
+                choiceCell: choiceTableCell
             )
         case .Starch:
             toggleSelectionArrayAndPropertyInModel(
                 indexPath,
                 mutableArray: &currentStarchArray,
                 immutableArray: self.starchArray,
-                propertyInModel: &dinner.starch
+                propertyInModel: &dinner.starch,
+                choiceCell: choiceTableCell
             )
         case .Oil:
             toggleSelectionArrayAndPropertyInModel(
                 indexPath,
                 mutableArray: &self.currentOilArray,
                 immutableArray: self.oilArray,
-                propertyInModel: &dinner.oil
+                propertyInModel: &dinner.oil,
+                choiceCell: choiceTableCell
             )
         case .Vegetable:
             toggleSelectionArrayAndPropertyInModel(
                 indexPath,
                 mutableArray: &currentVegetableArray,
                 immutableArray: self.vegetableArray,
-                propertyInModel: &dinner.vegetable
+                propertyInModel: &dinner.vegetable,
+                choiceCell: choiceTableCell
             )
         case .AdditionalInfo:
             if indexPath.row == 3 {

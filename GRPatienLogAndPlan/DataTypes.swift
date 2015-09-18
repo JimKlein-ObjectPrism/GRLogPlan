@@ -824,7 +824,7 @@ enum AddOnListItem: Int {
     
 }
 
-public enum PrescribedTimeForAction {
+public enum PrescribedTimeForAction: Int {
     //case BeforeBreakfast = 0,
     case BreakfastTime,
 //    MidMorning,

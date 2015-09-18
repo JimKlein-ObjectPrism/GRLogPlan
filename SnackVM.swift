@@ -164,7 +164,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
     }
     
-    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController) {
+    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController, choiceTableCell: NewChoiceTableViewCell?) {
         //selectedItemTitle = dataSource[indexPath.row]
         let menuSection = SnackMenuCategory( value: indexPath.section, snackTime: self.snackTime)
         
@@ -174,7 +174,8 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
                 indexPath,
                 mutableArray: &self.currentSnackItemArray,
                 immutableArray: self.snackItemArray,
-                propertyInModel: &snack.snackChoice
+                propertyInModel: &snack.snackChoice,
+                choiceCell: choiceTableCell
             )
         case .AdditionalInfo:
             if indexPath.row == 3 {

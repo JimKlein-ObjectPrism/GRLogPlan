@@ -149,7 +149,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
     func sendPDFAsEmailAttachment (pdfFilePath: String, subjectLine: String,  fileName: String) {
         //Check to see the device can send email.
         if( MFMailComposeViewController.canSendMail() ) {
-            println("Can send email.")
+            //println("Can send email.")
             let mailComposer = MFMailComposeViewController()
             
             mailComposer.mailComposeDelegate = self
@@ -159,7 +159,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
             mailComposer.setToRecipients(["j.mesklein@gmail.com"])
             
             if let fileData = NSData(contentsOfFile: pdfFilePath) {
-                println("File data loaded.")
+                //println("File data loaded.")
                 
                 mailComposer.addAttachmentData(fileData, mimeType: "application/pdf", fileName: fileName)
                 
@@ -201,7 +201,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
         return cell
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        println("test")
+        //println("test")
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

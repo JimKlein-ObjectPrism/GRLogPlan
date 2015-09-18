@@ -75,13 +75,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 dataStore.mealState = MealState.getMealState(NSDate())
                 dataStore.currentJournalEntry = dataStore.getJournalEntry_Today()
                 dataStore.initializeMealDataItems(dataStore.getJournalEntry_Today())
-                println("Home Tab: app did become active")
                 var dateFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = "EEEE, MMMM d"
                 
                 dayLabel.text = dateFormatter.stringFromDate(NSDate())
                 mealTitle.text = dataStore.mealState.mealName()
-                println(mealTitle.text)
+//                println(mealTitle.text)
 
                 summaryTextView.text = getMealStateValidationStatus(dataStore.mealState)
                 
@@ -100,11 +99,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(animated: Bool) {
 
         dataStore.currentJournalEntry = dataStore.getJournalEntry_Today()
-        dataStore.initializeMealDataItems(dataStore.getJournalEntry_Today())
+        dataStore.updateMealCategoryEnumsAndProfileFields()
+        dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+        
         let ms = MealState.getMealState(NSDate())
         dataStore.mealState = ms
         mealTitle.text = ms.mealName()
-        println("View Will Appear: \(mealTitle.text)")
+        //println("View Will Appear: \(mealTitle.text)")
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
         

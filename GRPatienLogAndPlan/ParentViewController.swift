@@ -66,7 +66,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             view.addGestureRecognizer(tap)
 
         case .AddOns:
-            println("addon")
+            //println("addon")
             var sb = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action: "addButtonTapped:")
             self.navigationItem.rightBarButtonItem = sb
         case .Medicines:
@@ -171,9 +171,9 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         }
         else
         {
-            for x in result.errorArray {
-                println(x.rawValue)
-            }
+//            for x in result.errorArray {
+//                println(x.rawValue)
+//            }
         }
     }
 
@@ -308,7 +308,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                     cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name()
                     var name = AddOnListItem(rawValue:  addOn.addOnItem.integerValue )?.name
                     var time = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name()
-                    println("addON \(name) , when \(time)") //("addON: \(name) \(addOnSelection), time: \(time) \(timeSelection)")
+                    //println("addON \(name) , when \(time)") //("addON: \(name) \(addOnSelection), time: \(time) \(timeSelection)")
 
                     //cell.accessoryType = UITableViewCellAccessoryType.
                 }

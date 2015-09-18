@@ -21,7 +21,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     var managedContext: NSManagedObjectContext
     
-    public var parentsArray: [String] = []
+    public var parentsArray: [String] {
+        get {
+            if currentProfile != nil {
+            return getParentsArray(currentProfile)
+            }
+            else {return [String]() }
+        }
+    }
 
     var currentAddOns: [OPAddOn] = [OPAddOn]()
     var currentParents: [OPParent] = [OPParent]()
@@ -30,11 +37,12 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     var currentRecord: OPPatientRecord!
     public 	var currentProfile: OPProfile!
-    var currentJournalEntry: OPJournalEntry! {
-        didSet(entry){
-            println(entry.date)
-        }
-    }
+    var currentJournalEntry: OPJournalEntry! //{
+//        didSet(entry){
+//            println("Property observer for currentJournalEntry: \(entry.date)")
+//            //updateMealCategoryEnumsAndProfileFields(self.currentJournalEntry)
+//        }
+//    }
     
     var todayJournalEntry: OPJournalEntry?
     
@@ -153,21 +161,20 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         todayJournalEntry = currentJournalEntry
         //after configuring currentJournalEntry
         // initialize items dependent on profile
-        parentsArray = getParentsArray(profile)
+        //parentsArray = getParentsArray(profile)
         //MARK:  Home Controller Meal State Init
         MealState.setUpMealMenuForProfile(profile)
         self.mealState = MealState.getMealState(NSDate())
         
         
-        //MARK: update enums for View Model Initializations
-        updateItemChoiceEnums(profile)
         
         var error: NSError?
         if !managedContext.save(&error) {
             println("Could not save: \(error)")
             //return ( nil, error)
         }
-        //super.init()
+        //MARK: update enums for View Model Initializations
+        updateItemChoiceEnums(profile)
 
     }
     
@@ -219,7 +226,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         todayJournalEntry = currentJournalEntry
         //after configuring currentJournalEntry
         // initialize items dependent on profile
-        parentsArray = getParentsArray(profile)
+        // = getParentsArray(profile)
         //MARK:  Home Controller Meal State Init
         MealState.setUpMealMenuForProfile(profile)
         self.mealState = MealState.getMealState(NSDate())
@@ -269,7 +276,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         currentJournalEntry = todayJournalEntry
         //after configuring currentJournalEntry
         // initialize items dependent on profile
-        parentsArray = getParentsArray(profile)
+        //parentsArray = getParentsArray(profile)
         initializeMealDataItems(todayJournalEntry!)
         
         //MARK:  Home Controller Meal State Init
@@ -298,10 +305,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let profile = currentProfile
         //update enums
         //configure MenuChoice also sets medicine/addonRequired fields in journalentry.meal
-        BreakfastMenuCategory.configureMenuChoice(profile, journalEntry: &currentJournalEntry!)
-        LunchMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
-        SnackMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
-        DinnerMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
+        BreakfastMenuCategory.configureMenuChoiceAndJournalEntry(profile, journalEntry: &self.currentJournalEntry!)
+        LunchMenuCategory.configureMenuChoiceAndJournalEntry(profile, journalEntry: &self.currentJournalEntry!)
+        SnackMenuCategory.configureMenuChoiceAndJournalEntry(profile, journalEntry: &self.currentJournalEntry!)
+        DinnerMenuCategory.configureMenuChoiceAndJournalEntry(profile, journalEntry: &self.currentJournalEntry!)
 
 
     }
@@ -310,16 +317,26 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let profile = currentProfile
         //update enums
         //configure MenuChoice also sets medicine/addonRequired fields in journalentry.meal
-        BreakfastMenuCategory.configureMenuChoice(profile, journalEntry: &currentJournalEntry!)
-        LunchMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
-        SnackMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
-        DinnerMenuCategory.configureMenuChoice(profile, journalEntry: &self.currentJournalEntry!)
+        BreakfastMenuCategory.configureMenuChoiceAndJournalEntry(profile, journalEntry: &currentJournalEntry!)
+        LunchMenuCategory.configureMenuChoiceAndJournalEntry(profile, journalEntry: &self.currentJournalEntry!)
+        SnackMenuCategory.configureMenuChoiceAndJournalEntry(profile, journalEntry: &self.currentJournalEntry!)
+        DinnerMenuCategory.configureMenuChoiceAndJournalEntry(profile, journalEntry: &self.currentJournalEntry!)
         
-        //configure todayJournalEntry
-        BreakfastMenuCategory.configureMenuChoice(profile, journalEntry: &self.todayJournalEntry!)
-        LunchMenuCategory.configureMenuChoice(profile, journalEntry: &self.self.todayJournalEntry!)
-        SnackMenuCategory.configureMenuChoice(profile, journalEntry: &self.self.todayJournalEntry!)
-        DinnerMenuCategory.configureMenuChoice(profile, journalEntry: &self.self.todayJournalEntry!)
+        
+        Meals.configureMeals(profile)
+        
+        PrescribedTimeForAction.configureTimes(profile)
+        
+    }
+    func updateMealCategoryEnumsAndProfileFields (journalEntry: OPJournalEntry){
+        let profile = currentProfile
+        //update enums
+        //configure MenuChoice also sets medicine/addonRequired fields in journalentry.meal
+        BreakfastMenuCategory.configureMenuChoice(journalEntry)
+        LunchMenuCategory.configureMenuChoice(journalEntry)
+        SnackMenuCategory.configureMenuChoice(journalEntry)
+        DinnerMenuCategory.configureMenuChoice(journalEntry)
+        
         
         Meals.configureMeals(profile)
         
@@ -363,6 +380,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     public func setMorningSnackRequired(isRequired: Bool) -> OPProfile {
         currentRecord.profile.morningSnackRequired = isRequired
+        
+        if isRequired {
+            addMorningSnackToJournalEntry(currentJournalEntry)
+        } else {
+            if let snackToDelete = currentJournalEntry.morningSnack {
+                managedContext.deleteObject(snackToDelete)
+            }
+        }
         var error: NSError?
         if !managedContext.save(&error) {
             println("Could not save: \(error)")
@@ -375,6 +400,15 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     public func setEveningSnackRequired(isRequired: Bool) -> OPProfile {
         currentRecord.profile.eveningSnackRequired = isRequired
+        
+        if isRequired {
+            addEveningSnackToJournalEntry(currentJournalEntry)
+        } else {
+            if let snackToDelete = currentJournalEntry.eveningSnack {
+                managedContext.deleteObject(snackToDelete)
+            }
+        }
+
         var error: NSError?
         if !managedContext.save(&error) {
             println("Could not save: \(error)")
@@ -637,7 +671,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if let medicine = result.0 {
                 // return value with no errors
                 validationResult.append(MedicineValidation.Success)
-                updateItemChoiceEnums(currentRecord.profile)
+//                updateItemChoiceEnums(currentRecord.profile)
                 return (medicine, validationResult)
             } else {
                 validationResult.append(MedicineValidation.CoreDataErrorEncountered)
@@ -683,8 +717,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not save: \(error)")
             return (nil, error)
         }
-        updateItemChoiceEnums(currentRecord.profile)
-        return (medicineToDelete, nil)
+         return (medicineToDelete, nil)
     }
     
     func updateMedicine (atIndex: Int, medicine: Int, prescribedTimeForAction: Int) -> ( medObject: OPMedicine?, errorArray: [MedicineValidation])
@@ -697,7 +730,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if let parent = result.0 {
                 // return value with no errors
                 validationResult.append(MedicineValidation.Success)
-                updateItemChoiceEnums(currentRecord.profile)
+                //updateItemChoiceEnums(currentRecord.profile)
                 return (parent, validationResult)
             } else {
                 validationResult.append(MedicineValidation.CoreDataErrorEncountered)
@@ -765,7 +798,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if let parent = result.0 {
                 // return value with no errors
                 validationResult.append(AddOnValidation.Success)
-                updateItemChoiceEnums(currentRecord.profile)
+                //updateItemChoiceEnums(currentRecord.profile)
                 return (parent, validationResult)
             } else {
                 validationResult.append(AddOnValidation.CoreDataErrorEncountered)
@@ -793,6 +826,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             return ( nil, error!)
         }
         else{
+            // update addonRequired for meal here, then update the delete function as well.
             return (med, nil)
         }
         
@@ -811,7 +845,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             println("Could not save: \(error)")
             return (nil, error)
         }
-        updateItemChoiceEnums(currentRecord.profile)
+        
+//        updateItemChoiceEnums(currentRecord.profile)
+        
         return (addOnToDelete, nil)
     }
     
@@ -825,7 +861,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             if let parent = result.0 {
                 // return value with no errors
                 validationResult.append(AddOnValidation.Success)
-                updateItemChoiceEnums(currentRecord.profile)
+//                updateItemChoiceEnums(currentRecord.profile)
                 return (parent, validationResult)
             } else {
                 validationResult.append(AddOnValidation.CoreDataErrorEncountered)
@@ -941,14 +977,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         lunchEntry.journalEntry = journalEntry
         
         //morning snack
-        let profileEntitymSnack = NSEntityDescription.entityForName("OPMorningSnack",
-            inManagedObjectContext: managedContext)
-        
-        let mSnackEntry =  OPMorningSnack(entity: profileEntitymSnack!,
-            insertIntoManagedObjectContext: managedContext)
-        
-        mSnackEntry.journalEntry = journalEntry
-        
+        if currentProfile.morningSnackRequired.boolValue {
+            addMorningSnackToJournalEntry(journalEntry)
+        }
         //afternoon snack
         let profileEntityAfternoonSnack = NSEntityDescription.entityForName("OPAfternoonSnack",
             inManagedObjectContext: managedContext)
@@ -959,14 +990,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         aSnackEntry.journalEntry = journalEntry
         
         //evening snack
-        let profileEntityeSnack = NSEntityDescription.entityForName("OPEveningSnack",
-            inManagedObjectContext: managedContext)
-        
-        let eSnackEntry =  OPEveningSnack(entity: profileEntityeSnack!,
-            insertIntoManagedObjectContext: managedContext)
-        
-        eSnackEntry.journalEntry = journalEntry
-        
+        if currentProfile.eveningSnackRequired.boolValue {
+            addEveningSnackToJournalEntry(journalEntry)
+        }
         //dinner
         let profileEntityDinner = NSEntityDescription.entityForName("OPDinner",
             inManagedObjectContext: managedContext)
@@ -977,8 +1003,28 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         dinnerEntry.journalEntry = journalEntry
         
 
+        //self.initializeMealCategoryEnumsAndProfileFields()
        
         return journalEntry
+    }
+    
+    func addMorningSnackToJournalEntry (journalEntry: OPJournalEntry) {
+            let profileEntitymSnack = NSEntityDescription.entityForName("OPMorningSnack",
+                inManagedObjectContext: managedContext)
+            
+            let mSnackEntry =  OPMorningSnack(entity: profileEntitymSnack!,
+                insertIntoManagedObjectContext: managedContext)
+            
+            mSnackEntry.journalEntry = journalEntry
+    }
+    func addEveningSnackToJournalEntry (journalEntry: OPJournalEntry) {
+        let profileEntityeSnack = NSEntityDescription.entityForName("OPEveningSnack",
+            inManagedObjectContext: managedContext)
+        
+        let eSnackEntry =  OPEveningSnack(entity: profileEntityeSnack!,
+            insertIntoManagedObjectContext: managedContext)
+        
+        eSnackEntry.journalEntry = journalEntry
     }
     
     func getJournalEntry_Today ( ) -> OPJournalEntry { // JournalItem{
@@ -997,7 +1043,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
          if let entries = result {
             if entries.count > 0 {
                 let entry = entries[0] as OPJournalEntry
-                println(entry.date)
+                //println(entry.date)
                 return entries[0]
             } else {
                 return getNewJournalEntry(today)
@@ -1008,7 +1054,61 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         }
     }
     
-    
+    func updateMedicineAndAddOnFields (journalEntry: OPJournalEntry)  {
+        
+        //        let pTime = PrescribedTimeForAction(rawValue: medicineToDelete.targetTimePeriodToTake.integerValue)!
+        //        switch pTime {
+        //        case PrescribedTimeForAction.BreakfastTime:
+        //
+        //            if mealOrSnackName == pTime.name() {
+        //                setValues(medicine.name.integerValue)
+        //            }
+        //        case .MorningSnack:
+        //            if mealOrSnackName == pTime.name() {
+        //                setValues(medicine.name.integerValue)
+        //            }
+        //        case .LunchTime:
+        //            if mealOrSnackName == pTime.name() {
+        //                setValues(medicine.name.integerValue)
+        //            }
+        //        case .AfternoonSnack:
+        //            if mealOrSnackName == pTime.name() {
+        //                setValues(medicine.name.integerValue)
+        //            }
+        //        case .DinnerTime:
+        //            if mealOrSnackName == pTime.name() {
+        //                setValues(medicine.name.integerValue)
+        //            }
+        //        case .EveningSnack:
+        //            if mealOrSnackName == pTime.name() {
+        //                setValues(medicine.name.integerValue)
+        //            }
+        //        }//end switch
+
+        
+        let addOnMatch = MenuCategoryEnumHelper.matchAddOnPrescribedTime("Breakfast", profile: currentProfile)
+        if addOnMatch.isMatch {
+            journalEntry.breakfast.addOnRequired = NSNumber(bool: true)
+            journalEntry.breakfast.addOnText = addOnMatch.addOnName
+            
+        } else {
+            journalEntry.breakfast.addOnRequired = NSNumber(bool: false)
+            journalEntry.breakfast.addOnConsumed = NSNumber(bool: false)
+        }
+        
+        
+        let medicineMatch = MenuCategoryEnumHelper.matchMedicinePrescribedTime("Breakfast", profile: currentProfile)
+        if medicineMatch.isMatch {
+            //if the profile contains a medicine, then add enum item, and set isRequired and medicineName fields in the meal object
+            journalEntry.breakfast.medicineRequired = NSNumber(bool: true)
+            journalEntry.breakfast.medicineText = medicineMatch.medicineName
+        } else {
+            journalEntry.breakfast.addOnRequired = NSNumber(bool: false)
+            journalEntry.breakfast.addOnConsumed = NSNumber(bool: false)
+            
+        }
+
+    }
     func getJournalEntry (dateIdentifier: String) -> JournalEntryResult { // JournalItem{
         
         //  Fetch Request and Predicate:  array of args supports multiple days
@@ -1023,7 +1123,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         if let entries = result {
             if entries.count > 0 {
                 let entry = entries[0] as OPJournalEntry
-                println(entry.date)
+                //println(entry.date)
                 return JournalEntryResult.Success(entry)
                 
             } else {
@@ -1095,17 +1195,18 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     func getParentsArray(profile: OPProfile) -> [String] {
         var parentsArray = [String]()
         for p in profile.parents {
-            let parent = p as? OPParent
-            let name = parent!.firstName + " " + parent!.lastName
-            parentsArray.append(name)
+                if let parent = p as? OPParent {
+                let name = parent.firstName + " " + parent.lastName
+                parentsArray.append(name)
+            }
         }
         return  parentsArray
 
     }
     func defaultParentInitials() -> String?{
-        if parentsArray.count == 0 {
-            parentsArray = getParentsArray(currentRecord.profile)
-        }
+//        if parentsArray.count == 0 {
+//            parentsArray = getParentsArray(currentRecord.profile)
+//        }
         
         if parentsArray.count > 0 {
             
@@ -1174,7 +1275,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let newDate = calendar.dateByAddingComponents(components, toDate: NSDate(), options: nil)
         let selectedDay = getFullStyleDateString(newDate!)
 
-        println(selectedDay)
+        //println(selectedDay)
         
         // if core data holds journal entry for this day
         // else create new entry for selected day
@@ -1208,7 +1309,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     public func getFullStyleDateString(date: NSDate) -> String {
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .FullStyle
-        println(dateFormatter.stringFromDate(date))
+        //println(dateFormatter.stringFromDate(date))
         return dateFormatter.stringFromDate(date)
     }
     
@@ -1692,20 +1793,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         var profile = self.loadProfile()
         var journalItem = self.buildJournalEntry(profile)
-        
-        //var logEntryItems = [Any]()
-        
-        //foodItems Array used by all foodItems
-        //self.foodItems = self.loadFoodItems()
-        
-//        logEntryItems.append(buildBreakfastItems(profile, journalItem: journalItem))
-//        logEntryItems.append(self.buildLunchItems(profile, journalItem: journalItem))
-//        logEntryItems.append(Snack())
-//        logEntryItems.append(self.buildDinnerItems(profile, journalItem: journalItem))
-//        logEntryItems.append(Medicine())
-//        logEntryItems.append(Activity())
-        //TODO:  Load additional meal items
-        
+                
         return logEntryItems
     }
     

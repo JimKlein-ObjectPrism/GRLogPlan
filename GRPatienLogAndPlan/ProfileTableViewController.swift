@@ -64,11 +64,12 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
             self.navigationItem.rightBarButtonItem = sb
             self.navigationItem.title = "Initial Setup"
             initialSetup = false
-
         }
-        
-
     }
+    func viewWillDisappear(){
+        //Make sure changes get made to today's journal entry:  set required med or required add on to false
+    }
+
     func doneButtonPressed (sender: UIBarButtonItem ){
         view.endEditing(true)
         let parents = dataStore.getParents()

@@ -37,6 +37,7 @@ class MealTrackingTableViewController: UITableViewController {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return vm.numberOfSectionsInTableView(self.tableView)
+        
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,8 +55,34 @@ class MealTrackingTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        vm.didDeselectRowAtIndexPath( indexPath, viewController: self )
+        //let selectedCell = tableView(self.tableView, cellForRowAtIndexPath, indexPath: indexPath) //as NewChoiceTableViewCell //{
+            //selectedCell
+        //}
+        let cell = self.tableView(tableView, cellForRowAtIndexPath: indexPath) as? NewChoiceTableViewCell
         //vm.tableView(tableView, didDeselectRowAtIndexPath: indexPath)
+//        if let vModel = vm as? MealViewModel {
+//            if  cell != nil && !vModel.choiceCellSelectedState {
+//                cell!.clearChoiceInSegmentControl()
+//                //cell!.choiceLabel.text = "Pow"
+//            }
+//        }
+        vm.didDeselectRowAtIndexPath( indexPath, viewController: self , choiceTableCell: cell)
+//        if let vModel = vm as? MealViewModel {
+//            if  cell != nil && !vModel.choiceCellSelectedState {
+////            tableView.reloadData()
+//            }
+//        }
+//        let section = indexPath.section
+//        let rowsInSection = self.tableView(self.tableView, numberOfRowsInSection: section)
+//        for row in 0..<rowsInSection {
+//            let iPath = NSIndexPath(forRow: row, inSection: section)
+//            let cell2 = self.tableView(tableView, cellForRowAtIndexPath: iPath) as? NewChoiceTableViewCell
+//            if let choiceCell = cell2 {
+//                println("Selected Index \(choiceCell.choiceLabel.text): \(choiceCell.selectedIndex)")
+//                choiceCell.clearChoiceInSegmentControl()
+//            }
+//        }
+
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

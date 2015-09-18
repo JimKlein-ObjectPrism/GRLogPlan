@@ -38,8 +38,8 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     override init(dataStore: DataStore)
     {
         //dataStore = dataStore
-        dataStore.updateMealCategoryEnumsAndProfileFields()
-
+        //dataStore.updateMealCategoryEnumsAndProfileFields()
+        BreakfastMenuCategory.configureMenuChoice(dataStore.currentJournalEntry)
         if let entry = dataStore.currentJournalEntry {
             self.breakfast = VMBreakfast(fromDataObject: entry.breakfast)
         } else {
@@ -69,12 +69,14 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         }
 
         //TODO: Get time at init, i
-        dataStore.updateMealCategoryEnumsAndProfileFields()
+        //dataStore.updateMealCategoryEnumsAndProfileFields()
 
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        //println("number of sections in table: \(BreakfastMenuCategory.count())")
         return BreakfastMenuCategory.count()
+    
     }
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let menuSection = BreakfastMenuCategory(value: section){
@@ -113,6 +115,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     
     
     @objc public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        BreakfastMenuCategory.configureMenuChoice(dataStore.currentJournalEntry)
         
         let menuSection = BreakfastMenuCategory(value: indexPath.section)
             
@@ -142,6 +145,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
                 cell.medicineTakenHandler = self
                 return cell
             case .AddOn:
+                println("count menu categories: \(BreakfastMenuCategory.count())")
                 //let handler: AddOnItemSelectedDelegate = (self as? AddOnItemSelectedDelegate)!
                 return tableCell(tableView, cellForAddOnItem: indexPath, addOnText: self.breakfast.addOnText!, switchState: self.breakfast.addOnConsumed!, switchSelectionHandler: self)
             case .AdditionalInfo:
@@ -165,24 +169,27 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
 
     }
     
-    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController) {
+    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController, choiceTableCell: NewChoiceTableViewCell?) {
         //selectedItemTitle = dataSource[indexPath.row]
         let menuSection = BreakfastMenuCategory( value: indexPath.section)
-            
+        
             switch menuSection!{
             case .FoodChoice:
                 toggleSelectionArrayAndPropertyInModel(
                     indexPath,
                     mutableArray: &self.currentFoodItemArray,
                     immutableArray: self.foodItemArray,
-                    propertyInModel: &breakfast.foodChoice
+                    propertyInModel: &breakfast.foodChoice,
+                    choiceCell: choiceTableCell
                 )
             case .Fruit:
                 toggleSelectionArrayAndPropertyInModel(
                     indexPath,
                     mutableArray: &currentFruitArray,
                     immutableArray: self.fruitArray,
-                    propertyInModel: &breakfast.fruitChoice
+                    propertyInModel: &breakfast.fruitChoice,
+                    choiceCell: choiceTableCell
+
                 )
             case .AdditionalInfo:
                 if indexPath.row == 3 {

@@ -89,6 +89,33 @@ extension UIApplication {
         return base
     }
 }
+// TODO: Update using where clause [FoodItem] for swift 2
+extension Array {
+    func getIndexInArray (item: String?) -> Int {
+        var itemIndex: Int = 0
+        if let itemValue = item {
+            for i in 0..<self.count {
+                if let foodItem = self[i] as? FoodItem{
+                    if foodItem.name == itemValue {
+                    itemIndex = i
+                    break
+                    }
+                }
+                if let foodItem = self[i] as? FoodItemWithChoice {
+                    let foodItemFullName = foodItem.name
+                    let myArray: [String] = itemValue.componentsSeparatedByString(",")
+                    let foodItemName = myArray.first ?? ""
+ 
+                    if foodItemFullName == foodItemName {
+                        itemIndex = i
+                        break
+                    }
+                }
+            }
+        }
+            return itemIndex
+    }
+}
 
 //MARK: UIButtonBarItem convenience initializer
 //extension UIBarButtonItem {

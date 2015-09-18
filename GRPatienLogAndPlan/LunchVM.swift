@@ -143,7 +143,7 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
     }
     
-    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController) {
+    @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController, choiceTableCell: NewChoiceTableViewCell?) {
         //selectedItemTitle = dataSource[indexPath.row]
         let menuSection = LunchMenuCategory( value: indexPath.section)
         
@@ -153,14 +153,16 @@ public class LunchVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
                 indexPath,
                 mutableArray: &self.currentLunchItemArray,
                 immutableArray: self.lunchItemArray,
-                propertyInModel: &lunch.lunchChoice
+                propertyInModel: &lunch.lunchChoice,
+                choiceCell: choiceTableCell
             )
         case .Fruit:
             toggleSelectionArrayAndPropertyInModel(
                 indexPath,
                 mutableArray: &currentFruitArray,
                 immutableArray: self.fruitArray,
-                propertyInModel: &lunch.fruitChoice
+                propertyInModel: &lunch.fruitChoice,
+                choiceCell: choiceTableCell
             )
         case .AdditionalInfo:
             if indexPath.row == 3 {

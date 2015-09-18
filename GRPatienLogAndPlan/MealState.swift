@@ -173,10 +173,10 @@ enum MealState {
                 let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute, fromDate: timeOfDay)
                 let hour = components.hour
                 let minute = components.minute
-                println(timeRange?.rangeEnd?.hour)
-                println(timeRange?.rangeEnd?.minute)
-                println(timeRange?.rangeStart?.hour)
-                println(timeRange?.rangeStart?.minute)
+//                println(timeRange?.rangeEnd?.hour)
+//                println(timeRange?.rangeEnd?.minute)
+//                println(timeRange?.rangeStart?.hour)
+//                println(timeRange?.rangeStart?.minute)
                 
                 let minHour = timeRange?.rangeStart?.hour
                 let minMinute = timeRange?.rangeStart?.minute
@@ -205,7 +205,7 @@ enum MealState {
     {
         
         var time = MealState.covertTimeToTuple(timeOfDay)
-        println("time \(timeOfDay) tupple time end: \(MealState.afternoonSnackRange.rangeEnd)")
+        //println("time \(timeOfDay) tupple time end: \(MealState.afternoonSnackRange.rangeEnd)")
 
         switch timeOfDay {
         case let x where mealTimeState(x, timeRange: MealState.breakfastRange):

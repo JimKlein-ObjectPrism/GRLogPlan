@@ -29,6 +29,19 @@ public enum Meals {
             mealArray.append(Meals.EveningSnack)
         }
     }
+    public static func configureMeals(entry: OPJournalEntry){
+        mealArray.removeAll(keepCapacity: false)
+        mealArray.append(Meals.Breakfast)
+        if let morningSnack = entry.morningSnack {
+            mealArray.append(Meals.MorningSnack)
+        }
+        mealArray.append(Meals.Lunch)
+        mealArray.append(Meals.AfternoonSnack)
+        mealArray.append(Meals.Dinner)
+        if let eveningSnack = entry.eveningSnack {
+            mealArray.append(Meals.EveningSnack)
+        }
+    }
     public static func count() -> Int { return mealArray.count }
     
     static var mealArray: [Meals] = [Meals]()
@@ -176,6 +189,8 @@ class FoodJournalTableViewController: UITableViewController {
 //        if currentDateHeader != dataStore.currentJournalEntry.date {
 //        }
         getJournalEntryForDay(currentDateHeader)
+        dataStore.updateMealCategoryEnumsAndProfileFields(dataStore.currentJournalEntry)
+        // if currentDateHeader = today.
         self.tableView.reloadData()
     }
     func getJournalEntryForDay(day: String) -> String {
@@ -183,12 +198,20 @@ class FoodJournalTableViewController: UITableViewController {
         //let a = entry.
         switch result {
         case .Success(let entry):
-            dataStore.currentJournalEntry = entry
-            dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+            if entry.date == dataStore.today {
+                dataStore.currentJournalEntry = entry
+                // update meal categories and meal item fiels
+                dataStore.updateMealCategoryEnumsAndProfileFields()
+                dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+            } else {
+                dataStore.currentJournalEntry = entry
+                dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+            }
             return entry.date
         case .EntryDoesNotExist:
             dataStore.currentJournalEntry = dataStore.getNewJournalEntry(day)
             dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
+            dataStore.initializeMealCategoryEnumsAndProfileFields()
             return dataStore.currentJournalEntry.date
         case .Error:
             print("Error encountered accessing Core Data.")
@@ -204,7 +227,7 @@ class FoodJournalTableViewController: UITableViewController {
         components.day = 1
         
         
-        println("1 day ago: \(calendar.dateByAddingComponents(components, toDate: date, options: nil))")
+        //println("1 day ago: \(calendar.dateByAddingComponents(components, toDate: date, options: nil))")
     }
   
     func previousDay() -> String {
@@ -216,7 +239,7 @@ class FoodJournalTableViewController: UITableViewController {
     @IBAction func nextDay(sender: AnyObject) {
         //currentDateHeader = dataStore.selectNextDayJournalEntry()
         returnNextDay(currentDateHeader)
-        
+        dataStore.updateMealCategoryEnumsAndProfileFields(dataStore.currentJournalEntry)
        tableView.reloadData()
     }
     
@@ -296,6 +319,8 @@ class FoodJournalTableViewController: UITableViewController {
     
     @IBAction func showPreviousDateButton(sender: AnyObject) {
         currentDateHeader = previousDay()
+        dataStore.updateMealCategoryEnumsAndProfileFields(dataStore.currentJournalEntry)
+
         tableView.reloadData()
     }
     
@@ -311,6 +336,7 @@ class FoodJournalTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        Meals.configureMeals(dataStore.currentJournalEntry)
         return Meals.count()
     }
     
@@ -320,28 +346,27 @@ class FoodJournalTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        //configures Meals enum to reflect required snacks in current journal entry
+        Meals.configureMeals(dataStore.currentJournalEntry)
         
+        //let c = meal
         cell.textLabel!.text = Meals(rawValue: indexPath.row)?.mealName()
         cell.textLabel?.textColor = UIColor.blackColor()
         cell.detailTextLabel?.text = "reset"
         cell.detailTextLabel?.textColor = UIColor.clearColor()
-        
+        //println(BreakfastMenuCategory.count())
+
         
         switch checkMealStateValidationStatus(indexPath.row)
         {
         case .Success:
             cell.detailTextLabel!.text = "Complete"
             cell.detailTextLabel?.textColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-            //cell.textLabel?.textColor = UIColor.()
+            
         case .Failure:
             cell.textLabel?.textColor = UIColor.blackColor()
             
-            //cell.detailTextLabel?.text = "reset"
-        }
-//        if testSwitch{
-//            cell.detailTextLabel?.text = "Complete"
-//            cell.detailTextLabel?.textColor = UIColor.greenColor()
-//        }
+         }
         return cell
 
     }
@@ -349,6 +374,7 @@ class FoodJournalTableViewController: UITableViewController {
         if let result = Meals(rawValue: row) {
         switch result{
             case .Breakfast:
+                BreakfastMenuCategory.configureMenuChoice(dataStore.currentJournalEntry)
                 //return dataStore.breakfast.validate()
                 return  VMBreakfast(fromDataObject: dataStore.currentJournalEntry.breakfast).validate()
                 //return dataStore.getBreakfast_Today().validate()
@@ -387,18 +413,23 @@ class FoodJournalTableViewController: UITableViewController {
         if let mealViewModel = vc.vm as? MealViewModel {
             mealViewModel.defaultMealTime = defaultMealTime
         }
+        dataStore.updateMealCategoryEnumsAndProfileFields(dataStore.currentJournalEntry)
         self.showViewController(vc as UIViewController, sender: vc)
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //Fill the detail view controller with the choices for the currently selected item.
         let selectedIndex = indexPath.row
         let meal = Meals(rawValue: selectedIndex)!
+        if let a = dataStore.currentJournalEntry.morningSnack {
+            let b = "b"
+        }
         
         //var meal = Meals.RawValue(selectedIndex)
         switch meal {
         case .Breakfast:
             let breakfastVM = BreakfastVM(dataStore: self.dataStore)
             breakfastVM.targetOPBreakfast = self.dataStore.currentJournalEntry.breakfast
+            
             
             //set time to default when you set the target.  make default time a type method
             showVC("Breakfast", mealVMDelegage: breakfastVM as MealViewModelDelegate, defaultMealTime: Meals.defaultMealTime(meal))

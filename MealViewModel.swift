@@ -16,7 +16,7 @@ protocol MealViewModelDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
-    func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController)
+    func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController, choiceTableCell: NewChoiceTableViewCell?)
     func saveButtonTapped()
     
     weak var tableView: UITableView! {get set}
@@ -28,7 +28,7 @@ public class MealViewModel: NSObject {
     weak var tableView: UITableView!
     weak var tableviewController: UITableViewController!
     let dataStore: DataStore
-    
+    var choiceCellSelectedState: Bool = false
     //Used in displaying current or default meal time
     var parentViewControllerIsHomeViewController = false
     var defaultMealTime: String?
@@ -46,6 +46,7 @@ public class MealViewModel: NSObject {
         if let itemWithChoice = currentItem as? FoodItemWithChoice {
             var cell = tableView.dequeueReusableCellWithIdentifier(NewChoiceTableViewCell.cellIdentifier, forIndexPath: indexPath) as! NewChoiceTableViewCell
             cell.choiceLabel?.text = itemWithChoice.itemDescription
+            cell.choiceSegmentControl.selectedSegmentIndex = -1
             cell.indexPath = indexPath
                 
             var segControl = cell.choiceSegmentControl as UISegmentedControl
@@ -75,10 +76,12 @@ public class MealViewModel: NSObject {
                 //if myArray.count > 1 {
                  
                 var choiceItemIndex = myArray.last?.toInt()
-                let selectedSegment = choiceItemIndex ?? 0
+                let selectedSegment = choiceItemIndex ?? -1
 
                 cell.choiceSegmentControl.selectedSegmentIndex = selectedSegment
         
+            } else {
+                cell.choiceSegmentControl.selectedSegmentIndex = -1
             }
             segControl.apportionsSegmentWidthsByContent = true
             
@@ -194,19 +197,42 @@ public class MealViewModel: NSObject {
     }
     
     //MARK: Toggle Food Item Rows
-    func toggleSelectionArrayAndPropertyInModel (indexPath: NSIndexPath, inout mutableArray: [FoodItem], immutableArray: [FoodItem], inout propertyInModel: String?)
+    func toggleSelectionArrayAndPropertyInModel (indexPath: NSIndexPath, inout mutableArray: [FoodItem], immutableArray: [FoodItem], inout propertyInModel: String?, choiceCell: NewChoiceTableViewCell?)
     {
         if mutableArray.count == 1 {
             // selecting row when only one row in section, deselects row and displays full list of options
             mutableArray = immutableArray  //immutable array contains full list of values
+//            let c = self.tableCell(tableViewRef, cellForFoodItemAtIndexPath: indexPath, inArray: mutableArray, foodItemName: <#String?#>, viewModel: <#ChoiceItemSelectedDelegate?#>)
+//            let cell = self.tableView(tableViewRef, cellForRowAtIndexPath: indexPath) //as? NewChoiceTableViewCell
+            //vm.didDeselectRowAtIndexPath( indexPath, viewController: self )
+            //vm.tableView(tableView, didDeselectRowAtIndexPath: indexPath)
+//            if  cell != nil {
+//                cell!.clearChoiceInSegmentControl()
+//            }
+            choiceCellSelectedState = false
+            //choiceCell?.clearChoiceInSegmentControl()
+            let currentProperyValue = propertyInModel
+            //need to be nil so there is no selection on row insertion
             propertyInModel = nil
-            animateRowInsertion(getIndexPathArrayOfRowsToInsert(indexPath, countOfArrayOfFoodItems: immutableArray.count))
-            //tableView.reloadData()
-        } else {
+//            if let choiceItem = immutableArray[indexPath.row] as? FoodItemWithChoice {
+//                var c = self.tableCell(<#tableView: UITableView#>, cellForFoodItemAtIndexPath: <#NSIndexPath#>, inArray: <#[FoodItem]#>, foodItemName: <#String?#>, viewModel: <#ChoiceItemSelectedDelegate?#>)
+//                var cell = self.tableCell(self.tableView!, cellForFoodItemAtIndexPath: indexPath, inArray: mutableArray, foodItemName: currentProperyValue, viewModel: self)
+//            }
+
+                if choiceCell != nil {
+                animateRowInsertion(immutableArray.getIndexInArray(currentProperyValue), indexPath: indexPath, rowCountInItemsArray: immutableArray.count, choiceCell: &choiceCell!.selectedIndex)
+                    self.tableView.reloadData()
+                } else {
+                    animateRowInsertion(immutableArray.getIndexInArray(currentProperyValue), indexPath: indexPath, rowCountInItemsArray: immutableArray.count)
+                }
+            
+            
+            } else {
             //
             if let choiceItem = immutableArray[indexPath.row] as? FoodItemWithChoice {
                 return
             } else {
+                choiceCellSelectedState = true
                 mutableArray.removeAll(keepCapacity: false)
                 mutableArray = [immutableArray[indexPath.row]]
                 propertyInModel = immutableArray[indexPath.row].name
@@ -263,22 +289,52 @@ public class MealViewModel: NSObject {
     {
         var pathSet: [NSIndexPath] = [NSIndexPath]()
         for index in 0 ..< countOfArrayOfFoodItems {
-            
-            if index  != indexPathOfSelectedItem.row {
-                pathSet.append( NSIndexPath(forRow: index , inSection: indexPathOfSelectedItem.section) )
-            }
+            pathSet.append( NSIndexPath(forRow: index , inSection: indexPathOfSelectedItem.section) )
         }
-
-//        for index in 0 ..< countOfArrayOfFoodItems {
-//            pathSet.append(NSIndexPath(forRow: index , inSection: indexPathOfSelectedItem.section))
-//        }
         return pathSet
     }
     
-    func animateRowInsertion ( rowsToInsert: [AnyObject] ) {
+    func animateRowInsertion ( indexInItemsArrayOfSelectedItem: Int, indexPath:  NSIndexPath, rowCountInItemsArray: Int , inout choiceCell: Int) {
+        var rowsAboveCurrentSelection = [NSIndexPath]()
+        for row in 0..<indexInItemsArrayOfSelectedItem {
+            rowsAboveCurrentSelection.append(NSIndexPath(forRow: row, inSection: indexPath.section))
+        }
+      
+        var rowsBelowCurrentSelection = [NSIndexPath]()
+        let nextItemInList = indexInItemsArrayOfSelectedItem + 1
+        for row in  nextItemInList..<rowCountInItemsArray {
+            rowsAboveCurrentSelection.append(NSIndexPath(forRow: row, inSection: indexPath.section))
+        }
+
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(rowsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
+        //choiceCell = 0
+        tableView.insertRowsAtIndexPaths(rowsAboveCurrentSelection, withRowAnimation: UITableViewRowAnimation.Bottom)
+        
         tableView.endUpdates()
+//        tableView.beginUpdates()
+//        tableView.endUpdates()
+
+    }
+    func animateRowInsertion ( indexInItemsArrayOfSelectedItem: Int, indexPath:  NSIndexPath, rowCountInItemsArray: Int ) {
+        var rowsAboveCurrentSelection = [NSIndexPath]()
+        for row in 0..<indexInItemsArrayOfSelectedItem {
+            rowsAboveCurrentSelection.append(NSIndexPath(forRow: row, inSection: indexPath.section))
+        }
+        
+        var rowsBelowCurrentSelection = [NSIndexPath]()
+        let nextItemInList = indexInItemsArrayOfSelectedItem + 1
+        for row in  nextItemInList..<rowCountInItemsArray {
+            rowsAboveCurrentSelection.append(NSIndexPath(forRow: row, inSection: indexPath.section))
+        }
+        
+        tableView.beginUpdates()
+        //choiceCell = 1
+        tableView.insertRowsAtIndexPaths(rowsAboveCurrentSelection, withRowAnimation: UITableViewRowAnimation.Bottom)
+        tableView.endUpdates()
+        
+        //        tableView.beginUpdates()
+        //        tableView.endUpdates()
+        
     }
 
     func getItemNameAndChoiceItemIndex ( #selectedIndexPath: NSIndexPath, selectedSegment: Int, mutableArray: [FoodItem] ) -> String

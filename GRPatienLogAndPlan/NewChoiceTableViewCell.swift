@@ -8,15 +8,23 @@
 
 import UIKit
 
-class NewChoiceTableViewCell: UITableViewCell {
+public class NewChoiceTableViewCell: UITableViewCell {
 
     static let cellIdentifier: String = "ChoiceCell"
     
     var segmentSelectionHandler: ChoiceItemSelectedDelegate?
     
-    var indexPathSection: Int!
+    public var indexPathSection: Int!
     var indexPathRow: Int!
     var indexPath: NSIndexPath!
+    var selectedIndex: Int {
+        get {
+            return choiceSegmentControl.selectedSegmentIndex
+        }
+        set {
+            choiceSegmentControl.selectedSegmentIndex = newValue
+        }
+    }
     
     @IBOutlet weak var choiceSegmentControl: UISegmentedControl!
     @IBOutlet weak var choiceLabel: UILabel!
@@ -24,12 +32,18 @@ class NewChoiceTableViewCell: UITableViewCell {
 //    
 //    @IBOutlet weak var choiceSegmentControl: UISegmentedControl!
 //
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    func clearChoiceInSegmentControl () {
+        //println("SelectedIndex = \(choiceSegmentControl.selectedSegmentIndex)")
+        choiceSegmentControl.selectedSegmentIndex = 1
+        
+    }
+    override public func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

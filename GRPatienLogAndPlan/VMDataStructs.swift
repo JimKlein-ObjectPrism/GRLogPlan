@@ -167,14 +167,14 @@ public struct VMBreakfast {
         
         self.location = fromDataObject.location ?? LocationForMeal.defaultLocation()
         //time is set at the point that the cell is created by VM
-        if let t = fromDataObject.time {
-            self.time = t
-        }
+//        if let t = fromDataObject.time {
+//            self.time = t
+//        }
         if let note = fromDataObject.note {
             self.note = note
         }
         
-        self.time = fromDataObject.time ?? Meals.defaultMealTime(Meals.Lunch)
+        self.time = fromDataObject.time ?? Meals.defaultMealTime(Meals.Breakfast)
     }
     public func validate () -> ValidationResult {
         var errorMessages = [String]()
@@ -388,10 +388,10 @@ public struct VMSnack {
     public var snackTime: Int?
     
     public var addOnRequired: Bool = false
-    public var addOnText: String? = "Yogurt"
+    public var addOnText: String? = "Error"
     public var addOnConsumed: Bool? = false
     public var medicineRequired: Bool = false
-    public var medicineText: String? = "Zinc"
+    public var medicineText: String? = "Error"
     public var medicineConsumed: Bool? = false
     
     public var parentInitials: String?
