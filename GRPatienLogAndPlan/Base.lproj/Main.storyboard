@@ -694,6 +694,9 @@
                                             <state key="normal" title="J. D.">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="354" y="8" width="30" height="29"/>
+                                            </variation>
                                             <connections>
                                                 <action selector="showAlertForParentInitials:" destination="y5B-jC-mGF" eventType="touchUpInside" id="OXl-WB-uAq"/>
                                             </connections>
@@ -1647,6 +1650,9 @@
                                             <subviews>
                                                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ktA-eS-bsT">
                                                     <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="40" y="-9" width="320" height="217"/>
+                                                    </variation>
                                                 </pickerView>
                                             </subviews>
                                             <constraints>
@@ -2379,6 +2385,9 @@
                                             <subviews>
                                                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zy1-34-TvE">
                                                     <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="40" y="-9" width="320" height="217"/>
+                                                    </variation>
                                                 </pickerView>
                                             </subviews>
                                             <constraints>
@@ -2418,6 +2427,9 @@
                                             <subviews>
                                                 <pickerView tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgo-4f-5dS">
                                                     <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="40" y="-9" width="320" height="217"/>
+                                                    </variation>
                                                 </pickerView>
                                             </subviews>
                                             <constraints>

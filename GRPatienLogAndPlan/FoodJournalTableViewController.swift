@@ -32,13 +32,13 @@ public enum Meals {
     public static func configureMeals(entry: OPJournalEntry){
         mealArray.removeAll(keepCapacity: false)
         mealArray.append(Meals.Breakfast)
-        if let morningSnack = entry.morningSnack {
+        if  entry.morningSnack != nil {
             mealArray.append(Meals.MorningSnack)
         }
         mealArray.append(Meals.Lunch)
         mealArray.append(Meals.AfternoonSnack)
         mealArray.append(Meals.Dinner)
-        if let eveningSnack = entry.eveningSnack {
+        if entry.eveningSnack  != nil {
             mealArray.append(Meals.EveningSnack)
         }
     }
@@ -208,27 +208,20 @@ class FoodJournalTableViewController: UITableViewController {
                 dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
             }
             return entry.date
+        case .WrongTypeOfEntryFound:
+            print("Error encountered accessing Core Data.", terminator: "")
+            return "Error."
         case .EntryDoesNotExist:
             dataStore.currentJournalEntry = dataStore.getNewJournalEntry(day)
             dataStore.initializeMealDataItems(dataStore.currentJournalEntry)
             dataStore.initializeMealCategoryEnumsAndProfileFields()
             return dataStore.currentJournalEntry.date
         case .Error:
-            print("Error encountered accessing Core Data.")
+            print("Error encountered accessing Core Data.", terminator: "")
             return "Error."
         }
     }
     
-    func getLast7Days(){
-        let calendar = NSCalendar.currentCalendar()
-        let date = NSDate()
-        
-        let components = NSDateComponents()
-        components.day = 1
-        
-        
-        //println("1 day ago: \(calendar.dateByAddingComponents(components, toDate: date, options: nil))")
-    }
   
     func previousDay() -> String {
         returnPreviousDay(currentDateHeader)
@@ -268,7 +261,7 @@ class FoodJournalTableViewController: UITableViewController {
         let currentSelection = getDateFromString(currentlySelectedDate)
         let dayBeforeCurrentSelectedDate = getDayFromOffSet(-1, date: currentSelection)
         //let dStore = DataStore()
-        let todaysDate = getDateFromString(dataStore.today)
+//        let todaysDate = getDateFromString(dataStore.today)
         
         currentDateHeader = getJournalEntryForDay(dayBeforeCurrentSelectedDate)
 //        if currentSelection.compare(todaysDate) == NSComparisonResult.OrderedSame {
@@ -287,23 +280,23 @@ class FoodJournalTableViewController: UITableViewController {
 
     
     func getDateFromString(dateStr:String) -> NSDate {
-        var dateFmt = NSDateFormatter()
+        let dateFmt = NSDateFormatter()
         dateFmt.dateFormat = "EEEE, MMMM d, yyyy"
         
         let newDate = dateFmt.dateFromString(dateStr)!
         
-        let date = NSDate()
-        let dateFormatter = NSDateFormatter()
+//        let date = NSDate()
+//        let dateFormatter = NSDateFormatter()
         
         
         //dateFormatter.timeZone = NSTimeZone()
-        let localDate = dateFormatter.stringFromDate(date)
+//        let localDate = dateFormatter.stringFromDate(date)
         
         
         return newDate
     }
     func getDayFromOffSet (offset: Int, date: NSDate) -> String{
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d, yyyy"
         dateFormatter.dateStyle = .FullStyle
         dateFormatter.stringFromDate(date)
@@ -314,7 +307,7 @@ class FoodJournalTableViewController: UITableViewController {
         
         
         components.day = offset
-        return dateFormatter.stringFromDate(calendar.dateByAddingComponents(components, toDate: date, options: nil)!)
+        return dateFormatter.stringFromDate(calendar.dateByAddingComponents(components, toDate: date, options: [])!)
     }
     
     @IBAction func showPreviousDateButton(sender: AnyObject) {
@@ -345,7 +338,7 @@ class FoodJournalTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
         //configures Meals enum to reflect required snacks in current journal entry
         Meals.configureMeals(dataStore.currentJournalEntry)
         
@@ -420,9 +413,9 @@ class FoodJournalTableViewController: UITableViewController {
         //Fill the detail view controller with the choices for the currently selected item.
         let selectedIndex = indexPath.row
         let meal = Meals(rawValue: selectedIndex)!
-        if let a = dataStore.currentJournalEntry.morningSnack {
-            let b = "b"
-        }
+//        if let a = dataStore.currentJournalEntry.morningSnack {
+//            let b = "b"
+//        }
         
         //var meal = Meals.RawValue(selectedIndex)
         switch meal {

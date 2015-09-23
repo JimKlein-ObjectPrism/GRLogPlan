@@ -47,7 +47,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         vc.preferredContentSize = CGSizeMake(100, 100);
         
-        var navigationController = UINavigationController(rootViewController: vc)
+        let navigationController = UINavigationController(rootViewController: vc)
         navigationController.preferredContentSize = CGSizeMake(100, 100);
         //presentViewController(navigationController, animated: true, completion: nil)
 //        let identifier = QOS_CLASS_BACKGROUND
@@ -71,11 +71,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func applicationDidBecomeActive(notification: NSNotification) {
         if let topController = UIApplication.topViewController()
         {
-            if let currentVC = topController as? HomeViewController {
+            if topController is HomeViewController {
                 dataStore.mealState = MealState.getMealState(NSDate())
                 dataStore.currentJournalEntry = dataStore.getJournalEntry_Today()
                 dataStore.initializeMealDataItems(dataStore.getJournalEntry_Today())
-                var dateFormatter = NSDateFormatter()
+                let dateFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = "EEEE, MMMM d"
                 
                 dayLabel.text = dateFormatter.stringFromDate(NSDate())
@@ -106,7 +106,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         dataStore.mealState = ms
         mealTitle.text = ms.mealName()
         //println("View Will Appear: \(mealTitle.text)")
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
         
         dayLabel.text = dateFormatter.stringFromDate(NSDate())
@@ -206,7 +206,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var section = indexPath.section
+//        var section = indexPath.section
         
         if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCellWithIdentifier("HomeLogItemCell", forIndexPath: indexPath)
@@ -285,13 +285,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let navc = segue.destinationViewController as? UINavigationController {
                 if let vc = navc.viewControllers[0] as? MyMealsRecipesTableViewController {
                     vc.navigationItem.title = "My Meals"
-                    var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"simpleBackButtonPressed:")
+                    let b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"simpleBackButtonPressed:")
                     vc.navigationItem.leftBarButtonItem = b
                     // hide nav bar on pushed view
                     navc.hidesBottomBarWhenPushed = true
                     
                     //TODO: Implement Save for Save Button, current: just Pops VC
-                    var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "simpleBackButtonPressed:")
+                    let sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "simpleBackButtonPressed:")
                     
                     vc.navigationItem.rightBarButtonItem = sb
                 }

@@ -49,7 +49,7 @@ class PopoverTableViewController: UITableViewController {
         
         //if numberOfSections > 0 {
         //var cellTextArray = rowArrays[indexPath.section]
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
         cell.textLabel?.text = items[indexPath.row]
         return cell
     }

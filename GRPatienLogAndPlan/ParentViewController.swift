@@ -59,26 +59,26 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         
         switch currentDisplayType! {
         case  ParentViewControllerDisplayType.Parents:
-            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped")
+            let sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped")
             self.navigationItem.rightBarButtonItem = sb
             //Looks for single or multiple taps.
-            var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
             view.addGestureRecognizer(tap)
 
         case .AddOns:
             //println("addon")
-            var sb = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action: "addButtonTapped:")
+            let sb = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action: "addButtonTapped:")
             self.navigationItem.rightBarButtonItem = sb
         case .Medicines:
             tableView.delegate = self
             tableView.dataSource = self
-            var sb = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action: "addButtonTapped:")
+            let sb = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action: "addButtonTapped:")
             self.navigationItem.rightBarButtonItem = sb
             
         }
         
         //Looks for single or multiple taps.
-        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         view.addGestureRecognizer(tap)
 
     }
@@ -104,7 +104,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 view.gestureRecognizers?.removeAll(keepCapacity: true)
             }
         case .Parents:
-            println()
+            print("")
         }
         
         self.tableView.reloadData()
@@ -299,15 +299,15 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         case .AddOns:
                 let row = indexPath.row
                 //var title: String = ProfileChoice(rawValue: row)?.name
-                let cell = tableView.dequeueReusableCellWithIdentifier("MedsAddOnTableViewCell", forIndexPath: indexPath) as! UITableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("MedsAddOnTableViewCell", forIndexPath: indexPath) 
                 
                 if addOns?.count > 0{
                     let addOn = addOns![row]
                     //TODO:  finish implementing code here
                     cell.textLabel?.text = AddOnListItem(rawValue:  addOn.addOnItem.integerValue )?.name
                     cell.detailTextLabel?.text = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name()
-                    var name = AddOnListItem(rawValue:  addOn.addOnItem.integerValue )?.name
-                    var time = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name()
+//                    var name = AddOnListItem(rawValue:  addOn.addOnItem.integerValue )?.name
+//                    var time = PrescribedTimeForAction(rawValue: addOn.targetMealOrSnack.integerValue )?.name()
                     //println("addON \(name) , when \(time)") //("addON: \(name) \(addOnSelection), time: \(time) \(timeSelection)")
 
                     //cell.accessoryType = UITableViewCellAccessoryType.
@@ -318,7 +318,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         case .Medicines:
             let row = indexPath.row
             //var title: String = ProfileChoice(rawValue: row)?.name
-            let cell = tableView.dequeueReusableCellWithIdentifier("MedsAddOnTableViewCell", forIndexPath: indexPath) as! UITableViewCell//MedsAddOnTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("MedsAddOnTableViewCell", forIndexPath: indexPath) //MedsAddOnTableViewCell
             if medicines?.count > 0 {
                 if let med = medicines?[row] {
                 //TODO:  finish implementing code here
@@ -339,7 +339,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         //TODO:  Add code for editing selected entry
         switch self.currentDisplayType! {
         case  ParentViewControllerDisplayType.Parents:
-            println()
+            print("")
         case .AddOns:
             self.pushAddOnVC_Update(indexPath.row, addOn: self.addOns![indexPath.row])
         
@@ -357,7 +357,7 @@ class ParentViewController: UIViewController, UITextFieldDelegate, UITableViewDa
 //        
         switch self.currentDisplayType! {
         case  ParentViewControllerDisplayType.Parents:
-            println("When parents are displayed, this button is not shown")
+            print("When parents are displayed, this button is not shown")
         case .AddOns:
             pushAddOnsVC()
         case .Medicines:

@@ -77,7 +77,7 @@ class HomeLogItemTableViewCell: UITableViewCell, UIPopoverPresentationController
         
         contentViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
         
-        var detailPopover : UIPopoverPresentationController = contentViewController.popoverPresentationController!
+        let detailPopover : UIPopoverPresentationController = contentViewController.popoverPresentationController!
         
         detailPopover.sourceView = self.myItemsButton as UIButton
         

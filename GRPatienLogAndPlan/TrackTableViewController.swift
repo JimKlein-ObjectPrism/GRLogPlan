@@ -45,19 +45,19 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             case .FullDayEntryWithMenu:
                 // add menu button to nav bar and set action
                 if self.revealViewController() != nil {
-                    var bb = UIBarButtonItem(image: UIImage(named: "menu"), style: UIBarButtonItemStyle.Plain, target: self.revealViewController(), action: "revealToggle:")
+                    let bb = UIBarButtonItem(image: UIImage(named: "menu"), style: UIBarButtonItemStyle.Plain, target: self.revealViewController(), action: "revealToggle:")
                     self.navigationItem.leftBarButtonItem = bb
                     self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
                 }
             case .SingleMealEntryWithBackButton:
                 // back button
-                var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
+                let b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
                 self.navigationItem.leftBarButtonItem = b
-                if let item = detailDisplayItem {
-                    //self.navigationItem.title = item.
-                }
+//                if let item = detailDisplayItem {
+//                    //self.navigationItem.title = item.
+//                }
                 //Save Button
-                var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonPressed:")
+                let sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonPressed:")
 
                 self.navigationItem.rightBarButtonItem = sb
                 
@@ -74,7 +74,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         }
         else
         {
-            println("AppDelegate = nil. The impossible happened.")
+            print("AppDelegate = nil. The impossible happened.")
         }
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         
@@ -125,7 +125,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             sectionData.append(detailItem.mealDetails)
             
         default:
-            println("error")
+            print("error")
 
         }
         
@@ -161,15 +161,15 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     }
     func handleSegmentedControlSelectionChanged(sender: UISegmentedControl)
     {
-        var selectedIndex = sender.selectedSegmentIndex
+        //var selectedIndex = sender.selectedSegmentIndex
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var section = indexPath.section
+//        var section = indexPath.section
         
         var currentItemsArray = sectionData[indexPath.section]
         
-        var row = indexPath.row
+//        var row = indexPath.row
         
         let currentItem: AnyObject = currentItemsArray[indexPath.row]
         
@@ -178,7 +178,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             //handle fooditemwithchoice
             //currentItemsArray must be [FoodItems]
             var foodItemArray = currentItemsArray as! [FoodItem]
-            var cell = tableView.dequeueReusableCellWithIdentifier(ChoiceItemsTableViewCell.cellIdentifier, forIndexPath: indexPath) as! ChoiceItemsTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(ChoiceItemsTableViewCell.cellIdentifier, forIndexPath: indexPath) as! ChoiceItemsTableViewCell
             cell.choiceLabel?.text = foodItemArray[indexPath.row].itemDescription
             cell.indexPath = indexPath
             //cell.indexPathRow  = indexPath.row
@@ -186,18 +186,16 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             cell.segmentSelectionHandler = dataStore
             }
             
-            var segControl = cell.choiceSegmentControl as UISegmentedControl
+            let segControl = cell.choiceSegmentControl as UISegmentedControl
            
             //TODO:  for the redraw, handle pre-selected child item  FoodChoiceItem.selectedChildFoodItem?  by setting the selected index of segment control to value in FoodChoiceItem
-            //HANDLE
-//            segControl.addTarget(self, action: "handleSegmentedControlSelectionChanged:", forControlEvents: .ValueChanged)
             
                 segControl.removeAllSegments()
 
             
                 for i in 0 ..< currentItem.choiceItems.count {
                     if i  < 2 {
-                        var choiceItem = currentItem.choiceItems[i]
+                        let choiceItem = currentItem.choiceItems[i]
                         segControl.insertSegmentWithTitle(choiceItem.itemDescription, atIndex: i, animated: false)
                         //segControl.setTitle(choiceItem.itemDescription, forSegmentAtIndex: i)
                         
@@ -215,7 +213,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             cell.isReusedCell = true
             return cell
             
-        case let currentItem as ParentInitials:
+        case _ as ParentInitials:
             let cell = tableView.dequeueReusableCellWithIdentifier("ParentInitialsCell", forIndexPath: indexPath) as! ParentInitialsTableViewCell
             cell.titleLabel?.text = "Parent Initials"
             if self.parentInitials != nil{
@@ -223,7 +221,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             }
             return cell
             
-        case let currentItem as Time:
+        case _ as Time:
             let cell = tableView.dequeueReusableCellWithIdentifier("TimeEntryCell", forIndexPath: indexPath) as! TimeEntryTableViewCell
             cell.titleTextLabel?.text = "Time"
             return cell
@@ -234,7 +232,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
 //            cell.placeButton.titleLabel?.text = "Kitchen"
 //            return cell
             
-        case let currentItem as Note:
+        case _ as Note:
             let cell = tableView.dequeueReusableCellWithIdentifier("NoteCell", forIndexPath: indexPath) as! NoteTableViewCell
             cell.textLabel?.text = "Note"
             return cell
@@ -243,7 +241,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
             //handle plain FoodItem
             //currentItemsArray must be [FoodItems]
             var foodItemArray = currentItemsArray as! [FoodItem]
-            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)  as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)  
             
             //if let newCell = cell as? UITableViewCell {
             cell.textLabel?.text = foodItemArray[indexPath.row].name
@@ -257,7 +255,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         var currentItemsArray = sectionData[indexPath.section]
 
         let currentItem: AnyObject = currentItemsArray[indexPath.row]
-        if  let timeCell = currentItem as? Time {
+        if  let _ = currentItem as? Time {
             return 200.0
         }
         return 50.0
@@ -270,13 +268,13 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         //TODO: Fix it so Additional Info Items never get deleted.  Hook up Status indicator when necessary items have been selected.
-        var selectedRow = indexPath.row
-        var selectedSection = indexPath.section
+        let selectedRow = indexPath.row
+        let selectedSection = indexPath.section
         
-        var currentData = self.sectionData[indexPath.section]
+//        var currentData = self.sectionData[indexPath.section]
         
         //TODO: send update meal item message to DataStore
-        var currentItem: DetailDisplayItem = detailDisplayItem!
+        let currentItem: DetailDisplayItem = detailDisplayItem!
         var itemsArray = self.sectionData[indexPath.section]
         //switch on type here
         //var currentItem = self.detailDisplayItem pendulum, ken,  michael, android, bjorn, built light, online teacher.  kevin, precision caset part.  web ios.  brian, ideependent. start ou  cdk brian,  ios-devleopers.io.  next ascent, todd, ebay, dhval, ebay classified. zabzab  pdx electrohacks.
@@ -318,10 +316,10 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
            
         default:
             //handle other items here
-            println("unimplemented code for non-meal items encountered")
+            print("unimplemented code for non-meal items encountered")
         }
        
-        var originalCountRowsInSection = sectionData[indexPath.section].count //rowArrays[selectedSection].count
+        let originalCountRowsInSection = sectionData[indexPath.section].count //rowArrays[selectedSection].count
 
         //collapse data
         //Remove data items --  need to remove data item as well as deleting rows from table
@@ -336,7 +334,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         if originalCountRowsInSection > 0 {
             var index = originalCountRowsInSection
             while index >  0 {
-                var positionInArray = index - 1
+                let positionInArray = index - 1
                 if selectedRow != positionInArray {
                     sectionData[selectedSection].removeAtIndex(positionInArray)
                 }
@@ -367,7 +365,7 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
         if rowsOriginallyInSection > 1 {
             for index in 0 ..< rowsOriginallyInSection {
                 if selectedRow != index {
-                    var indexPath = NSIndexPath(forRow: index , inSection: selectedSection)
+                    let indexPath = NSIndexPath(forRow: index , inSection: selectedSection)
                     indexPathArray.append(indexPath)
                 }
             }
@@ -383,26 +381,26 @@ class TrackTableViewController: UITableViewController, UpdateDetailViewDelegate,
     @IBAction func showAlertForParentInitials(sender: AnyObject) {
         let buttonList = ["A.B." , "B.C."]
         let title = "Parent Initials"
-        let cancel = "Cancel"
-        let firstButtonItem = buttonList[0]
+//        let cancel = "Cancel"
+//        let firstButtonItem = buttonList[0]
         
         // create controller
         let choiceMenu = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
         
         let button = sender as! UIButton
         
-        var newTitle : String = ""
+        //var newTitle : String = ""
         
         // add Action buttons for each set of initials in the list
         for s in 0..<buttonList.count {
             
-            var buttonIndex = s
+//            var buttonIndex = s
 
-            var action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
-                (alert: UIAlertAction!) -> Void in
+            let action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
+                (alert: UIAlertAction) -> Void in
                 //send initials updated event
                 button.titleLabel?.text = buttonList[s]
-                newTitle = buttonList[s]
+                //newTitle = buttonList[s]
                 self.parentInitials = buttonList[s]
                 
             })

@@ -44,18 +44,18 @@ public class MealViewModel: NSObject {
         let currentItem = choicesArray[indexPath.row]
         
         if let itemWithChoice = currentItem as? FoodItemWithChoice {
-            var cell = tableView.dequeueReusableCellWithIdentifier(NewChoiceTableViewCell.cellIdentifier, forIndexPath: indexPath) as! NewChoiceTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(NewChoiceTableViewCell.cellIdentifier, forIndexPath: indexPath) as! NewChoiceTableViewCell
             cell.choiceLabel?.text = itemWithChoice.itemDescription
             cell.choiceSegmentControl.selectedSegmentIndex = -1
             cell.indexPath = indexPath
                 
-            var segControl = cell.choiceSegmentControl as UISegmentedControl
+            let segControl = cell.choiceSegmentControl as UISegmentedControl
                 
             segControl.removeAllSegments()
             
             for i in 0 ..< itemWithChoice.choiceItems.count {
                 if i  < 2 {
-                    var choiceItem = itemWithChoice.choiceItems[i]
+                    let choiceItem = itemWithChoice.choiceItems[i]
                     segControl.insertSegmentWithTitle(choiceItem.itemDescription, atIndex: i, animated: false)
 
                     // cell size apportionament, used below, requires cell to have width = 0
@@ -68,15 +68,11 @@ public class MealViewModel: NSObject {
             }
             
             if foodItemName != nil {
-                //let parentItemName = currentItem.name
-                
                 
                 let myArray: [String] = foodItemName!.componentsSeparatedByString(",")
-                //var firstName: String? = myArray.first
-                //if myArray.count > 1 {
-                 
-                var choiceItemIndex = myArray.last?.toInt()
-                let selectedSegment = choiceItemIndex ?? -1
+                let choiceItemIndex = myArray.last ?? "-1"
+                //var choiceItemIndex = (myArray.last?)!)
+                let selectedSegment = Int(choiceItemIndex) ?? -1
 
                 cell.choiceSegmentControl.selectedSegmentIndex = selectedSegment
         
@@ -92,7 +88,7 @@ public class MealViewModel: NSObject {
         }
         else {
             //handle plain FoodItem
-            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)  as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)  
             cell.textLabel?.text = currentItem.name
             var itemDescription: String = ""
             if currentItem.menuItemType == "VegetableItem" {
@@ -145,14 +141,8 @@ public class MealViewModel: NSObject {
         let cell: LocationTableViewCell = tableView.dequeueReusableCellWithIdentifier(LocationTableViewCell.cellIdentifer, forIndexPath: indexPath)  as! LocationTableViewCell
         
         cell.locationButtonHandler = locationSelectionHandler
-        var location = ""
-        if locationText != nil {
-            location = locationText!
-        } else {
-            location = LocationForMeal(rawValue: 0)!.name()
-            locationText = LocationForMeal(rawValue: 0)!.name()
-        }
-        cell.locationButton.setTitle(locationText, forState: .Normal)
+        let location = locationText ?? LocationForMeal(rawValue: 0)!.name()
+        cell.locationButton.setTitle(location, forState: .Normal)
 
         return cell
     
@@ -188,7 +178,7 @@ public class MealViewModel: NSObject {
     }
     
     func tableCell(tableView: UITableView, cellForNoteItem indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NoteTableCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("NoteTableCell", forIndexPath: indexPath) 
         
         // Configure the cell...
         //cell.textLabel?.text
@@ -227,9 +217,9 @@ public class MealViewModel: NSObject {
                 }
             
             
-            } else {
+        } else {
             //
-            if let choiceItem = immutableArray[indexPath.row] as? FoodItemWithChoice {
+            if  immutableArray[indexPath.row] is FoodItemWithChoice {
                 return
             } else {
                 choiceCellSelectedState = true
@@ -247,14 +237,14 @@ public class MealViewModel: NSObject {
     
     //MARK: Segmented Control Handler
     
-    func toggleSelectionArrayAndPropertyInModelForSegmentedControl (#selectedIndexPath: NSIndexPath, selectedSegment: Int, inout mutableArray: [FoodItem], immutableArray: [FoodItem], inout propertyInModel: String?)
+    func toggleSelectionArrayAndPropertyInModelForSegmentedControl (selectedIndexPath selectedIndexPath: NSIndexPath, selectedSegment: Int, inout mutableArray: [FoodItem], immutableArray: [FoodItem], inout propertyInModel: String?)
     {
         if mutableArray.count == 1 {
             //for FoodItemWithChoice this gets called when user changes selection after they've selected this tableCell from the list
             //mutableArray = immutableArray  //immutable array contains full list of values
             propertyInModel = self.getItemNameAndChoiceItemIndex(selectedIndexPath: selectedIndexPath, selectedSegment: selectedSegment, mutableArray: mutableArray)
         } else {
-            var indexPathArrayToDelete = getIndexPathArrayOfRowsToDelete(selectedIndexPath, countOfArrayOfFoodItems: mutableArray.count)
+            let indexPathArrayToDelete = getIndexPathArrayOfRowsToDelete(selectedIndexPath, countOfArrayOfFoodItems: mutableArray.count)
             
             propertyInModel = self.getItemNameAndChoiceItemIndex(selectedIndexPath: selectedIndexPath, selectedSegment: selectedSegment, mutableArray: mutableArray)            
             mutableArray = [immutableArray[selectedIndexPath.row]]
@@ -279,7 +269,7 @@ public class MealViewModel: NSObject {
         return pathSet
     }
     
-    func animateRowDeletion ( rowsToDelete: [AnyObject] ) {// selectedRow: Int, rowsOriginallyInSection: Int , selectedSection: Int){
+    func animateRowDeletion ( rowsToDelete: [NSIndexPath] ) {// selectedRow: Int, rowsOriginallyInSection: Int , selectedSection: Int){
         
         tableView.beginUpdates()
         tableView.deleteRowsAtIndexPaths(rowsToDelete, withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -295,20 +285,20 @@ public class MealViewModel: NSObject {
     }
     
     func animateRowInsertion ( indexInItemsArrayOfSelectedItem: Int, indexPath:  NSIndexPath, rowCountInItemsArray: Int , inout choiceCell: Int) {
-        var rowsAboveCurrentSelection = [NSIndexPath]()
+        var rowsToInsert = [NSIndexPath]()
         for row in 0..<indexInItemsArrayOfSelectedItem {
-            rowsAboveCurrentSelection.append(NSIndexPath(forRow: row, inSection: indexPath.section))
+            rowsToInsert.append(NSIndexPath(forRow: row, inSection: indexPath.section))
         }
       
-        var rowsBelowCurrentSelection = [NSIndexPath]()
+//        var rowsBelowCurrentSelection = [NSIndexPath]()
         let nextItemInList = indexInItemsArrayOfSelectedItem + 1
         for row in  nextItemInList..<rowCountInItemsArray {
-            rowsAboveCurrentSelection.append(NSIndexPath(forRow: row, inSection: indexPath.section))
+            rowsToInsert.append(NSIndexPath(forRow: row, inSection: indexPath.section))
         }
 
         tableView.beginUpdates()
         //choiceCell = 0
-        tableView.insertRowsAtIndexPaths(rowsAboveCurrentSelection, withRowAnimation: UITableViewRowAnimation.Bottom)
+        tableView.insertRowsAtIndexPaths(rowsToInsert, withRowAnimation: UITableViewRowAnimation.Bottom)
         
         tableView.endUpdates()
 //        tableView.beginUpdates()
@@ -321,14 +311,14 @@ public class MealViewModel: NSObject {
             rowsAboveCurrentSelection.append(NSIndexPath(forRow: row, inSection: indexPath.section))
         }
         
-        var rowsBelowCurrentSelection = [NSIndexPath]()
+//        var rowsBelowCurrentSelection = [NSIndexPath]()
         let nextItemInList = indexInItemsArrayOfSelectedItem + 1
         for row in  nextItemInList..<rowCountInItemsArray {
             rowsAboveCurrentSelection.append(NSIndexPath(forRow: row, inSection: indexPath.section))
         }
         
         tableView.beginUpdates()
-        //choiceCell = 1
+//        choiceCell = 1
         tableView.insertRowsAtIndexPaths(rowsAboveCurrentSelection, withRowAnimation: UITableViewRowAnimation.Bottom)
         tableView.endUpdates()
         
@@ -337,7 +327,7 @@ public class MealViewModel: NSObject {
         
     }
 
-    func getItemNameAndChoiceItemIndex ( #selectedIndexPath: NSIndexPath, selectedSegment: Int, mutableArray: [FoodItem] ) -> String
+    func getItemNameAndChoiceItemIndex ( selectedIndexPath selectedIndexPath: NSIndexPath, selectedSegment: Int, mutableArray: [FoodItem] ) -> String
     {
         var itemName = ""
         if mutableArray.count == 1 {
@@ -350,7 +340,7 @@ public class MealViewModel: NSObject {
         itemName = choiceItem!.name
         //let childChoiceItemName = choiceItem!.choiceItems[selectedSegment].name
         }
-        var compoundName = itemName + "," + String(selectedSegment)
+        let compoundName = itemName + "," + String(selectedSegment)
         return compoundName
 
     }
@@ -358,16 +348,16 @@ public class MealViewModel: NSObject {
     
      //MARK: Helper Methods
    
-    func setPropertyInModel (#value: String, inout propertyInModel: String?){
+    func setPropertyInModel (value value: String, inout propertyInModel: String?){
         propertyInModel = value
     }
-    func setPropertyInModel (#value: String, inout propertyInModel: String){
+    func setPropertyInModel (value value: String, inout propertyInModel: String){
         propertyInModel = value
     }
-    func setPropertyInModel (#boolValue: Bool, inout boolPropertyInModel: Bool?){
+    func setPropertyInModel (boolValue boolValue: Bool, inout boolPropertyInModel: Bool?){
         boolPropertyInModel = boolValue
     }
-    func setPropertyInModel (#dateValue: NSDate, inout datePropertyInModel: NSDate?){
+    func setPropertyInModel (dateValue dateValue: NSDate, inout datePropertyInModel: NSDate?){
         datePropertyInModel = dateValue
 
     }
@@ -375,7 +365,7 @@ public class MealViewModel: NSObject {
     func getFoodItem ( itemName: String, foodItemArray: [FoodItem] ) -> [FoodItem] {
         // get subtype of food items for selection
         let myArray: [String] = itemName.componentsSeparatedByString(",")
-        var nameOfParentFoodItem: String? = myArray.first
+        let nameOfParentFoodItem: String? = myArray.first
 
         let fItems = foodItemArray.filter({m in
             m.name == nameOfParentFoodItem
@@ -388,13 +378,13 @@ public class MealViewModel: NSObject {
         var initials = [String]()
         //TODO: implement more robust version of getParentInitials
         for fullName in dataStore.parentsArray{
-            var fullNameArr = split(fullName) {$0 == " "}
+            var fullNameArr = fullName.characters.split {$0 == " "}.map { String($0) }
             
-            var firstName: String = fullNameArr[0]
-            var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count-1] : nil
+            let firstName: String = fullNameArr[0]
+            let lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count-1] : nil
             
-            var firstInitial = firstName[firstName.startIndex]
-            var lastInitial = lastName?[lastName!.startIndex]
+            let firstInitial = firstName[firstName.startIndex]
+            let lastInitial = lastName?[lastName!.startIndex]
             
             initials.append("\(firstInitial). \(lastInitial!).")
         }

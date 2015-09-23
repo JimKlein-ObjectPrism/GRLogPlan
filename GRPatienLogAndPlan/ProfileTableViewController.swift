@@ -59,7 +59,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150.0/255.0, green: 185.0/255.0, blue: 118.0/255.0, alpha: 1.0)
 
         if initialSetup {
-            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonPressed:")
+            let sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonPressed:")
             
             self.navigationItem.rightBarButtonItem = sb
             self.navigationItem.title = "Initial Setup"
@@ -73,15 +73,15 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     func doneButtonPressed (sender: UIBarButtonItem ){
         view.endEditing(true)
         let parents = dataStore.getParents()
-        let profile = dataStore.currentProfile
-        let fieldText = firstNameTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+//        let profile = dataStore.currentProfile
+        let fieldText = firstNameTextField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) ?? ""
         if fieldText != "" {
             
         
-            var fullName = firstNameTextField.text
-            var fullNameArr = split(fullName) {$0 == " "}
-            var firstName: String = fullNameArr[0]
-            var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count - 1] : nil
+            //var fullName = firstNameTextField.text
+            let fullNameArr = fieldText.characters.split {$0 == " "}.map { String($0) }
+//            var firstName: String = fullNameArr[0]
+//            var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count - 1] : nil
 
             if firstNameTextField.text == "Patient First and Last Name" {
                 displayErrorAlert("Patient Name Required.", message: "Please enter Patient First and Last Name.")
@@ -105,7 +105,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
                 //save patient name
                 
                 let result = dataStore.savePatientName(fieldText)
-                if let profile = result.profile {
+                if result.profile != nil {
                     
                     MealState.setUpMealMenuForProfile(dataStore.currentProfile)
 //                    dataStore.mealState = MealState.getMealState(NSDate())
@@ -151,7 +151,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         //Looks for single or multiple taps.
-        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         view.addGestureRecognizer(tap)
 
         return true
@@ -159,9 +159,10 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
 
-        let result = dataStore.savePatientName(self.firstNameTextField.text)
+        let patientName = self.firstNameTextField!.text ?? ""
+        let result = dataStore.savePatientName(patientName)
         
-        if let name = result.profile {
+        if result.profile != nil {
             //Success
             if view.gestureRecognizers?.count > 0 {
                 view.gestureRecognizers?.removeAll(keepCapacity: true)

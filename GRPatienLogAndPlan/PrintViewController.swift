@@ -50,7 +50,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
 
     func logEntryFormattedForPrinting(date: String) -> String {
         
-            var printService = PrintSevice()
+            let printService = PrintSevice()
         
             return printService.getLogEntryToPrint(date).htmlString
         }
@@ -59,15 +59,19 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
         //file format Food Journal:  First Name Last Name - Date
         var fileName = "Food Journal: " + patientName + " - " + date + ".pdf"
         
-        if let arrayPaths: [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true) as? [String] {
+         let arrayPaths: [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
             
             let path = arrayPaths[0]
+            guard let url = NSURL(string: path) else {
+                return ""
+            }
+            let pdfFileURL = url.URLByAppendingPathComponent(fileName)
             
-            let pdfFileName: String = path.stringByAppendingPathComponent(fileName)
+            let pdfFileName: String =  String(pdfFileURL)
             
             fileName = pdfFileName
             
-        }
+
         
         return fileName
     }
@@ -79,20 +83,20 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
             writeLogEntryPDF(date, name: name, filePath: filePath)
             
             
-            if let url = NSURL(fileURLWithPath: filePath)  {
+             let url =  NSURL(fileURLWithPath: filePath)
                 if UIPrintInteractionController.canPrintURL(url) {
                     let printInfo = UIPrintInfo(dictionary: nil)
-                    printInfo.jobName = url.lastPathComponent
+                    printInfo.jobName = url.lastPathComponent ?? ""
                     printInfo.outputType = UIPrintInfoOutputType.General
                     
-                    let printController = UIPrintInteractionController.sharedPrintController()!
+                    let printController = UIPrintInteractionController.sharedPrintController()
                     printController.printInfo = printInfo
                     printController.showsNumberOfCopies = false
                     
                     printController.printingItem = url
                     
                     printController.presentAnimated(true, completionHandler: nil)
-                }
+                
             }
             
 //
@@ -192,7 +196,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PrintCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("PrintCell", forIndexPath: indexPath) 
         
         cell.textLabel?.text = journalEntries[indexPath.row]
         //use commented out code to display status in detail area of cell
@@ -205,7 +209,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let logEntryIdentifier = journalEntries[indexPath.row]
+//        let logEntryIdentifier = journalEntries[indexPath.row]
         //only supporting single selection for now
         
         selectedItemDateString = journalEntries[indexPath.row]
@@ -237,7 +241,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
     }
     
     //MARK: Mail delegate
-    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 

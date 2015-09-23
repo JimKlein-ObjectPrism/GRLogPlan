@@ -11,7 +11,7 @@ import Foundation
 public struct MenuCategoryEnumHelper {
     public static func matchAddOnPrescribedTime(mealOrSnackName: String, profile: OPProfile) -> (isMatch: Bool, addOnName: String) {
         //case for add on is simpler because only one add on allowed per meal
-        var addOnName = ""
+        let addOnName = ""
         if profile.addOns.count > 0 {
         for o in profile.addOns  {
             if let addOn = o as? OPAddOn {
@@ -63,7 +63,7 @@ public struct MenuCategoryEnumHelper {
         }
         
         for o in profile.medicineLIst  {
-            var medicineText = ""
+//            var medicineText = ""
             if let medicine = o as? OPMedicine {
                 let pTime = PrescribedTimeForAction(rawValue: medicine.targetTimePeriodToTake.integerValue)!
                 switch pTime {
@@ -355,9 +355,9 @@ public enum SnackMenuCategory {
                 }
             }
         }
-        configureMorningSnackMenuChoice(profile, journalEntry)
-        configureAfternoonSnackMenuChoice(profile, journalEntry)
-        configureEveningSnackMenuChoice(profile, journalEntry)
+        configureMorningSnackMenuChoice(profile, journalEntry: journalEntry)
+        configureAfternoonSnackMenuChoice(profile, journalEntry: journalEntry)
+        configureEveningSnackMenuChoice(profile, journalEntry: journalEntry)
         
     }
     public static func configureMenuChoice(journalEntry: OPJournalEntry){
@@ -401,25 +401,23 @@ public enum SnackMenuCategory {
             
         }
         func configureEveningSnackMenuChoice(journalEntry: OPJournalEntry){
-            if journalEntry.eveningSnack != nil {
-                if  journalEntry.eveningSnack != nil  {
+                if let eveningSnack = journalEntry.eveningSnack {
                     eveningSnackCaseItems.removeAll(keepCapacity: false)
                     
                     eveningSnackCaseItems.append(.SnackChoice)
                     //eveningSnackCaseItems.append(.Fruit)
                     
-                    if let snack = journalEntry.eveningSnack?.addOnRequired.boolValue {
+                    if eveningSnack.addOnRequired.boolValue {
                         eveningSnackCaseItems.append(.AddOn)
                     }
                     
-                    if let snack = journalEntry.eveningSnack?.medicineRequired.boolValue {
+                    if eveningSnack.medicineRequired.boolValue {
                         //if the profile contains a medicine, then add enum item, and set isRequired and medicineName fields in the meal object
                         eveningSnackCaseItems.append(.Medicine)
                     }
                     eveningSnackCaseItems.append(.AdditionalInfo)
                 }
             }
-        }
         configureMorningSnackMenuChoice(journalEntry)
         configureAfternoonSnackMenuChoice(journalEntry)
         configureEveningSnackMenuChoice(journalEntry)

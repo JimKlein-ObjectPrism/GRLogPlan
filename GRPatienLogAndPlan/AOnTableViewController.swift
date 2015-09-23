@@ -42,7 +42,7 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
                 action: "doneButtonTapped_Update")
             
         } else {
-            var sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Add")
+            let sb = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneButtonTapped_Add")
             self.navigationItem.rightBarButtonItem = sb
         }
 
@@ -64,7 +64,7 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
     }
     
     //MARK: Delegates
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return PrescribedTimeForAction(rawValue: row)?.name()
     }
     
@@ -98,7 +98,7 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
         let timeSelection = prescribedTimeUIPicker.selectedRowInComponent(0)
         
         let result = dataStoreDelegate.addAddOn(addOnSelection, prescribedTimeForAction: timeSelection)
-        if let med = result.addOnObject {
+        if  result.addOnObject != nil {
             //no errors
             self.navigationController?.popViewControllerAnimated(true)
         } else {
@@ -116,7 +116,7 @@ class AOnTableViewController: UITableViewController, UIPickerViewDataSource, UIP
         let timeSelection = prescribedTimeUIPicker.selectedRowInComponent(0)
         
         let result = dataStoreDelegate.updateAddOn(selectedIndex!, addOn: addOnSelection, prescribedTimeForAction: timeSelection)
-        if let med = result.addOnObject {
+        if result.addOnObject != nil {
             //no errors
             self.navigationController?.popViewControllerAnimated(true)
         } else {

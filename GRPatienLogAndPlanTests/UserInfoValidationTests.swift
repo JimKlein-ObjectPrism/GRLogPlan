@@ -48,7 +48,7 @@ class UserInfoValidationTests: XCTestCase {
         let medicineEntity = NSEntityDescription.entityForName("OPMedicine",
             inManagedObjectContext: coreDataStack.context)
         
-        var med: OPMedicine = OPMedicine(entity: medicineEntity!,
+        let med: OPMedicine = OPMedicine(entity: medicineEntity!,
             insertIntoManagedObjectContext: coreDataStack.context)
         med.profile = profile
         med.name = 0
@@ -60,7 +60,7 @@ class UserInfoValidationTests: XCTestCase {
         let addOnEntity = NSEntityDescription.entityForName("OPAddOn",
             inManagedObjectContext: coreDataStack.context)
         
-        var addOn: OPAddOn = OPAddOn(entity: addOnEntity!,
+        let addOn: OPAddOn = OPAddOn(entity: addOnEntity!,
             insertIntoManagedObjectContext: coreDataStack.context)
         addOn.profile = profile
         addOn.addOnItem = NSNumber(integer: 0)

@@ -31,7 +31,7 @@ class MedicineTableViewCell: UITableViewCell {
     }
 
     @IBAction func selectionChanged_Switch(sender: AnyObject) {
-        if let medsTaken = sender as? UISwitch {
+        if let _ = sender as? UISwitch {
             medicineTakenHandler!.choiceItemSelectedHandler(medicineSwitch.on)
         }
     }

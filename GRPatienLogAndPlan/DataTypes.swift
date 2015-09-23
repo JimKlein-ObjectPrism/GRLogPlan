@@ -48,7 +48,7 @@ class JournalItem : JournalEntryItem {
     }
     func getTestJournalItem (title: String) -> JournalItem {
         
-        var ji = JournalItem(itemTitle: title)
+        let ji = JournalItem(itemTitle: title)
         
         
         ji.breakfastChoice = Breakfast()
@@ -257,11 +257,11 @@ class PatientProfile {
     
     
     init(){
-        var person = Person(firstName: "Hannah", lastName: "Doe", nicName: "")
+        let person = Person(firstName: "Hannah", lastName: "Doe", nicName: "")
         patientName = person
         
-        var father = Person(firstName: "John", lastName: "Doe", nicName: "J.D.")
-        var mother = Person(firstName: "Jane", lastName: "Doe", nicName: "")
+        let father = Person(firstName: "John", lastName: "Doe", nicName: "J.D.")
+        let mother = Person(firstName: "Jane", lastName: "Doe", nicName: "")
         parents = [mother, father]
         
         

@@ -34,17 +34,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //dataStore.managedContext = coreDataStack.context
         
-        dataArray = dataStore.buildDetailViewArray()
+        //dataArray = dataStore.buildDetailViewArray()
         
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         // instantiate nav controller for Track tab and set data
-        var contentNavController = storyboard.instantiateViewControllerWithIdentifier("TrackNavController") as! UINavigationController
+        let contentNavController = storyboard.instantiateViewControllerWithIdentifier("TrackNavController") as! UINavigationController
         
-        var trackMenuController = storyboard.instantiateViewControllerWithIdentifier("TrackMenuController") as! UINavigationController
+        let trackMenuController = storyboard.instantiateViewControllerWithIdentifier("TrackMenuController") as! UINavigationController
         
-        var trackController = storyboard.instantiateViewControllerWithIdentifier("Track") as! SWRevealViewController
+        let trackController = storyboard.instantiateViewControllerWithIdentifier("Track") as! SWRevealViewController
         
         //set up delegates for selecting items in the menu
 
@@ -59,8 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         trackController.frontViewController = contentNavController
         trackController.rearViewController = trackMenuController
        
-        var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as! HomeViewController
-                
+//        var homeViewController = storyboard.instantiateViewControllerWithIdentifier("Home") as! HomeViewController
+        
         let homeNaveController = storyboard.instantiateViewControllerWithIdentifier("HomeNavController") as! UINavigationController
         
         

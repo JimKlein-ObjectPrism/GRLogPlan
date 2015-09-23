@@ -40,7 +40,7 @@ class ChoiceItemsTableViewCell: UITableViewCell {
     @IBAction func didSelectSegment(sender: AnyObject) {
         //
         if let seg = sender as? UISegmentedControl {
-            var choice = seg.selectedSegmentIndex
+            let choice = seg.selectedSegmentIndex
             
         
             if  segmentSelectionHandler != nil {

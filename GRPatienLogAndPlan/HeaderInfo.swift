@@ -27,7 +27,7 @@ public struct HeaderInfo {
         let patientNameYPadding = 10
         let patientNameTotalHeight = patientNameFontSize + patientNameYPadding
         
-        var drawTextPatientName = drawableTextFromString(patientName)
+        let drawTextPatientName = drawableTextFromString(patientName)
         setTextBoldingAndFontSizeFullString(drawTextPatientName, originalString: patientName,  fontSize: patientNameFontSize )
         currentYOnPage += patientNameTotalHeight
         
@@ -40,7 +40,7 @@ public struct HeaderInfo {
         let logEntryPadding = 8
         let logEntryDateTotalHeight =  logEntryDateFontSize + logEntryPadding
         let logEntryDate = date
-        var drawTextJournalEntryDate = drawableTextFromString(logEntryDate)
+        let drawTextJournalEntryDate = drawableTextFromString(logEntryDate)
         setTextBoldingAndFontSizeFullString(drawTextJournalEntryDate, originalString: logEntryDate,  fontSize: logEntryDateFontSize )
         
         currentYOnPage += logEntryDateTotalHeight
@@ -65,7 +65,7 @@ public struct HeaderInfo {
     func setTextBoldingAndFontSizeFullString(text:  CFMutableAttributedStringRef, originalString: String, fontSize: Int){
         let size: CGFloat = CGFloat(fontSize)
         
-        let stringLength = count(originalString)
+        let stringLength = originalString.characters.count
         let fontBold = CTFontCreateWithName("Helvetica-Bold", size, nil)
         CFAttributedStringSetAttribute(text , CFRangeMake(0, stringLength ), kCTFontAttributeName, fontBold)
     }

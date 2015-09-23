@@ -19,15 +19,15 @@ class PDFViewController: UIViewController {
         
         view.backgroundColor = UIColor.yellowColor()
         
-        var webView = UIWebView(frame: CGRectMake(25, 50, view.bounds.width - 50, view.bounds.height - 50))
+        let webView = UIWebView(frame: CGRectMake(25, 50, view.bounds.width - 50, view.bounds.height - 50))
         webView.backgroundColor = UIColor.orangeColor()
-        let writer = PDFWriter()
+//        let writer = PDFWriter()
         //let pdfFileName = writer.getPDFFileName()
 //        writer.drawPDF(filePath)
         
-        var url = NSURL(fileURLWithPath: filePath)
+        let url = NSURL(fileURLWithPath: filePath)
         
-        var request = NSURLRequest(URL: url!)
+        let request = NSURLRequest(URL: url)
         
         webView.scalesPageToFit = true
         webView.loadRequest(request)

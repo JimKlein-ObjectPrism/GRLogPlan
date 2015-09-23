@@ -526,6 +526,7 @@
 		9864434C1A9E78FB00887579 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "ObjectPrism Corp.";

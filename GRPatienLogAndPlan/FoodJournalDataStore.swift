@@ -12,6 +12,7 @@ import CoreData
 
 enum JournalEntryResult {
     case Success(OPJournalEntry),
+    WrongTypeOfEntryFound,
     EntryDoesNotExist,
     Error(NSError?)
     
@@ -52,15 +53,15 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
 
     var currentTime: String  {
         get {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
-        var time = dateFormatter.stringFromDate(NSDate())
+        let time = dateFormatter.stringFromDate(NSDate())
         return time
         }
     }
     var today: String  {
         get {
-            var dateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .FullStyle
             //println(dateFormatter.stringFromDate(NSDate()))
             return dateFormatter.stringFromDate(NSDate())
@@ -117,7 +118,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         super.init()
         
-        let defaults = NSUserDefaults.standardUserDefaults()
+        //let defaults = NSUserDefaults.standardUserDefaults()
         
 //        if let profile = defaults.valueForKey("profileIsValid") as? Bool  {
 //            if profile == true {
@@ -169,8 +170,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             //return ( nil, error)
         }
         //MARK: update enums for View Model Initializations
@@ -360,7 +364,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             lastName = nil
 
             if myArray.count > 1 {
-                var name = myArray[myArray.count - 1]
+                let name = myArray[myArray.count - 1]
                 lastName = name
             }
         }
@@ -389,8 +393,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             }
         }
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             //return ( nil, error)
         }
         updateMealCategoryEnumsAndProfileFields()
@@ -410,8 +417,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         }
 
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             //return ( nil, error)
         }
         updateMealCategoryEnumsAndProfileFields()
@@ -424,14 +434,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     //MARK: Parents Model
     public func getParents() -> [OPParent] {
-        var profileparents = currentRecord.profile.parents
+        let profileparents = currentRecord.profile.parents
         currentParents = [OPParent]()
         
         // Create new Parent Object, then add to top of array sent to tableview
         let parentEntity = NSEntityDescription.entityForName("OPParent",
             inManagedObjectContext: managedContext)
         
-        var parent: OPParent = OPParent(entity: parentEntity!,
+        let parent: OPParent = OPParent(entity: parentEntity!,
             insertIntoManagedObjectContext: managedContext)
         parent.firstName = ""
         parent.lastName = ""
@@ -450,7 +460,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let parentEntity = NSEntityDescription.entityForName("OPParent",
             inManagedObjectContext: managedContext)
         
-        var parent: OPParent = OPParent(entity: parentEntity!,
+        let parent: OPParent = OPParent(entity: parentEntity!,
             insertIntoManagedObjectContext: managedContext)
         
         parent.profile = currentRecord.profile
@@ -460,12 +470,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
-            return ( nil, error)
-        }
-        else{
+        do {
+            try managedContext.save()
             return (parent, nil)
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
+            return ( nil, error)
         }
     }
     
@@ -562,9 +573,9 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
     public func validateName( name: String , pattern: String ) -> Bool {
-        if let regex = NSRegularExpression(pattern: pattern, options: .CaseInsensitive, error: nil) {
+        if let regex = try? NSRegularExpression(pattern: pattern, options: .CaseInsensitive) {
             let text = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            let range = NSMakeRange(0, count(text))
+            let range = NSMakeRange(0, text.characters.count)
             
             let matchRange = regex.rangeOfFirstMatchInString(text, options: .ReportProgress, range: range)
             
@@ -604,7 +615,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     func updateParent ( atIndex: Int, firstName: String, lastName: String) -> (OPParent?, NSError?)  {
         
-        var parent: OPParent = self.currentParents[atIndex]
+        let parent: OPParent = self.currentParents[atIndex]
         
         parent.firstName = firstName
         parent.lastName = lastName
@@ -614,8 +625,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             parent.profile = currentRecord.profile
         }
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             return (nil, error)
         }
         
@@ -627,8 +641,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         managedContext.deleteObject(parentToDelete)
         
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             return (parentToDelete, error)
         }
         
@@ -686,7 +703,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let medicineEntity = NSEntityDescription.entityForName("OPMedicine",
             inManagedObjectContext: managedContext)
         
-        var med: OPMedicine = OPMedicine(entity: medicineEntity!,
+        let med: OPMedicine = OPMedicine(entity: medicineEntity!,
             insertIntoManagedObjectContext: managedContext)
         med.profile = currentRecord.profile
         med.name = medicine
@@ -694,12 +711,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         med.targetTimePeriodToTake = prescribedTimeForAction
         
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
-            return ( nil, error!)
-        }
-        else{
+        do {
+            try managedContext.save()
             return (med, nil)
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
+            return ( nil, error!)
         }
         
     }
@@ -713,8 +731,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         managedContext.deleteObject(medicineToDelete)
         
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             return (nil, error)
         }
          return (medicineToDelete, nil)
@@ -745,15 +766,18 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
     func updateMedicineInModel (atIndex: Int, medicine: Int, prescribedTimeForAction: Int) -> ( medObject: OPMedicine?, error: NSError?){
-        var currentMedicine: OPMedicine = self.currentMedicines[atIndex]
+        let currentMedicine: OPMedicine = self.currentMedicines[atIndex]
         
         currentMedicine.name = NSNumber(integer: medicine)
         currentMedicine.targetTimePeriodToTake = NSNumber(integer: prescribedTimeForAction)
         
         currentMedicine.profile = currentRecord.profile
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             return (nil, error!)
         }
         
@@ -813,7 +837,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let addOnEntity = NSEntityDescription.entityForName("OPAddOn",
             inManagedObjectContext: managedContext)
         
-        var med: OPAddOn = OPAddOn(entity: addOnEntity!,
+        let med: OPAddOn = OPAddOn(entity: addOnEntity!,
             insertIntoManagedObjectContext: managedContext)
         med.profile = currentRecord.profile
         med.addOnItem = NSNumber(integer: addOn)
@@ -821,13 +845,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         med.targetMealOrSnack = NSNumber(integer: prescribedTimeForAction)
         
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
-            return ( nil, error!)
-        }
-        else{
+        do {
+            try managedContext.save()
             // update addonRequired for meal here, then update the delete function as well.
             return (med, nil)
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
+            return ( nil, error!)
         }
         
     }
@@ -841,8 +866,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         managedContext.deleteObject(addOnToDelete)
         
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             return (nil, error)
         }
         
@@ -873,15 +901,18 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
     func updateAddOnInModel (atIndex: Int, addOn: Int, prescribedTimeForAction: Int) -> ( addOnObject: OPAddOn?, error: NSError?){
-        var currentAddOn: OPAddOn = self.currentAddOns[atIndex]
+        let currentAddOn: OPAddOn = self.currentAddOns[atIndex]
         
         currentAddOn.addOnItem = NSNumber(integer: addOn)
         currentAddOn.targetMealOrSnack = NSNumber(integer: prescribedTimeForAction)
         
         currentAddOn.profile = currentRecord.profile
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
             return (nil, error!)
         }
         
@@ -895,14 +926,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
     }
     func initializeMedicineMembers (breakfast: VMBreakfast){
-        var matchesMeal = false
-        for medicine in currentProfile.medicineLIst {
-            //let time = PrescribedTimeForAction(rawValue: medicine.targetTimePeriodToTake.integerValue)
-                //if time = PrescribedTimeForAction.BreakfastTime {
-                    
-                //}
-            
-        }
+        //var matchesMeal = false
+//        for medicine in currentProfile.medicineLIst {
+//            //let time = PrescribedTimeForAction(rawValue: medicine.targetTimePeriodToTake.integerValue)
+//                //if time = PrescribedTimeForAction.BreakfastTime {
+//                    
+//                //}
+//            
+//        }
     }
 
     
@@ -1036,20 +1067,23 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         jEntryFetch.predicate = NSPredicate(format: "date == %@", argumentArray: [journalEntryDate])
         //(format: "date IN %@", @[journalEntryDate])
         
-        var error: NSError?
+        //var error: NSError?
         
-        let result = managedContext.executeFetchRequest(jEntryFetch, error: &error) as? [OPJournalEntry]
-        
-         if let entries = result {
-            if entries.count > 0 {
-                let entry = entries[0] as OPJournalEntry
-                //println(entry.date)
-                return entries[0]
+        do {
+            let result = try managedContext.executeFetchRequest(jEntryFetch) as? [OPJournalEntry]
+            
+             if let entries = result {
+                if entries.count > 0 {
+                    return entries[0]
+                } else {
+                    return getNewJournalEntry(today)
+                }
+                
             } else {
                 return getNewJournalEntry(today)
             }
-            
-        } else {
+        } catch {
+            //TODO: Implement Catch -  Implement Guard
             return getNewJournalEntry(today)
         }
     }
@@ -1116,22 +1150,22 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         //jEntryFetch.predicate = NSPredicate(format: "date == %@", journalEntryDate)
         jEntryFetch.predicate = NSPredicate(format: "date == %@", argumentArray: [dateIdentifier])
 
-        var error: NSError?
-        
-        let result = managedContext.executeFetchRequest(jEntryFetch, error: &error) as? [OPJournalEntry]  //(jEntryFetch, error: &error) as! [OPJournalEntry]?
-        
-        if let entries = result {
-            if entries.count > 0 {
-                let entry = entries[0] as OPJournalEntry
-                //println(entry.date)
-                return JournalEntryResult.Success(entry)
-                
-            } else {
-                return JournalEntryResult.EntryDoesNotExist
-            }
-        } else {
-            
+        var result = [AnyObject]()
+        do {
+            result = try managedContext.executeFetchRequest(jEntryFetch)
+        } catch let error as NSError {
             return JournalEntryResult.Error(error)
+        }
+        guard let entries = result as? [OPJournalEntry] else {
+            return JournalEntryResult.WrongTypeOfEntryFound
+        }
+        
+        if entries.count > 0 {
+            let entry = entries[0]
+            return JournalEntryResult.Success(entry)
+            
+        } else {
+            return JournalEntryResult.EntryDoesNotExist
         }
     }
     
@@ -1141,17 +1175,17 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         var tupleArray = [stringDateTuple]()
         var dateArray = [NSDate]()
         for s in strings {
-            var dateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
             let date = dateFormatter.dateFromString(s)
             tupleArray.append(stringDateTuple(s, date!))
             dateArray.append(date!)
         }
         
-        dateArray.sort({$0.compare($1) == NSComparisonResult.OrderedDescending })
+        dateArray.sortInPlace({$0.compare($1) == NSComparisonResult.OrderedDescending })
         var stringArray = [String]()
         for date in dateArray{
-            var dateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
             let dateString = dateFormatter.stringFromDate(date)
             stringArray.append(dateString)
@@ -1176,17 +1210,18 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         //  Fetch Request and Predicate:  array of args supports multiple days
         let jEntryFetch = NSFetchRequest(entityName: "OPJournalEntry")
-        var error: NSError?
-        
-        var result = managedContext.executeFetchRequest(jEntryFetch, error: &error) as? [OPJournalEntry]
-        
-        if let entries = result {
-            //result!.sort({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
-            return entries
-        } else {
-            //ignore error return JournalEntryResult.Error(error)
+        //TODO:  Refactor this whole process to return Error or the non-optional result of entries
+        var result = [AnyObject]()
+        do {
+            result = try managedContext.executeFetchRequest(jEntryFetch)
+        } catch {
             return nil
         }
+        guard let entries = result as? [OPJournalEntry] else {
+            return nil
+        }
+        return entries
+        
     }
 
     
@@ -1211,14 +1246,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         if parentsArray.count > 0 {
             
             let fullName = parentsArray[0]
-            var fullNameArr = split(fullName) {$0 == " "}
+            var fullNameArr = fullName.characters.split {$0 == " "}.map { String($0) }
             
             if fullNameArr.count > 1 {
-            var firstName: String = fullNameArr[0]
-            var lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count-1] : nil
+            let firstName: String = fullNameArr[0]
+            let lastName: String? = fullNameArr.count > 1 ? fullNameArr[fullNameArr.count-1] : nil
             
-            var firstInitial = firstName[firstName.startIndex]
-            var lastInitial = lastName?[lastName!.startIndex]
+            let firstInitial = firstName[firstName.startIndex]
+            let lastInitial = lastName?[lastName!.startIndex]
             
             return "\(firstInitial). \(lastInitial!)."
             }
@@ -1272,7 +1307,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         
         components.day = offsetFromCurrentDay
-        let newDate = calendar.dateByAddingComponents(components, toDate: NSDate(), options: nil)
+        let newDate = calendar.dateByAddingComponents(components, toDate: NSDate(), options: [])
         let selectedDay = getFullStyleDateString(newDate!)
 
         //println(selectedDay)
@@ -1285,11 +1320,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         case let .Success(entry):
             currentJournalEntry = entry
             updateJournalEntryToSelectedDate(entry)
+        case .WrongTypeOfEntryFound:
+            print("Wrong type of entry found.")
         case .EntryDoesNotExist:
             currentJournalEntry = getNewJournalEntry(selectedDay)
             updateJournalEntryToSelectedDate(currentJournalEntry)
         case .Error:
-            println("Core Data error encountered.")
+            print("Core Data error encountered.")
         
         }
         
@@ -1307,7 +1344,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     }
     public func getFullStyleDateString(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .FullStyle
         //println(dateFormatter.stringFromDate(date))
         return dateFormatter.stringFromDate(date)
@@ -1326,11 +1363,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         let recordFetch = NSFetchRequest(entityName: "OPPatientRecord")
         
-        var error: NSError?
-        
-        let result = managedContext.executeFetchRequest(recordFetch, error: &error) as! [OPPatientRecord]?
-        
-        if let records = result {
+        //var error: NSError?
+        var result: [AnyObject]?
+        do {
+            result = try managedContext.executeFetchRequest(recordFetch)
+        } catch let error as NSError {
+            print("Could not fetch: \(error.localizedDescription)")
+        }
+        if let records = result as? [OPPatientRecord]{
             
             if records.count == 0 {
                 // Create mew record and profile
@@ -1348,34 +1388,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 
                 currentRecord.profile.firstAndLastName = ""
                 
-//                //Add Parent Name
-//                let profileEntityParent2 = NSEntityDescription.entityForName("OPParent",
-//                    inManagedObjectContext: managedContext)
-//                
-//                let parentEntry2 =  OPParent(entity: profileEntityParent2!,
-//                    insertIntoManagedObjectContext: managedContext)
-//                
-////                parentEntry2.firstName = "Jon"
-////                parentEntry2.lastName = "Smith"
-//                
-//                parentEntry2.profile = currentRecord.profile
-                
-                
-//                //Add Parent Name
-//                let profileEntityParent = NSEntityDescription.entityForName("OPParent",
-//                    inManagedObjectContext: managedContext)
-//                
-//                let parentEntry =  OPParent(entity: profileEntityParent!,
-//                    insertIntoManagedObjectContext: managedContext)
-//                
-//                parentEntry.firstName = "Susan"
-//                parentEntry.lastName = "Smith"
-//                
-//                parentEntry.profile = currentRecord.profile
-//                
-                
-
-                
+              
                 return currentRecord
                 
             } else {
@@ -1383,10 +1396,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                 
                 return currentRecord
             }
-        } else {
-            println("Could not fetch: \(error)")
         }
-        //assert(false, "Unimplemented")
         return currentRecord
     }
     
@@ -1402,7 +1412,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     
     func loadProfile() -> PatientProfile {
-        var profile = PatientProfile()
+        let profile = PatientProfile()
         return profile
     }
     
@@ -1415,8 +1425,8 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         let myArray: [String] = foodItemString.componentsSeparatedByString(",")
         
         if myArray.count > 1 && myArray[0] != "Milk"{
-        let indexString: String? = myArray.last
-        let indexValue = indexString?.toInt()
+        let indexString: String = myArray.last!
+        let indexValue = Int(indexString)
         
         let parentName = myArray.first
 
@@ -1490,7 +1500,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         for i in 1...6 {
             components.day = -i
             
-            var newDate: NSDate = calendar.dateByAddingComponents(components, toDate: NSDate(), options: nil) ?? NSDate()
+            let newDate: NSDate = calendar.dateByAddingComponents(components, toDate: NSDate(), options: []) ?? NSDate()
             let newString = getFullStyleDateString(newDate)
 
             dates.append(newString)
@@ -1584,8 +1594,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         setOptionalStringProperty(&mBreakfast.time, valuefromMealVM: breakfast.time)
         setOptionalStringProperty(&mBreakfast.note, valuefromMealVM: breakfast.note)
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
         }
     }
 
@@ -1615,9 +1628,12 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
 
                 var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
-        }
+                do {
+                    try managedContext.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    print("Could not save: \(error)")
+                }
         
     }
     
@@ -1698,8 +1714,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             }
         }
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
         }
 
         
@@ -1733,8 +1752,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
         modelDinner.note = dinner.note
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error)")
         }
 
     }
@@ -1744,12 +1766,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     //MARK: Data Update Delgate Methods
     func choiceItemSelectedHandler(childItemIndex: Int, indexPath: NSIndexPath){
         //update current meal item
-        println("l'")
+        print("l'")
+        //TODO: Refactor by deleting method and references
         currentMealItem = Lunch()
         
         switch currentMealItem {
-        case let x as Breakfast:
-            println("breaky")
+        case _ as Breakfast:
+            print("breaky")
         case let x as Lunch:
             switch indexPath.row{
             case 0:
@@ -1758,10 +1781,10 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             case 1:
                 x.fruitChoice?.name = ""
             default:
-                println("index out of range")
+                print("index out of range")
             }
         default:
-            println("index out of range")
+            print("index out of range")
             assertionFailure("index out of range")
         }
         //update viewmodel
@@ -1789,36 +1812,36 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     
    
-    func buildDetailViewArray() -> [AnyObject]{
-        
-        var profile = self.loadProfile()
-        var journalItem = self.buildJournalEntry(profile)
-                
-        return logEntryItems
-    }
+//    func buildDetailViewArray() -> [AnyObject]{
+//        
+//        let profile = self.loadProfile()
+//        self.buildJournalEntry(profile)
+//                
+//        return logEntryItems
+//    }
     
-    func updateMealItems (mealItem: MealItem, section: Int, row: Int, foodItem: FoodItem) {
-        
-        switch mealItem {
-        case let mealItem as Breakfast:
-            if section == 0 {
-                mealItem.foodChoice = foodItem
-            } else {
-                mealItem.fruitChoice = foodItem
-            }
-            
-        case let mealItem as Lunch:
-            
-            if section == 0 {
-            
-            }
-            
-        default:
-            println("error")
-        }
-        
-    }
-    func buildFoodItemArray (#filterString: String ) -> [FoodItem]{
+//    func updateMealItems (mealItem: MealItem, section: Int, row: Int, foodItem: FoodItem) {
+//        
+//        switch mealItem {
+//        case let mealItem as Breakfast:
+//            if section == 0 {
+//                mealItem.foodChoice = foodItem
+//            } else {
+//                mealItem.fruitChoice = foodItem
+//            }
+//            
+//        case let mealItem as Lunch:
+//            
+//            if section == 0 {
+//            
+//            }
+//            
+//        default:
+//            print("error")
+//        }
+//        
+//    }
+    func buildFoodItemArray (filterString filterString: String ) -> [FoodItem]{
         
        // get subtype of food items for selection
         let fItems = foodItems.filter({m in
@@ -1831,20 +1854,20 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     
     func menuItemSelectedHandler(menudisplayType: MenuDisplayCell){
         switch menudisplayType{
-        case let menudisplayType as Breakfast:
+        case _ as Breakfast:
             updateDetailViewDelegate.updateDetailViewHandler(self.buildBreakfastItems(loadProfile(), journalItem: buildJournalEntry(loadProfile())))
             
-        case let menudisplayType as Lunch:
+        case _ as Lunch:
             updateDetailViewDelegate.updateDetailViewHandler(
                 self.buildLunchItems(loadProfile(), journalItem: buildJournalEntry(loadProfile()))
                 )
-        case let menudisplayType as Dinner:
+        case _ as Dinner:
             updateDetailViewDelegate.updateDetailViewHandler(
                 self.buildDinnerItems(loadProfile(), journalItem: buildJournalEntry(loadProfile())
                 ))
             
         default:
-            println("rest of menu Item Selection Handler not written yet")
+            print("rest of menu Item Selection Handler not written yet")
             
         }
     }
@@ -1948,7 +1971,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
 
     func getDinnerChoiceItems() -> [Any]{
-        var choiceItems = [Any]()
+        let choiceItems = [Any]()
         // Get MeatChoiceItems
         
         return choiceItems
@@ -1967,13 +1990,13 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
     }
     func parseFile ()
     {
-        var xmlPath = foodItemsPath()
+        //var xmlPath = foodItemsPath()
         // TODO:  unwrap this
         let url: NSURL! = NSBundle.mainBundle().URLForResource("MealItems", withExtension: "xml")
         let xmlParser = NSXMLParser(contentsOfURL: url)
         xmlParser!.delegate = self
-        var success:Bool = xmlParser!.parse()
-        println(success)
+        let success:Bool = xmlParser!.parse()
+        print(success)
 
         
     }
@@ -2017,7 +2040,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
                     foodItemStackArray.append(foodItem)
                     currentIndexOfTopStackItem++
                 } else {
-                    println("error:  non-nil currentItem encountered")
+                    print("error:  non-nil currentItem encountered")
                 }
 
             }
@@ -2053,7 +2076,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         case "itemDescription":
             currentFoodItem!.itemDescription = currentElementValue
         case "measurement":
-            var m: Double = (currentElementName as NSString).doubleValue
+            let m: Double = (currentElementName as NSString).doubleValue
             currentFoodItem!.serving.measurement = m
         case "unit":
             currentFoodItem!.serving.unit = currentElementValue
@@ -2062,25 +2085,25 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         case "menuItemType":
             currentFoodItem!.menuItemType = currentElementValue
         default:
-            println("default reached in error for set PropertyOnFoodItem \(currentElementName), \(currentElementValue)")
+            print("default reached in error for set PropertyOnFoodItem \(currentElementName), \(currentElementValue)")
             }
     }
     
     // MARK: NSXMLParser Delegate
-    public func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [NSObject: AnyObject]) {
+    public func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
         
         //TODO:  should be a simle If statement
         switch elementName {
             case "foodItem":
-            var foodItem = FoodItem()
+            let foodItem = FoodItem()
             PushFoodItem(foodItem)
         case "foodItemWithChoice":
-            var foodItem = FoodItemWithChoice()
+            let foodItem = FoodItemWithChoice()
             PushFoodItem(foodItem)
             
         default:
             currentElementName = elementName
-            println(elementName)
+            print(elementName)
         }
         
     }
@@ -2092,11 +2115,11 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             case "foodItemWithChoice":
             PopFoodItem()
             case "root":
-            println(elementName)
+            print(elementName)
             case  "choiceItems" :
-            println(elementName)
+            print(elementName)
             case "serving":
-            println(elementName)
+            print(elementName)
             default:
             setPropertyOnFoodItem()
         }
@@ -2105,12 +2128,12 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         
     }
 
-    public func parser(parser: NSXMLParser,foundCharacters string: String?) {
-        currentElementValue = string!
+    public func parser(parser: NSXMLParser,foundCharacters string: String) {
+        currentElementValue = string
     }
 
     public func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
-        println(parseError)
+        print(parseError)
     }
     
 //    func addJournalItem(activity: JournalItem) {

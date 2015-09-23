@@ -19,9 +19,9 @@ struct TimeRange {
             
             var seconds: Int = 0
             if rangeStart != nil && rangeEnd != nil {
-                var hours: Int = rangeEnd!.hour - rangeStart!.hour
+                let hours: Int = rangeEnd!.hour - rangeStart!.hour
                 
-                var minutes = abs(rangeStart!.minute - rangeEnd!.minute)
+                let minutes = abs(rangeStart!.minute - rangeEnd!.minute)
                 seconds = hours * 60 * 60 + minutes * 60
                 return seconds
             }
@@ -67,7 +67,7 @@ enum MealState {
     
     mutating func next() {
         switch self {
-        case let .Breakfast(x):
+        case .Breakfast:
             if MealState.morningSnackRange.rangeStart == nil {
                 self = .Lunch(MealState.lunchRange)
             } else {
@@ -128,12 +128,12 @@ enum MealState {
     }
     func timeSpanInSecondsFromCurrentTimeToRangeEndingTime( endingTime: TimeTuple) -> Int
     {
-        var currentTime: TimeTuple = MealState.covertTimeToTuple(NSDate())
+        let currentTime: TimeTuple = MealState.covertTimeToTuple(NSDate())
         
         var seconds = 0
         
-        var hours: Int = abs(currentTime.hour - endingTime.hour)
-        var minutes = abs(currentTime.minute - endingTime.minute)
+        let hours: Int = abs(currentTime.hour - endingTime.hour)
+        let minutes = abs(currentTime.minute - endingTime.minute)
         
         seconds = hours * 60 * 60 + minutes * 60
         
@@ -170,7 +170,7 @@ enum MealState {
                 //rule is lowerLimit <= timeOfDay < upperLimit
                 // refactor these constants out of the function because they will be useed by other cases in the switch statement
                 let calendar = NSCalendar.currentCalendar()
-                let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute, fromDate: timeOfDay)
+                let components = calendar.components([.Hour, .Minute], fromDate: timeOfDay)
                 let hour = components.hour
                 let minute = components.minute
 //                println(timeRange?.rangeEnd?.hour)
@@ -184,9 +184,9 @@ enum MealState {
                 let maxHour = timeRange?.rangeEnd?.hour
                 let maxMinute = timeRange?.rangeEnd?.minute
                 
-                var part1 = ( hour >= minHour && minute >= minMinute)
-                var test = ((hour < timeRange?.rangeEnd?.hour) || ( hour == timeRange?.rangeEnd?.hour && minute < timeRange?.rangeEnd?.minute))//(hour < timeRange?.rangeEnd?.hour) //|| ( hour < timeRange?.rangeEnd?.hour && minute < timeRange?.rangeEnd?.hour))
-                var timeWithinRange: Bool =
+//                var part1 = ( hour >= minHour && minute >= minMinute)
+//                var test = ((hour < timeRange?.rangeEnd?.hour) || ( hour == timeRange?.rangeEnd?.hour && minute < timeRange?.rangeEnd?.minute))//(hour < timeRange?.rangeEnd?.hour) //|| ( hour < timeRange?.rangeEnd?.hour && minute < timeRange?.rangeEnd?.hour))
+                let timeWithinRange: Bool =
                 (( hour >= minHour && minute >= minMinute) || (hour > minHour)) &&
                     ((hour < maxHour) || ( hour == maxHour && minute < maxMinute))
                 return timeWithinRange
@@ -195,7 +195,7 @@ enum MealState {
     
     static func covertTimeToTuple(timeOfDay: NSDate) -> TimeTuple {
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute, fromDate: timeOfDay)
+        let components = calendar.components([.Hour, .Minute], fromDate: timeOfDay)
         let hour = components.hour
         let minute = components.minute
         return TimeTuple(hour: hour, minute: minute)
@@ -204,7 +204,7 @@ enum MealState {
     static func getMealState ( timeOfDay: NSDate) -> MealState
     {
         
-        var time = MealState.covertTimeToTuple(timeOfDay)
+//        var time = MealState.covertTimeToTuple(timeOfDay)
         //println("time \(timeOfDay) tupple time end: \(MealState.afternoonSnackRange.rangeEnd)")
 
         switch timeOfDay {

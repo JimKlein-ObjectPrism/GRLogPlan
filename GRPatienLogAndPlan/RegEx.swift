@@ -15,12 +15,12 @@ class Regex {
     
     init(_ pattern: String) {
         self.pattern = pattern
-        var error: NSError?
-        self.internalExpression = NSRegularExpression(pattern: pattern, options: .CaseInsensitive, error: &error)!
+//        var error: NSError?
+        self.internalExpression = try! NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
     }
     
     func test(input: String) -> Bool {
-        let matches = self.internalExpression.matchesInString(input, options: nil, range:NSMakeRange(0, count(input)))
+        let matches = self.internalExpression.matchesInString(input, options: [], range:NSMakeRange(0, input.characters.count))
         return matches.count > 0
     }
 }

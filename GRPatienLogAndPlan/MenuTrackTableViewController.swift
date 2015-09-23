@@ -52,45 +52,36 @@ class MenuTrackTableViewController: UITableViewController {
     }
     func handleSegmentedControlSelectionChanged(sender: UISegmentedControl)
     {
-        var selectedIndex = sender.selectedSegmentIndex
+//        var selectedIndex = sender.selectedSegmentIndex
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var item: (AnyObject) = dataArray[indexPath.row]
+        let item: (AnyObject) = dataArray[indexPath.row]
         
                 switch item {
-        case let mealItem as BreakfastItems:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
+        case _ as BreakfastItems:
+            let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             cell.titleLabel.text = "Breakfast"
             //cell.statusDisplayView.backgroundColor = UIColor.greenColor()
             return cell
             
-        case let mealItem as LunchItems:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
+        case _ as LunchItems:
+            let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             cell.titleLabel.text = "Lunch"
             return cell
             
-        case let mealItem as DinnerItems:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
+        case _ as DinnerItems:
+            let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             cell.titleLabel.text = "Dinner"
             return cell
         case let mealItem as Snack:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             cell.titleLabel.text = mealItem.menuDisplayName
             return cell
-            
-            
-            
-            //            case let mealItem as MenuDisplayCell:
-            //                var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as MenuCellTableViewCell
-            //                //if let menuItem = item as? MenuDisplayCell {
-            //                    cell.titleLabel.text = menu
-            //                //}
-            //                return cell
-            
+           
         default:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell", forIndexPath: indexPath) as! MenuCellTableViewCell
             if let menuItem = item as? MenuDisplayCell {
                 cell.titleLabel.text = menuItem.menuDisplayName
                 return cell
@@ -104,7 +95,7 @@ class MenuTrackTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         //Fill the detail view controller with the choices for the currently selected item.
-        var selectedIndex = indexPath.row
+        let selectedIndex = indexPath.row
         
         switch selectedIndex {
         case 0:
@@ -116,7 +107,7 @@ class MenuTrackTableViewController: UITableViewController {
             menuItemSelectionHandler?.menuItemSelectedHandler(Dinner())
             
         default:
-            println("Unfinished implementation")
+            print("Unfinished implementation")
         }
     }
 

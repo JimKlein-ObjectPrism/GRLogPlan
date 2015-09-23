@@ -156,9 +156,6 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
                 
             }
             
-        default:
-            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-            return cell
         }
         
         
@@ -222,8 +219,8 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
         let buttonList = locations
         let title = "Location"
-        let cancel = "Cancel"
-        let firstButtonItem = buttonList[0]
+//        let cancel = "Cancel"
+//        let firstButtonItem = buttonList[0]
         
         // create controller
         let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
@@ -239,10 +236,10 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         // add Action buttons for each set of initials in the list
         for s in 0..<buttonList.count {
             
-            var buttonIndex = s
+//            var buttonIndex = s
             
-            var action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
-                (alert: UIAlertAction!) -> Void in
+            let action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
+                (alert: UIAlertAction) -> Void in
                 //send initials updated event
                 newTitle = buttonList[s]
                 self.setPropertyInModel(value: newTitle, propertyInModel: &self.snack.location)
@@ -259,7 +256,8 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         
         let title = "Parent Initials"
         let initialsArray = getParentInitials()
-        let returnString: () = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &self.snack.parentInitials)
+        //let returnString: () = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &self.snack.parentInitials)
+        self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &self.snack.parentInitials)
         
     }
     //Note Handler
@@ -268,16 +266,16 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     }
 
     func timeSelectedHandler(selectedTime : NSDate){
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
-        var time = dateFormatter.stringFromDate(selectedTime)
+        let time = dateFormatter.stringFromDate(selectedTime)
         setPropertyInModel(value: time, propertyInModel: &self.snack.time)
         //setPropertyInModel(dateValue: selectedTime, datePropertyInModel: &self.snack.time)
     }
     //MARK: Alert View methods
     func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){
         
-        let cancel = "Cancel"
+//        let cancel = "Cancel"
         
         // create controller
         let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
@@ -288,15 +286,10 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
             // ...
         }
         alertController.addAction(cancelAction)
-        var a: String? = "a"
-        
-        var b:String? = ""
         for i in 0 ..< buttonValues.count {
             
-            var buttonIndex = i
-            
-            var action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
-                (alert: UIAlertAction!) -> Void in
+            let action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
+                (alert: UIAlertAction) -> Void in
                 self.setPropertyInModel(value: buttonValues[i], propertyInModel: &self.snack.parentInitials)//modelProperty)
                 //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.snack.parentInitials)
                 self.tableView.reloadData()
@@ -310,12 +303,10 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
     }
     func showAlertForSaveValidation(title: String, buttonValues: [String]){
         
-        let cancel = "Cancel"
-        
         var message: String = ""
         
         for i in 0 ..< buttonValues.count {
-            var newLine = "\n \(buttonValues[i])"
+            let newLine = "\n \(buttonValues[i])"
             message += newLine
         }
         
@@ -330,7 +321,7 @@ public class SnackVM: MealViewModel, MealViewModelDelegate, UITableViewDataSourc
         alertController.addAction(cancelAction)
         
         let saveAnywayAction = UIAlertAction(title: "Save Anyway", style: .Default)  {
-            (alert: UIAlertAction!) -> Void in
+            (alert: UIAlertAction) -> Void in
             self.dataStore.saveSnack_Today(self.snack, snackTime: self.snackTime)
             
             self.tableviewController.navigationController?.popViewControllerAnimated(true)

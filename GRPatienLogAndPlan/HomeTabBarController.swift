@@ -43,7 +43,7 @@ class HomeTabBarController: UITabBarController {
         
     }
     
-    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem!) {
+    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
         if item.title == "Track" {
             
   

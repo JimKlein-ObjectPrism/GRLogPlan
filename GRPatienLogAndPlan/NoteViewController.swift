@@ -38,7 +38,7 @@ class NoteViewController: UIViewController, UITextViewDelegate {
 //        self.navigationItem.rightBarButtonItem = sb
         
         //MARK: back button
-        var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
+        let b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
         self.navigationItem.leftBarButtonItem = b
 
 

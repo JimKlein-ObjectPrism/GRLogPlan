@@ -128,8 +128,8 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
                     if let v = self.breakfast.foodChoice {
                         //let indexString =
                         let myArray: [String] = v.componentsSeparatedByString(",")
-                        var indexString: String? = myArray.last
-                        let indexValue = indexString?.toInt()
+                        let indexString: String = myArray.last ?? "-1"
+                        let indexValue = Int(indexString)
                         choiceCell.choiceSegmentControl.selectedSegmentIndex = indexValue!
                     }
                 }
@@ -145,7 +145,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
                 cell.medicineTakenHandler = self
                 return cell
             case .AddOn:
-                println("count menu categories: \(BreakfastMenuCategory.count())")
+                print("count menu categories: \(BreakfastMenuCategory.count())")
                 //let handler: AddOnItemSelectedDelegate = (self as? AddOnItemSelectedDelegate)!
                 return tableCell(tableView, cellForAddOnItem: indexPath, addOnText: self.breakfast.addOnText!, switchState: self.breakfast.addOnConsumed!, switchSelectionHandler: self)
             case .AdditionalInfo:
@@ -160,14 +160,8 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
                     return tableCell(tableView, cellForNoteItem: indexPath)
                     
                 }
-                
-            default:
-                let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-                return cell
             }
-        
-
-    }
+     }
     
     @objc public func didDeselectRowAtIndexPath (indexPath: NSIndexPath, viewController: UIViewController, choiceTableCell: NewChoiceTableViewCell?) {
         //selectedItemTitle = dataSource[indexPath.row]
@@ -248,8 +242,6 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         
                 let buttonList = locations
                 let title = "Location"
-                let cancel = "Cancel"
-                let firstButtonItem = buttonList[0]
         
                 // create controller
                 let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
@@ -265,12 +257,9 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
                 // add Action buttons for each set of initials in the list
                 for s in 0..<buttonList.count {
         
-                    var buttonIndex = s
         
-                    var action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
-                        (alert: UIAlertAction!) -> Void in
-                        //send initials updated event
-                        //button.titleLabel?.text = buttonList[s]
+                    let action = UIAlertAction(title: buttonList[s], style: .Default, handler: {
+                        (alert: UIAlertAction) -> Void in
                         newTitle = buttonList[s]
                         self.setPropertyInModel(value: newTitle, propertyInModel: &self.breakfast.location)
                         self.tableView.reloadData()
@@ -283,18 +272,16 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     }
     
     func parentInitialsSelectedHandler(){
-        
-        let title = "Parent Initials"
-        let initialsArray = getParentInitials()
-        //let b = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &<#String#>)
-        let returnString: () = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &self.breakfast.parentInitials)
-        
+            let title = "Parent Initials"
+            let initialsArray = getParentInitials()
+            //let b = self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &<#String#>)
+            self.showAlertForPropertyInput(title, buttonValues: initialsArray, modelProperty: &self.breakfast.parentInitials)
         }
     
     func timeSelectedHandler(selectedTime : NSDate){
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
-        var time = dateFormatter.stringFromDate(selectedTime)
+        let time = dateFormatter.stringFromDate(selectedTime)
 
         setPropertyInModel(value: time, propertyInModel: &self.breakfast.time)
         //self.breakfast.time = selectedTime
@@ -302,7 +289,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     //MARK: Alert View methods
     func showAlertForPropertyInput(title: String, buttonValues: [String],  inout modelProperty: String?){
         
-        let cancel = "Cancel"
+//        let cancel = "Cancel"
         
         // create controller
         let alertController = UIAlertController(title: nil, message: title, preferredStyle: .ActionSheet)
@@ -313,15 +300,15 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
             // ...
         }
         alertController.addAction(cancelAction)
-        var a: String? = "a"
-        
-        var b:String? = ""
+//        var a: String? = "a"
+//        
+//        var b:String? = ""
         for i in 0 ..< buttonValues.count {
             
-            var buttonIndex = i
+//            var buttonIndex = i
             
-            var action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
-                (alert: UIAlertAction!) -> Void in
+            let action = UIAlertAction(title: buttonValues[i], style: .Default, handler: {
+                (alert: UIAlertAction) -> Void in
                 self.setPropertyInModel(value: buttonValues[i], propertyInModel: &self.breakfast.parentInitials)//modelProperty)
                 //self.setPropertyInModel(value: b!, propertyInModel: &b)//modelProperty)//&self.breakfast.parentInitials)
                 self.tableView.reloadData()
@@ -335,12 +322,12 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
     }
     func showAlertForSaveValidation(title: String, buttonValues: [String]){
         
-        let cancel = "Cancel"
+//        let cancel = "Cancel"
         
         var message: String = ""
         
         for i in 0 ..< buttonValues.count {
-            var newLine = "\n \(buttonValues[i])"
+            let newLine = "\n \(buttonValues[i])"
             message += newLine
         }
         
@@ -355,7 +342,7 @@ public class BreakfastVM: MealViewModel, MealViewModelDelegate, UITableViewDataS
         alertController.addAction(cancelAction)
         
         let saveAnywayAction = UIAlertAction(title: "Save Anyway", style: .Default)  {
-            (alert: UIAlertAction!) -> Void in
+            (alert: UIAlertAction) -> Void in
             self.dataStore.saveBreakfast(self.breakfast)//, modelBreakfast: &self.targetOPBreakfast!)
 
             self.tableviewController.navigationController?.popViewControllerAnimated(true)

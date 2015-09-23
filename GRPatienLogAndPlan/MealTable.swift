@@ -71,7 +71,7 @@ class MealTable {
             
             item += stringWithBullet
             
-            let stringLength = count(stringWithBullet)
+            let stringLength = stringWithBullet.characters.count
             
             //get range of bolded text from start of line to colon:  * Main Item: Ham Sandwich
             let pos = getPositionOfColon(stringWithBullet)
@@ -88,8 +88,8 @@ class MealTable {
     func getPositionOfColon ( item: String) -> Int {
         var pos = 0
         let needle: Character = ":"
-        if let idx = find(item, needle) {
-            pos = distance(item.startIndex, idx)
+        if let idx = item.characters.indexOf(needle) {
+            pos = item.startIndex.distanceTo(idx)
         }
         return pos
     }
@@ -131,7 +131,7 @@ class MealTable {
     
     func getHeightOfString (text: String) -> Int {
         var h = 0
-        var font = UIFont(name: "Helvetica", size: 12.0)
+        let font = UIFont(name: "Helvetica", size: 12.0)
         if let size = font?.sizeOfString(text, constrainedToWidth: 500.0) {
             h = Int(size.height)
         }
@@ -196,7 +196,7 @@ class MealTable {
         
         currentYOnPage = drawingItem.height//+= Int(drawingItem.frameRect.height)
         
-        var logItem = logEntryCell(self.logEntryString(), currentYValue: currentYOnPage)
+        let logItem = logEntryCell(self.logEntryString(), currentYValue: currentYOnPage)
         drawingItems.append(logItem)
         
         currentYOnPage += Int(logItem.frameRect.height)
@@ -224,7 +224,7 @@ class MealTable {
             drawingItems.append(drawingItemNote)
             currentYOnPage = drawingItemNote.height//+= Int(drawingItemNote.frameRect.height)
             horizontalLineIndices.append(Int(drawingItemNote.height))
-            var noteItem = noteCell(note!, currentYValue: currentYOnPage) //logEntryCell("placeholder text", currentYOnPage)
+            let noteItem = noteCell(note!, currentYValue: currentYOnPage) //logEntryCell("placeholder text", currentYOnPage)
             drawingItems.append(noteItem)
             horizontalLineIndices.append(Int(noteItem.height - 12))
         }
@@ -248,9 +248,9 @@ class MealTable {
     func logEntryCell(entries: LogEntryStringResult, currentYValue: Int) -> TextDrawingItem {
         
         //TODO: use parameter "entries" instead of hard coded logItems string
-        var logItems = entries.logEntryString
+        let logItems = entries.logEntryString
         
-        var font = UIFont(name: "Helvetica", size: 12.0)
+        let font = UIFont(name: "Helvetica", size: 12.0)
         let size = font?.sizeOfString(logItems, constrainedToWidth: 468.0)
         
         let mutableRefStr = buildMutableAttributedStringRef(logItems)
@@ -261,7 +261,7 @@ class MealTable {
         
         let height = size!.height
         
-        let padding: CGFloat = 10
+//        let padding: CGFloat = 10
         //let frameRect = CGRectMake(CGFloat(72.0), CGFloat(currentYValue) + height + padding, CGFloat(612 - 144), height + padding/2)
         
         let frameRect = cGRectForItem(72 , currentYValue: currentYValue, sizeOfFontOrItemCell: Int(height) + 10, leftPadding: 10, verticalPadding: 10, pageWidth: 612 - 144 - 20)//subtract padding in width calculation
@@ -381,13 +381,13 @@ class MealTable {
     }
     func noteCell(note: String, currentYValue: Int) -> TextDrawingItem {
         
-        var font = UIFont(name: "Helvetica", size: 12.0)
+        let font = UIFont(name: "Helvetica", size: 12.0)
         let size = font?.sizeOfString(note, constrainedToWidth: 468)
         
         let mutableRefStr = buildMutableAttributedStringRef(note)
         let height = size!.height
         
-        let padding: CGFloat = 10
+//        let padding: CGFloat = 10
         //let frameRect = CGRectMake(CGFloat(72.0), CGFloat(currentYValue) + height + padding, CGFloat(612 - 144), height + padding/2)
         
         let frameRect = cGRectForItem(72 , currentYValue: currentYValue, sizeOfFontOrItemCell: Int(height) + 10, leftPadding: 10, verticalPadding: 20, pageWidth: 612 - 144)
@@ -415,7 +415,7 @@ class MealTable {
     func setTextBoldingAndFontSizeFullString(text:  CFMutableAttributedStringRef, originalString: String, fontSize: Int){
         let size: CGFloat = CGFloat(fontSize)
         
-        let stringLength = count(originalString)
+        let stringLength = originalString.characters.count
         let fontBold = CTFontCreateWithName("Helvetica-Bold", size, nil)
         CFAttributedStringSetAttribute(text , CFRangeMake(0, stringLength ), kCTFontAttributeName, fontBold)
     }
@@ -432,7 +432,7 @@ class MealTable {
 
     func columnTripletDrawItem(text: String, isBoldText: Bool, columnIndex: Int,  leftMargin: Int , currentYValue: Int, sizeOfFontOrItemCell: Int, leftPadding: Int,  verticalPadding: Int, pageWidth: Int ) -> TextDrawingItem {
         
-        var mutableStringRef: CFMutableAttributedStringRef = buildMutableAttributedStringRef(text)
+        let mutableStringRef: CFMutableAttributedStringRef = buildMutableAttributedStringRef(text)
         
         if isBoldText {
             setTextBoldingAndFontSizeFullString(mutableStringRef, originalString: text, fontSize: 12)

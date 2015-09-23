@@ -33,7 +33,7 @@ public class PrintSevice {
     }
     
     func getLogEntryToPrint(journalEntryDateString: String) -> LogEntryPrintOutItem {
-        var result = dataStore.getJournalEntry(journalEntryDateString)
+        let result = dataStore.getJournalEntry(journalEntryDateString)
 
         switch result {
         case let JournalEntryResult.Success(entry):
@@ -44,10 +44,11 @@ public class PrintSevice {
                 let htmlString = printOut.htmlString
                 return (htmlString, printOut.mealTableItems)
         case .EntryDoesNotExist:
-            println("no journal entry found")
-            
+            print("no journal entry found")
+        case .WrongTypeOfEntryFound:
+            print("no journal entry found")
         case let .Error(error):
-            println("CoreData Error: \(error)")
+            print("CoreData Error: \(error)")
         }
 
         return ("", [MealTableInfoItem]())
@@ -70,33 +71,33 @@ public class PrintSevice {
             var mealTableItems = [MealTableInfoItem]()
             var eveningSnackString = ""
             
-            var breakfastPrintItems = buildBreakfastHTML(breakfastLogEntry.time, breakfastLogEntry: breakfastLogEntry)
+            let breakfastPrintItems = buildBreakfastHTML(breakfastLogEntry.time, breakfastLogEntry: breakfastLogEntry)
             mealTableItems.append(breakfastPrintItems.pdfInfoItem)
             
             if let snack = morningSnackLogEntry {
-            var morningSnack = buildMorningSnackHTML("Morning Snack", time: snack.time, snackLogEntry: snack)
+            let morningSnack = buildMorningSnackHTML("Morning Snack", time: snack.time, snackLogEntry: snack)
             morningSnackString =   tableOpeningTags +
                 morningSnack.htmlTableString +
                 tableClosingTags + spacerTags
             mealTableItems.append(morningSnack.pdfInfoItem)
             }
             
-            var lunchPrintItems = buildLunchHTML(lunchLogEntry.time, lunchLogEntry: lunchLogEntry)
+            let lunchPrintItems = buildLunchHTML(lunchLogEntry.time, lunchLogEntry: lunchLogEntry)
             mealTableItems.append(lunchPrintItems.pdfInfoItem)
-            var afternoonSnackItems = buildAfternoonSnackHTML("Afternoon Snack", time: afternoonSnackLogEntry.time, snackLogEntry: afternoonSnackLogEntry)
+            let afternoonSnackItems = buildAfternoonSnackHTML("Afternoon Snack", time: afternoonSnackLogEntry.time, snackLogEntry: afternoonSnackLogEntry)
             mealTableItems.append(afternoonSnackItems.pdfInfoItem)
-            var dinnerPrintItems = buildDinnerHTML(dinnerLogEntry.time, dinnerLogEntry: dinnerLogEntry)
+            let dinnerPrintItems = buildDinnerHTML(dinnerLogEntry.time, dinnerLogEntry: dinnerLogEntry)
             mealTableItems.append(dinnerPrintItems.pdfInfoItem)
             
             if let snack = eveningSnackLogEntry {
-                var eveningSnack = buildEveningSnackHTML("Evening Snack", time: snack.time, snackLogEntry: snack)
+                let eveningSnack = buildEveningSnackHTML("Evening Snack", time: snack.time, snackLogEntry: snack)
                 eveningSnackString =   tableOpeningTags +
                     eveningSnack.htmlTableString +
                     tableClosingTags + spacerTags
                 mealTableItems.append(eveningSnack.pdfInfoItem)
             }
             
-            var entryPage: String = htmlHeaderString +
+            let entryPage: String = htmlHeaderString +
                 buildFoodJournalHeader(profile, dateString: date) +
                 tableOpeningTags +
                 breakfastPrintItems.htmlTableString + //buildBreakfastHTML(breakfastLogEntry.time, breakfastLogEntry: breakfastLogEntry) +
@@ -138,7 +139,7 @@ public class PrintSevice {
             patientName = firstName
         }
         
-        var nameDateTableHeader =
+        let nameDateTableHeader =
         "<body><h3>\(patientName)<br/>\(dateString)</h3>"
         return nameDateTableHeader
     }
@@ -146,9 +147,9 @@ public class PrintSevice {
     public typealias MealTableItem = (htmlTableString: String, pdfInfoItem: MealTableInfoItem)
     public func buildBreakfastHTML(time: String?, breakfastLogEntry: OPBreakfast) -> MealTableItem{
         
-        var summaryRow = buildMealSummaryRow(breakfastLogEntry)
+        let summaryRow = buildMealSummaryRow(breakfastLogEntry)
 
-        var tableBody: String =
+        let tableBody: String =
         buildTitleRow("Breakfast") +
             summaryRow.htmlString +
             additionalInfoTableRow(time , place: breakfastLogEntry.location, parentInitials: breakfastLogEntry.parentInitials ) +
@@ -158,9 +159,9 @@ public class PrintSevice {
         return (tableBody, pdfTableInfo)
     }
     public func buildLunchHTML(time: String?, lunchLogEntry: OPLunch) -> MealTableItem{
-        var summaryRow = buildMealSummaryRow(lunchLogEntry)
+        let summaryRow = buildMealSummaryRow(lunchLogEntry)
 
-        var tableBody: String = buildTitleRow("Lunch") +
+        let tableBody: String = buildTitleRow("Lunch") +
             summaryRow.htmlString +
             additionalInfoTableRow(time , place: lunchLogEntry.location, parentInitials: lunchLogEntry.parentInitials ) +
             buildNoteRows(lunchLogEntry.note)
@@ -170,9 +171,9 @@ public class PrintSevice {
     }
     public func buildMorningSnackHTML(snackName: String, time: String?, snackLogEntry: OPMorningSnack) -> MealTableItem
 {
-        var summaryRow = buildMealSummaryRow(snackLogEntry)
+        let summaryRow = buildMealSummaryRow(snackLogEntry)
         
-        var tableBody: String = buildTitleRow(snackName) +
+        let tableBody: String = buildTitleRow(snackName) +
             summaryRow.htmlString + //buildMealSummaryRow(snackLogEntry) +
             additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
             buildNoteRows(snackLogEntry.note)
@@ -182,9 +183,9 @@ public class PrintSevice {
 
     }
     public func buildAfternoonSnackHTML(snackName: String, time: String?, snackLogEntry: OPAfternoonSnack) -> MealTableItem{
-        var summaryRow = buildMealSummaryRow(snackLogEntry)
+        let summaryRow = buildMealSummaryRow(snackLogEntry)
 
-        var tableBody: String = buildTitleRow(snackName) +
+        let tableBody: String = buildTitleRow(snackName) +
             summaryRow.htmlString +  //buildMealSummaryRow(snackLogEntry) +
             additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
             buildNoteRows(snackLogEntry.note)
@@ -192,9 +193,9 @@ public class PrintSevice {
         return (tableBody, pdfTableInfo)
     }
     public func buildEveningSnackHTML(snackName: String, time: String?, snackLogEntry: OPEveningSnack) -> MealTableItem{
-        var summaryRow = buildMealSummaryRow(snackLogEntry)
+        let summaryRow = buildMealSummaryRow(snackLogEntry)
         
-        var tableBody: String = buildTitleRow(snackName) +
+        let tableBody: String = buildTitleRow(snackName) +
             summaryRow.htmlString +  //buildMealSummaryRow(snackLogEntry) +
             additionalInfoTableRow(time , place: snackLogEntry.location, parentInitials: snackLogEntry.parentInitials ) +
             buildNoteRows(snackLogEntry.note)
@@ -203,9 +204,9 @@ public class PrintSevice {
 
     }
     public func buildDinnerHTML(time: String?, dinnerLogEntry: OPDinner) -> MealTableItem {
-        var summaryRow = buildMealSummaryRow(dinnerLogEntry)
+        let summaryRow = buildMealSummaryRow(dinnerLogEntry)
     
-        var tableBody: String = buildTitleRow("Dinner") +
+        let tableBody: String = buildTitleRow("Dinner") +
             summaryRow.htmlString + //buildMealSummaryRow(dinnerLogEntry) +
             additionalInfoTableRow(time , place: dinnerLogEntry.place, parentInitials: dinnerLogEntry.parentInitials ) +
             buildNoteRows(dinnerLogEntry.note)
@@ -231,7 +232,7 @@ public class PrintSevice {
         summaryRow = summaryRow + fruitItem.htmlString
         pdfText.append(fruitItem.textForPDF)
         
-        var entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
+        let entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
         
         for htmlString in entries.htmlText {
             summaryRow += htmlString
@@ -271,7 +272,7 @@ public class PrintSevice {
         summaryRow = summaryRow + fruitItem.htmlString
         pdfText.append(fruitItem.textForPDF)
         
-        var entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRquired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
+        let entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRquired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
         
         for htmlString in entries.htmlText {
             summaryRow += htmlString
@@ -328,7 +329,7 @@ public class PrintSevice {
         pdfText.append(mainItem.textForPDF)
         
         
-        var entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
+        let entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
         
         for htmlString in entries.htmlText {
             summaryRow += htmlString
@@ -351,7 +352,7 @@ public class PrintSevice {
         pdfText.append(mainItem.textForPDF)
         
         
-        var entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
+        let entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
         
         for htmlString in entries.htmlText {
             summaryRow += htmlString
@@ -374,7 +375,7 @@ public class PrintSevice {
         pdfText.append(mainItem.textForPDF)
         
         
-        var entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
+        let entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
         
         for htmlString in entries.htmlText {
             summaryRow += htmlString
@@ -422,7 +423,7 @@ public class PrintSevice {
 //            + buildListItem("Reqired Items", listItem: "Milk, Salad")
         
         
-        var entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
+        let entries = buildMedicineAndAddOnPrintText(mealLogEntry.medicineRequired.boolValue, medicine: mealLogEntry.medicineText, addOnRequired: mealLogEntry.addOnRequired.boolValue, addOn: mealLogEntry.addOnText)
         
         for htmlString in entries.htmlText {
             summaryRow += htmlString
@@ -442,7 +443,7 @@ public class PrintSevice {
         var pdfText = caption + ":  "
         let listItemCaption = "<b>\(caption):  </b>"
         if let stringToPrint = listItem {
-        var itemString = dataStore.getPrintableFoodItemReference(stringToPrint)
+        let itemString = dataStore.getPrintableFoodItemReference(stringToPrint)
         foodItem = listItemCaption  + itemString
             pdfText +=  itemString
             
@@ -474,9 +475,9 @@ public class PrintSevice {
 //        var dateFormatter = NSDateFormatter()
 //        dateFormatter.timeStyle = .ShortStyle
 //        var time = dateFormatter.stringFromDate(NSDate())
-        var p = place ?? nilEntryNote()
-        var t = time ?? nilEntryNote()
-        var pi = parentInitials ?? nilEntryNote()
+        let p = place ?? nilEntryNote()
+        let t = time ?? nilEntryNote()
+        let pi = parentInitials ?? nilEntryNote()
         
         return "<tr><th class=\"inline\">Place</th><th class=\"inline\">Time</th><th class=\"inline\">Parent<br/>Initials</th></tr>" +
         "<tr><td class=\"inline\">\(p)</td><td class=\"inline\">\(t)</td><td class=\"inline\">\(pi)</td></tr>"

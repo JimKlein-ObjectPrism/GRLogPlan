@@ -30,12 +30,12 @@ class TimeTableViewCell: UITableViewCell {
     }
 
     @IBAction func timeTextSelected(sender: UITextField) {
-        var datePickerView  : UIDatePicker = UIDatePicker()
+        let datePickerView  : UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.Time
         datePickerView.minuteInterval = 15
         sender.inputView = datePickerView
         
-        let dateAsString = timeTextField.text
+        let dateAsString = timeTextField.text ?? ""
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "h:mm a"
         if let date = dateFormatter.dateFromString(dateAsString) {
@@ -48,7 +48,7 @@ class TimeTableViewCell: UITableViewCell {
         
     }
     func handleDatePicker( sender: UIDatePicker) {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
         
         timeTextField.text = dateFormatter.stringFromDate(sender.date)

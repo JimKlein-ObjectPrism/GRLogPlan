@@ -17,11 +17,11 @@ class MealTrackingTableViewController: UITableViewController {
         super.viewDidLoad()
        
         //Save Button
-        var sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonTapped")
+        let sb = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveButtonTapped")
         self.navigationItem.rightBarButtonItem = sb
 
         //MARK: back button
-        var b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
+        let b = UIBarButtonItem(title: "< Back", style: .Plain, target: self, action:"backButtonPressed:")
         self.navigationItem.leftBarButtonItem = b
         self.hidesBottomBarWhenPushed = true
     }

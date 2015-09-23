@@ -153,7 +153,7 @@ class PDFWriter {
     func drawTableLines ( yCoordinateOfUpperLeftCorner: Int, leftMargin: Int, printableAreaWidth: Int, table: MealTable)
     {
         // horizontal lines
-        var horizontalLines = [Int]()
+//        var horizontalLines = [Int]()
         let immutableRowHeight = table.immutableRowHeight
         
         let topLineY = yCoordinateOfUpperLeftCorner
@@ -161,7 +161,7 @@ class PDFWriter {
         
         let bottomLineTableTitleCell = topLineY + immutableRowHeight
         drawLineAtY(bottomLineTableTitleCell)
-        print(table.logEntriesHeight)
+        print(table.logEntriesHeight, terminator: "")
         let bottomLineLogEntryCell = bottomLineTableTitleCell + 14 + table.logEntriesHeight
         drawLineAtY(bottomLineLogEntryCell)
         
@@ -196,7 +196,10 @@ class PDFWriter {
         let frameRef = CTFramesetterCreateFrame(frameSetter, currentRange, framePath, nil);
         
         // Get the graphics context.
-        let currentContext = UIGraphicsGetCurrentContext()
+        
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            return
+        }
         
         // Put the text matrix into a known state. This ensures
         // that no old scaling factors are left in place.
@@ -236,7 +239,7 @@ class PDFWriter {
     func setTextBoldingAndFontSizeFullString(text:  CFMutableAttributedStringRef, originalString: String, fontSize: Int){
         let size: CGFloat = CGFloat(fontSize)
         
-        let stringLength = count(originalString)
+        let stringLength = originalString.characters.count
         let fontBold = CTFontCreateWithName("Helvetica-Bold", size, nil)
         CFAttributedStringSetAttribute(text , CFRangeMake(0, stringLength ), kCTFontAttributeName, fontBold)
     }
@@ -273,19 +276,19 @@ class PDFWriter {
         drawLineFromPoint(from, to: to)
     }
     
-    func getPDFFileName() -> String {
-        var fileName = "Invoice.pdf"
-        if let arrayPaths: [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true) as? [String] {
-            
-            let path = arrayPaths[0]
-            
-            let pdfFileName: String = path.stringByAppendingPathComponent(fileName)
-            
-            fileName = pdfFileName
-            
-        }
-        
-        return fileName
-    }
+//    func getPDFFileName() -> String {
+//        var fileName = "Invoice.pdf"
+//        if let arrayPaths: [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)  {
+//            
+//            let path = arrayPaths[0]
+//            
+//            let pdfFileName: String = path.stringByAppendingPathComponent(fileName)
+//            
+//            fileName = pdfFileName
+//            
+//        }
+//    
+//        return fileName
+//    }
 
 }

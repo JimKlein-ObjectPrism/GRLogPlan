@@ -40,7 +40,7 @@ class ParentViewTableViewCell: UITableViewCell, UITextFieldDelegate{
         nameTextField.delegate = self
         
         // add a pan recognizer
-        var recognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
+        let recognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         recognizer.delegate = self
         //addGestureRecognizer(recognizer)
     }
@@ -66,11 +66,11 @@ class ParentViewTableViewCell: UITableViewCell, UITextFieldDelegate{
     func textFieldDidEndEditing(textField: UITextField) {
        
         
-        let nameInput = textField.text
+        let nameInput = textField.text  ?? ""
         let myArray: [String] = nameInput.componentsSeparatedByString(" ")
-        var firstName: String? = myArray.first
+        let firstName: String? = myArray.first
         if myArray.count > 1 {
-            var lastName: String? = myArray.last
+            let lastName: String? = myArray.last
             tableViewCellDelegate!.nameEntered(parentItemIndexInProfileSet!, firstName: firstName, lastName: lastName)
         } else {
             tableViewCellDelegate!.nameEntered(parentItemIndexInProfileSet!, firstName: firstName, lastName: nil)

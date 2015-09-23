@@ -13,11 +13,11 @@ class PrintVisitor: JournalEntryItemVisitor {
     
     func formatMealItemName(s: String) -> NSMutableAttributedString {
 
-        var myString = NSAttributedString(string: s)
+        let myString = NSAttributedString(string: s)
         let headerStart: Int = 0
         let headerEnd: Int = myString.length
-        var mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: myString)
-        var newLine = NSMutableAttributedString(string: "\n")
+        let mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: myString)
+        let newLine = NSMutableAttributedString(string: "\n")
         mutableAttrString.appendAttributedString(newLine)
         mutableAttrString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSRange(location: headerStart, length: headerEnd))
         return mutableAttrString
@@ -27,14 +27,14 @@ class PrintVisitor: JournalEntryItemVisitor {
     
     func formatBulletItem(s: String) -> NSMutableAttributedString {
         //var myMutableString = NSMutableAttributedString()
-        var myString = NSAttributedString(string: s)
+        let myString = NSAttributedString(string: s)
         //myMutableString.addAttribute(NSFontAttributeName, value: UIFont(name: "Georgia", size: 36.0)!, range: NSRange(location: 0, length: 1))
-        let headerStart: Int = 0
-        let headerEnd: Int = myString.length
-        var mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: myString)
-        var bullet = NSMutableAttributedString(string: "\n\u{2022}  ")
+        //let headerStart: Int = 0
+        //let headerEnd: Int = myString.length
+        let mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: myString)
+        let bullet = NSMutableAttributedString(string: "\n\u{2022}  ")
         bullet.appendAttributedString(mutableAttrString)//x.appenAttributedString(NSAttributedString("\n\u{2022}  "))
-        var newLine = NSMutableAttributedString(string: "\n")
+        let newLine = NSMutableAttributedString(string: "\n")
         
         bullet.appendAttributedString(newLine)
         //bullet.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(18.0), range: NSMakeRange(headerStart, headerEnd))
@@ -44,14 +44,14 @@ class PrintVisitor: JournalEntryItemVisitor {
     }
     func formatBulletItemTimePlaceInitials(s: String) -> NSMutableAttributedString {
         //var myMutableString = NSMutableAttributedString()
-        var myString = NSAttributedString(string: s)
+        let myString = NSAttributedString(string: s)
         //myMutableString.addAttribute(NSFontAttributeName, value: UIFont(name: "Georgia", size: 36.0)!, range: NSRange(location: 0, length: 1))
-        let headerStart: Int = 0
-        let headerEnd: Int = myString.length
-        var mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: myString)
-        var bullet = NSMutableAttributedString(string: "\n\u{2022}  ")
+//      let headerStart: Int = 0
+        //let headerEnd: Int = myString.length
+        let mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: myString)
+        let bullet = NSMutableAttributedString(string: "\n\u{2022}  ")
         bullet.appendAttributedString(mutableAttrString)//x.appenAttributedString(NSAttributedString("\n\u{2022}  "))
-        var newLine = NSMutableAttributedString(string: "\n\n")
+        let newLine = NSMutableAttributedString(string: "\n\n")
         
         bullet.appendAttributedString(newLine)
         //bullet.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(18.0), range: NSMakeRange(headerStart, headerEnd))
@@ -61,12 +61,12 @@ class PrintVisitor: JournalEntryItemVisitor {
     }
     
     func setFontFor(attrString: NSAttributedString) -> NSMutableAttributedString {
-        var mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrString)
-        let headerStart: Int = 0
-        let headerEnd: Int = attrString.length
-        var bullet = NSMutableAttributedString(string: "\n\u{2022}  ")
+        let mutableAttrString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrString)
+//        let headerStart: Int = 0
+//        let headerEnd: Int = attrString.length
+        let bullet = NSMutableAttributedString(string: "\n\u{2022}  ")
         bullet.appendAttributedString(mutableAttrString)//x.appenAttributedString(NSAttributedString("\n\u{2022}  "))
-        var newLine = NSMutableAttributedString(string: "\n")
+        let newLine = NSMutableAttributedString(string: "\n")
         bullet.appendAttributedString(newLine)
         //bullet.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(18.0), range: NSMakeRange(headerStart, headerEnd))
         
@@ -74,7 +74,7 @@ class PrintVisitor: JournalEntryItemVisitor {
     }
     
     func reduceStringsArray ( xs: [NSMutableAttributedString] ) -> NSMutableAttributedString {
-        var ms: NSMutableAttributedString = NSMutableAttributedString()
+        let ms: NSMutableAttributedString = NSMutableAttributedString()
         for x in xs {
             ms.appendAttributedString(x)
         }    
@@ -82,8 +82,8 @@ class PrintVisitor: JournalEntryItemVisitor {
     }
     
     func visit(journalItem: JournalItem){
-        var s = NSMutableAttributedString(string: journalItem.title)
-        var newLine = NSMutableAttributedString(string: "\n")
+        let s = NSMutableAttributedString(string: journalItem.title)
+        let newLine = NSMutableAttributedString(string: "\n")
         s.appendAttributedString(newLine)
         let headerStart: Int = 0
         let headerEnd: Int = s.length
@@ -116,7 +116,7 @@ class PrintVisitor: JournalEntryItemVisitor {
 //        var pi = journalItem.parentInitials?.defaultInitials
 //        var place = journalItem.place?.mealLocation!
         
-        var otherInfo = appendTimePlaceInitials("8:00", place: "Kitchen", initials: "B.C.")
+        let otherInfo = appendTimePlaceInitials("8:00", place: "Kitchen", initials: "B.C.")
         stringsArray.append(formatBulletItemTimePlaceInitials(otherInfo))
         
     }
@@ -131,12 +131,12 @@ class PrintVisitor: JournalEntryItemVisitor {
         if let s = journalItem.fruitChoice?.name {
             stringsArray.append(formatBulletItem(s))
         }
-        var otherInfo = appendTimePlaceInitials("12:15", place: "Kitchen", initials: "A.B.")
+        let otherInfo = appendTimePlaceInitials("12:15", place: "Kitchen", initials: "A.B.")
         stringsArray.append(formatBulletItemTimePlaceInitials(otherInfo))
         
         stringsArray.append(formatMealItemName("Afternoon Snack"))
         stringsArray.append(formatBulletItem("Cheese, Crackers and Fruit"))
-        var otherInfoS = appendTimePlaceInitials("3:00", place: "Kitchen", initials: "A.B.")
+        let otherInfoS = appendTimePlaceInitials("3:00", place: "Kitchen", initials: "A.B.")
         stringsArray.append(formatBulletItemTimePlaceInitials(otherInfoS))
         
         stringsArray.append(formatMealItemName("Dinner"))
@@ -147,7 +147,7 @@ class PrintVisitor: JournalEntryItemVisitor {
         stringsArray.append(formatBulletItem("Milk"))
         stringsArray.append(formatBulletItem("Salad"))
         
-        var otherInfoD = appendTimePlaceInitials("6:00", place: "Kitchen", initials: "A.B.")
+        let otherInfoD = appendTimePlaceInitials("6:00", place: "Kitchen", initials: "A.B.")
         stringsArray.append(formatBulletItemTimePlaceInitials(otherInfoD))
 
     }
