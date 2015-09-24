@@ -43,6 +43,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
         
     }
     override func viewWillAppear(animated: Bool) {
+        
         journalEntries = dataStore?.getListOfDatePropertyValuesForExisitingJournalEntries() ?? [String]()
         tableView.reloadData()
         
@@ -173,7 +174,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
 //            }
         }
         else {
-            UIAlertView(title: NSLocalizedString("Error", value: "Error", comment: ""), message: NSLocalizedString("Your device doesn't support Mail messaging", value: "Your device doesn't support Mail messaging", comment: ""), delegate: nil, cancelButtonTitle: NSLocalizedString("OK", value: "OK", comment: "")).show()
+            UIAlertView(title: NSLocalizedString("Error", value: "Error", comment: ""), message: NSLocalizedString("Your device does not support Mail messaging", value: "Your device does not support Mail messaging", comment: ""), delegate: nil, cancelButtonTitle: NSLocalizedString("OK", value: "OK", comment: "")).show()
         }
     }
 

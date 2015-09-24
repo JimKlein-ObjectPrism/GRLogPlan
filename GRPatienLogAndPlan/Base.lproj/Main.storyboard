@@ -24,7 +24,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="266" id="GNS-QB-7tc"/>
+                                    <constraint firstAttribute="height" constant="266" id="GNS-QB-7tc">
+                                        <variation key="widthClass=compact" constant="202"/>
+                                    </constraint>
                                 </constraints>
                                 <color key="sectionIndexBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -188,18 +190,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8m1-fm-20L" firstAttribute="top" secondItem="roq-tf-Ne7" secondAttribute="top" id="1AD-oa-1Ic"/>
+                            <constraint firstItem="8m1-fm-20L" firstAttribute="top" secondItem="roq-tf-Ne7" secondAttribute="top" id="1AD-oa-1Ic">
+                                <variation key="widthClass=compact" constant="64"/>
+                            </constraint>
                             <constraint firstItem="vNK-Qw-GYF" firstAttribute="leading" secondItem="roq-tf-Ne7" secondAttribute="leading" id="7Wf-Xy-gVB"/>
                             <constraint firstItem="jTb-Q3-9Bh" firstAttribute="top" secondItem="8m1-fm-20L" secondAttribute="bottom" id="AN2-uq-XBA"/>
                             <constraint firstAttribute="trailing" secondItem="8m1-fm-20L" secondAttribute="trailing" id="GdD-8N-WPz"/>
-                            <constraint firstAttribute="trailing" secondItem="8m1-fm-20L" secondAttribute="trailing" id="UPI-oB-GiE"/>
                             <constraint firstAttribute="trailing" secondItem="vNK-Qw-GYF" secondAttribute="trailing" id="UPY-Qg-GWx"/>
                             <constraint firstAttribute="bottom" secondItem="vNK-Qw-GYF" secondAttribute="bottom" id="UzH-re-UzW"/>
                             <constraint firstItem="jTb-Q3-9Bh" firstAttribute="leading" secondItem="roq-tf-Ne7" secondAttribute="leading" id="iUI-2n-dzY"/>
-                            <constraint firstItem="8m1-fm-20L" firstAttribute="top" secondItem="roq-tf-Ne7" secondAttribute="top" id="pOW-Re-Zmw"/>
                             <constraint firstItem="8m1-fm-20L" firstAttribute="leading" secondItem="roq-tf-Ne7" secondAttribute="leading" id="ssp-qg-FF8"/>
-                            <constraint firstItem="8m1-fm-20L" firstAttribute="leading" secondItem="roq-tf-Ne7" secondAttribute="leading" id="uEC-tC-7L2"/>
                             <constraint firstItem="vNK-Qw-GYF" firstAttribute="top" secondItem="jTb-Q3-9Bh" secondAttribute="bottom" id="ujL-Ul-zIr"/>
+                            <constraint firstItem="8m1-fm-20L" firstAttribute="top" secondItem="LbX-BN-xYu" secondAttribute="bottom" constant="-64" id="wsG-DM-Qun">
+                                <variation key="widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="jTb-Q3-9Bh" secondAttribute="trailing" id="yyq-uG-yV6"/>
                         </constraints>
                         <variation key="default">
@@ -209,15 +213,12 @@
                                 <exclude reference="vNK-Qw-GYF"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="1AD-oa-1Ic"/>
+                                <exclude reference="GdD-8N-WPz"/>
+                                <exclude reference="ssp-qg-FF8"/>
                                 <exclude reference="AN2-uq-XBA"/>
                                 <exclude reference="iUI-2n-dzY"/>
                                 <exclude reference="yyq-uG-yV6"/>
-                                <exclude reference="1AD-oa-1Ic"/>
-                                <exclude reference="GdD-8N-WPz"/>
-                                <exclude reference="UPI-oB-GiE"/>
-                                <exclude reference="pOW-Re-Zmw"/>
-                                <exclude reference="ssp-qg-FF8"/>
-                                <exclude reference="uEC-tC-7L2"/>
                                 <exclude reference="7Wf-Xy-gVB"/>
                                 <exclude reference="UPY-Qg-GWx"/>
                                 <exclude reference="UzH-re-UzW"/>
@@ -231,15 +232,12 @@
                                 <include reference="vNK-Qw-GYF"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="1AD-oa-1Ic"/>
+                                <include reference="GdD-8N-WPz"/>
+                                <include reference="ssp-qg-FF8"/>
                                 <include reference="AN2-uq-XBA"/>
                                 <include reference="iUI-2n-dzY"/>
                                 <include reference="yyq-uG-yV6"/>
-                                <include reference="1AD-oa-1Ic"/>
-                                <include reference="GdD-8N-WPz"/>
-                                <include reference="UPI-oB-GiE"/>
-                                <include reference="pOW-Re-Zmw"/>
-                                <include reference="ssp-qg-FF8"/>
-                                <include reference="uEC-tC-7L2"/>
                                 <include reference="7Wf-Xy-gVB"/>
                                 <include reference="UPY-Qg-GWx"/>
                                 <include reference="UzH-re-UzW"/>
@@ -694,9 +692,6 @@
                                             <state key="normal" title="J. D.">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <variation key="widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="354" y="8" width="30" height="29"/>
-                                            </variation>
                                             <connections>
                                                 <action selector="showAlertForParentInitials:" destination="y5B-jC-mGF" eventType="touchUpInside" id="OXl-WB-uAq"/>
                                             </connections>
@@ -1650,9 +1645,6 @@
                                             <subviews>
                                                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ktA-eS-bsT">
                                                     <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="40" y="-9" width="320" height="217"/>
-                                                    </variation>
                                                 </pickerView>
                                             </subviews>
                                             <constraints>
@@ -2385,9 +2377,6 @@
                                             <subviews>
                                                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zy1-34-TvE">
                                                     <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="40" y="-9" width="320" height="217"/>
-                                                    </variation>
                                                 </pickerView>
                                             </subviews>
                                             <constraints>
@@ -2427,9 +2416,6 @@
                                             <subviews>
                                                 <pickerView tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgo-4f-5dS">
                                                     <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="40" y="-9" width="320" height="217"/>
-                                                    </variation>
                                                 </pickerView>
                                             </subviews>
                                             <constraints>
