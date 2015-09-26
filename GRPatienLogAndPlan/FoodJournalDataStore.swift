@@ -1988,17 +1988,15 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
         parseFile()
         return foodItemArray
     }
-    func parseFile ()
+    func parseFile () -> Bool
     {
         //var xmlPath = foodItemsPath()
         // TODO:  unwrap this
         let url: NSURL! = NSBundle.mainBundle().URLForResource("MealItems", withExtension: "xml")
         let xmlParser = NSXMLParser(contentsOfURL: url)
         xmlParser!.delegate = self
-        let success:Bool = xmlParser!.parse()
-        print(success)
-
-        
+        return xmlParser!.parse()
+        //print(success)
     }
 
 
@@ -2103,7 +2101,7 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             
         default:
             currentElementName = elementName
-            print(elementName)
+            //print(elementName)
         }
         
     }
@@ -2115,11 +2113,14 @@ public class DataStore: NSObject, NSXMLParserDelegate,  MenuItemSelectedDelegate
             case "foodItemWithChoice":
             PopFoodItem()
             case "root":
-            print(elementName)
+            break
+            //print(elementName)
             case  "choiceItems" :
-            print(elementName)
+            break
+            //print(elementName)
             case "serving":
-            print(elementName)
+            break
+            //print(elementName)
             default:
             setPropertyOnFoodItem()
         }

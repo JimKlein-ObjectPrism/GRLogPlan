@@ -47,6 +47,7 @@
 		EF27C39D1B5E915900A7AC7E /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27C39C1B5E915900A7AC7E /* PDFViewController.swift */; };
 		EF3587FE1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */; };
 		EF374C7C1B0B904A005A29BE /* VMDataStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */; };
+		EF38B49C1BB5D68D0008FFDE /* EmailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF38B49B1BB5D68D0008FFDE /* EmailComposer.swift */; settings = {ASSET_TAGS = (); }; };
 		EF44341E1B8BBA9B00D3C9BD /* beach2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF44341D1B8BBA9B00D3C9BD /* beach2.jpg */; };
 		EF49F8331AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF49F8311AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodeld */; };
 		EF5944671B0D3905009ED145 /* SnackVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5944661B0D3905009ED145 /* SnackVM.swift */; };
@@ -164,6 +165,7 @@
 		EF27C39C1B5E915900A7AC7E /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		EF3587FD1B1D84F100EA3474 /* MedsAddOnTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedsAddOnTableViewCell.swift; sourceTree = "<group>"; };
 		EF374C7B1B0B904A005A29BE /* VMDataStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VMDataStructs.swift; sourceTree = "<group>"; };
+		EF38B49B1BB5D68D0008FFDE /* EmailComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailComposer.swift; sourceTree = "<group>"; };
 		EF44341D1B8BBA9B00D3C9BD /* beach2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beach2.jpg; sourceTree = "<group>"; };
 		EF49F8321AC6FA440005A3DC /* GRPatientLogAndPlan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GRPatientLogAndPlan.xcdatamodel; sourceTree = "<group>"; };
 		EF5944661B0D3905009ED145 /* SnackVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnackVM.swift; path = ../SnackVM.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				EF5D836C1B213CCF00D67E67 /* PrintService.swift */,
 				EF0D923C1B0FB36F00EE992B /* MealState.swift */,
 				EFD976C61B7BE3E400CD8D64 /* RegEx.swift */,
+				EF38B49B1BB5D68D0008FFDE /* EmailComposer.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				EFCD097B1AC9F7A1009B60BA /* MyMealsRecipesTableViewController.swift in Sources */,
 				EF27C39B1B5D550B00A7AC7E /* HeaderInfo.swift in Sources */,
 				EFCDDBB11B0150D500A5F363 /* MealViewModel.swift in Sources */,
+				EF38B49C1BB5D68D0008FFDE /* EmailComposer.swift in Sources */,
 				EF1367991B1D543F007F1649 /* ProfileDataStoreDelegate.swift in Sources */,
 				986443831A9E8B8C00887579 /* TrackTableViewController.swift in Sources */,
 				EF0D923D1B0FB36F00EE992B /* MealState.swift in Sources */,

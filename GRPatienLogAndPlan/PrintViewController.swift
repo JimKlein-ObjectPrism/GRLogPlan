@@ -26,8 +26,9 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
     var journalEntries: [String]!
     var selectedJournalEntryIdentifiers: [String] = [String]()
  
-    //var selectedCellDateValue: String!
     
+    let emailComposer = EmailComposer()
+
 
     
     override func viewDidLoad() {
@@ -56,7 +57,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
             return printService.getLogEntryToPrint(date).htmlString
         }
     
-    func getPDFFileName(patientName: String, date: String) -> String {
+    func getPDFFilePath(patientName: String, date: String) -> String {
         //file format Food Journal:  First Name Last Name - Date
         var fileName = "Food Journal: " + patientName + " - " + date + ".pdf"
         
@@ -71,16 +72,14 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
             let pdfFileName: String =  String(pdfFileURL)
             
             fileName = pdfFileName
-            
-
-        
+      
         return fileName
     }
     @IBAction func printJournalEntry(sender: AnyObject) {
         
         if let date = selectedItemDateString {
             let name = dataStore.currentProfile.firstAndLastName
-            let filePath = getPDFFileName(name, date: date)
+            let filePath = getPDFFilePath(name, date: date)
             writeLogEntryPDF(date, name: name, filePath: filePath)
             
             
@@ -121,18 +120,34 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
         //printController.presentAnimated(true, completionHandler: nil)
         }
     }
-    
+    //TODO: rename func to sendPDFAsEmailAttachment
     @IBAction func previewPrintJob(sender: AnyObject) {
         // this will be the email button
         
         if let date = selectedItemDateString {
+            //create pdf and write to disc
             let name = dataStore.currentProfile.firstAndLastName
-            let filePath = getPDFFileName(name, date: date)
+            let filePath = getPDFFilePath(name, date: date)
             writeLogEntryPDF(date, name: name, filePath: filePath)
-            let emailSubjectLine = "Food Journal: " + name + " - " + date
-            sendPDFAsEmailAttachment(filePath, subjectLine: emailSubjectLine, fileName: emailSubjectLine)
             
+            // send as email attachment
+            let toRecipients = ["j.mesklein@gmail.com"]
+            let emailSubjectLine = "Food Journal: " + name + " - " + date
+            let messageBody = "Please find food journal log entry attached."
+
+            //sendPDFAsEmailAttachment(filePath, subjectLine: emailSubjectLine, fileName: emailSubjectLine)
+            let configuredMailComposeViewController = emailComposer.configuredMailComposeViewController(toRecipients, subjectText: emailSubjectLine, messageBody: messageBody, fileName: emailSubjectLine, pdfFilePath: filePath)
+            if emailComposer.canSendMail() {
+                presentViewController(configuredMailComposeViewController, animated: true, completion: nil)
+            } else {
+                showSendMailErrorAlert()
+            }
         }        
+    }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
     }
     
     func writeLogEntryPDF(date: String, name: String, filePath:String)  {
@@ -178,6 +193,7 @@ UIScrollViewDelegate, MFMailComposeViewControllerDelegate {
         }
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
