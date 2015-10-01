@@ -22,7 +22,7 @@ class EmailComposer: NSObject, MFMailComposeViewControllerDelegate {
         mailComposerVC.setToRecipients(toRecipients)
         mailComposerVC.setSubject(subjectText)
         mailComposerVC.setMessageBody(messageBody, isHTML: false)
-        
+        		
         if let fileData = NSData(contentsOfFile: pdfFilePath) {
             //println("File data loaded.")
             
